@@ -66,13 +66,45 @@ def permutations(lst,l,n):
                     else:
                         continue
     return segments
-segments_list = permutations(letters1,4,100)
-print(segments_list)
-myset = set(segments_list) #create set from affix list
-if len(segments_list) != len(myset): #compare length of set to length of affix list to test for repeated strings
-    print("Duplicates found in the list")
-else:
-    print("No duplicates found in the list!")
+
+def setlistcompare(lst):
+    '''
+    Compares length of a set to length of a list to test for repeated strings
+
+    Parameters
+    ----------
+    lst : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    '''
+    testset = set(lst)
+    if len(lst) != len(testset):
+        print("Duplicates found in the list!")
+    else:
+        print("No duplicates found in the list.")
+
+L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
+L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
+L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
+L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
+
+def repeats_check(lst1,lst2): # Checks whether there are any items in list 1 that are formed of items in list 2.
+    lst11 = []   
+    lst22 = []
+    for word in lst1:
+        lst11.append([*word])
+    return print(lst11)
+    for word in lst2:
+        lst22.append([*word])
+    return print(lst22)
+
+example1 = ["hello", "goods", "title"]
+example2 = ["bye", "tie", "yes"]
+repeats_check(example2,example1)
 
 import numpy as np
 def LEdistance(word1,word2):
