@@ -97,7 +97,7 @@ def setlistcompare(lst):
 
 def repeats_check(lst1, lst2): # for the moment, written for 4-character items in lst2
     '''
-    Flags words from lst1 that are part of lst2.
+    Flags words from lst1 that are part of lst2, where lst1 has items formed of fewer or the same number of characters as the items in lst2.
 
     Parameters
     ----------
@@ -119,20 +119,25 @@ def repeats_check(lst1, lst2): # for the moment, written for 4-character items i
         lst11.append([*word])
     for word in lst2:
         lst22.append([*word])
-    def intersection(lst1, lst2):
-        lst3 = [value for value in lst1 if value in lst2]
-        return lst3
     intersections = []
     test_lst = []
     ints = []
-    for j in  lst22:
-        test_word1 = j[0:length1]
-        test_word2 = j[1:length1+1]
-        test_lst = [test_word1, test_word2]
-        ints = intersection(test_lst, lst11)
-        intersections += ints
-        ints = []
-        test_lst = []
+    n = 0
+    for j in lst22:
+        test_lst = j[n:length1]
+    while n < length2-length1:
+        x = n+1
+        y = length1+n
+        for j in lst22:
+            test_word = j[x:y]
+            test_lst += test_word
+        print(test_lst)
+        n += 1
+    def intersection(lst1, lst2):
+        lst3 = [value for value in lst1 if value in lst2]
+        return lst3
+    ints = intersection(test_lst, lst11)
+    intersections += ints
     intersections = [''.join(i) for i in intersections]
     print(intersections)
 

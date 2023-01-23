@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 23 11:01:07 2023
+Created on Mon Jan 23 14:42:13 2023
 
 @author: annal
 """
@@ -26,6 +26,7 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
         intersections += ints
         ints = []
         test_lst = []
+    intersections = [''.join(i) for i in intersections]
     print(intersections)
 
 example1 = ["bye", "log", "hat", "wol", "but"]
