@@ -8,15 +8,17 @@ def permutations(lst,l,n):
 
     Parameters
     ----------
-    lst : TYPE
-        DESCRIPTION.
-    n : TYPE
-        DESCRIPTION.
+    lst : LIST
+        Input list
+    l : INTEGER
+        Desired length of the segments
+    n : INTEGER
+        Number of segments to be added to output list
 
     Returns
     -------
-    affixes : TYPE
-        DESCRIPTION.
+    segments : LIST
+        Output list containing generated permutations
 
     '''
     segments = []
@@ -75,12 +77,11 @@ def setlistcompare(lst):
 
     Parameters
     ----------
-    lst : TYPE
-        DESCRIPTION.
+    lst : LIST
 
     Returns
     -------
-    None.
+    Printed message saying whether duplicates were found in the list or not.
 
     '''
     testset = set(lst)
@@ -103,9 +104,12 @@ def repeats_check(lst1,lst2): # Checks whether there are any items in list 1 tha
     for word in lst2:
         lst22.append([*word])
     return print(lst22)
+    for word in lst11:
+        intersection = lst11.intersection(lst22)
+    return print(intersection)
 
-example1 = ["hello", "goods", "title"]
-example2 = ["bye", "tie", "yes"]
+example1 = ["hello", "goods", "title", "hands"]
+example2 = ["bye", "tie", "yes", "goo"]
 repeats_check(example2,example1)
 
 import numpy as np
@@ -115,16 +119,12 @@ def LEdistance(word1,word2):
 
     Parameters
     ----------
-    word1 : TYPE
-        DESCRIPTION.
-    word2 : TYPE
-        DESCRIPTION.
+    word1 : STRING
+    word2 : STRING
 
     Returns
     -------
-    TYPE
-        DESCRIPTION.
-
+    distances: LE distance between the two words
     '''
     distances = np.zeros((len(word1)+1, len(word2)+1))
     for w1 in range(len(word1)+1):
