@@ -124,15 +124,15 @@ def repeats_check(lst1, lst2): # for the moment, written for 4-character items i
     ints = []
     n = 0
     for j in lst22:
-        test_lst = j[n:length1]
-    while n < length2-length1:
-        x = n+1
-        y = length1+n
-        for j in lst22:
-            test_word = j[x:y]
-            test_lst += test_word
-        print(test_lst)
-        n += 1
+        test_lst = [j[n:length1-n]]
+        while length1+n < length2:
+            x = n
+            y = length1+n
+            test_word = [j for j in lst22[x:y]]
+            test_lst += [test_word]
+            print(test_lst)
+            n += 1
+            test_word = []
     def intersection(lst1, lst2):
         lst3 = [value for value in lst1 if value in lst2]
         return lst3
@@ -144,6 +144,17 @@ def repeats_check(lst1, lst2): # for the moment, written for 4-character items i
 example1 = ["wol", "log", "hat", "bye", "but"]
 example2 = ["hell", "logg", "hats", "drug", "wolf"]
 repeats_check(example1, example2)
+
+def test(lst):
+    n = 0
+    length = len(lst)
+    test_words = []
+    while n < length:
+        test_words += list([j for j in lst[n]])
+        n += 1
+    print(test_words)
+
+#test(example1)
 
 import numpy as np
 def LEdistance(word1,word2):

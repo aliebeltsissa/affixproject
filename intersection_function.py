@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 23 14:42:13 2023
-
-@author: annal
-"""
-
 def repeats_check(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
     lst11 = []   
     lst22 = []
