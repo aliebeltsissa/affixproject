@@ -15,22 +15,19 @@ def repeatscheck(lst1, lst2): # for the moment, written for 3-character items in
     def intersection(lst1, lst2):
         lst3 = [value for value in lst1 if value in lst2]
         return lst3
-    length_count = 0
     intersections = []
-    while length_count < len(lst1):
-        for i,j in lst1, lst2:
-            test_word1 = lst22[length_count][0:3]
-            test_word2 = lst22[length_count][1:4]
-            test_lst = [test_word1, test_word2]
-            intersections += intersection(test_lst,lst11)
-        length_count += 1
-    print(lst11)
-    print(lst22)
-    print(test_word1)
-    print(test_word2)
-    print(test_lst)
+    test_lst = []
+    ints = []
+    for j in  lst22:
+        test_word1 = j[0:3]
+        test_word2 = j[1:4]
+        test_lst = [test_word1, test_word2]
+        ints = intersection(test_lst, lst11)
+        intersections += ints
+        ints = []
+        test_lst = []
     print(intersections)
 
-example1 = ["bye", "log"]
-example2 = ["hell", "logg"]
+example1 = ["bye", "log", "hat", "wol", "but"]
+example2 = ["hell", "logg", "hats", "drug", "wolf"]
 repeatscheck(example1, example2)
