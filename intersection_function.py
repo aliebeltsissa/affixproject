@@ -5,7 +5,7 @@ Created on Mon Jan 23 11:01:07 2023
 @author: annal
 """
 
-def repeatscheck(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
+def repeats_check(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
     lst11 = []   
     lst22 = []
     for word in lst1:
@@ -30,4 +30,4 @@ def repeatscheck(lst1, lst2): # for the moment, written for 3-character items in
 
 example1 = ["bye", "log", "hat", "wol", "but"]
 example2 = ["hell", "logg", "hats", "drug", "wolf"]
-repeatscheck(example1, example2)
+repeats_check(example1, example2)
