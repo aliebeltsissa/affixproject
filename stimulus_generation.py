@@ -65,6 +65,8 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
+    if segments != False:
+        print(f"Finished generating list of {l}-character segments")
     return segments
 
 def setlistcompare(lst):
