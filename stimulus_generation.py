@@ -90,27 +90,37 @@ def setlistcompare(lst):
     else:
         print("No duplicates found in the list.")
 
-L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
-L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
-L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
-L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
+#L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
+#L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
+#L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
+#L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
 
-def repeats_check(lst1,lst2): # Checks whether there are any items in list 1 that are formed of items in list 2.
+def repeats_check(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
     lst11 = []   
     lst22 = []
     for word in lst1:
         lst11.append([*word])
-    return print(lst11)
     for word in lst2:
         lst22.append([*word])
-    return print(lst22)
-    for word in lst11:
-        intersection = lst11.intersection(lst22)
-    return print(intersection)
+    def intersection(lst1, lst2):
+        lst3 = [value for value in lst1 if value in lst2]
+        return lst3
+    intersections = []
+    test_lst = []
+    ints = []
+    for j in  lst22:
+        test_word1 = j[0:3]
+        test_word2 = j[1:4]
+        test_lst = [test_word1, test_word2]
+        ints = intersection(test_lst, lst11)
+        intersections += ints
+        ints = []
+        test_lst = []
+    print(intersections)
 
-example1 = ["hello", "goods", "title", "hands"]
-example2 = ["bye", "tie", "yes", "goo"]
-repeats_check(example2,example1)
+example1 = ["bye", "log", "hat", "wol", "but"]
+example2 = ["hell", "logg", "hats", "drug", "wolf"]
+repeats_check(example1, example2)
 
 import numpy as np
 def LEdistance(word1,word2):
