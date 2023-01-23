@@ -95,7 +95,7 @@ def setlistcompare(lst):
 #L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
 #L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
 
-def repeats_check(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
+def repeats_check(lst1, lst2): # for the moment, written for 4-character items in lst2
     '''
     Flags words from lst1 that are part of lst2.
 
@@ -111,6 +111,8 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
     intersections : LIST
         Output list containing repeated words from list 1
     '''    
+    length1 = len(lst1[0])
+    length2 = len(lst2[0])
     lst11 = []   
     lst22 = []
     for word in lst1:
@@ -124,8 +126,8 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
     test_lst = []
     ints = []
     for j in  lst22:
-        test_word1 = j[0:3]
-        test_word2 = j[1:4]
+        test_word1 = j[0:length1]
+        test_word2 = j[1:length1+1]
         test_lst = [test_word1, test_word2]
         ints = intersection(test_lst, lst11)
         intersections += ints
