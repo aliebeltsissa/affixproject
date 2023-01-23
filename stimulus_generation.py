@@ -109,6 +109,7 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
     Returns
     -------
     List of intersecting segments from list 1.
+    List 1b of items in list 1 that weren't intersecting with list 2.
 
     '''
     length1 = len(lst1[0])
@@ -128,13 +129,9 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
     for j in lst22:
         n = 0
         while length1+n <= length2:
-            print(j)
             test_word = j[n:(length1+n)]
-            print(test_word)
             test_lst += [test_word]
-            print(test_lst)
             ints = intersection(test_lst, lst11)
-            print(ints)
             intersections += ints
             ints = []
             test_lst = []
@@ -144,21 +141,12 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
             continue
     intersections = [''.join(i) for i in intersections]
     print(intersections)
+    lst1b = [x for x in lst1 if x not in intersections]
+    print(lst1b)
 
 example1 = ["wol", "log", "hat", "bye", "but"]
 example2 = ["hell", "logg", "hats", "drug", "wolf"]
 repeats_check(example1, example2)
-
-def test(lst):
-    n = 0
-    length = len(lst)
-    test_words = []
-    while n < length:
-        test_words += list([j for j in lst[n]])
-        n += 1
-    print(test_words)
-
-#test(example1)
 
 import numpy as np
 def LEdistance(word1,word2):
