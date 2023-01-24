@@ -1,8 +1,42 @@
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
-letters1 = letters[0:12]
-letters2 = letters[12:24]
+def setlistcompare(lst):
+    '''
+    Compares length of a set to length of a list to test for repeated strings
+
+    Parameters
+    ----------
+    lst : LIST
+
+    Returns
+    -------
+    Printed message saying whether duplicates were found in the list or not.
+
+    '''
+    testset = set(lst)
+    if len(lst) != len(testset):
+        print("Duplicates found in the list!")
+    else:
+        print("No duplicates found in the list.")
 
 import random
+def language_characters():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
+    overlap = input("Overlapping characters across languages? [y/n]: ")
+    if overlap == 'n':
+        random.shuffle(letters)
+        letters1 = letters[12:]
+        letters2 = letters[:12]
+    elif overlap == 'y':
+        letters1 = random.sample(letters, k = 12)
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
+        letters2 = random.sample(letters, k = 12)
+    else:
+        print("Sorry, not a valid choice.")
+    print(f'Letters in language 1: {letters1}')
+    print(f'Letters in language 2: {letters2}')
+    all_letters = letters1 + letters2
+    setlistcompare(all_letters)
+    return letters1, letters2
+
 def permutations(lst,l,n):
     '''
     Generates n permutations of length l of a list lst. Works if l [3;6].
@@ -72,25 +106,7 @@ def permutations(lst,l,n):
         print(f"Finished generating list of {l}-character segments")
     return segments
 
-def setlistcompare(lst):
-    '''
-    Compares length of a set to length of a list to test for repeated strings
-
-    Parameters
-    ----------
-    lst : LIST
-
-    Returns
-    -------
-    Printed message saying whether duplicates were found in the list or not.
-
-    '''
-    testset = set(lst)
-    if len(lst) != len(testset):
-        print("Duplicates found in the list!")
-    else:
-        print("No duplicates found in the list.")
-
+language_characters()
 #L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
 #L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
 #L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
@@ -193,13 +209,11 @@ def repeats_check(lst1, lst2):
         lst1_cleaned = []
         lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
     print(f'List 1 without the repeated segments is: {lst1_cleaned}')
-    return intersections
-    return dellist
-    return lst1_cleaned
-    
-example1 = ["wolf", "logs", "hate", "baby", "bust"]
-example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
-repeats_check(example1, example2)
+    return intersections, dellist, lst1_cleaned
+
+#example1 = ["wolf", "logs", "hate", "baby", "bust"]
+#example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
+#repeats_check(example1, example2)
 
 import numpy as np
 def LEdistance(word1,word2):
