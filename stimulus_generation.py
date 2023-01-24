@@ -1,6 +1,7 @@
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
 letters1 = letters[0:12]
 letters2 = letters[12:24]
+
 import random
 def permutations(lst,l,n):
     '''
@@ -29,7 +30,7 @@ def permutations(lst,l,n):
             break
         else:
             while count < n:
-                if l == 3: # for 3-character word parts
+                if l == 3: # randomly pick 3 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     if a != i and b != i and a != b and i+a+b not in segments: # making sure there are only different letters in the segment
@@ -37,7 +38,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 4: # for 4-character word parts
+                if l == 4: # randomly pick 4 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -46,7 +47,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 5: # for 5-character word parts
+                if l == 5: # randomly pick 5 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -56,7 +57,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 6: # for 6-character word parts
+                if l == 6: # randomly pick 6 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -95,7 +96,7 @@ def setlistcompare(lst):
 #L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
 #L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
 
-def repeats_check(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
+def repeats_check(lst1, lst2):
     '''
     Cycles through items from list 2 to find segments from items in list 1. This version is flexible for lists with any length of items.
 

@@ -40,7 +40,7 @@ def repeats_check1(lst1, lst2):
     lst1b = [x for x in lst1 if x not in intersections]
     print(lst1b)
 
-def repeats_check2(lst1, lst2): # for the moment, written for 3-character items in lst1 and 4-character items in lst2
+def repeats_check2(lst1, lst2):
     '''
     Cycles through items from list 2 to find segments from items in list 1. This version is flexible for lists with any length of items.
 
