@@ -19,6 +19,17 @@ def setlistcompare(lst):
 
 import random
 def language_characters():
+    '''
+    Makes two lists with overlapping or non-overlapping character sets
+
+    Returns
+    -------
+    letters1 : LIST
+        First list of characters.
+    letters2 : LIST
+        Second list of characters.
+
+    '''
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
     overlap = input("Overlapping characters across languages? [y/n]: ")
     if overlap == 'n':
@@ -34,7 +45,7 @@ def language_characters():
     print(f'Letters in language 1: {letters1}')
     print(f'Letters in language 2: {letters2}')
     all_letters = letters1 + letters2
-    setlistcompare(all_letters)
+    setlistcompare(all_letters) # test whether the letter sets are overlapping or not
     return letters1, letters2
 
 def permutations(lst,l,n):
@@ -105,12 +116,6 @@ def permutations(lst,l,n):
     if segments != False:
         print(f"Finished generating list of {l}-character segments")
     return segments
-
-language_characters()
-#L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
-#L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
-#L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
-#L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
 
 def repeats_check(lst1, lst2):
     '''
@@ -211,10 +216,6 @@ def repeats_check(lst1, lst2):
     print(f'List 1 without the repeated segments is: {lst1_cleaned}')
     return intersections, dellist, lst1_cleaned
 
-#example1 = ["wolf", "logs", "hate", "baby", "bust"]
-#example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
-#repeats_check(example1, example2)
-
 import numpy as np
 def LEdistance(word1,word2):
     '''
@@ -252,3 +253,14 @@ def LEdistance(word1,word2):
                 else:
                     distances[w1][w2] = c + 1
     return distances[len(word1)][len(word2)]
+
+#language_characters()
+
+#L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
+#L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
+#L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
+#L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
+
+example1 = ["wolf", "logs", "hate", "baby", "bust"]
+#example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
+#repeats_check(example1, example2)
