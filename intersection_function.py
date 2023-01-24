@@ -96,32 +96,31 @@ def repeats_check2(lst1, lst2):
             n = 0
             continue
     intersections2 = [''.join(i) for i in intersections]
-    print(intersections2)
-    lst1a = intersection(test_lst1, intersections)
-    print(lst1a)
+    print(f'The common segments are: {intersections2}')
     test_lst = []
-    lst1c = []
     for i in lst11:
         n = 0
         while 3+n <= length1:
             test_word = i[n:(3+n)]
-            print(test_word)
-            #if test_word in lst1a:
-            #    lst11 = lst11 - test_word
-            l3 = [x for x in lst11 if x not in test_word]
-            #test_lst += [test_word]
-            #lst1b = intersection(test_lst, lst1a)
-            #lst11.remove(lst1b)
-            #lst1b = []
-            #test_lst = []
+            test_words = [test_word, i]
+            test_words = [''.join(i) for i in test_words]
+            test_lst += [test_words]
             n += 1
         else:
             n = 0
             continue
-    print(l3)
-    #lst1c = [''.join(i) for i in lst11]
-    #print(lst1c)
+    dellist = []
+    for i in range(0,len(test_lst)):
+        if test_lst[i][0] in intersections2:
+            dellist += [test_lst[i][1]]
+        else:
+            continue
+    print(f'The words those segments belong to are: {dellist}')
+    lst1c = []
+    lst1c = [x for x in lst1 if x not in dellist]
+    print(f'List 1 without the repeated segments is: {lst1c}')
+    return lst1c
     
-example1 = ["wolr", "logs", "hate", "byeb", "buts"]
+example1 = ["wolf", "logs", "hate", "baby", "bust"]
 example2 = ["heller", "loggy", "hatsy", "drugsy", "wolfer"]
 repeats_check2(example1, example2)

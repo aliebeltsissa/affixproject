@@ -123,29 +123,61 @@ def repeats_check(lst1, lst2): # for the moment, written for 3-character items i
     def intersection(lst1, lst2):
         lst3 = [value for value in lst1 if value in lst2]
         return lst3
-    intersections = []
-    test_lst = []
+    test_lst1 = []
+    for i in lst11:
+        n = 0
+        while 3+n <= length1:
+            test_word = i[n:(3+n)]
+            test_lst1 += [test_word]
+            n +=1
+        else:
+            n = 0
+            continue
+    n = 0
+    test_lst2 = []
     ints = []
+    intersections = []
     for j in lst22:
         n = 0
-        while length1+n <= length2:
-            test_word = j[n:(length1+n)]
-            test_lst += [test_word]
-            ints = intersection(test_lst, lst11)
+        while 3+n <= length2:
+            test_word = j[n:(3+n)]
+            test_lst2 += [test_word]
+            ints = intersection(test_lst1, test_lst2)
             intersections += ints
             ints = []
-            test_lst = []
+            test_lst2 = []
             n += 1
         else:
             n = 0
             continue
-    intersections = [''.join(i) for i in intersections]
-    print(intersections)
-    lst1b = [x for x in lst1 if x not in intersections]
-    print(lst1b)
-
-example1 = ["wol", "log", "hat", "bye", "but"]
-example2 = ["hell", "logg", "hats", "drug", "wolf"]
+    intersections2 = [''.join(i) for i in intersections]
+    print(f'The common segments are: {intersections2}')
+    test_lst = []
+    for i in lst11:
+        n = 0
+        while 3+n <= length1:
+            test_word = i[n:(3+n)]
+            test_words = [test_word, i]
+            test_words = [''.join(i) for i in test_words]
+            test_lst += [test_words]
+            n += 1
+        else:
+            n = 0
+            continue
+    dellist = []
+    for i in range(0,len(test_lst)):
+        if test_lst[i][0] in intersections2:
+            dellist += [test_lst[i][1]]
+        else:
+            continue
+    print(f'The words those segments belong to are: {dellist}')
+    lst1c = []
+    lst1c = [x for x in lst1 if x not in dellist]
+    print(f'List 1 without the repeated segments is: {lst1c}')
+    return lst1c
+    
+example1 = ["wolf", "logs", "hate", "baby", "bust"]
+example2 = ["heller", "loggy", "hatsy", "drugsy", "wolfer"]
 repeats_check(example1, example2)
 
 import numpy as np
