@@ -103,9 +103,9 @@ def repeats_check(lst1, lst2):
     Parameters
     ----------
     lst1 : LIST
-        The first list.
+        The first list, with shorter words a minimum of 3 characters in length.
     lst2 : LIST
-        The second list.
+        The second list, with longer words.
 
     Returns
     -------
@@ -124,14 +124,14 @@ def repeats_check(lst1, lst2):
         lst22.append([*word]) # split apart words in lst1 into sublists
     def intersection(lst1, lst2):
         '''
-        Finds the intersection of lst1 and lst2, where lst1 has longer words.
+        Finds the intersection of lst1 and lst2, where lst1 has shorter words.
 
         Parameters
         ----------
         lst1 : LIST
-            The list with longer words.
-        lst2 : LIST
             The list with shorter words.
+        lst2 : LIST
+            The list with longer words.
 
         Returns
         -------
@@ -166,33 +166,39 @@ def repeats_check(lst1, lst2):
             n = 0
             continue
     intersections = [''.join(i) for i in intersections]
-    print(f'The common segments are: {intersections}')
-    test_lst = []
-    for i in lst11:
-        n = 0
-        while 3+n <= length1:
-            test_word = i[n:(3+n)] # split lst11 into 3-character segments
-            test_words = [test_word, i] # create joined sublists with the segments and the words they belong to
-            test_words = [''.join(i) for i in test_words] # group the separated sublist segments and words 
-            test_lst += [test_words]
-            n += 1
-        else:
+    if intersections == []:
+        print('There are no segments in common in these two lists.')
+        lst1_cleaned = lst1.copy()
+    else:
+        print(f'The common segments are: {intersections}')
+        test_lst = []
+        for i in lst11:
             n = 0
-            continue
-    dellist = []
-    for i in range(0,len(test_lst)):
-        if test_lst[i][0] in intersections:
-            dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
-        else:
-            continue
-    print(f'The words those segments belong to are: {dellist}')
-    lst1_cleaned = []
-    lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
+            while 3+n <= length1:
+                test_word = i[n:(3+n)] # split lst11 into 3-character segments
+                test_words = [test_word, i] # create joined sublists with the segments and the words they belong to
+                test_words = [''.join(i) for i in test_words] # group the separated sublist segments and words 
+                test_lst += [test_words]
+                n += 1
+            else:
+                n = 0
+                continue
+        dellist = []
+        for i in range(0,len(test_lst)):
+            if test_lst[i][0] in intersections:
+                dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
+            else:
+                continue
+        print(f'The words those segments belong to are: {dellist}')
+        lst1_cleaned = []
+        lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
     print(f'List 1 without the repeated segments is: {lst1_cleaned}')
+    return intersections
+    return dellist
     return lst1_cleaned
     
 example1 = ["wolf", "logs", "hate", "baby", "bust"]
-example2 = ["heller", "loggie", "hatsie", "drugsy", "wolfer"]
+example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
 repeats_check(example1, example2)
 
 import numpy as np

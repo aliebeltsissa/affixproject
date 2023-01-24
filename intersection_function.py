@@ -47,9 +47,9 @@ def repeats_check2(lst1, lst2):
     Parameters
     ----------
     lst1 : LIST
-        The first list.
+        The first list, with shorter words a minimum of 3 characters in length.
     lst2 : LIST
-        The second list.
+        The second list, with longer words.
 
     Returns
     -------
@@ -68,14 +68,14 @@ def repeats_check2(lst1, lst2):
         lst22.append([*word]) # split apart words in lst1 into sublists
     def intersection(lst1, lst2):
         '''
-        Finds the intersection of lst1 and lst2, where lst1 has longer words.
+        Finds the intersection of lst1 and lst2, where lst1 has shorter words.
 
         Parameters
         ----------
         lst1 : LIST
-            The list with longer words.
-        lst2 : LIST
             The list with shorter words.
+        lst2 : LIST
+            The list with longer words.
 
         Returns
         -------
