@@ -200,10 +200,10 @@ def repeats_check(lst1, lst2):
     intersections = [''.join(i) for i in intersections]
     dellist = []
     if intersections == []:
-        #print('There are no segments in common in these two lists.')
+        #print('There are no segments in common in these two lists.') # optional check
         lst1_cleaned = lst1.copy()
     else:
-        #print(f'The common segments are: {intersections}')
+        #print(f'The common segments are: {intersections}') #optional check
         test_lst = []
         for i in lst11:
             n = 0
@@ -222,7 +222,7 @@ def repeats_check(lst1, lst2):
                 dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
             else:
                 continue
-        #if len(dellist) != 0:
+        #if len(dellist) != 0: #optional check
             #print(f'The words those segments belong to are: {dellist}')
         lst1_cleaned = []
         lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
@@ -232,45 +232,63 @@ def repeats_check(lst1, lst2):
     return intersections, dellist, lst1_cleaned
 
 import numpy as np
-def LEdistance(word1,word2):
-    '''
-    Calculates the Levenshtein distance between 2 given words.
-
-    Parameters
-    ----------
-    word1 : STRING
-        The first word to compare.
-    word2 : STRING
-        The second word to compare
-
-    Returns
-    -------
-    distances : INTEGER
+def LEdistance(lst1,lst2):
+    def LED(word1,word2):
+        '''
+        Calculates the Levenshtein distance between 2 given words.
+        
+        Parameters
+        ----------
+        word1 : STRING
+            The first word to compare.
+            word2 : STRING
+            The second word to compare
+            
+        Returns
+        -------
+        distances : INTEGER
         LE distance between the two words
-    '''
-    distances = np.zeros((len(word1)+1, len(word2)+1))
-    for w1 in range(len(word1)+1):
-        distances[w1][0] = w1
-    for w2 in range(len(word2)+1):
-        distances[0][w2] = w2
-    a = 0
-    b = 0
-    c = 0
-    for w1 in range(1, len(word1)+1):
-        for w2 in range(1, len(word2)+1):
-            if (word1[w1-1] == word2[w2-1]):
-                distances[w1][w2] = distances[w1-1][w2-1]
-            else:
-                a = distances[w1][w2-1]
-                b = distances[w1-1][w2]
-                c = distances[w1-1][w2-1]
-                if a <= b and a <= c:
-                    distances[w1][w2] = a + 1
-                elif b <= a and b <= c:
-                    distances[w1][w2] = b + 1
+        '''
+        distances = np.zeros((len(word1)+1, len(word2)+1))
+        for w1 in range(len(word1)+1):
+            distances[w1][0] = w1
+        for w2 in range(len(word2)+1):
+            distances[0][w2] = w2
+        a = 0
+        b = 0
+        c = 0
+        for w1 in range(1, len(word1)+1):
+            for w2 in range(1, len(word2)+1):
+                if (word1[w1-1] == word2[w2-1]):
+                    distances[w1][w2] = distances[w1-1][w2-1]
                 else:
-                    distances[w1][w2] = c + 1
-    return distances[len(word1)][len(word2)]
+                    a = distances[w1][w2-1]
+                    b = distances[w1-1][w2]
+                    c = distances[w1-1][w2-1]
+                    if a <= b and a <= c:
+                        distances[w1][w2] = a + 1
+                    elif b <= a and b <= c:
+                        distances[w1][w2] = b + 1
+                    else:
+                        distances[w1][w2] = c + 1
+        return distances[len(word1)][len(word2)]
+    dellist = []
+    if len(lst1) != len(lst2):
+        print("Problem: lst1 is of a different length than lst2.")
+    l = len(lst1) - 1
+    j = 0
+    i = 0
+    for i in range(l):
+        j = 0
+        while j <= l:
+            distance = LED(lst1[i],lst2[j])
+            print(lst1[i], lst2[j])
+            print(distance)
+            if distance <= 2:
+                dellist.append(lst1[i])
+            j += 1
+    print(f'Words to delete: {dellist}')
+    return dellist
 
 def cycle_through(a,s):
     '''
@@ -346,4 +364,7 @@ def cycle_through(a,s):
     #print(f'L2 stems: {L2stems}')
     return L1affixes, L1stems, L2affixes, L2stems
 
-cycle_through(100,200)
+#L1affixes, L1stems, L2affixes, L2stems = cycle_through(100,200)
+example1 = ["wolf", "logs", "hate", "baby", "bust"]
+example2 = ["heller", "loggie", "hatsie", "drugsy", "wolfer"]
+LEdistance(example1,example2)
