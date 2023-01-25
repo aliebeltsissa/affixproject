@@ -293,12 +293,6 @@ def cycle_through(a,s):
     L1affixes2 = []
     L1stems = []
     L1stems1 = []
-    L1stems2 = []
-    L2affixes = []
-    L2affixes1 = []
-    L2affixes2 = []
-    L2stems = []
-    L2stems1 = []
     L2stems2 = []
     dellist = []
     intersections = []
@@ -313,10 +307,9 @@ def cycle_through(a,s):
         moreL1affixes1 = permutations(letters1,3,missing)
         L1affixes1 = moreL1affixes1 + L1affixes1
         intersections, dellist, L1affixes1 = repeats_check(L1affixes1, L1affixes2)
-        return L1affixes1
-    L1stems1 = permutations(letters1,4,s) # generate 3-character stems for L1
-    print(L1affixes1)
-    L1stems2 = permutations(letters1,5,s) # generate 4-character stems for L1
+        n_inter = len(L1affixes1)
+    L1stems1 = permutations(letters1,4,s) # generate 4-character stems for L1
+    L1stems2 = permutations(letters1,5,s) # generate 5-character stems for L1
     intersections, dellist, L1stems1 = repeats_check(L1stems1, L1stems2)
     n_inter = len(L1stems1)
     while n_inter < s: # generate more segments if there are fewer than the required number due to the repeats_check deletions
@@ -325,25 +318,51 @@ def cycle_through(a,s):
         moreL1stems1 = permutations(letters1,4,missing)
         L1stems1 = moreL1stems1 + L1stems1
         intersections, dellist, L1stems1 = repeats_check(L1stems1, L1stems2)
-        return L1stems1
+        n_inter = len(L1stems1)
+        
     L1affixes = L1affixes1 + L1affixes2
-    print(L1affixes)
     L1stems = L1stems1 + L1stems2
-    print(L1stems)
     
-    #L2affixes1 = permutations(letters2,3,a) # generate 3-character affixes for L2
-    #L2affixes2 = permutations(letters2,4,a) # generate 4-character affixes for L2
-    #L2stems1 = permutations(letters2,4,s) # generate 4-character affixes for L2
-    #L2stems2 = permutations(letters2,5,s) # generate 5-character affixes for L2
-    #L2affixes = L2affixes1 + L2affixes2
-    #L2stems = L2stems1 + L2stems2
+    L2affixes = []
+    L2affixes1 = []
+    L2affixes2 = []
+    L2stems = []
+    L2stems1 = []
+    L2stems2 = []
+    dellist = []
+    intersections = []
+    L2affixes1 = permutations(letters2,3,a) # generate 3-character affixes for L1
+    print(L1affixes1)
+    L2affixes2 = permutations(letters2,4,a) # generate 4-character affixes for L1
+    intersections, dellist, L2affixes = repeats_check(L2affixes1, L2affixes2)
+    n_inter = len(L1affixes1)
+    while n_inter < a: # generate more segments if there are fewer than the required number due to the repeats_check deletions
+        missing = a - n_inter # calculate the number of segments missing
+        print(f'Still missing {missing} segments')
+        moreL2affixes1 = permutations(letters2,3,missing)
+        L2affixes1 = moreL2affixes1 + L2affixes1
+        intersections, dellist, L2affixes1 = repeats_check(L2affixes1, L2affixes2)
+        n_inter = len(L2affixes1)
+        
+    L2stems1 = permutations(letters2,4,s) # generate 4-character stems for L2
+    L2stems2 = permutations(letters2,5,s) # generate 5-character stems for L2
+    intersections, dellist, L2stems1 = repeats_check(L2stems1, L2stems2)
+    n_inter = len(L2stems1)
+    while n_inter < s: # generate more segments if there are fewer than the required number due to the repeats_check deletions
+        missing = s - n_inter # calculate the number of segments missing
+        print(f'Still missing {missing} segments')
+        moreL2stems1 = permutations(letters1,4,missing)
+        L2stems1 = moreL2stems1 + L2stems1
+        intersections, dellist, L2stems1 = repeats_check(L2stems1, L2stems2)
+        n_inter = len(L2stems1)
+        
+    L2affixes = L2affixes1 + L2affixes2
+    L2stems = L2stems1 + L2stems2
+    
     print(f'L1 affixes: {L1affixes}')
-    #print(f'L1 stems: {L1stems}')
-    #print(f'L2 affixes: {L2affixes}')
-    #print(f'L2 stems: {L2stems}')
+    print(f'L1 stems: {L1stems}')
+    print(f'L2 affixes: {L2affixes}')
+    print(f'L2 stems: {L2stems}')
     return L1affixes, L1stems, L2affixes, L2stems
 
-cycle_through(100,200)      
-#example1 = ["wolf", "logs", "hate", "baby", "bust"]
-#example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
-#repeats_check(example1, example2)
+cycle_through(100,200)
