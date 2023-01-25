@@ -302,6 +302,25 @@ def cycle_through(a,s):
     L1stems1 = []
     L2stems2 = []
     def cycle_throughs(lst,n,t):
+        '''
+        Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
+
+        Parameters
+        ----------
+        lst : LIST
+            List of the characters to assemble into segments.
+        n : INTEGER
+            Lower length of the segments to generate. For example, if you want 3- & 4- letter segments, enter '3'.
+        t : INTEGER
+            Number of segments to generate.
+
+        Returns
+        -------
+        segments1 : LIST
+            List of the first set of segments.
+        segments2 : LIST
+            List of the second set of segments.
+        '''
         segments1 = permutations(lst,n,t)
         segments2 = permutations(lst,n+1,t)
         intersections, dellist, segments = repeats_check(segments1, segments2)
