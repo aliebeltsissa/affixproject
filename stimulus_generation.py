@@ -200,10 +200,10 @@ def repeats_check(lst1, lst2):
     intersections = [''.join(i) for i in intersections]
     dellist = []
     if intersections == []:
-        print('There are no segments in common in these two lists.')
+        #print('There are no segments in common in these two lists.')
         lst1_cleaned = lst1.copy()
     else:
-        print(f'The common segments are: {intersections}')
+        #print(f'The common segments are: {intersections}')
         test_lst = []
         for i in lst11:
             n = 0
@@ -222,11 +222,13 @@ def repeats_check(lst1, lst2):
                 dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
             else:
                 continue
-        if len(dellist) != 0:
-            print(f'The words those segments belong to are: {dellist}')
+        #if len(dellist) != 0:
+            #print(f'The words those segments belong to are: {dellist}')
         lst1_cleaned = []
         lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
-    print(f'List 1 without the repeated segments is: {lst1_cleaned}')
+    #print('List 1 without the repeated segments is: {lst1_cleaned}')
+    if len(lst1_cleaned) != 0:
+        print('Finished cleaning list.')
     return intersections, dellist, lst1_cleaned
 
 import numpy as np
@@ -336,10 +338,12 @@ def cycle_through(a,s):
     L2affixes = L2affixes1 + L2affixes2
     L2stems = L2stems1 + L2stems2
     
-    print(f'L1 affixes: {L1affixes}')
-    print(f'L1 stems: {L1stems}')
-    print(f'L2 affixes: {L2affixes}')
-    print(f'L2 stems: {L2stems}')
+    if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0:
+        print('Finished generating stimuli sets.')
+    #print(f'L1 affixes: {L1affixes}')
+    #print(f'L1 stems: {L1stems}')
+    #print(f'L2 affixes: {L2affixes}')
+    #print(f'L2 stems: {L2stems}')
     return L1affixes, L1stems, L2affixes, L2stems
 
 cycle_through(100,200)
