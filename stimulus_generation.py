@@ -67,6 +67,9 @@ def permutations(lst,l,n):
         Output list containing generated permutations
 
     '''
+    if len(lst) == 0:
+        print('Careful, input list to permutations is empty!')
+        return
     segments = []
     count = 0
     for i in lst:
@@ -78,8 +81,9 @@ def permutations(lst,l,n):
                 if l == 3: # randomly pick 3 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
-                    if a != i and b != i and a != b and i+a+b not in segments: # making sure there are only different letters in the segment
-                        segments += [i + a + b]
+                    c = random.choice(lst)
+                    if a != b and b != c and c != a and a+b+c not in segments: # making sure there are only different letters in the segment
+                        segments += [a + b + c]
                         count += 1
                     else:
                         continue
@@ -87,8 +91,9 @@ def permutations(lst,l,n):
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
-                    if a !=b and b != c and c != i and i != a and i+a+b+c not in segments: # making sure there are only different letters in the segment
-                        segments += [i + a + b + c]
+                    d = random.choice(lst)
+                    if a !=b and b != c and c != d and d != a and a+b+c+d not in segments: # making sure there are only different letters in the segment
+                        segments += [a + b + c + d]
                         count += 1
                     else:
                         continue
@@ -97,8 +102,9 @@ def permutations(lst,l,n):
                     b = random.choice(lst)
                     c = random.choice(lst)
                     d = random.choice(lst)
-                    if a != b and b != c and c != d and d != i and i != a and i+a+b+c+d not in segments: # making sure there are only different letters in the segment
-                        segments += [i + a + b + c + d]
+                    e = random.choice(lst)
+                    if a != b and b != c and c != d and d != e and e != a and a+b+c+d+e not in segments: # making sure there are only different letters in the segment
+                        segments += [a + b + c + d + e]
                         count += 1
                     else:
                         continue
@@ -108,8 +114,9 @@ def permutations(lst,l,n):
                     c = random.choice(lst)
                     d = random.choice(lst)
                     e = random.choice(lst)
-                    if a != b and b != c and c != d and d != e and e != i and i != a and i+a+b+c+d+e not in segments: # making sure there are only different letters in the segment
-                        segments += [i + a + b + c + d + e]
+                    f = random.choice(lst)
+                    if a != b and b != c and c != d and d != e and e != f and f != a and a+b+c+d+e+f not in segments: # making sure there are only different letters in the segment
+                        segments += [a + b + c + d + e + f]
                         count += 1
                     else:
                         continue
@@ -135,6 +142,12 @@ def repeats_check(lst1, lst2):
     List of items from list 1 that don't intersect with list 2 called lst1_cleaned.
 
     '''
+    if len(lst1) == 0: # tests to see whether the lists given to the function contain something
+        print('Careful, lst1 is empty!')
+    if len(lst2) == 0:
+        print('Careful, lst2 is empty!')
+    if len(lst1) == 0 or len(lst2) == 0:
+        return
     length1 = len(lst1[0])
     length2 = len(lst2[0])    
     lst11 = []   
@@ -254,13 +267,59 @@ def LEdistance(word1,word2):
                     distances[w1][w2] = c + 1
     return distances[len(word1)][len(word2)]
 
-#language_characters()
+def cycle_through(a,s):
+    '''
+    Cycles through the permutations and repeats_check function to obtain lists of stems and affixes in each language without repeats.
 
-#L1affixes1 = permutations(letters1,3,100) # generate 3-character affixes for L1
-#L1affixes2 = permutations(letters1,4,100) # generate 4-character affixes for L1
-#L1stems1 = permutations(letters1,4,200) # generate 4-character affixes for L1
-#L1stems2 = permutations(letters1,5,200) # generate 5-character affixes for L1
+    Parameters
+    ----------
+    a : INTEGER
+        Input for the number of affixes to be generated.
+    s : INTEGER
+        INpute for the number of stems to be generated.
 
-example1 = ["wolf", "logs", "hate", "baby", "bust"]
+    Returns
+    -------
+    None.
+
+    '''
+    letters1 = []
+    letters2 = []
+    letters1, letters2 = language_characters()
+    L1affixes1 = []
+    L1affixes = []
+    L1stems = []
+    L2affixes = []
+    L2stems = []
+    L1affixes1 = permutations(letters1,3,a) # generate 3-character affixes for L1
+    print(L1affixes1)
+    #L1affixes2 = permutations(letters1,4,a) # generate 4-character affixes for L1
+    #repeats_check(L1affixes1, L1affixes2)
+    #n_inter = len(lst1_cleaned)
+    #while n_inter < a:
+    #    moreL1affixes1 = permutations(letters1,3,(a-n_inter))
+    #    L1affixes1 = moreL1affixes1 + lst1_cleaned
+    #    repeats_check(L1affixes1, L1affixes2)
+    #print(L1affixes1)
+    #print(len(L1affixes1))
+    #L1stems1 = permutations(letters1,4,s) # generate 4-character affixes for L1
+    #L1stems2 = permutations(letters1,5,s) # generate 5-character affixes for L1
+    #L1affixes = L1affixes1 + L1affixes2
+    #L1stems = L1stems1 + L1stems2
+    
+    #L2affixes1 = permutations(letters2,3,a) # generate 3-character affixes for L2
+    #L2affixes2 = permutations(letters2,4,a) # generate 4-character affixes for L2
+    #L2stems1 = permutations(letters2,4,s) # generate 4-character affixes for L2
+    #L2stems2 = permutations(letters2,5,s) # generate 5-character affixes for L2
+    #L2affixes = L2affixes1 + L2affixes2
+    #L2stems = L2stems1 + L2stems2
+    print(f'L1 affixes: {L1affixes}')
+    #print(f'L1 stems: {L1stems}')
+    #print(f'L2 affixes: {L2affixes}')
+    #print(f'L2 stems: {L2stems}')
+    return L1affixes, L1stems, L2affixes, L2stems
+
+cycle_through(100,200)      
+#example1 = ["wolf", "logs", "hate", "baby", "bust"]
 #example2 = ["heller", "loggie", "hatsie", "drugs", "wolfer"]
 #repeats_check(example1, example2)
