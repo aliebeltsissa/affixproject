@@ -9,7 +9,6 @@ def setlistcompare(lst):
     Returns
     -------
     Printed message saying whether duplicates were found in the list or not.
-
     '''
     testset = set(lst)
     if len(lst) != len(testset):
@@ -28,7 +27,6 @@ def language_characters():
         First list of characters.
     letters2 : LIST
         Second list of characters.
-
     '''
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
     overlap = input("Overlapping characters across languages? [y/n]: ")
@@ -65,7 +63,6 @@ def permutations(lst,l,n):
     -------
     segments : LIST
         Output list containing generated permutations
-
     '''
     if len(lst) == 0:
         print('Careful, input list to permutations is empty!')
@@ -137,10 +134,12 @@ def repeats_check(lst1, lst2):
 
     Returns
     -------
-    List of intersecting segments from list 1 called instersections.
-    List of items in list 1 that are intersecting with list 2 called dellist.
-    List of items from list 1 that don't intersect with list 2 called lst1_cleaned.
-
+    intersections : LIST
+        List of intersecting segments from list 1.
+    dellist : LIST
+        List of items in list 1 that are intersecting with list 2.
+    lst1_cleaned : LIST
+        List of items from list 1 that don't intersect with list 2.
     '''
     if len(lst1) == 0: # tests to see whether the lists given to the function contain something
         print('Careful, lst1 is empty!')
@@ -171,7 +170,6 @@ def repeats_check(lst1, lst2):
         -------
         lst3 : LIST
             A list with the segments that are in both lists.
-
         '''
         incommon_lst = [value for value in lst1 if value in lst2]
         return incommon_lst
@@ -239,11 +237,14 @@ def LEdistance(word1,word2):
     Parameters
     ----------
     word1 : STRING
+        The first word to compare.
     word2 : STRING
+        The second word to compare
 
     Returns
     -------
-    distances: LE distance between the two words
+    distances : INTEGER
+        LE distance between the two words
     '''
     distances = np.zeros((len(word1)+1, len(word2)+1))
     for w1 in range(len(word1)+1):
@@ -276,14 +277,20 @@ def cycle_through(a,s):
     Parameters
     ----------
     a : INTEGER
-        Input for the number of affixes to be generated.
+        The number of affixes to generate in each language.
     s : INTEGER
-        INpute for the number of stems to be generated.
+        The number of stems to generate in each language.
 
     Returns
     -------
-    None.
-
+    L1affixes : LIST
+        The list of affixes for L1.
+    L1stems : LIST
+        The list of stems for L1.
+    L2affixes : LIST
+        The list of affixes for L2.
+    L2stems : LIST
+        The list of stems for L2.
     '''
     letters1 = []
     letters2 = []
@@ -294,68 +301,26 @@ def cycle_through(a,s):
     L1stems = []
     L1stems1 = []
     L2stems2 = []
-    dellist = []
-    intersections = []
-    L1affixes1 = permutations(letters1,3,a) # generate 3-character affixes for L1
-    print(L1affixes1)
-    L1affixes2 = permutations(letters1,4,a) # generate 4-character affixes for L1
-    intersections, dellist, L1affixes1 = repeats_check(L1affixes1, L1affixes2)
-    n_inter = len(L1affixes1)
-    while n_inter < a: # generate more segments if there are fewer than the required number due to the repeats_check deletions
-        missing = a - n_inter # calculate the number of segments missing
-        print(f'Still missing {missing} segments')
-        moreL1affixes1 = permutations(letters1,3,missing)
-        L1affixes1 = moreL1affixes1 + L1affixes1
-        intersections, dellist, L1affixes1 = repeats_check(L1affixes1, L1affixes2)
-        n_inter = len(L1affixes1)
-    L1stems1 = permutations(letters1,4,s) # generate 4-character stems for L1
-    L1stems2 = permutations(letters1,5,s) # generate 5-character stems for L1
-    intersections, dellist, L1stems1 = repeats_check(L1stems1, L1stems2)
-    n_inter = len(L1stems1)
-    while n_inter < s: # generate more segments if there are fewer than the required number due to the repeats_check deletions
-        missing = s - n_inter # calculate the number of segments missing
-        print(f'Still missing {missing} segments')
-        moreL1stems1 = permutations(letters1,4,missing)
-        L1stems1 = moreL1stems1 + L1stems1
-        intersections, dellist, L1stems1 = repeats_check(L1stems1, L1stems2)
-        n_inter = len(L1stems1)
-        
+    def cycle_throughs(lst,n,t):
+        segments1 = permutations(lst,n,t)
+        segments2 = permutations(lst,n+1,t)
+        intersections, dellist, segments = repeats_check(segments1, segments2)
+        n_inter = len(segments1)
+        while n_inter < t:
+            missing = t - n_inter
+            print(f'Still missing {missing} segments')
+            moresegments1 = permutations(lst,n,missing)
+            segments1 = moresegments1 + segments1
+            intersections, dellist, segments1 = repeats_check(segments1, segments2)
+            n_inter = len(segments1)
+        return segments1, segments2
+    
+    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,a)
+    L1stems1, L1stems2 = cycle_throughs(letters1,4,s)
+    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,a)
+    L2stems1, L2stems2 = cycle_throughs(letters2,4,s)
     L1affixes = L1affixes1 + L1affixes2
     L1stems = L1stems1 + L1stems2
-    
-    L2affixes = []
-    L2affixes1 = []
-    L2affixes2 = []
-    L2stems = []
-    L2stems1 = []
-    L2stems2 = []
-    dellist = []
-    intersections = []
-    L2affixes1 = permutations(letters2,3,a) # generate 3-character affixes for L1
-    print(L1affixes1)
-    L2affixes2 = permutations(letters2,4,a) # generate 4-character affixes for L1
-    intersections, dellist, L2affixes = repeats_check(L2affixes1, L2affixes2)
-    n_inter = len(L1affixes1)
-    while n_inter < a: # generate more segments if there are fewer than the required number due to the repeats_check deletions
-        missing = a - n_inter # calculate the number of segments missing
-        print(f'Still missing {missing} segments')
-        moreL2affixes1 = permutations(letters2,3,missing)
-        L2affixes1 = moreL2affixes1 + L2affixes1
-        intersections, dellist, L2affixes1 = repeats_check(L2affixes1, L2affixes2)
-        n_inter = len(L2affixes1)
-        
-    L2stems1 = permutations(letters2,4,s) # generate 4-character stems for L2
-    L2stems2 = permutations(letters2,5,s) # generate 5-character stems for L2
-    intersections, dellist, L2stems1 = repeats_check(L2stems1, L2stems2)
-    n_inter = len(L2stems1)
-    while n_inter < s: # generate more segments if there are fewer than the required number due to the repeats_check deletions
-        missing = s - n_inter # calculate the number of segments missing
-        print(f'Still missing {missing} segments')
-        moreL2stems1 = permutations(letters1,4,missing)
-        L2stems1 = moreL2stems1 + L2stems1
-        intersections, dellist, L2stems1 = repeats_check(L2stems1, L2stems2)
-        n_inter = len(L2stems1)
-        
     L2affixes = L2affixes1 + L2affixes2
     L2stems = L2stems1 + L2stems2
     
