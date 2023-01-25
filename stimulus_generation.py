@@ -69,8 +69,8 @@ def permutations(lst,l,n):
     '''
     segments = []
     count = 0
-    for i in lst: # break function if requested length is outside defined parameters
-        if l < 3 or l > 6:
+    for i in lst:
+        if l < 3 or l > 6: # break function if requested length is outside defined parameters
             print("Problem: invalid parameters. l must be between 3 and 6.")
             break
         else:
@@ -87,7 +87,7 @@ def permutations(lst,l,n):
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
-                    if a != i and b != i and c != i and a != b and a != c and b != c and i+a+b+c not in segments: # making sure there are only different letters in the segment
+                    if a !=b and b != c and c != i and i != a and i+a+b+c not in segments: # making sure there are only different letters in the segment
                         segments += [i + a + b + c]
                         count += 1
                     else:
@@ -97,7 +97,7 @@ def permutations(lst,l,n):
                     b = random.choice(lst)
                     c = random.choice(lst)
                     d = random.choice(lst)
-                    if a != b and b != c and c != d and d != i and i != a and a != c and a != d and b != i and b != d and c != i and i+a+b+c+d not in segments: # making sure there are only different letters in the segment
+                    if a != b and b != c and c != d and d != i and i != a and i+a+b+c+d not in segments: # making sure there are only different letters in the segment
                         segments += [i + a + b + c + d]
                         count += 1
                     else:
@@ -108,7 +108,7 @@ def permutations(lst,l,n):
                     c = random.choice(lst)
                     d = random.choice(lst)
                     e = random.choice(lst)
-                    if a != b and b != c and c != d and d != e and e != i and i != a and a != c and a != d and a != e and b != i and b != e and b != d and c != i and c != e and d != i and i+a+b+c+d+e not in segments: # making sure there are only different letters in the segment
+                    if a != b and b != c and c != d and d != e and e != i and i != a and i+a+b+c+d+e not in segments: # making sure there are only different letters in the segment
                         segments += [i + a + b + c + d + e]
                         count += 1
                     else:
