@@ -232,7 +232,7 @@ def repeats_check(lst1, lst2):
     return intersections, dellist, lst1_cleaned
 
 import numpy as np
-def LEdistance(lst1,lst2):
+def LEdistance(lst1,lst2,t):
     def LED(word1,word2):
         '''
         Calculates the Levenshtein distance between 2 given words.
@@ -273,21 +273,18 @@ def LEdistance(lst1,lst2):
                         distances[w1][w2] = c + 1
         return distances[len(word1)][len(word2)]
     dellist = []
-    if len(lst1) != len(lst2):
-        print("Problem: lst1 is of a different length than lst2.")
     l = len(lst1) - 1
-    j = 0
     i = 0
     for i in range(l):
         j = 0
         while j <= l:
             distance = LED(lst1[i],lst2[j])
-            print(lst1[i], lst2[j])
-            print(distance)
-            if distance <= 2:
-                dellist.append(lst1[i])
+            #print(lst1[i], lst2[j])
+            #print(distance)
+            if distance <= t:
+                dellist.append(lst2[i])
             j += 1
-    print(f'Words to delete: {dellist}')
+    #print(f'Words to delete: {dellist}')
     return dellist
 
 def cycle_through(a,s):
@@ -313,7 +310,7 @@ def cycle_through(a,s):
         The list of stems for L2.
     '''
     letters1, letters2 = language_characters()
-    def cycle_throughs(lst,n,t):
+    def cycle_throughs(lst,n1,n2,t):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
 
@@ -321,8 +318,10 @@ def cycle_through(a,s):
         ----------
         lst : LIST
             List of the characters to assemble into segments.
-        n : INTEGER
-            Lower length of the segments to generate. For example, if you want 3- & 4- letter segments, enter '3'.
+        n1 : INTEGER
+            Lower length of the segments to generate.
+        n2 : INTEGER
+            Upper length of the segments to generate.
         t : INTEGER
             Number of segments to generate.
 
@@ -333,38 +332,70 @@ def cycle_through(a,s):
         segments2 : LIST
             List of the second set of segments.
         '''
-        segments1 = permutations(lst,n,t) # generate segments of a certain length
-        segments2 = permutations(lst,n+1,t) # generate segments 1 character longer than in segments1
+        segments1 = permutations(lst,n1,(t/2)) # generate segments of a certain length
+        segments2 = permutations(lst,n2,(t/2)) # generate segments 1 character longer than in segments1
         intersections, dellist, segments = repeats_check(segments1, segments2) # find intersections in the segments lists
         n_inter = len(segments1)
-        while n_inter < t: # while segments1 has deletions due to intersections with segments2
-            missing = t - n_inter # calculate how many more to generate
+        while n_inter < (t/2): # while segments1 has deletions due to intersections with segments2
+            missing = (t/2) - n_inter # calculate how many more to generate
             print(f'Still missing {missing} segments')
-            moresegments1 = permutations(lst,n,missing)
+            moresegments1 = permutations(lst,n1,missing)
             segments1 = moresegments1 + segments1
             intersections, dellist, segments1 = repeats_check(segments1, segments2) # calculate intersections between new segments1 and segments2
             n_inter = len(segments1)
         return segments1, segments2
     
     # generate affix & stem lists for both languages:
-    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,a)
-    L1stems1, L1stems2 = cycle_throughs(letters1,4,s)
-    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,a)
-    L2stems1, L2stems2 = cycle_throughs(letters2,4,s)
+    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,a)
+    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,s)
+    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,4,a)
+    L2stems1, L2stems2 = cycle_throughs(letters2,4,5,s)
     L1affixes = L1affixes1 + L1affixes2
     L1stems = L1stems1 + L1stems2
     L2affixes = L2affixes1 + L2affixes2
     L2stems = L2stems1 + L2stems2
     
-    if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0:
+    if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0 and len(L1affixes) == len(L2affixes) and len(L1stems) == len(L2stems):
         print('Finished generating stimuli sets.')
-    #print(f'L1 affixes: {L1affixes}')
-    #print(f'L1 stems: {L1stems}')
-    #print(f'L2 affixes: {L2affixes}')
-    #print(f'L2 stems: {L2stems}')
+    else:
+        print('Problem generating stimuli sets.')
+    
+    dist_input = int(input("Desired LE distance threshold: "))
+    L1dellist = []
+    L2dellist = []
+    L1dellist = LEdistance(L1affixes, L1stems, dist_input)
+    L2dellist = LEdistance(L2affixes, L2stems, dist_input)
+    L1dellist = [*set(L1dellist)]
+    L2dellist = [*set(L2dellist)]
+    print(L1dellist)
+    print(L2dellist)
+    L1stems = [x for x in L1stems if x not in L1dellist]
+    L2stems = [x for x in L2stems if x not in L2dellist]
+    print(L1stems)
+    print(L2stems)
+    while len(L1stems) < s:
+        L1stems1a, L1stems2a = cycle_throughs(letters1,5,5,len(L1dellist))
+        L1stems = L1stems1 + L1stems1a + L1stems2a
+        L1dellist = LEdistance(L1affixes, L1stems, dist_input)
+        L1dellist = [*set(L1dellist)]
+        L1stems = [x for x in L1stems if x not in L1dellist]
+    while len(L2stems) < s:
+        L2stems1a, L2stems2a = cycle_throughs(letters2,5,5,len(L2dellist))
+        L2stems = L2stems1 + L2stems1a + L2stems2a
+        L2dellist = LEdistance(L2affixes, L2stems, dist_input)
+        L2dellist = [*set(L2dellist)]
+        L2stems = [x for x in L2stems if x not in L2dellist]
+    print(f'L1 affixes: {L1affixes}')
+    print(len(L1affixes))
+    print(f'L1 stems: {L1stems}')
+    print(len(L1stems))
+    print(f'L2 affixes: {L2affixes}')
+    print(len(L2affixes))
+    print(f'L2 stems: {L2stems}')
+    print(len(L2stems))
     return L1affixes, L1stems, L2affixes, L2stems
 
-#L1affixes, L1stems, L2affixes, L2stems = cycle_through(100,200)
-example1 = ["wolf", "logs", "hate", "baby", "bust"]
-example2 = ["heller", "loggie", "hatsie", "drugsy", "wolfer"]
-LEdistance(example1,example2)
+L1affixes, L1stems, L2affixes, L2stems = cycle_through(100,200)
+#example1 = ["wolf", "logs", "hate", "baby", "bust"]
+#example2 = ["heller", "loggie", "hatsie", "drugsy", "wolfer"]
+#LEdistance(L1affixes)
