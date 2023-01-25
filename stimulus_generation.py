@@ -292,15 +292,7 @@ def cycle_through(a,s):
     L2stems : LIST
         The list of stems for L2.
     '''
-    letters1 = []
-    letters2 = []
     letters1, letters2 = language_characters()
-    L1affixes = []
-    L1affixes1 = []
-    L1affixes2 = []
-    L1stems = []
-    L1stems1 = []
-    L2stems2 = []
     def cycle_throughs(lst,n,t):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
@@ -321,19 +313,20 @@ def cycle_through(a,s):
         segments2 : LIST
             List of the second set of segments.
         '''
-        segments1 = permutations(lst,n,t)
-        segments2 = permutations(lst,n+1,t)
-        intersections, dellist, segments = repeats_check(segments1, segments2)
+        segments1 = permutations(lst,n,t) # generate segments of a certain length
+        segments2 = permutations(lst,n+1,t) # generate segments 1 character longer than in segments1
+        intersections, dellist, segments = repeats_check(segments1, segments2) # find intersections in the segments lists
         n_inter = len(segments1)
-        while n_inter < t:
-            missing = t - n_inter
+        while n_inter < t: # while segments1 has deletions due to intersections with segments2
+            missing = t - n_inter # calculate how many more to generate
             print(f'Still missing {missing} segments')
             moresegments1 = permutations(lst,n,missing)
             segments1 = moresegments1 + segments1
-            intersections, dellist, segments1 = repeats_check(segments1, segments2)
+            intersections, dellist, segments1 = repeats_check(segments1, segments2) # calculate intersections between new segments1 and segments2
             n_inter = len(segments1)
         return segments1, segments2
     
+    # generate affix & stem lists for both languages:
     L1affixes1, L1affixes2 = cycle_throughs(letters1,3,a)
     L1stems1, L1stems2 = cycle_throughs(letters1,4,s)
     L2affixes1, L2affixes2 = cycle_throughs(letters2,3,a)
