@@ -53,11 +53,19 @@ def repeats_check2(lst1, lst2):
 
     Returns
     -------
-    List of intersecting segments from list 1 called instersections.
-    List of items in list 1 that are intersecting with list 2 called dellist.
-    List of items from list 1 that don't intersect with list 2 called lst1_cleaned.
-
+    intersections : LIST
+        List of intersecting segments from list 1.
+    dellist : LIST
+        List of items in list 1 that are intersecting with list 2.
+    lst1_cleaned : LIST
+        List of items from list 1 that don't intersect with list 2.
     '''
+    if len(lst1) == 0: # tests to see whether the lists given to the function contain something
+        print('Careful, lst1 is empty!')
+    if len(lst2) == 0:
+        print('Careful, lst2 is empty!')
+    if len(lst1) == 0 or len(lst2) == 0:
+        return
     length1 = len(lst1[0])
     length2 = len(lst2[0])    
     lst11 = []   
@@ -81,7 +89,6 @@ def repeats_check2(lst1, lst2):
         -------
         lst3 : LIST
             A list with the segments that are in both lists.
-
         '''
         incommon_lst = [value for value in lst1 if value in lst2]
         return incommon_lst
@@ -110,11 +117,12 @@ def repeats_check2(lst1, lst2):
             n = 0
             continue
     intersections = [''.join(i) for i in intersections]
+    dellist = []
     if intersections == []:
-        print('There are no segments in common in these two lists.')
+        #print('There are no segments in common in these two lists.')
         lst1_cleaned = lst1.copy()
     else:
-        print(f'The common segments are: {intersections}')
+        #print(f'The common segments are: {intersections}')
         test_lst = []
         for i in lst11:
             n = 0
@@ -133,10 +141,13 @@ def repeats_check2(lst1, lst2):
                 dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
             else:
                 continue
-        print(f'The words those segments belong to are: {dellist}')
+        #if len(dellist) != 0:
+            #print(f'The words those segments belong to are: {dellist}')
         lst1_cleaned = []
         lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
-    print(f'List 1 without the repeated segments is: {lst1_cleaned}')
+    #print('List 1 without the repeated segments is: {lst1_cleaned}')
+    if len(lst1_cleaned) != 0:
+        print('Finished cleaning list.')
     return intersections, dellist, lst1_cleaned
     
 example1 = ["wolf", "logs", "hate", "baby", "bust"]
