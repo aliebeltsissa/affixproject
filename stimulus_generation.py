@@ -310,7 +310,7 @@ def cycle_through(a,s):
         The list of stems for L2.
     '''
     letters1, letters2 = language_characters()
-    def cycle_throughs(lst,n1,n2,t):
+    def cycle_throughs(lst,n1,n2,t1,t2):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
 
@@ -332,12 +332,20 @@ def cycle_through(a,s):
         segments2 : LIST
             List of the second set of segments.
         '''
-        segments1 = permutations(lst,n1,(t/2)) # generate segments of a certain length
-        segments2 = permutations(lst,n2,(t/2)) # generate segments 1 character longer than in segments1
+        segments1 = []
+        segments2 = []
+        if t1 != 0:
+            segments1 = permutations(lst,n1,t1) # generate segments of a certain length
+        else:
+            print('Careful, t1 = 0')
+        if t2 != 0:
+            segments2 = permutations(lst,n2,t2) # generate segments 1 character longer than in segments1
+        else:
+            print('Careful, t2 = 0')
         intersections, dellist, segments = repeats_check(segments1, segments2) # find intersections in the segments lists
         n_inter = len(segments1)
-        while n_inter < (t/2): # while segments1 has deletions due to intersections with segments2
-            missing = (t/2) - n_inter # calculate how many more to generate
+        while n_inter < t1: # while segments1 has deletions due to intersections with segments2
+            missing = t1 - n_inter # calculate how many more to generate
             print(f'Still missing {missing} segments')
             moresegments1 = permutations(lst,n1,missing)
             segments1 = moresegments1 + segments1
@@ -346,10 +354,10 @@ def cycle_through(a,s):
         return segments1, segments2
     
     # generate affix & stem lists for both languages:
-    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,a)
-    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,s)
-    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,4,a)
-    L2stems1, L2stems2 = cycle_throughs(letters2,4,5,s)
+    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,(a/2),(a/2))
+    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,(s/2),(s/2))
+    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,4,(a/2),(a/2))
+    L2stems1, L2stems2 = cycle_throughs(letters2,4,5,(s/2),(s/2))
     L1affixes = L1affixes1 + L1affixes2
     L1stems = L1stems1 + L1stems2
     L2affixes = L2affixes1 + L2affixes2
@@ -367,31 +375,75 @@ def cycle_through(a,s):
     L2dellist = LEdistance(L2affixes, L2stems, dist_input)
     L1dellist = [*set(L1dellist)]
     L2dellist = [*set(L2dellist)]
-    print(L1dellist)
-    print(L2dellist)
     L1stems = [x for x in L1stems if x not in L1dellist]
     L2stems = [x for x in L2stems if x not in L2dellist]
-    print(L1stems)
-    print(L2stems)
+    n1 = n2 = int(len(L1dellist)/2)
     while len(L1stems) < s:
-        L1stems1a, L1stems2a = cycle_throughs(letters1,5,5,len(L1dellist))
-        L1stems = L1stems1 + L1stems1a + L1stems2a
+        if n1 != 0 and n2 != 0:
+            L1stems1a, L1stems2a = cycle_throughs(letters1,4,5,n1,n2)
+            L1stems = L1stems1 + L1stems1a + L1stems2a
+        elif n1 == 0:
+            L1stems1 = permutations(letters1,4,n1)
+            L1stems = L1stems1 + L1stems2
+        elif n2 == 0:
+            L1stems2 = permutations(letters1,5,n2)
+            L1stems = L1stems1 + L1stems2
         L1dellist = LEdistance(L1affixes, L1stems, dist_input)
         L1dellist = [*set(L1dellist)]
+        dellength = len(L1dellist)
+        print(f'4-character L1 segments to generate: {n1}')
+        print(f'5-character L1 segments to generate: {n2}')
+        print(f'Still have {dellength} segments to find')
         L1stems = [x for x in L1stems if x not in L1dellist]
+        L1stems1 = [x for x in L1stems if len(x) == 4]
+        L1stems2 = [x for x in L1stems if len(x) == 5]
+        n1 = s - len(L1stems1)
+        n2 = s - len(L1stems1)
+        print(len(L1stems))
+    print('Finished generating L1 set')
+    
+    n1 = n2 = len(L2dellist)
     while len(L2stems) < s:
-        L2stems1a, L2stems2a = cycle_throughs(letters2,5,5,len(L2dellist))
-        L2stems = L2stems1 + L2stems1a + L2stems2a
+        if n1 != 0 and n2 != 0:
+            L2stems1a, L2stems2a = cycle_throughs(letters2,4,5,n1,n2)
+            L2stems = L2stems1 + L2stems1a + L2stems2a
+        elif n1 == 0:
+            L2stems1 = permutations(letters2,4,n1)
+            L2stems = L2stems1 + L2stems2
+        elif n2 == 0:
+            L2stems2 = permutations(letters2,5,n2)
+            L2stems = L2stems1 + L2stems2
         L2dellist = LEdistance(L2affixes, L2stems, dist_input)
         L2dellist = [*set(L2dellist)]
+        n1 = 0
+        n2 = 0
+        for i in range(len(L2dellist)):
+            if len(L2dellist[i]) == 4:
+                n1 += 1
+            elif len(L2dellist[i]) == 5:
+                n2 += 1
+        L2dellist = LEdistance(L2affixes, L2stems, dist_input)
+        L2dellist = [*set(L2dellist)]
+        dellength = len(L2dellist)
+        print(f'4-character L2 segments to generate: {n1}')
+        print(f'5-character L2 segments to generate: {n2}')
+        print(f'Still have {dellength} segments to find')
         L2stems = [x for x in L2stems if x not in L2dellist]
+        L2stems1 = [x for x in L2stems if len(x) == 4]
+        L2stems2 = [x for x in L2stems if len(x) == 5]
+        n1 = s - len(L2stems1)
+        n2 = s - len(L2stems1)
+        print(len(L2stems))
+    print('Finished generating L2 set')
+        
     print(f'L1 affixes: {L1affixes}')
-    print(len(L1affixes))
     print(f'L1 stems: {L1stems}')
-    print(len(L1stems))
     print(f'L2 affixes: {L2affixes}')
-    print(len(L2affixes))
     print(f'L2 stems: {L2stems}')
+    
+    print(len(L1affixes))
+    print(len(L1stems))
+    print(len(L2affixes))
     print(len(L2stems))
     return L1affixes, L1stems, L2affixes, L2stems
 
