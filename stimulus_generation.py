@@ -70,12 +70,20 @@ def permutations(lst,l,n):
     segments = []
     count = 0
     for i in lst:
-        if l < 3 or l > 6: # break function if requested length is outside defined parameters
+        if l < 2 or l > 6: # break function if requested length is outside defined parameters
             print("Problem: invalid parameters. l must be between 3 and 6.")
             break
         else:
             while count < n:
-                if l == 3: # randomly pick 3 characters to assemble into a segment
+                if l ==2:
+                    a = random.choice(lst)
+                    b = random.choice(lst)
+                    if a != b and a + b not in segments:
+                        segments += [a + b]
+                        count += 1
+                    else:
+                        continue
+                elif l == 3: # randomly pick 3 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -84,7 +92,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 4: # randomly pick 4 characters to assemble into a segment
+                elif l == 4: # randomly pick 4 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -94,7 +102,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 5: # randomly pick 5 characters to assemble into a segment
+                elif l == 5: # randomly pick 5 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -105,7 +113,7 @@ def permutations(lst,l,n):
                         count += 1
                     else:
                         continue
-                if l == 6: # randomly pick 6 characters to assemble into a segment
+                elif l == 6: # randomly pick 6 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
@@ -232,7 +240,7 @@ def repeats_check(lst1, lst2):
     return intersections, dellist, lst1_cleaned
 
 import numpy as np
-def LEdistance(lst1,lst2,t):
+def LEdistance(lst1,lst2,dist_input):
     def LED(word1,word2):
         '''
         Calculates the Levenshtein distance between 2 given words.
@@ -281,13 +289,13 @@ def LEdistance(lst1,lst2,t):
             distance = LED(lst1[i],lst2[j])
             #print(lst1[i], lst2[j])
             #print(distance)
-            if distance <= t:
+            if distance <= dist_input:
                 dellist.append(lst2[i])
             j += 1
     #print(f'Words to delete: {dellist}')
     return dellist
 
-def cycle_through(a,s):
+def cycle_through(a,s,w):
     '''
     Cycles through the permutations and repeats_check function to obtain lists of stems and affixes in each language without repeats.
 
@@ -297,6 +305,8 @@ def cycle_through(a,s):
         The number of affixes to generate in each language.
     s : INTEGER
         The number of stems to generate in each language.
+    w : INTEGER
+        The number of words to generate in each language.
 
     Returns
     -------
@@ -308,6 +318,10 @@ def cycle_through(a,s):
         The list of affixes for L2.
     L2stems : LIST
         The list of stems for L2.
+    L1words : LIST
+        The list of words for L1.
+    L2words : LIST
+        The list of words for L2.
     '''
     letters1, letters2 = language_characters()
     def cycle_throughs(lst,n1,n2,t1,t2):
@@ -374,40 +388,143 @@ def cycle_through(a,s):
     L1dellist = [*set(L1dellist)]
     L2dellist = [*set(L2dellist)]
     L1stems = [x for x in L1stems if x not in L1dellist]
-    print(len(L1stems))
     L1stems1 = [x for x in L1stems if len(x) == 4]
-    print(len(L1stems1))
     L1stems2 = [x for x in L1stems if len(x) == 5]
-    print(len(L1stems2))
     L2stems = [x for x in L2stems if x not in L2dellist]
     L2stems1 = [x for x in L2stems if len(x) == 4]
     L2stems2 = [x for x in L2stems if len(x) == 5]
     
+    def LEDcycle(lst1,lst2,lst3,lst4,n):
+        '''
+        
+
+        Parameters
+        ----------
+        lang : INTEGER
+            L1 (1) or L2 (2).
+        letters : letter bank
+        lst1 : TYPE
+            DESCRIPTION.
+        lst2 : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+        '''
+        for i in lst1:
+            for j in lst2:
+                count = 0
+                words = []
+                while count < n:
+                    a = random.choice(lst1)
+                    b = random.choice(lst2)
+                    if a != b and a + b not in words:
+                        words += [a + b]
+                        count += 1
+        
+        stems1 = [x for x in stems if len(x) == 4]
+        stems2 = [x for x in stems if len(x) == 5]
+        n1 = (s/2) - len(stems1)
+        n2 = (s/2) - len(stems2)
+        while len(stems) < s:
+            if n1 != 0 and n2 != 0:
+                stems1a, stems2a = cycle_throughs(letters1,4,5,n1,n2)
+                stems_int = stems1 + stems2 + stems1a + stems2a
+            elif n1 == 0:
+                print('In n1 == 0 branch')
+                stems2a = permutations(letters1,5,n2)
+                stems_int = stems1 + stems2 + stems2a
+            elif n2 == 0:
+                print('In n2 == 0 branch')
+                stems1a = permutations(letters1,4,n1)
+                print(stems1a)
+                stems_int = stems1 + stems1a + stems2
+                print(len(stems_int))
+            dellist = LEdistance(affixes, stems_int, dist_input)
+            dellist = [set(dellist)]
+            print(dellist)
+            stems = [x for x in stems if x not in dellist]
+            stems1 = [x for x in stems if len(x) == 4]
+            stems2 = [x for x in stems if len(x) == 5]
+            print(stems1)
+            n1 = (s/2) - len(stems1)
+            n2 = (s/2) - len(stems2)
+            print(f'4-character stems to generate: {n1}')
+            print(f'5-character stems to generate: {n2}')
+            print(len(L1stems))
+        print('Finished generating L1 set')
+        
+        stems1 = [x for x in stems if len(x) == 4]
+        stems2 = [x for x in stems if len(x) == 5]
+        n1 = (s/2) - len(stems1)
+        n2 = (s/2) - len(stems2)
+        while len(stems) < s:
+            if n1 != 0 and n2 != 0:
+                stems1a, stems2a = cycle_throughs(letters1,4,5,n1,n2)
+                stems_int = stems1 + stems2 + stems1a + stems2a
+            elif n1 == 0:
+                print('In n1 == 0 branch')
+                stems2a = permutations(letters1,5,n2)
+                stems_int = stems1 + stems2 + stems2a
+            elif n2 == 0:
+                print('In n2 == 0 branch')
+                stems1a = permutations(letters1,4,n1)
+                print(stems1a)
+                stems_int = stems1 + stems1a + stems2
+                print(len(stems_int))
+            dellist = LEdistance(affixes, stems_int, dist_input)
+            dellist = [set(dellist)]
+            print(dellist)
+            stems = [x for x in stems if x not in dellist]
+            stems1 = [x for x in stems if len(x) == 4]
+            stems2 = [x for x in stems if len(x) == 5]
+            print(stems1)
+            n1 = (s/2) - len(stems1)
+            n2 = (s/2) - len(stems2)
+            print(f'4-character stems to generate: {n1}')
+            print(f'5-character stems to generate: {n2}')
+            print(len(L1stems))
+        print('Finished generating L1 set')
+        
+        print(f'L1 affixes: {L1affixes}')
+        print(f'L1 stems: {L1stems}')
+        print(f'L2 affixes: {L2affixes}')
+        print(f'L2 stems: {L2stems}')
+        
+        print(len(L1affixes))
+        print(len(L1stems))
+        print(len(L2affixes))
+        print(len(L2stems))
+        return L1affixes, L1stems, L2affixes, L2stems
+        
     n1 = (s/2) - len(L1stems1)
     n2 = (s/2) - len(L1stems2)
-    print(f'n1: {n1}')
-    print(f'n2: {n2}')
     while len(L1stems) < s:
         if n1 != 0 and n2 != 0:
             L1stems1a, L1stems2a = cycle_throughs(letters1,4,5,n1,n2)
-            L1stems = L1stems1 + L1stems2 + L1stems1a + L1stems2a
+            L1stems_int = L1stems1 + L1stems2 + L1stems1a + L1stems2a
         elif n1 == 0:
+            print('In n1 == 0 branch')
             L1stems2a = permutations(letters1,5,n2)
-            L1stems = L1stems1 + L1stems2 + L1stems2a
+            L1stems_int = L1stems1 + L1stems2 + L1stems2a
         elif n2 == 0:
+            print('In n2 == 0 branch')
             L1stems1a = permutations(letters1,4,n1)
-            L1stems = L1stems1 + L1stems1a + L1stems2
-        L1dellist = LEdistance(L1affixes, L1stems, dist_input)
-        L1dellist = [*set(L1dellist)]
-        dellength = len(L1dellist)
+            print(L1stems1a)
+            L1stems_int = L1stems1 + L1stems1a + L1stems2
+            print(len(L1stems_int))
+        L1dellist = LEdistance(L1affixes, L1stems_int, dist_input)
+        L1dellist = [set(L1dellist)]
+        print(L1dellist)
         L1stems = [x for x in L1stems if x not in L1dellist]
         L1stems1 = [x for x in L1stems if len(x) == 4]
         L1stems2 = [x for x in L1stems if len(x) == 5]
+        print(L1stems1)
         n1 = (s/2) - len(L1stems1)
         n2 = (s/2) - len(L1stems2)
         print(f'4-character L1 stems to generate: {n1}')
         print(f'5-character L1 stems to generate: {n2}')
-        print(f'Still have {dellength} segments to find')
         print(len(L1stems))
     print('Finished generating L1 set')
     
@@ -425,7 +542,6 @@ def cycle_through(a,s):
     #        L2stems = L2stems1 + L2stems1a + L2stems2
     #    L2dellist = LEdistance(L2affixes, L2stems, dist_input)
     #    L2dellist = [*set(L2dellist)]
-    #    dellength = len(L2dellist)
     #    L2stems = [x for x in L2stems if x not in L2dellist]
     #    L2stems1 = [x for x in L2stems if len(x) == 4]
     #    L2stems2 = [x for x in L2stems if len(x) == 5]
@@ -433,7 +549,6 @@ def cycle_through(a,s):
     #    n2 = (s/2) - len(L2stems2)
     #    print(f'4-character L2 stems to generate: {n1}')
     #    print(f'5-character L2 stems to generate: {n2}')
-    #    print(f'Still have {dellength} segments to find')
     #    print(len(L2stems))
     #print('Finished generating L2 set')
         
