@@ -398,14 +398,13 @@ def cycle_through(a,s,w):
             for i in affixes:
                 for j in stems:
                     while missing > 0:
-                        print(missing)
                         s = random.choice(stems)
                         a = random.choice(affixes)
-                        if s != a and s[-1] != a[0] and a + a not in words:
+                        if s != a and s[-1] != a[0] and s + a not in words:
                             words += [s + a]
+                            missing -= 1
                             parts = [s, a]
                             word = s + a
-                            missing -= 1
                             words_dict[word] = parts
             if len(words) == n:
                 print(f'Finished generating {l} word set. Testing LE distance...')
@@ -423,12 +422,12 @@ def cycle_through(a,s,w):
                             dellist.append(words[i])
                     j += 1
             dellist = [*set(dellist)]
-            print(f'Words to delete: {dellist}')
+            #print(f'Words to delete: {dellist}')
             missing = len(dellist)
             print(f'Still missing {missing} word(s).')
             for w in dellist:
-                words.remove(w)
                 del words_dict[w]
+            words = [x for x in words if x in words_dict]
             reps += 1
         if len(words) == n:
             print('Finished testing word set.')
