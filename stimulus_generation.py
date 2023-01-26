@@ -240,46 +240,47 @@ def repeats_check(lst1, lst2):
     return intersections, dellist, lst1_cleaned
 
 import numpy as np
-def LEdistance(lst1,lst2,dist_input):
-    def LED(word1,word2):
-        '''
-        Calculates the Levenshtein distance between 2 given words.
+def LED(word1,word2):
+    '''
+    Calculates the Levenshtein distance between 2 given words.
+    
+    Parameters
+    ----------
+    word1 : STRING
+        The first word to compare.
+        word2 : STRING
+        The second word to compare
         
-        Parameters
-        ----------
-        word1 : STRING
-            The first word to compare.
-            word2 : STRING
-            The second word to compare
-            
-        Returns
-        -------
-        distances : INTEGER
-        LE distance between the two words
-        '''
-        distances = np.zeros((len(word1)+1, len(word2)+1))
-        for w1 in range(len(word1)+1):
-            distances[w1][0] = w1
-        for w2 in range(len(word2)+1):
-            distances[0][w2] = w2
-        a = 0
-        b = 0
-        c = 0
-        for w1 in range(1, len(word1)+1):
-            for w2 in range(1, len(word2)+1):
-                if (word1[w1-1] == word2[w2-1]):
-                    distances[w1][w2] = distances[w1-1][w2-1]
+    Returns
+    -------
+    distances : INTEGER
+    LE distance between the two words
+    '''
+    distances = np.zeros((len(word1)+1, len(word2)+1))
+    for w1 in range(len(word1)+1):
+        distances[w1][0] = w1
+    for w2 in range(len(word2)+1):
+        distances[0][w2] = w2
+    a = 0
+    b = 0
+    c = 0
+    for w1 in range(1, len(word1)+1):
+        for w2 in range(1, len(word2)+1):
+            if (word1[w1-1] == word2[w2-1]):
+                distances[w1][w2] = distances[w1-1][w2-1]
+            else:
+                a = distances[w1][w2-1]
+                b = distances[w1-1][w2]
+                c = distances[w1-1][w2-1]
+                if a <= b and a <= c:
+                    distances[w1][w2] = a + 1
+                elif b <= a and b <= c:
+                    distances[w1][w2] = b + 1
                 else:
-                    a = distances[w1][w2-1]
-                    b = distances[w1-1][w2]
-                    c = distances[w1-1][w2-1]
-                    if a <= b and a <= c:
-                        distances[w1][w2] = a + 1
-                    elif b <= a and b <= c:
-                        distances[w1][w2] = b + 1
-                    else:
-                        distances[w1][w2] = c + 1
-        return distances[len(word1)][len(word2)]
+                    distances[w1][w2] = c + 1
+    return distances[len(word1)][len(word2)]
+
+def LEdistance(lst1,lst2,dist_input):
     dellist = []
     l = len(lst1) - 1
     i = 0
@@ -367,6 +368,72 @@ def cycle_through(a,s,w):
             n_inter = len(segments1)
         return segments1, segments2
     
+    def wordcycle(affixes,stems,l,n,dist):
+        '''
+        
+
+        Parameters
+        ----------
+        lst1 : TYPE
+            DESCRIPTION.
+        lst2 : TYPE
+            DESCRIPTION.
+        l : STRING
+            Language 1 or 2
+        n : INTEGER
+            Number of words to generate
+        dist_input : INTEGER
+            The desired LE distance threshold.
+
+        Returns
+        -------
+        words : LIST
+            Generated words list
+        '''
+        words = []
+        missing = n
+        reps = 0
+        words_dict = {}
+        while len(words) < n:
+            for i in affixes:
+                for j in stems:
+                    while missing > 0:
+                        print(missing)
+                        s = random.choice(stems)
+                        a = random.choice(affixes)
+                        if s != a and s[-1] != a[0] and a + a not in words:
+                            words += [s + a]
+                            parts = [s, a]
+                            word = s + a
+                            missing -= 1
+                            words_dict[word] = parts
+            if len(words) == n:
+                print(f'Finished generating {l} word set. Testing LE distance...')
+            else:
+                print(f'Problem generating {l} word set.')
+                break
+            
+            dellist = []
+            for i in range(len(words)):
+                for j in range(len(words)):
+                    if i != j:
+                        distance = int(LED(words[i], words[j]))
+                        print(words[i], words[j], distance)
+                        if distance < dist:
+                            dellist.append(words[i])
+                    j += 1
+            dellist = [*set(dellist)]
+            print(f'Words to delete: {dellist}')
+            missing = len(dellist)
+            print(f'Still missing {missing} word(s).')
+            for w in dellist:
+                words.remove(w)
+                del words_dict[w]
+            reps += 1
+        if len(words) == n:
+            print('Finished testing word set.')
+        return words, reps, words_dict
+        
     # generate affix & stem lists for both languages:
     L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,(a/2),(a/2))
     L1stems1, L1stems2 = cycle_throughs(letters1,4,5,(s/2),(s/2))
@@ -376,194 +443,19 @@ def cycle_through(a,s,w):
     L1stems = L1stems1 + L1stems2
     L2affixes = L2affixes1 + L2affixes2
     L2stems = L2stems1 + L2stems2
-    
     if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0 and len(L1affixes) == len(L2affixes) and len(L1stems) == len(L2stems):
         print('Finished generating stimuli sets.')
     else:
         print('Problem generating stimuli sets.')
     
-    dist_input = int(input("Desired LE distance threshold: "))
-    L1dellist = LEdistance(L1affixes, L1stems, dist_input)
-    L2dellist = LEdistance(L2affixes, L2stems, dist_input)
-    L1dellist = [*set(L1dellist)]
-    L2dellist = [*set(L2dellist)]
-    L1stems = [x for x in L1stems if x not in L1dellist]
-    L1stems1 = [x for x in L1stems if len(x) == 4]
-    L1stems2 = [x for x in L1stems if len(x) == 5]
-    L2stems = [x for x in L2stems if x not in L2dellist]
-    L2stems1 = [x for x in L2stems if len(x) == 4]
-    L2stems2 = [x for x in L2stems if len(x) == 5]
-    
-    def LEDcycle(lst1,lst2,lst3,lst4,n):
-        '''
-        
+    dist_input = int(input("Desired LE distance threshold for words: "))
+    L1words, L1reps, L1dict = wordcycle(L1affixes,L1stems,'first',w,dist_input)
+    L2words, L2reps, L2dict = wordcycle(L2affixes,L2stems,'second',w,dist_input)
+    print(f'L1 reps: {L1reps}')
+    print(f'L2 reps: {L2reps}')
+    if len(L1words) == w and len(L2words) == w:
+        print('Correctly generated complete stimuli set.')
+    return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict
 
-        Parameters
-        ----------
-        lang : INTEGER
-            L1 (1) or L2 (2).
-        letters : letter bank
-        lst1 : TYPE
-            DESCRIPTION.
-        lst2 : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        None.
-        '''
-        for i in lst1:
-            for j in lst2:
-                count = 0
-                words = []
-                while count < n:
-                    a = random.choice(lst1)
-                    b = random.choice(lst2)
-                    if a != b and a + b not in words:
-                        words += [a + b]
-                        count += 1
-        
-        stems1 = [x for x in stems if len(x) == 4]
-        stems2 = [x for x in stems if len(x) == 5]
-        n1 = (s/2) - len(stems1)
-        n2 = (s/2) - len(stems2)
-        while len(stems) < s:
-            if n1 != 0 and n2 != 0:
-                stems1a, stems2a = cycle_throughs(letters1,4,5,n1,n2)
-                stems_int = stems1 + stems2 + stems1a + stems2a
-            elif n1 == 0:
-                print('In n1 == 0 branch')
-                stems2a = permutations(letters1,5,n2)
-                stems_int = stems1 + stems2 + stems2a
-            elif n2 == 0:
-                print('In n2 == 0 branch')
-                stems1a = permutations(letters1,4,n1)
-                print(stems1a)
-                stems_int = stems1 + stems1a + stems2
-                print(len(stems_int))
-            dellist = LEdistance(affixes, stems_int, dist_input)
-            dellist = [set(dellist)]
-            print(dellist)
-            stems = [x for x in stems if x not in dellist]
-            stems1 = [x for x in stems if len(x) == 4]
-            stems2 = [x for x in stems if len(x) == 5]
-            print(stems1)
-            n1 = (s/2) - len(stems1)
-            n2 = (s/2) - len(stems2)
-            print(f'4-character stems to generate: {n1}')
-            print(f'5-character stems to generate: {n2}')
-            print(len(L1stems))
-        print('Finished generating L1 set')
-        
-        stems1 = [x for x in stems if len(x) == 4]
-        stems2 = [x for x in stems if len(x) == 5]
-        n1 = (s/2) - len(stems1)
-        n2 = (s/2) - len(stems2)
-        while len(stems) < s:
-            if n1 != 0 and n2 != 0:
-                stems1a, stems2a = cycle_throughs(letters1,4,5,n1,n2)
-                stems_int = stems1 + stems2 + stems1a + stems2a
-            elif n1 == 0:
-                print('In n1 == 0 branch')
-                stems2a = permutations(letters1,5,n2)
-                stems_int = stems1 + stems2 + stems2a
-            elif n2 == 0:
-                print('In n2 == 0 branch')
-                stems1a = permutations(letters1,4,n1)
-                print(stems1a)
-                stems_int = stems1 + stems1a + stems2
-                print(len(stems_int))
-            dellist = LEdistance(affixes, stems_int, dist_input)
-            dellist = [set(dellist)]
-            print(dellist)
-            stems = [x for x in stems if x not in dellist]
-            stems1 = [x for x in stems if len(x) == 4]
-            stems2 = [x for x in stems if len(x) == 5]
-            print(stems1)
-            n1 = (s/2) - len(stems1)
-            n2 = (s/2) - len(stems2)
-            print(f'4-character stems to generate: {n1}')
-            print(f'5-character stems to generate: {n2}')
-            print(len(L1stems))
-        print('Finished generating L1 set')
-        
-        print(f'L1 affixes: {L1affixes}')
-        print(f'L1 stems: {L1stems}')
-        print(f'L2 affixes: {L2affixes}')
-        print(f'L2 stems: {L2stems}')
-        
-        print(len(L1affixes))
-        print(len(L1stems))
-        print(len(L2affixes))
-        print(len(L2stems))
-        return L1affixes, L1stems, L2affixes, L2stems
-        
-    n1 = (s/2) - len(L1stems1)
-    n2 = (s/2) - len(L1stems2)
-    while len(L1stems) < s:
-        if n1 != 0 and n2 != 0:
-            L1stems1a, L1stems2a = cycle_throughs(letters1,4,5,n1,n2)
-            L1stems_int = L1stems1 + L1stems2 + L1stems1a + L1stems2a
-        elif n1 == 0:
-            print('In n1 == 0 branch')
-            L1stems2a = permutations(letters1,5,n2)
-            L1stems_int = L1stems1 + L1stems2 + L1stems2a
-        elif n2 == 0:
-            print('In n2 == 0 branch')
-            L1stems1a = permutations(letters1,4,n1)
-            print(L1stems1a)
-            L1stems_int = L1stems1 + L1stems1a + L1stems2
-            print(len(L1stems_int))
-        L1dellist = LEdistance(L1affixes, L1stems_int, dist_input)
-        L1dellist = [set(L1dellist)]
-        print(L1dellist)
-        L1stems = [x for x in L1stems if x not in L1dellist]
-        L1stems1 = [x for x in L1stems if len(x) == 4]
-        L1stems2 = [x for x in L1stems if len(x) == 5]
-        print(L1stems1)
-        n1 = (s/2) - len(L1stems1)
-        n2 = (s/2) - len(L1stems2)
-        print(f'4-character L1 stems to generate: {n1}')
-        print(f'5-character L1 stems to generate: {n2}')
-        print(len(L1stems))
-    print('Finished generating L1 set')
-    
-    #n1 = (s/2) - len(L2stems1)
-    #n2 = (s/2) - len(L2stems2)
-    #while len(L2stems) < s:
-    #    if n1 != 0 and n2 != 0:
-    #        L2stems1a, L2stems2a = cycle_throughs(letters2,4,5,n1,n2)
-    #        L2stems = L2stems1 + L2stems2 + L2stems1a + L2stems2a
-    #    elif n1 == 0:
-    #        L2stems2a = permutations(letters2,5,n2)
-    #        L2stems = L2stems1 + L2stems2 + L2stems2a
-    #    elif n2 == 0:
-    #        L2stems1a = permutations(letters2,4,n1)
-    #        L2stems = L2stems1 + L2stems1a + L2stems2
-    #    L2dellist = LEdistance(L2affixes, L2stems, dist_input)
-    #    L2dellist = [*set(L2dellist)]
-    #    L2stems = [x for x in L2stems if x not in L2dellist]
-    #    L2stems1 = [x for x in L2stems if len(x) == 4]
-    #    L2stems2 = [x for x in L2stems if len(x) == 5]
-    #    n1 = (s/2) - len(L2stems1)
-    #    n2 = (s/2) - len(L2stems2)
-    #    print(f'4-character L2 stems to generate: {n1}')
-    #    print(f'5-character L2 stems to generate: {n2}')
-    #    print(len(L2stems))
-    #print('Finished generating L2 set')
-        
-    print(f'L1 affixes: {L1affixes}')
-    print(f'L1 stems: {L1stems}')
-    print(f'L2 affixes: {L2affixes}')
-    print(f'L2 stems: {L2stems}')
-    
-    print(len(L1affixes))
-    print(len(L1stems))
-    print(len(L2affixes))
-    print(len(L2stems))
-    return L1affixes, L1stems, L2affixes, L2stems
-
-L1affixes, L1stems, L2affixes, L2stems = cycle_through(100,200)
-#example1 = ["wolf", "logs", "hate", "baby", "bust"]
-#example2 = ["heller", "loggie", "hatsie", "drugsy", "wolfer"]
-#LEdistance(L1affixes)
+L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict = cycle_through(100,200,300)
+print(L1dict)
