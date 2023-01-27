@@ -71,11 +71,11 @@ def permutations(lst,l,n):
     count = 0
     for i in lst:
         if l < 2 or l > 6: # break function if requested length is outside defined parameters
-            print("Problem: invalid parameters. l must be between 3 and 6.")
+            print("Problem: invalid parameters. l must be between 2 and 6.")
             break
         else:
             while count < n:
-                if l ==2:
+                if l == 2: # randomly pick 2 characters to assemble into a segment
                     a = random.choice(lst)
                     b = random.choice(lst)
                     if a != b and a + b not in segments:
@@ -281,13 +281,31 @@ def LED(word1,word2):
     return distances[len(word1)][len(word2)]
 
 def LEdistance(lst1,lst2,dist_input):
+    '''
+    Uses the LED function to cycle through 2 lists and compile a list of words too similar between the lists.
+
+    Parameters
+    ----------
+    lst1 : LIST
+        The first list to compare.
+    lst2 : LIST
+        The second list to compare.
+    dist_input : INTEGER
+        The accepted LE threshold value.
+
+    Returns
+    -------
+    dellist : LIST
+        A list of segments from lst2 to delete due to too great similarity to lst1.
+
+    '''
     dellist = []
     l = len(lst1) - 1
     i = 0
     for i in range(l):
         j = 0
         while j <= l:
-            distance = LED(lst1[i],lst2[j])
+            distance = LED(lst1[i],lst2[j]) # computation of LE distance
             #print(lst1[i], lst2[j])
             #print(distance)
             if distance <= dist_input:
@@ -323,8 +341,12 @@ def cycle_through(a,s,w):
         The list of words for L1.
     L2words : LIST
         The list of words for L2.
+    L1dict : DICTIONARY
+        The dictionary of words for L1, with the stem and affix they're composed of
+    L2dict : DICTIONARY
+        The dictionary of words for L2, with the stem and affix they're composed of
     '''
-    letters1, letters2 = language_characters()
+
     def cycle_throughs(lst,n1,n2,t1,t2):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
@@ -337,8 +359,10 @@ def cycle_through(a,s,w):
             Lower length of the segments to generate.
         n2 : INTEGER
             Upper length of the segments to generate.
-        t : INTEGER
-            Number of segments to generate.
+        t1 : INTEGER
+            Number of segments of length n1 to generate.
+        t2 : INTEGER
+            Number of segments of length n2 to generate.
 
         Returns
         -------
@@ -370,46 +394,47 @@ def cycle_through(a,s,w):
     
     def wordcycle(affixes,stems,l,n,dist):
         '''
-        
+        Combines affixes and stems into words, tests LED, delete similar words, cycles through again if word list incomplete.
 
         Parameters
         ----------
-        lst1 : TYPE
-            DESCRIPTION.
-        lst2 : TYPE
-            DESCRIPTION.
+        affixes : LIST
+            The list of affixes.
+        stems : LIST
+            The list of stems.
         l : STRING
-            Language 1 or 2
+            Label for printed output specifying the language ('L1' or 'L2').
         n : INTEGER
-            Number of words to generate
-        dist_input : INTEGER
+            Number of words to generate.
+        dist : INTEGER
             The desired LE distance threshold.
 
         Returns
         -------
         words : LIST
-            Generated words list
+            Generated words list.
         '''
         words = []
-        missing = n
+        missing = n # to start, all n desired items are missing
         reps = 0
         words_dict = {}
-        while len(words) < n:
+        while len(words) < n: # while words list incomplete
+            reps += 1
             for i in affixes:
                 for j in stems:
                     while missing > 0:
                         s = random.choice(stems)
                         a = random.choice(affixes)
-                        if s != a and s[-1] != a[0] and s + a not in words:
+                        if s != a and s[-1] != a[0] and s + a not in words: # if stem & affix different, plus if the boundary letters are different, and the word isn't already in the word list
                             words += [s + a]
                             missing -= 1
                             parts = [s, a]
                             word = s + a
-                            words_dict[word] = parts
+                            words_dict[word] = parts # add word to dictionary
             if len(words) == n:
-                print(f'Finished generating {l} word set. Testing LE distance...')
+                print(f'Finished rep {reps} of generating {l} word list. Testing LE distance...')
             else:
-                print(f'Problem generating {l} word set.')
+                print(f'Problem on rep {reps} of generating {l} word list.')
                 break
             
             dellist = []
@@ -417,25 +442,27 @@ def cycle_through(a,s,w):
                 for j in range(len(words)):
                     if i != j:
                         distance = int(LED(words[i], words[j]))
-                        print(words[i], words[j], distance)
-                        if distance < dist:
+                        #print(words[i], words[j], distance) optional: print tested word pairs & the LED
+                        if distance < dist: # if LED below specified threshold LED
                             dellist.append(words[i])
                     j += 1
             dellist = [*set(dellist)]
-            #print(f'Words to delete: {dellist}')
-            missing = len(dellist)
-            print(f'Still missing {missing} word(s).')
+            #print(f'Words to delete: {dellist}') optional: print list of words to delete
+            missing = len(dellist) # calculate how many more words it'll need to generate
+            #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
             for w in dellist:
-                del words_dict[w]
-            words = [x for x in words if x in words_dict]
-            reps += 1
+                del words_dict[w] # delete dictionary entry for too-similar words
+            words = [x for x in words if x in words_dict] # delete words in list if they're not in the dictionary
         if len(words) == n:
-            print('Finished testing word set.')
+            print(f'Finished testing {l} word list.')
         return words, reps, words_dict
         
+    # generate character lists for both languages:
+    letters1, letters2 = language_characters()
+    
     # generate affix & stem lists for both languages:
-    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,(a/2),(a/2))
-    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,(s/2),(s/2))
+    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,(a/2),(a/2)) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
+    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,(s/2),(s/2)) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
     L2affixes1, L2affixes2 = cycle_throughs(letters2,3,4,(a/2),(a/2))
     L2stems1, L2stems2 = cycle_throughs(letters2,4,5,(s/2),(s/2))
     L1affixes = L1affixes1 + L1affixes2
@@ -443,18 +470,18 @@ def cycle_through(a,s,w):
     L2affixes = L2affixes1 + L2affixes2
     L2stems = L2stems1 + L2stems2
     if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0 and len(L1affixes) == len(L2affixes) and len(L1stems) == len(L2stems):
-        print('Finished generating stimuli sets.')
+        print('Finished generating affix and stem lists.')
     else:
-        print('Problem generating stimuli sets.')
+        print('Problem generating affix and stem lists.')
     
-    dist_input = int(input("Desired LE distance threshold for words: "))
-    L1words, L1reps, L1dict = wordcycle(L1affixes,L1stems,'first',w,dist_input)
-    L2words, L2reps, L2dict = wordcycle(L2affixes,L2stems,'second',w,dist_input)
-    print(f'L1 reps: {L1reps}')
-    print(f'L2 reps: {L2reps}')
-    if len(L1words) == w and len(L2words) == w:
+    # generate word lists for both languages:
+    dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
+    L1words, L1reps, L1dict = wordcycle(L1affixes,L1stems,'L1',w,dist_input)
+    L2words, L2reps, L2dict = wordcycle(L2affixes,L2stems,'L2',w,dist_input)
+    #print(f'L1 reps: {L1reps}') optional: print how many cycles wordcycle had to go through to form the word lists
+    #print(f'L2 reps: {L2reps}')
+    if len(L1words) == len(L2words) == w:
         print('Correctly generated complete stimuli set.')
     return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict
 
 L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict = cycle_through(100,200,300)
-print(L1dict)
