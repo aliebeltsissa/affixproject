@@ -1,5 +1,4 @@
 import time
-import math
 start_time = time.time()
 
 def setlistcompare(lst):
@@ -419,10 +418,10 @@ def cycle_through(a,s,w):
             Generated words list.
         '''
         words = []
-        missing = w # to start, all n desired items are missing
+        missing = w # to start, all w desired items are missing
         reps = 0
         words_dict = {}
-        while len(words) < w: # while words list incomplete
+        while len(words) < w: # while word list incomplete
             reps += 1
             for i in affixes:
                 for j in stems:
@@ -462,41 +461,109 @@ def cycle_through(a,s,w):
         return words, reps, words_dict
     
     def globalcycle(L1affixes,L1stems,L2affixes,L2stems,l,w,dist):
-        missing = w
+        '''
+        Uses the wordcycle function to generate stem + affix pairings in L1 and L2, tests the LE distance between languages, and returns complete word lists.
+
+        Parameters
+        ----------
+        L1affixes : LIST
+            The list of affixes from L1.
+        L1stems : LIST
+            The list of stems from L1.
+        L2affixes : LIST
+            The list of affixes from L2.
+        L2stems : LIST
+            The list of stems from L2.
+        l : STRING
+            The label for what the function is working with (usually, enter 'global').
+        w : INTEGER
+            The total number of words to generate for each language.
+        dist : INTEGER
+            The input for the threshold accepted LE distance.
+
+        Returns
+        -------
+        L1words : LIST
+            A list of words in L1.
+        L2words : LIST
+            A list of words in L2.
+        L1reps : LIST
+            A list of the amount of cycles needed for the function to get all the L1 words for each global cycle.
+        L2reps : LIST
+            A list of the amount of cycles needed for the function to get all the L2 words for each global cycle..
+        L1dict : DICT
+            A dictionary matching L1 words with the stem & affix they're made of (order: stem, then affix).
+        L2dict : DICT
+            A dictionary matching L2 words with the stem & affix they're made of (order: stem, then affix)..
+        globalreps : INTEGER
+            The number of cycles that globalcycle had to go through to get all the L1 & L2 words.
+        '''
+        dist2 = int(input("Desired LE distance threshold for words between languages: ")) # LED threshold prompt
+        missing2 = w # to start, all w desired items are missing
         L1words = []
         L1reps = []
         L2reps = []
-        globalreps = 0
-        while len(L1words) < w:
+        globalreps = 1
+        L1words, L1reps1, L1dict = wordcycle(L1affixes,L1stems,'L1',missing2,dist)
+        L1reps.append(L1reps1)
+        L2words, L2reps1, L2dict = wordcycle(L2affixes,L2stems,'L2',missing2,dist)
+        L2reps.append(L2reps1)
+        print('Testing LE distance between languages...')
+        dellist1 = []
+        dellist2 = []            
+        for i in range(len(L1words)):
+            for j in range(len(L2words)):
+                distance = int(LED(L1words[i], L2words[j])) # LE distance calculations between L1 & L2 words
+                #print(L1words[i], L2words[j], distance) # optional: print tested word pairs & the LED
+                if distance < dist2: # if LED below specified threshold LED
+                    dellist1.append(L1words[i])
+                    dellist2.append(L2words[j])
+            j += 1
+        dellist1 = [*set(dellist1)]
+        dellist2 = [*set(dellist2)]
+        #print(f'Words to delete: {dellist}') optional: print list of words to delete
+        missing2 = len(dellist1) # calculate how many more words it'll need to generate
+        #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
+        for x in dellist1:
+            del L1dict[x] # delete dictionary entry for too-similar words
+        for y in dellist2:
+            del L2dict[y] # delete dictionary entry for too-similar words
+        L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
+        L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary
+        while len(L1words) < w: # while word lists incomplete
             globalreps += 1
+            L1words1, L1reps1, L1dict1 = wordcycle(L1affixes,L1stems,'L1',missing2,dist)
+            L1reps.append(L1reps1) # add repetition count to reps list
+            L1dict.update(L1dict1) # update dictionary
+            L1words += L1words1 # update words list
+            L2words1, L2reps1, L2dict1 = wordcycle(L2affixes,L2stems,'L2',missing2,dist)
+            L2reps.append(L2reps1) # add repetition count to reps list
+            L2dict.update(L2dict1) # update dictionary
+            L2words += L2words1 # update words list
+            print('Testing LE distance between languages...')
             dellist1 = []
-            dellist2 = []
-            L1words, L1reps1, L1dict = wordcycle(L1affixes,L1stems,'L1',missing,dist_input)
-            L1reps.append(L1reps1)
-            L2words, L2reps1, L2dict = wordcycle(L2affixes,L2stems,'L2',missing,dist_input)
-            L2reps.append(L2reps1)
+            dellist2 = []            
             for i in range(len(L1words)):
                 for j in range(len(L2words)):
-                    if i != j:
-                        distance = int(LED(L1words[i], L2words[j]))
-                        #print(words[i], words[j], distance) optional: print tested word pairs & the LED
-                        if distance < dist: # if LED below specified threshold LED
-                            dellist1.append(L1words[i])
-                            dellist2.append(L2words[j])
-                    j += 1
+                    distance = int(LED(L1words[i], L2words[j])) # LE distance calculations between L1 & L2 words
+                    #print(L1words[i], L2words[j], distance) # optional: print tested word pairs & the LED
+                    if distance < dist2: # if LED below specified threshold LED
+                        dellist1.append(L1words[i])
+                        dellist2.append(L2words[j])
+                j += 1
             dellist1 = [*set(dellist1)]
             dellist2 = [*set(dellist2)]
             #print(f'Words to delete: {dellist}') optional: print list of words to delete
-            missing = len(dellist1) # calculate how many more words it'll need to generate
-            #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
-            for w in dellist1:
-                del L1dict[w] # delete dictionary entry for too-similar words
-            for w in dellist2:
-                del L2dict[w] # delete dictionary entry for too-similar words
+            missing2 = len(dellist1) # calculate how many more words it'll need to generate
+            #print(f'Still missing {missing2} word(s).') optional: print how many words it still has to generate
+            for x in dellist1:
+                del L1dict[x] # delete dictionary entry for too-similar words
+            for y in dellist2:
+                del L2dict[y] # delete dictionary entry for too-similar words
             L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
             L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary  
             print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
-        if len(L1words) == len(L2words) == w and missing == 0:
+        if len(L1words) == len(L2words) == w and missing2 == 0:
             print('Finished comparing L1 and L2 word lists.')
         return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
         
@@ -519,15 +586,14 @@ def cycle_through(a,s,w):
     
     # generate word lists for both languages:
     dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
-    #print(f'L1 reps: {L1reps}') optional: print how many cycles wordcycle had to go through to form the word lists
-    #print(f'L2 reps: {L2reps}')
     L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes,L1stems,L2affixes,L2stems,'global',w,dist_input)
     if len(L1words) == len(L2words) == w:
         print('Correctly generated complete stimuli set.')
     return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
 L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
+
 end_time = time.time()
 elapsed_time = (end_time - start_time)/60
-#'%.2f' % a
+
 print('Execution time: %.2f minutes' % elapsed_time)
