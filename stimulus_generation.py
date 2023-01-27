@@ -1,3 +1,7 @@
+import time
+import math
+start_time = time.time()
+
 def setlistcompare(lst):
     '''
     Compares length of a set to length of a list to test for repeated strings
@@ -392,7 +396,7 @@ def cycle_through(a,s,w):
             n_inter = len(segments1)
         return segments1, segments2
     
-    def wordcycle(affixes,stems,l,n,dist):
+    def wordcycle(affixes,stems,l,w,dist):
         '''
         Combines affixes and stems into words, tests LED, delete similar words, cycles through again if word list incomplete.
 
@@ -404,7 +408,7 @@ def cycle_through(a,s,w):
             The list of stems.
         l : STRING
             Label for printed output specifying the language ('L1' or 'L2').
-        n : INTEGER
+        w : INTEGER
             Number of words to generate.
         dist : INTEGER
             The desired LE distance threshold.
@@ -415,10 +419,10 @@ def cycle_through(a,s,w):
             Generated words list.
         '''
         words = []
-        missing = n # to start, all n desired items are missing
+        missing = w # to start, all n desired items are missing
         reps = 0
         words_dict = {}
-        while len(words) < n: # while words list incomplete
+        while len(words) < w: # while words list incomplete
             reps += 1
             for i in affixes:
                 for j in stems:
@@ -431,7 +435,7 @@ def cycle_through(a,s,w):
                             parts = [s, a]
                             word = s + a
                             words_dict[word] = parts # add word to dictionary
-            if len(words) == n:
+            if len(words) == w:
                 print(f'Finished rep {reps} of generating {l} word list. Testing LE distance...')
             else:
                 print(f'Problem on rep {reps} of generating {l} word list.')
@@ -450,12 +454,51 @@ def cycle_through(a,s,w):
             #print(f'Words to delete: {dellist}') optional: print list of words to delete
             missing = len(dellist) # calculate how many more words it'll need to generate
             #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
-            for w in dellist:
-                del words_dict[w] # delete dictionary entry for too-similar words
+            for x in dellist:
+                del words_dict[x] # delete dictionary entry for too-similar words
             words = [x for x in words if x in words_dict] # delete words in list if they're not in the dictionary
-        if len(words) == n:
+        if len(words) == w:
             print(f'Finished testing {l} word list.')
         return words, reps, words_dict
+    
+    def globalcycle(L1affixes,L1stems,L2affixes,L2stems,l,w,dist):
+        missing = w
+        L1words = []
+        L1reps = []
+        L2reps = []
+        globalreps = 0
+        while len(L1words) < w:
+            globalreps += 1
+            dellist1 = []
+            dellist2 = []
+            L1words, L1reps1, L1dict = wordcycle(L1affixes,L1stems,'L1',missing,dist_input)
+            L1reps.append(L1reps1)
+            L2words, L2reps1, L2dict = wordcycle(L2affixes,L2stems,'L2',missing,dist_input)
+            L2reps.append(L2reps1)
+            for i in range(len(L1words)):
+                for j in range(len(L2words)):
+                    if i != j:
+                        distance = int(LED(L1words[i], L2words[j]))
+                        #print(words[i], words[j], distance) optional: print tested word pairs & the LED
+                        if distance < dist: # if LED below specified threshold LED
+                            dellist1.append(L1words[i])
+                            dellist2.append(L2words[j])
+                    j += 1
+            dellist1 = [*set(dellist1)]
+            dellist2 = [*set(dellist2)]
+            #print(f'Words to delete: {dellist}') optional: print list of words to delete
+            missing = len(dellist1) # calculate how many more words it'll need to generate
+            #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
+            for w in dellist1:
+                del L1dict[w] # delete dictionary entry for too-similar words
+            for w in dellist2:
+                del L2dict[w] # delete dictionary entry for too-similar words
+            L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
+            L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary  
+            print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
+        if len(L1words) == len(L2words) == w and missing == 0:
+            print('Finished comparing L1 and L2 word lists.')
+        return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
         
     # generate character lists for both languages:
     letters1, letters2 = language_characters()
@@ -476,12 +519,15 @@ def cycle_through(a,s,w):
     
     # generate word lists for both languages:
     dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
-    L1words, L1reps, L1dict = wordcycle(L1affixes,L1stems,'L1',w,dist_input)
-    L2words, L2reps, L2dict = wordcycle(L2affixes,L2stems,'L2',w,dist_input)
     #print(f'L1 reps: {L1reps}') optional: print how many cycles wordcycle had to go through to form the word lists
     #print(f'L2 reps: {L2reps}')
+    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes,L1stems,L2affixes,L2stems,'global',w,dist_input)
     if len(L1words) == len(L2words) == w:
         print('Correctly generated complete stimuli set.')
-    return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict
+    return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
-L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1dict, L2dict = cycle_through(100,200,300)
+L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
+end_time = time.time()
+elapsed_time = (end_time - start_time)/60
+#'%.2f' % a
+print('Execution time: %.2f minutes' % elapsed_time)
