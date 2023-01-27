@@ -521,14 +521,13 @@ def cycle_through(a,s,w):
                 if distance < dist2: # if LED below specified threshold LED
                     dellist1.append(L1testword)
                     dellist2.append(L2testword)
-        dellist1 = [*set(dellist1)]
-        dellist2 = [*set(dellist2)]
-        print(dellist1)
-        print(dellist2)
         if len(dellist1) != len(dellist2):
             print('Warning: different lengths of the dellists!')
+        dellist1 = [*set(dellist1)]
+        dellist2 = [*set(dellist2)]
         #print(f'Words to delete: {dellist}') optional: print list of words to delete
-        missing2 = len(dellist1) # calculate how many more words it'll need to generate
+        missing1 = len(dellist1) # calculate how many more words it'll need to generate
+        missing2 = len(dellist2)
         #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
         for x in dellist1:
             del L1dict[x] # delete dictionary entry for too-similar words
@@ -536,12 +535,10 @@ def cycle_through(a,s,w):
             del L2dict[y] # delete dictionary entry for too-similar words
         L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
         L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary
-        if len(L1words) != len(L2words):
-            print('L1words different from L2words')
         print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
         while len(L1words) < w : # while word lists incomplete
             globalreps += 1
-            L1words_a, L1reps_a, L1dict_a = wordcycle(L1affixes,L1stems,'L1',missing2,dist)
+            L1words_a, L1reps_a, L1dict_a = wordcycle(L1affixes,L1stems,'L1',missing1,dist)
             L1reps.append(L1reps_a) # add repetition count to reps list
             L1dict.update(L1dict_a) # update dictionary
             L1words += L1words_a # update words list
@@ -549,8 +546,6 @@ def cycle_through(a,s,w):
             L2reps.append(L2reps_a) # add repetition count to reps list
             L2dict.update(L2dict_a) # update dictionary
             L2words += L2words_a # update words list
-            if len(L1words_a) != len(L2words_a):
-                print('Warning: added L1 words not the same length as added L2 words')
             if len(L1words) != len(L2words):
                 print('Warning: L1words length different from L2words length')
             print('Testing LE distance between languages...')
@@ -563,13 +558,14 @@ def cycle_through(a,s,w):
                     if distance < dist2: # if LED below specified threshold LED
                         dellist1.append(L1words[i])
                         dellist2.append(L2words[j])
-            dellist1 = [*set(dellist1)]
-            dellist2 = [*set(dellist2)]
             if len(dellist1) != len(dellist2):
                 print('Warning: different lengths of the dellists!')
+            dellist1 = [*set(dellist1)]
+            dellist2 = [*set(dellist2)]
             #print(f'Words to delete: {dellist}') optional: print list of words to delete
-            missing2 = len(dellist1) # calculate how many more words it'll need to generate
-            #print(f'Still missing {missing2} word(s).') optional: print how many words it still has to generate
+            missing1 = len(dellist1)
+            missing2 = len(dellist2) # calculate how many more words it'll need to generate
+            #print(f'Still missing {missing1} word(s).') optional: print how many words it still has to generate
             for x in dellist1:
                 del L1dict[x] # delete dictionary entry for too-similar words
             for y in dellist2:
@@ -577,7 +573,7 @@ def cycle_through(a,s,w):
             L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
             L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary  
             print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
-        if len(L1words) == len(L2words) == w and missing2 == 0:
+        if len(L1words) == len(L2words) == w and missing1 == 0 and missing2 == 0:
             print('Finished comparing L1 and L2 word lists.')
         return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
         
