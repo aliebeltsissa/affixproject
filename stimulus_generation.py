@@ -349,8 +349,7 @@ def cycle_through(a,s,w):
     L2dict : DICTIONARY
         The dictionary of words for L2, with the stem and affix they're composed of
     '''
-
-    def cycle_throughs(lst,n1,n2,t1,t2):
+    def list_generations(lst,n1,n2,t1,t2):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
 
@@ -379,11 +378,11 @@ def cycle_through(a,s,w):
         if t1 != 0:
             segments1 = permutations(lst,n1,t1) # generate segments of a certain length
         else:
-            print('Careful, t1 = 0')
+            print('Careful, t1 == 0')
         if t2 != 0:
             segments2 = permutations(lst,n2,t2) # generate segments 1 character longer than in segments1
         else:
-            print('Careful, t2 = 0')
+            print('Careful, t2 == 0')
         intersections, dellist, segments = repeats_check(segments1, segments2) # find intersections in the segments lists
         n_inter = len(segments1)
         while n_inter < t1: # while segments1 has deletions due to intersections with segments2
@@ -581,10 +580,10 @@ def cycle_through(a,s,w):
     letters1, letters2 = language_characters()
     
     # generate affix & stem lists for both languages:
-    L1affixes1, L1affixes2 = cycle_throughs(letters1,3,4,(a/2),(a/2)) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
-    L1stems1, L1stems2 = cycle_throughs(letters1,4,5,(s/2),(s/2)) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
-    L2affixes1, L2affixes2 = cycle_throughs(letters2,3,4,(a/2),(a/2))
-    L2stems1, L2stems2 = cycle_throughs(letters2,4,5,(s/2),(s/2))
+    L1affixes1, L1affixes2 = list_generations(letters1,3,4,(a/2),(a/2)) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
+    L1stems1, L1stems2 = list_generations(letters1,4,5,(s/2),(s/2)) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
+    L2affixes1, L2affixes2 = list_generations(letters2,3,4,(a/2),(a/2))
+    L2stems1, L2stems2 = list_generations(letters2,4,5,(s/2),(s/2))
     L1affixes = L1affixes1 + L1affixes2
     L1stems = L1stems1 + L1stems2
     L2affixes = L2affixes1 + L2affixes2
