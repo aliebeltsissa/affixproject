@@ -38,9 +38,8 @@ def language_characters():
         letters1 = letters[12:]
         letters2 = letters[:12]
     elif overlap == 'y':
-        letters1 = random.sample(letters, k = 12)
-        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
-        letters2 = random.sample(letters, k = 12)
+        letters1 = letters
+        letters2 = letters
     else:
         print("Sorry, not a valid choice.")
     print(f'Letters in language 1: {letters1}')
