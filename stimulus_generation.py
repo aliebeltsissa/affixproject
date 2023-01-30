@@ -531,8 +531,10 @@ def cycle_through(a,s,w):
             del L1dict[x] # delete dictionary entry for too-similar words
         for y in dellist2:
             del L2dict[y] # delete dictionary entry for too-similar words
-        L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
-        L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary
+        L1words = list(L1dict.keys()) # delete words in list if they're not in the dictionary
+        L2words = list(L2dict.keys()) # delete words in list if they're not in the dictionary
+        missing1 = w - len(L1words) # calculate how many more words it'll need to generate
+        missing2 = w - len(L2words)
         print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
         while len(L1words) < w : # while word lists incomplete
             globalreps += 1
@@ -545,7 +547,7 @@ def cycle_through(a,s,w):
             L2dict.update(L2dict_a) # update dictionary
             L2words += L2words_a # update words list
             if len(L1words) != len(L2words):
-                print('Warning: L1words length different from L2words length')
+                print('Warning: L1words length different from L2words length after update')
             print('Testing LE distance between languages...')
             dellist1 = []
             dellist2 = []            
@@ -561,18 +563,19 @@ def cycle_through(a,s,w):
             dellist1 = [*set(dellist1)]
             dellist2 = [*set(dellist2)]
             #print(f'Words to delete: {dellist}') optional: print list of words to delete
-            missing1 = len(dellist1)
-            missing2 = len(dellist2) # calculate how many more words it'll need to generate
-            #print(f'Still missing {missing1} word(s).') optional: print how many words it still has to generate
             for x in dellist1:
                 del L1dict[x] # delete dictionary entry for too-similar words
             for y in dellist2:
                 del L2dict[y] # delete dictionary entry for too-similar words
-            L1words = [x for x in L1words if x in L1dict] # delete words in list if they're not in the dictionary
-            L2words = [x for x in L2words if x in L2dict] # delete words in list if they're not in the dictionary  
+            L1words = list(L1dict.keys()) # delete words in list if they're not in the dictionary
+            L2words = list(L2dict.keys()) # delete words in list if they're not in the dictionary  
+            missing1 = w - len(L1words)
+            missing2 = w - len(L2words)
             print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
         if len(L1words) == len(L2words) == w and missing1 == 0 and missing2 == 0:
             print('Finished comparing L1 and L2 word lists.')
+        elif len(L1words) != len(L2words):
+            print(f'Warning: L1word and L2word length different at end of rep {globalreps}')
         return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
         
     # generate character lists for both languages:
@@ -595,8 +598,10 @@ def cycle_through(a,s,w):
     # generate word lists for both languages:
     dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
     L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes,L1stems,L2affixes,L2stems,'global',w,dist_input)
-    if len(L1words) == len(L2words) == w:
+    if len(L1words) == len(L2words) == w and list(L1dict.keys()) == L1words and list(L2dict.keys()) == L2words:
         print('Correctly generated complete stimuli set.')
+    elif list(L1dict.keys()) != L1words or list(L2dict.keys()) != L2words:
+        print('Dictionaries not the same length as word lists!')
     return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
 L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
