@@ -50,7 +50,7 @@ def language_characters():
 
 def permutations(lst,l,n):
     '''
-    Generates n permutations of length l of a list lst. Works if l [3;6].
+    Generates n permutations of length l of a list lst. Works if l [2;6].
 
     Parameters
     ----------
@@ -524,9 +524,6 @@ def cycle_through(a,s,w):
         dellist1 = [*set(dellist1)]
         dellist2 = [*set(dellist2)]
         #print(f'Words to delete: {dellist}') optional: print list of words to delete
-        missing1 = len(dellist1) # calculate how many more words it'll need to generate
-        missing2 = len(dellist2)
-        #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
         for x in dellist1:
             del L1dict[x] # delete dictionary entry for too-similar words
         for y in dellist2:
@@ -535,6 +532,7 @@ def cycle_through(a,s,w):
         L2words = list(L2dict.keys()) # delete words in list if they're not in the dictionary
         missing1 = w - len(L1words) # calculate how many more words it'll need to generate
         missing2 = w - len(L2words)
+        #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
         print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
         while len(L1words) < w : # while word lists incomplete
             globalreps += 1
