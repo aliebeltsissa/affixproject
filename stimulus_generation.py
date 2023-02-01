@@ -38,8 +38,9 @@ def language_characters():
         letters1 = letters[12:]
         letters2 = letters[:12]
     elif overlap == 'y':
-        letters1 = letters
-        letters2 = letters
+        letters1 = random.sample(letters, k = 12)
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
+        letters2 = random.sample(letters, k = 12)
     else:
         print("Sorry, not a valid choice.")
     print(f'Letters in language 1: {letters1}')
@@ -57,19 +58,19 @@ def permutations(lst,l,n):
     lst : LIST
         Input list
     l : INTEGER
-        Desired length of the segments
+        Desired length of the morphemes
     n : INTEGER
-        Number of segments to be added to output list
+        Number of morphemes to be added to output list
 
     Returns
     -------
-    segments : LIST
+    morphemes : LIST
         Output list containing generated permutations
     '''
     if len(lst) == 0:
         print('Careful, input list to permutations is empty!')
         return
-    segments = []
+    morphemes = []
     count = 0
     for i in lst:
         if l < 2 or l > 6: # break function if requested length is outside defined parameters
@@ -77,63 +78,63 @@ def permutations(lst,l,n):
             break
         else:
             while count < n:
-                if l == 2: # randomly pick 2 characters to assemble into a segment
+                if l == 2: # randomly pick 2 characters to assemble into a morpheme
                     a = random.choice(lst)
                     b = random.choice(lst)
-                    if a != b and a + b not in segments:
-                        segments += [a + b]
+                    if a != b and a + b not in morphemes:
+                        morphemes += [a + b]
                         count += 1
                     else:
                         continue
-                elif l == 3: # randomly pick 3 characters to assemble into a segment
+                elif l == 3: # randomly pick 3 characters to assemble into a morpheme
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
-                    if a != b and b != c and c != a and a+b+c not in segments: # making sure there are only different letters in the segment
-                        segments += [a + b + c]
+                    if a != b and b != c and c != a and a+b+c not in morphemes: # making sure there are only different letters in the morpheme
+                        morphemes += [a + b + c]
                         count += 1
                     else:
                         continue
-                elif l == 4: # randomly pick 4 characters to assemble into a segment
+                elif l == 4: # randomly pick 4 characters to assemble into a morpheme
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
                     d = random.choice(lst)
-                    if a !=b and b != c and c != d and d != a and a+b+c+d not in segments: # making sure there are only different letters in the segment
-                        segments += [a + b + c + d]
+                    if a !=b and b != c and c != d and d != a and a+b+c+d not in morphemes: # making sure there are only different letters in the morpheme
+                        morphemes += [a + b + c + d]
                         count += 1
                     else:
                         continue
-                elif l == 5: # randomly pick 5 characters to assemble into a segment
+                elif l == 5: # randomly pick 5 characters to assemble into a morpheme
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
                     d = random.choice(lst)
                     e = random.choice(lst)
-                    if a != b and b != c and c != d and d != e and e != a and a+b+c+d+e not in segments: # making sure there are only different letters in the segment
-                        segments += [a + b + c + d + e]
+                    if a != b and b != c and c != d and d != e and e != a and a+b+c+d+e not in morphemes: # making sure there are only different letters in the morpheme
+                        morphemes += [a + b + c + d + e]
                         count += 1
                     else:
                         continue
-                elif l == 6: # randomly pick 6 characters to assemble into a segment
+                elif l == 6: # randomly pick 6 characters to assemble into a morpheme
                     a = random.choice(lst)
                     b = random.choice(lst)
                     c = random.choice(lst)
                     d = random.choice(lst)
                     e = random.choice(lst)
                     f = random.choice(lst)
-                    if a != b and b != c and c != d and d != e and e != f and f != a and a+b+c+d+e+f not in segments: # making sure there are only different letters in the segment
-                        segments += [a + b + c + d + e + f]
+                    if a != b and b != c and c != d and d != e and e != f and f != a and a+b+c+d+e+f not in morphemes: # making sure there are only different letters in the morpheme
+                        morphemes += [a + b + c + d + e + f]
                         count += 1
                     else:
                         continue
-    if segments != False:
-        print(f"Finished generating list of {l}-character segments")
-    return segments
+    if morphemes != False:
+        print(f"Finished generating list of {l}-character morphemes")
+    return morphemes
 
 def repeats_check(lst1, lst2):
     '''
-    Cycles through items from list 2 to find segments from items in list 1. This version is flexible for lists with any length of items.
+    Cycles through items from list 2 to find morphemes from items in list 1. This version is flexible for lists with any length of items.
 
     Parameters
     ----------
@@ -145,7 +146,7 @@ def repeats_check(lst1, lst2):
     Returns
     -------
     intersections : LIST
-        List of intersecting segments from list 1.
+        List of intersecting morphemes from list 1.
     dellist : LIST
         List of items in list 1 that are intersecting with list 2.
     lst1_cleaned : LIST
@@ -179,12 +180,12 @@ def repeats_check(lst1, lst2):
         Returns
         -------
         lst3 : LIST
-            A list with the segments that are in both lists.
+            A list with the morphemes that are in both lists.
         '''
         incommon_lst = [value for value in lst1 if value in lst2]
         return incommon_lst
     test_lst1 = []
-    for i in lst11: # split lst11 into 3-character segments
+    for i in lst11: # split lst11 into 3-character morphemes
         n = 0
         while 3+n <= length1:
             test_word = i[n:(3+n)]
@@ -198,9 +199,9 @@ def repeats_check(lst1, lst2):
     for j in lst22:
         n = 0
         while 3+n <= length2:
-            test_word = j[n:(3+n)] # split lst22 into 3-character segments
+            test_word = j[n:(3+n)] # split lst22 into 3-character morphemes
             test_lst2 += [test_word]
-            ints = intersection(test_lst1, test_lst2) # calculate the intersection of the 3-character segments from both lists
+            ints = intersection(test_lst1, test_lst2) # calculate the intersection of the 3-character morphemes from both lists
             intersections += ints
             test_lst2 = []
             n += 1
@@ -210,17 +211,17 @@ def repeats_check(lst1, lst2):
     intersections = [''.join(i) for i in intersections]
     dellist = []
     if intersections == []:
-        #print('There are no segments in common in these two lists.') # optional check
+        #print('There are no morphemes in common in these two lists.') # optional check
         lst1_cleaned = lst1.copy()
     else:
-        #print(f'The common segments are: {intersections}') #optional check
+        #print(f'The common morphemes are: {intersections}') #optional check
         test_lst = []
         for i in lst11:
             n = 0
             while 3+n <= length1:
-                test_word = i[n:(3+n)] # split lst11 into 3-character segments
-                test_words = [test_word, i] # create joined sublists with the segments and the words they belong to
-                test_words = [''.join(i) for i in test_words] # group the separated sublist segments and words 
+                test_word = i[n:(3+n)] # split lst11 into 3-character morphemes
+                test_words = [test_word, i] # create joined sublists with the morphemes and the words they belong to
+                test_words = [''.join(i) for i in test_words] # group the separated sublist morphemes and words 
                 test_lst += [test_words]
                 n += 1
             else:
@@ -229,14 +230,14 @@ def repeats_check(lst1, lst2):
         dellist = []
         for i in range(0,len(test_lst)):
             if test_lst[i][0] in intersections:
-                dellist += [test_lst[i][1]] # makes list of words whose associated segments were in common with lst2
+                dellist += [test_lst[i][1]] # makes list of words whose associated morphemes were in common with lst2
             else:
                 continue
         #if len(dellist) != 0: #optional check
-            #print(f'The words those segments belong to are: {dellist}')
+            #print(f'The words those morphemes belong to are: {dellist}')
         lst1_cleaned = []
-        lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common segments from lst1
-    #print('List 1 without the repeated segments is: {lst1_cleaned}')
+        lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common morphemes from lst1
+    #print('List 1 without the repeated morphemes is: {lst1_cleaned}')
     if len(lst1_cleaned) != 0:
         print('Finished cleaning list.')
     return intersections, dellist, lst1_cleaned
@@ -298,7 +299,7 @@ def LEdistance(lst1,lst2,dist_input):
     Returns
     -------
     dellist : LIST
-        A list of segments from lst2 to delete due to too great similarity to lst1.
+        A list of morphemes from lst2 to delete due to too great similarity to lst1.
 
     '''
     dellist = []
@@ -355,43 +356,43 @@ def cycle_through(a,s,w):
         Parameters
         ----------
         lst : LIST
-            List of the characters to assemble into segments.
+            List of the characters to assemble into morphemes.
         n1 : INTEGER
-            Lower length of the segments to generate.
+            Lower length of the morphemes to generate.
         n2 : INTEGER
-            Upper length of the segments to generate.
+            Upper length of the morphemes to generate.
         t1 : INTEGER
-            Number of segments of length n1 to generate.
+            Number of morphemes of length n1 to generate.
         t2 : INTEGER
-            Number of segments of length n2 to generate.
+            Number of morphemes of length n2 to generate.
 
         Returns
         -------
-        segments1 : LIST
-            List of the first set of segments.
-        segments2 : LIST
-            List of the second set of segments.
+        morphemes1 : LIST
+            List of the first set of morphemes.
+        morphemes2 : LIST
+            List of the second set of morphemes.
         '''
-        segments1 = []
-        segments2 = []
+        morphemes1 = []
+        morphemes2 = []
         if t1 != 0:
-            segments1 = permutations(lst,n1,t1) # generate segments of a certain length
+            morphemes1 = permutations(lst,n1,t1) # generate morphemes of a certain length
         else:
             print('Careful, t1 == 0')
         if t2 != 0:
-            segments2 = permutations(lst,n2,t2) # generate segments 1 character longer than in segments1
+            morphemes2 = permutations(lst,n2,t2) # generate morphemes 1 character longer than in morphemes1
         else:
             print('Careful, t2 == 0')
-        intersections, dellist, segments = repeats_check(segments1, segments2) # find intersections in the segments lists
-        n_inter = len(segments1)
-        while n_inter < t1: # while segments1 has deletions due to intersections with segments2
+        intersections, dellist, morphemes = repeats_check(morphemes1, morphemes2) # find intersections in the morphemes lists
+        n_inter = len(morphemes1)
+        while n_inter < t1: # while morphemes1 has deletions due to intersections with morphemes2
             missing = t1 - n_inter # calculate how many more to generate
-            print(f'Still missing {missing} segments')
-            moresegments1 = permutations(lst,n1,missing)
-            segments1 = moresegments1 + segments1
-            intersections, dellist, segments1 = repeats_check(segments1, segments2) # calculate intersections between new segments1 and segments2
-            n_inter = len(segments1)
-        return segments1, segments2
+            print(f'Still missing {missing} morphemes')
+            moremorphemes1 = permutations(lst,n1,missing)
+            morphemes1 = moremorphemes1 + morphemes1
+            intersections, dellist, morphemes1 = repeats_check(morphemes1, morphemes2) # calculate intersections between new morphemes1 and morphemes2
+            n_inter = len(morphemes1)
+        return morphemes1, morphemes2
     
     def wordcycle(affixes,stems,l,w,dist):
         '''
