@@ -133,9 +133,10 @@ def permutations(lst,l,n):
         print(f"Finished generating list of {l}-character morphemes")
     return morphemes
 
+import itertools
 def repeats_check(lst1, lst2, intersectiondist):
     '''
-    Cycles through items from list 2 to find morphemes from items in list 1. This version is flexible for lists with any length of items.
+    Cycles through items from list 2 to find chunks in common with items in list 1. This version is flexible for lists with any length of items.
 
     Parameters
     ----------
@@ -155,97 +156,67 @@ def repeats_check(lst1, lst2, intersectiondist):
     lst1_cleaned : LIST
         List of items from list 1 that don't intersect with list 2.
     '''
-    if len(lst1) == 0: # tests to see whether the lists given to the function contain something
-        print('Careful, lst1 is empty!')
-    if len(lst2) == 0:
-        print('Careful, lst2 is empty!')
-    if len(lst1) == 0 or len(lst2) == 0:
-        return
-    length1 = len(lst1[0])
-    length2 = len(lst2[0])    
-    lst11 = []   
-    lst22 = []
-    for word in lst1:
-        lst11.append([*word]) # split apart words in lst1 into sublists
-    for word in lst2: 
-        lst22.append([*word]) # split apart words in lst1 into sublists
-    def intersection(lst1, lst2, intersectiondist):
+    def intersection(lst1,intersectiondist):
         '''
-        Finds the intersection of lst1 and lst2, where lst1 has shorter words.
+        Tests for identical chunks of characters in words from 1 list.
 
         Parameters
         ----------
-        lst1 : LIST
-            The list with shorter words.
-        lst2 : LIST
-            The list with longer words.
-        intersectiondist : INTEGER
-            The size of chunks to take.
+        lst1 : TYPE
+            DESCRIPTION.
+        intersectiondist : TYPE
+            DESCRIPTION.
 
         Returns
         -------
-        lst3 : LIST
-            A list with the morphemes that are in both lists.
+        None.
+
         '''
-        incommon_lst = [value for value in lst1 if value in lst2]
-        return incommon_lst
-    test_lst1 = []
-    for i in lst11: # split lst11 into 3-character morphemes
-        n = 0
-        while (intersectiondist + n) <= length1:
-            test_word = i[n:(intersectiondist + n)]
-            test_lst1 += [test_word]
-            n +=1
-        else:
+        if len(lst1) == 0: # tests to see whether the list given to the function contains something
+            print('Careful, list is empty!')
+        morphemes_dict = {}
+        for i in lst1: # split lst1 into chunks of pre-defined length
+            length1 = len(i)    
             n = 0
-            continue
-    test_lst2 = []
-    intersections = []
-    for j in lst22:
-        n = 0
-        while (intersectiondist + n) <= length2:
-            test_word = j[n:(intersectiondist + n)] # split lst22 into 3-character morphemes
-            test_lst2 += [test_word]
-            ints = intersection(test_lst1, test_lst2, intersectiondist) # calculate the intersection of the 3-character morphemes from both lists
-            intersections += ints
-            test_lst2 = []
-            n += 1
-        else:
-            n = 0
-            continue
-    intersections = [''.join(i) for i in intersections]
-    dellist = []
-    if intersections == []:
-        #print('There are no morphemes in common in these two lists.') # optional check
-        lst1_cleaned = lst1.copy()
-    else:
-        #print(f'The common morphemes are: {intersections}') #optional check
-        test_lst = []
-        for i in lst11:
-            n = 0
+            morphemes_dict[i] = [i[0:intersectiondist]]
+            n = 1
             while (intersectiondist + n) <= length1:
-                test_word = i[n:(intersectiondist + n)] # split lst11 into 3-character morphemes
-                test_words = [test_word, i] # create joined sublists with the morphemes and the words they belong to
-                test_words = [''.join(i) for i in test_words] # group the separated sublist morphemes and words 
-                test_lst += [test_words]
+                test_chunk = i[n:(intersectiondist + n)]
+                morphemes_dict[i].append(test_chunk) # add morpheme to dictionary
                 n += 1
             else:
                 n = 0
                 continue
-        dellist = []
-        for i in range(0,len(test_lst)):
-            if test_lst[i][0] in intersections:
-                dellist += [test_lst[i][1]] # makes list of words whose associated morphemes were in common with lst2
+        chunks_list = morphemes_dict.values()
+        chunks_list = list(itertools.chain.from_iterable(chunks_list))
+        chunks_dellist = [x for x in chunks_list if chunks_list.count(x) > 1]
+        chunks_dellist = [*set(chunks_dellist)]
+        dict_length = len(morphemes_dict)
+        dict_list = list(morphemes_dict.keys())
+        for i in range(dict_length):
+            key = dict_list[i]
+            for j in range(len(morphemes_dict[key])):
+                if key in morphemes_dict.keys():
+                    if morphemes_dict[key][j] in chunks_dellist:
+                        del morphemes_dict[key]
             else:
                 continue
-        #if len(dellist) != 0: #optional check
-            #print(f'The words those morphemes belong to are: {dellist}')
-        lst1_cleaned = []
-        lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common morphemes from lst1
-    #print('List 1 without the repeated morphemes is: {lst1_cleaned}')
-    if len(lst1_cleaned) != 0:
-        print('Finished cleaning list.')
-    return intersections, dellist, lst1_cleaned
+        print(morphemes_dict)
+        return morphemes_dict
+    #     dellist = []
+    #     for i in range(0,len(test_lst)):
+    #         if test_lst[i][0] in intersections:
+    #             dellist += [test_lst[i][1]] # makes list of words whose associated morphemes were in common with lst2
+    #         else:
+    #             continue
+    #     #if len(dellist) != 0: #optional check
+    #         #print(f'The words those morphemes belong to are: {dellist}')
+    #     lst1_cleaned = []
+    #     lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common morphemes from lst1
+    # #print('List 1 without the repeated morphemes is: {lst1_cleaned}')
+    # if len(lst1_cleaned) != 0:
+    #     print('Finished cleaning list.')
+    # return intersections, dellist, lst1_cleaned
 
 import numpy as np
 def LED(word1,word2):
