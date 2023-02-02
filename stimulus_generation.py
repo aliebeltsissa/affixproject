@@ -31,16 +31,17 @@ def language_characters():
     letters2 : LIST
         Second list of characters.
     '''
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z', 'a', 'b', 'c', 'd', 'g', 'h', 'i', 'k', 'l', 'm', 'o', 'r', 't', 'u', 'v', 'y']
+    division = int(len(letters)/2)
     overlap = input("Overlapping characters across languages? [y/n]: ")
     if overlap == 'n':
         random.shuffle(letters)
-        letters1 = letters[12:]
-        letters2 = letters[:12]
+        letters1 = letters[division:]
+        letters2 = letters[:division]
     elif overlap == 'y':
-        letters1 = random.sample(letters, k = 12)
-        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'y', 'z']
-        letters2 = random.sample(letters, k = 12)
+        letters1 = random.sample(letters, k = division)
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z', 'a', 'b', 'c', 'd', 'g', 'h', 'i', 'k', 'l', 'm', 'o', 'r', 't', 'u', 'v', 'y']
+        letters2 = random.sample(letters, k = division)
     else:
         print("Sorry, not a valid choice.")
     print(f'Letters in language 1: {letters1}')
@@ -132,7 +133,7 @@ def permutations(lst,l,n):
         print(f"Finished generating list of {l}-character morphemes")
     return morphemes
 
-def repeats_check(lst1, lst2):
+def repeats_check(lst1, lst2, intersectiondist):
     '''
     Cycles through items from list 2 to find morphemes from items in list 1. This version is flexible for lists with any length of items.
 
@@ -142,6 +143,8 @@ def repeats_check(lst1, lst2):
         The first list, with shorter words a minimum of 3 characters in length.
     lst2 : LIST
         The second list, with longer words.
+    intersectiondist : INTEGER
+        The size of chunks to take for the intersections similarity check.
 
     Returns
     -------
@@ -166,7 +169,7 @@ def repeats_check(lst1, lst2):
         lst11.append([*word]) # split apart words in lst1 into sublists
     for word in lst2: 
         lst22.append([*word]) # split apart words in lst1 into sublists
-    def intersection(lst1, lst2):
+    def intersection(lst1, lst2, intersectiondist):
         '''
         Finds the intersection of lst1 and lst2, where lst1 has shorter words.
 
@@ -176,6 +179,8 @@ def repeats_check(lst1, lst2):
             The list with shorter words.
         lst2 : LIST
             The list with longer words.
+        intersectiondist : INTEGER
+            The size of chunks to take.
 
         Returns
         -------
@@ -187,8 +192,8 @@ def repeats_check(lst1, lst2):
     test_lst1 = []
     for i in lst11: # split lst11 into 3-character morphemes
         n = 0
-        while 3+n <= length1:
-            test_word = i[n:(3+n)]
+        while (intersectiondist + n) <= length1:
+            test_word = i[n:(intersectiondist + n)]
             test_lst1 += [test_word]
             n +=1
         else:
@@ -198,10 +203,10 @@ def repeats_check(lst1, lst2):
     intersections = []
     for j in lst22:
         n = 0
-        while 3+n <= length2:
-            test_word = j[n:(3+n)] # split lst22 into 3-character morphemes
+        while (intersectiondist + n) <= length2:
+            test_word = j[n:(intersectiondist + n)] # split lst22 into 3-character morphemes
             test_lst2 += [test_word]
-            ints = intersection(test_lst1, test_lst2) # calculate the intersection of the 3-character morphemes from both lists
+            ints = intersection(test_lst1, test_lst2, intersectiondist) # calculate the intersection of the 3-character morphemes from both lists
             intersections += ints
             test_lst2 = []
             n += 1
@@ -218,8 +223,8 @@ def repeats_check(lst1, lst2):
         test_lst = []
         for i in lst11:
             n = 0
-            while 3+n <= length1:
-                test_word = i[n:(3+n)] # split lst11 into 3-character morphemes
+            while (intersectiondist + n) <= length1:
+                test_word = i[n:(intersectiondist + n)] # split lst11 into 3-character morphemes
                 test_words = [test_word, i] # create joined sublists with the morphemes and the words they belong to
                 test_words = [''.join(i) for i in test_words] # group the separated sublist morphemes and words 
                 test_lst += [test_words]
@@ -349,7 +354,7 @@ def cycle_through(a,s,w):
     L2dict : DICTIONARY
         The dictionary of words for L2, with the stem and affix they're composed of
     '''
-    def list_generations(lst,n1,n2,t1,t2):
+    def list_generations(lst,n1,n2,t1,t2,intersectiondist):
         '''
         Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
 
@@ -365,7 +370,9 @@ def cycle_through(a,s,w):
             Number of morphemes of length n1 to generate.
         t2 : INTEGER
             Number of morphemes of length n2 to generate.
-
+        intersectiondist : INTEGER
+            The size of chunks to take.
+        
         Returns
         -------
         morphemes1 : LIST
@@ -383,14 +390,14 @@ def cycle_through(a,s,w):
             morphemes2 = permutations(lst,n2,t2) # generate morphemes 1 character longer than in morphemes1
         else:
             print('Careful, t2 == 0')
-        intersections, dellist, morphemes = repeats_check(morphemes1, morphemes2) # find intersections in the morphemes lists
+        intersections, dellist, morphemes = repeats_check(morphemes1, morphemes2, intersectiondist) # find intersections in the morphemes lists
         n_inter = len(morphemes1)
         while n_inter < t1: # while morphemes1 has deletions due to intersections with morphemes2
             missing = t1 - n_inter # calculate how many more to generate
             print(f'Still missing {missing} morphemes')
             moremorphemes1 = permutations(lst,n1,missing)
             morphemes1 = moremorphemes1 + morphemes1
-            intersections, dellist, morphemes1 = repeats_check(morphemes1, morphemes2) # calculate intersections between new morphemes1 and morphemes2
+            intersections, dellist, morphemes1 = repeats_check(morphemes1, morphemes2, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
             n_inter = len(morphemes1)
         return morphemes1, morphemes2
     
@@ -581,10 +588,11 @@ def cycle_through(a,s,w):
     letters1, letters2 = language_characters()
     
     # generate affix & stem lists for both languages:
-    L1affixes1, L1affixes2 = list_generations(letters1,3,4,(a/2),(a/2)) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
-    L1stems1, L1stems2 = list_generations(letters1,4,5,(s/2),(s/2)) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
-    L2affixes1, L2affixes2 = list_generations(letters2,3,4,(a/2),(a/2))
-    L2stems1, L2stems2 = list_generations(letters2,4,5,(s/2),(s/2))
+    intersectiondist = int(input("Desired intersections chunk size for morphemes: ")) # intersections check chunk size prompt
+    L1affixes1, L1affixes2 = list_generations(letters1,3,4,(a/2),(a/2),intersectiondist) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
+    L1stems1, L1stems2 = list_generations(letters1,4,5,(s/2),(s/2),intersectiondist) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
+    L2affixes1, L2affixes2 = list_generations(letters2,3,4,(a/2),(a/2),intersectiondist)
+    L2stems1, L2stems2 = list_generations(letters2,4,5,(s/2),(s/2),intersectiondist)
     L1affixes = L1affixes1 + L1affixes2
     L1stems = L1stems1 + L1stems2
     L2affixes = L2affixes1 + L2affixes2
