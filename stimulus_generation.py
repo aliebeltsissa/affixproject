@@ -50,7 +50,7 @@ def language_characters():
     setlistcompare(all_letters) # test whether the letter sets are overlapping or not
     return letters1, letters2
 
-def permutations(lst,l,n):
+def permutations(lst,l,n,morpheme_type):
     '''
     Generates n permutations of length l of a list lst. Works if l [2;6].
 
@@ -62,6 +62,8 @@ def permutations(lst,l,n):
         Desired length of the morphemes
     n : INTEGER
         Number of morphemes to be added to output list
+    morpheme_type : STRING
+        'Affixes' or 'stems' for the end printed message
 
     Returns
     -------
@@ -130,47 +132,51 @@ def permutations(lst,l,n):
                     else:
                         continue
     if morphemes != False:
-        print(f"Finished generating list of {l}-character morphemes")
+        print(f"Finished generating list of {l}-character {morpheme_type}")
     return morphemes
 
 import itertools
-def repeats_check(lst1, lst2, intersectiondist):
+def global_intersection(lst1,lst2,intersectiondist):
     '''
-    Cycles through items from list 2 to find chunks in common with items in list 1. This version is flexible for lists with any length of items.
+    Tests for identical chunks of characters in words from 2 lists.
 
     Parameters
     ----------
     lst1 : LIST
-        The first list, with shorter words a minimum of 3 characters in length.
+        The first list to run the intersection check on.
     lst2 : LIST
-        The second list, with longer words.
+        The second list to run the intersection check on.
     intersectiondist : INTEGER
-        The size of chunks to take for the intersections similarity check.
+        Size of chunk taken for the intersection check.
 
     Returns
     -------
-    intersections : LIST
-        List of intersecting morphemes from list 1.
-    dellist : LIST
-        List of items in list 1 that are intersecting with list 2.
-    lst1_cleaned : LIST
-        List of items from list 1 that don't intersect with list 2.
+    morphemes1_dict : DICTIONARY
+        Output dictionary of non-intersecting morphemes from lst1.
+    morphemes1_list : LIST
+        Output list of non-intersecting morphemes from lst1.
+    morphemes2_dict : DICTIONARY
+        Output dictionary of non-intersecting morphemes from lst2.
+    morphemes2_list : LIST
+        Output list of non-intersecting morphemes from lst2.
     '''
     def intersection(lst1,intersectiondist):
         '''
-        Tests for identical chunks of characters in words from 1 list.
+        Tests for identical chunks of characters in morphemes from 1 list.
 
         Parameters
         ----------
-        lst1 : TYPE
-            DESCRIPTION.
-        intersectiondist : TYPE
-            DESCRIPTION.
+        lst1 : LIST
+            The list to perform the check on.
+        intersectiondist : INTEGER
+            Size of chunk taken for the check.
 
         Returns
         -------
-        None.
-
+        morphemes_dict : DICTIONARY
+            Output dictionary of non-intersecting morphemes.
+        morphemes_list : LIST
+            Output list of non-intersecting morphemes.
         '''
         if len(lst1) == 0: # tests to see whether the list given to the function contains something
             print('Careful, list is empty!')
@@ -189,34 +195,59 @@ def repeats_check(lst1, lst2, intersectiondist):
                 continue
         chunks_list = morphemes_dict.values()
         chunks_list = list(itertools.chain.from_iterable(chunks_list))
-        chunks_dellist = [x for x in chunks_list if chunks_list.count(x) > 1]
+        chunks_dellist = [x for x in chunks_list if chunks_list.count(x) > 1] # extract duplicates from chunks_list
         chunks_dellist = [*set(chunks_dellist)]
         dict_length = len(morphemes_dict)
         dict_list = list(morphemes_dict.keys())
-        for i in range(dict_length):
+        for i in range(dict_length): # for every morpheme key in the dictionary
             key = dict_list[i]
             for j in range(len(morphemes_dict[key])):
-                if key in morphemes_dict.keys():
-                    if morphemes_dict[key][j] in chunks_dellist:
-                        del morphemes_dict[key]
+                if key in morphemes_dict.keys(): # if the key hasn't already been deleted
+                    if morphemes_dict[key][j] in chunks_dellist: # if one of the morpheme's chunks is in the dellist
+                        del morphemes_dict[key] # delete entry for that item
+                else:
+                    continue
+        morphemes_list = list(morphemes_dict.keys())
+        return morphemes_dict, morphemes_list
+        
+    if len(lst1) == 0: # tests to see whether the lists given to the function contain something
+        print('Careful, lst1 is empty!')
+    if len(lst2) == 0:
+        print('Careful, lst2 is empty!')
+    if len(lst1) == 0 or len(lst2) == 0:
+        return
+    morphemes1_dict, morphemes1_list = intersection(lst1, intersectiondist)
+    morphemes2_dict, morphemes2_list = intersection(lst2, intersectiondist)
+    chunks1_list = morphemes1_dict.values()
+    chunks2_list = morphemes2_dict.values()
+    chunks1_list = list(itertools.chain.from_iterable(chunks1_list))
+    chunks2_list = list(itertools.chain.from_iterable(chunks2_list))
+    pooled_list = chunks1_list + chunks2_list
+    chunks1_dellist = [x for x in pooled_list if pooled_list.count(x) > 1] # extract duplicates from chunks_list
+    chunks2_dellist = [x for x in pooled_list if pooled_list.count(x) > 1]
+    chunks1_dellist = [*set(chunks1_dellist)]
+    chunks2_dellist = [*set(chunks2_dellist)]
+    dict1_length = len(morphemes1_dict)
+    dict1_list = list(morphemes1_dict.keys())
+    for i in range(dict1_length): # for every morpheme key in the dictionary
+        key = dict1_list[i]
+        for j in range(len(morphemes1_dict[key])):
+            if key in morphemes1_dict.keys(): # if the key hasn't already been deleted
+                if morphemes1_dict[key][j] in chunks1_dellist: # if one of the morpheme's chunks is in the dellist
+                    del morphemes1_dict[key] # delete entry for that item
             else:
                 continue
-        print(morphemes_dict)
-        return morphemes_dict
-    #     dellist = []
-    #     for i in range(0,len(test_lst)):
-    #         if test_lst[i][0] in intersections:
-    #             dellist += [test_lst[i][1]] # makes list of words whose associated morphemes were in common with lst2
-    #         else:
-    #             continue
-    #     #if len(dellist) != 0: #optional check
-    #         #print(f'The words those morphemes belong to are: {dellist}')
-    #     lst1_cleaned = []
-    #     lst1_cleaned = [x for x in lst1 if x not in dellist] # remove words with common morphemes from lst1
-    # #print('List 1 without the repeated morphemes is: {lst1_cleaned}')
-    # if len(lst1_cleaned) != 0:
-    #     print('Finished cleaning list.')
-    # return intersections, dellist, lst1_cleaned
+    dict2_length = len(morphemes2_dict)
+    dict2_list = list(morphemes2_dict.keys())
+    for i in range(dict2_length): # for every morpheme key in the dictionary
+        key = dict2_list[i]
+        for j in range(len(morphemes2_dict[key])):
+            if key in morphemes2_dict.keys(): # if the key hasn't already been deleted
+                if morphemes2_dict[key][j] in chunks1_dellist: # if one of the morpheme's chunks is in the dellist
+                    del morphemes2_dict[key] # delete entry for that item
+            else:
+                continue
+    return morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list
 
 import numpy as np
 def LED(word1,word2):
@@ -325,9 +356,9 @@ def cycle_through(a,s,w):
     L2dict : DICTIONARY
         The dictionary of words for L2, with the stem and affix they're composed of
     '''
-    def list_generations(lst,n1,n2,t1,t2,intersectiondist):
+    def list_generations(lst,n1,n2,t1,t2,intersectiondist,morpheme_type):
         '''
-        Cycles through the permutations and repeats_check function to obtain 2 lists without repeats.
+        Cycles through the permutations and global_intersection function to obtain 2 lists without repeats.
 
         Parameters
         ----------
@@ -343,6 +374,8 @@ def cycle_through(a,s,w):
             Number of morphemes of length n2 to generate.
         intersectiondist : INTEGER
             The size of chunks to take.
+        morpheme_type : STRING
+            'Affixes' or 'stems' for the end printed message
         
         Returns
         -------
@@ -354,23 +387,23 @@ def cycle_through(a,s,w):
         morphemes1 = []
         morphemes2 = []
         if t1 != 0:
-            morphemes1 = permutations(lst,n1,t1) # generate morphemes of a certain length
+            morphemes1 = permutations(lst,n1,t1,morpheme_type) # generate morphemes of a certain length
         else:
             print('Careful, t1 == 0')
         if t2 != 0:
-            morphemes2 = permutations(lst,n2,t2) # generate morphemes 1 character longer than in morphemes1
+            morphemes2 = permutations(lst,n2,t2,morpheme_type) # generate morphemes 1 character longer than in morphemes1
         else:
             print('Careful, t2 == 0')
-        intersections, dellist, morphemes = repeats_check(morphemes1, morphemes2, intersectiondist) # find intersections in the morphemes lists
-        n_inter = len(morphemes1)
+        morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1, morphemes2, intersectiondist) # find intersections in the morphemes lists
+        n_inter = len(morphemes1_list)
         while n_inter < t1: # while morphemes1 has deletions due to intersections with morphemes2
-            missing = t1 - n_inter # calculate how many more to generate
+            missing = int(t1 - n_inter) # calculate how many more to generate
             print(f'Still missing {missing} morphemes')
-            moremorphemes1 = permutations(lst,n1,missing)
-            morphemes1 = moremorphemes1 + morphemes1
-            intersections, dellist, morphemes1 = repeats_check(morphemes1, morphemes2, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
-            n_inter = len(morphemes1)
-        return morphemes1, morphemes2
+            moremorphemes1 = permutations(lst,n1,missing,morpheme_type)
+            morphemes1_list = moremorphemes1 + morphemes1_list
+            morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1, morphemes2, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
+            n_inter = len(morphemes1_list)
+        return morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list
     
     def wordcycle(affixes,stems,l,w,dist):
         '''
@@ -560,29 +593,33 @@ def cycle_through(a,s,w):
     
     # generate affix & stem lists for both languages:
     intersectiondist = int(input("Desired intersections chunk size for morphemes: ")) # intersections check chunk size prompt
-    L1affixes1, L1affixes2 = list_generations(letters1,3,4,(a/2),(a/2),intersectiondist) # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
-    L1stems1, L1stems2 = list_generations(letters1,4,5,(s/2),(s/2),intersectiondist) # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
-    L2affixes1, L2affixes2 = list_generations(letters2,3,4,(a/2),(a/2),intersectiondist)
-    L2stems1, L2stems2 = list_generations(letters2,4,5,(s/2),(s/2),intersectiondist)
-    L1affixes = L1affixes1 + L1affixes2
-    L1stems = L1stems1 + L1stems2
-    L2affixes = L2affixes1 + L2affixes2
-    L2stems = L2stems1 + L2stems2
-    if len(L1affixes) != 0 and len(L1stems) != 0 and len(L2affixes) != 0 and len(L2stems) != 0 and len(L1affixes) == len(L2affixes) and len(L1stems) == len(L2stems):
+    L1affixes1_dict, L1affixes1_list, L1affixes2_dict, L1affixes2_list = list_generations(letters1,3,4,(a/2),(a/2),intersectiondist,'affixes') # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
+    L1stems1_dict, L1stems1_list, L1stems2_dict, L1stems2_list = list_generations(letters1,4,5,(s/2),(s/2),intersectiondist,'stems') # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
+    L2affixes1_dict, L2affixes1_list, L2affixes2_dict, L2affixes2_list = list_generations(letters2,3,4,(a/2),(a/2),intersectiondist,'affixes')
+    L2stems1_dict, L2stems1_list, L2stems2_dict, L2stems2_list = list_generations(letters2,4,5,(s/2),(s/2),intersectiondist,'stems')
+    L1affixes_dict = L1affixes1_dict.update(L1affixes2_dict)
+    L1affixes_list = L1affixes1_list + L1affixes2_list
+    L1stems_dict = L1stems1_dict.update(L1stems2_dict)
+    L1stems_list = L1stems1_list + L1stems2_list
+    L2affixes_dict = L2affixes1_dict.update(L2affixes2_dict)
+    L2affixes_list = L2affixes1_list + L2affixes2_list
+    L2stems_dict = L2stems1_dict.update(L2stems2_dict)
+    L2stems_list = L2stems1_list + L2stems2_list
+    if len(L1affixes_list) != 0 and len(L1stems_list) != 0 and len(L2affixes_list) != 0 and len(L2stems_list) != 0 and len(L1affixes_list) == len(L2affixes_list) and len(L1stems_list) == len(L2stems_list):
         print('Finished generating affix and stem lists.')
     else:
         print('Problem generating affix and stem lists.')
     
     # generate word lists for both languages:
     dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
-    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes,L1stems,L2affixes,L2stems,'global',w,dist_input)
+    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list,'global',w,dist_input)
     if len(L1words) == len(L2words) == w and list(L1dict.keys()) == L1words and list(L2dict.keys()) == L2words:
         print('Correctly generated complete stimuli set.')
     elif list(L1dict.keys()) != L1words or list(L2dict.keys()) != L2words:
         print('Dictionaries not the same length as word lists!')
-    return L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
+    return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
-L1affixes, L1stems, L2affixes, L2stems, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
+L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)/60
