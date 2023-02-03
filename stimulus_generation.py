@@ -384,24 +384,24 @@ def cycle_through(a,s,w):
         morphemes2 : LIST
             List of the second set of morphemes.
         '''
-        morphemes1 = []
-        morphemes2 = []
+        morphemes1_list = []
+        morphemes2_list = []
         if t1 != 0:
-            morphemes1 = permutations(lst,n1,t1,morpheme_type) # generate morphemes of a certain length
+            morphemes1_list = permutations(lst,n1,t1,morpheme_type) # generate morphemes of a certain length
         else:
             print('Careful, t1 == 0')
         if t2 != 0:
-            morphemes2 = permutations(lst,n2,t2,morpheme_type) # generate morphemes 1 character longer than in morphemes1
+            morphemes2_list = permutations(lst,n2,t2,morpheme_type) # generate morphemes 1 character longer than in morphemes1
         else:
             print('Careful, t2 == 0')
-        morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1, morphemes2, intersectiondist) # find intersections in the morphemes lists
+        morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1_list, morphemes2_list, intersectiondist) # find intersections in the morphemes lists
         n_inter = len(morphemes1_list)
         while n_inter < t1: # while morphemes1 has deletions due to intersections with morphemes2
             missing = int(t1 - n_inter) # calculate how many more to generate
-            print(f'Still missing {missing} morphemes')
-            moremorphemes1 = permutations(lst,n1,missing,morpheme_type)
-            morphemes1_list = moremorphemes1 + morphemes1_list
-            morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1, morphemes2, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
+            #print(f'Still missing {missing} morphemes')
+            moremorphemes1_list = permutations(lst,n1,missing,morpheme_type)
+            morphemes1_list = moremorphemes1_list + morphemes1_list
+            morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1_list, morphemes2_list, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
             n_inter = len(morphemes1_list)
         return morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list
     
