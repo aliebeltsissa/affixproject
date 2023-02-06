@@ -475,7 +475,30 @@ def morpheme_generations(a,s):
     return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list
         
 L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list = morpheme_generations(100,200)
-    
+
+import os.path
+folder = "C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject"
+file_name = 'L1affixes.txt'
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output:
+    for morpheme in L1affixes_list:
+        output.write(morpheme+"\n")
+file_name = 'L1stems.txt'
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output:
+    for morpheme in L1affixes_list:
+        output.write(morpheme+"\n")
+file_name = 'L2affixes.txt'
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output:
+    for morpheme in L1affixes_list:
+        output.write(morpheme+"\n")
+file_name = 'L2stems.txt'
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output:
+    for morpheme in L1affixes_list:
+        output.write(morpheme+"\n")
+
 end_time = time.time()
 elapsed_time = end_time - start_time
 print('Execution time: %.1f seconds' % elapsed_time)
