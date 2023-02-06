@@ -50,20 +50,22 @@ def language_characters():
     setlistcompare(all_letters) # test whether the letter sets are overlapping or not
     return letters1, letters2
 
-def permutations(lst,l,n,morpheme_type):
+def permutations(lst,l,n,morpheme_type,language):
     '''
     Generates n permutations of length l of a list lst. Works if l [2;6].
 
     Parameters
     ----------
     lst : LIST
-        Input list
+        Input list.
     l : INTEGER
-        Desired length of the morphemes
+        Desired length of the morphemes.
     n : INTEGER
-        Number of morphemes to be added to output list
+        Number of morphemes to be added to output list.
     morpheme_type : STRING
-        'Affixes' or 'stems' for the end printed message
+        'Affixes' or 'stems' for the end printed message.
+    language : STRING
+        'L1' or 'L2' for the end printed message.
 
     Returns
     -------
@@ -132,7 +134,7 @@ def permutations(lst,l,n,morpheme_type):
                     else:
                         continue
     if morphemes != False:
-        print(f"Finished generating list of {l}-character {morpheme_type}")
+        print(f"Finished generating {language} list of {l}-character {morpheme_type}")
     return morphemes
 
 import itertools
@@ -326,42 +328,40 @@ def LEdistance(lst1,lst2,dist_input):
     #print(f'Words to delete: {dellist}')
     return dellist
 
-def cycle_through(a,s,w):
+def morpheme_generations(a,s):
     '''
-    Cycles through the permutations and repeats_check function to obtain lists of stems and affixes in each language without repeats.
+    Cycles through list_generation function to get sets of morphemes for L1 & L2.
 
     Parameters
     ----------
     a : INTEGER
-        The number of affixes to generate in each language.
+        The number of affixes to generate for each language.
     s : INTEGER
-        The number of stems to generate in each language.
-    w : INTEGER
-        The number of words to generate in each language.
+        The number of stems to generate for each language.
 
     Returns
     -------
-    L1affixes : LIST
-        The list of affixes for L1.
-    L1stems : LIST
-        The list of stems for L1.
-    L2affixes : LIST
-        The list of affixes for L2.
-    L2stems : LIST
-        The list of stems for L2.
-    L1words : LIST
-        The list of words for L1.
-    L2words : LIST
-        The list of words for L2.
-    L1dict : DICTIONARY
-        The dictionary of words for L1, with the stem and affix they're composed of
-    L2dict : DICTIONARY
-        The dictionary of words for L2, with the stem and affix they're composed of
+    L1affixes_dict : DICTIONARY
+        A dictionary of morphemes belonging to L2.
+    L1affixes_list : LIST
+        A list of morphemes belonging to L2.
+    L1stems_dict : DICTIONARY
+        A dictionary of morphemes belonging to L2.
+    L1stems_list : LIST
+        A list of morphemes belonging to L2.
+    L2affixes_dict : DICTIONARY
+        A dictionary of morphemes belonging to L2.
+    L2affixes_list : LIST
+        A list of morphemes belonging to L2.
+    L2stems_dict : DICTIONARY
+        A dictionary of morphemes belonging to L2.
+    L2stems_list : LIST
+        A list of morphemes belonging to L2.
     '''
-    def list_generations(lst,n1,n2,t1,t2,intersectiondist,morpheme_type):
+    def list_generations(lst,n1,n2,t1,t2,intersectiondist,morpheme_type,language):
         '''
         Cycles through the permutations and global_intersection function to obtain 2 lists without repeats.
-
+    
         Parameters
         ----------
         lst : LIST
@@ -377,23 +377,29 @@ def cycle_through(a,s,w):
         intersectiondist : INTEGER
             The size of chunks to take.
         morpheme_type : STRING
-            'Affixes' or 'stems' for the end printed message
+            'Affixes' or 'stems' for the end printed message.
+        language : STRING
+            'L1' or 'L2' for the end printed message.
         
         Returns
         -------
-        morphemes1 : LIST
+        moprhemes1_dict : DICTIONARY
+            Dictionary of the first set of morphemes.
+        morphemes1_list : LIST
             List of the first set of morphemes.
-        morphemes2 : LIST
+        morphemes2_dict : DICTIONARY
+            Dictionary of the second set of morphemes.
+        morphemes2_list : LIST
             List of the second set of morphemes.
         '''
         morphemes1_list = []
         morphemes2_list = []
         if t1 != 0:
-            morphemes1_list = permutations(lst,n1,t1,morpheme_type) # generate morphemes of a certain length
+            morphemes1_list = permutations(lst,n1,t1,morpheme_type,language) # generate morphemes of a certain length
         else:
             print('Careful, t1 == 0')
         if t2 != 0:
-            morphemes2_list = permutations(lst,n2,t2,morpheme_type) # generate morphemes 1 character longer than in morphemes1
+            morphemes2_list = permutations(lst,n2,t2,morpheme_type,language) # generate morphemes 1 character longer than in morphemes1
         else:
             print('Careful, t2 == 0')
         morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1_list, morphemes2_list, intersectiondist) # find intersections in the morphemes lists
@@ -401,7 +407,7 @@ def cycle_through(a,s,w):
         missing = int(t1 - n_inter1) # calculate how many more to generate
         #print(f'Still missing {missing} morphemes')
         while n_inter1 < t1: # while morphemes1 has deletions due to intersections with morphemes2
-            moremorphemes1_list = permutations(lst,n1,missing,morpheme_type)
+            moremorphemes1_list = permutations(lst,n1,missing,morpheme_type,language)
             morphemes1_list = moremorphemes1_list + morphemes1_list
             morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1_list, morphemes2_list, intersectiondist) # calculate intersections between new morphemes1 and morphemes2
             n_inter1 = len(morphemes1_list)
@@ -411,231 +417,41 @@ def cycle_through(a,s,w):
         missing = int(t2 - n_inter2) # calculate how many more to generate
         #print(f'Still missing {missing} morphemes')
         while n_inter2 < t2: # while morphemes2 has deletions due to intersections with morphemes1
-            moremorphemes2_list = permutations(lst,n2,missing,morpheme_type)
+            moremorphemes2_list = permutations(lst,n2,missing,morpheme_type,language)
             morphemes2_list = moremorphemes2_list + morphemes2_list
             morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list = global_intersection(morphemes1_list, morphemes2_list, intersectiondist) # calculate intersections between new morphemes2 and morphemes1
             n_inter2 = len(morphemes2_list)
             missing = int(t2 - n_inter2) # calculate how many more to generate
             #print(f'Still missing {missing} morphemes')
         return morphemes1_dict, morphemes1_list, morphemes2_dict, morphemes2_list
-    
-    def wordcycle(affixes,stems,l,w,dist):
-        '''
-        Combines affixes and stems into words, tests LED, delete similar words, cycles through again if word list incomplete.
-
-        Parameters
-        ----------
-        affixes : LIST
-            The list of affixes.
-        stems : LIST
-            The list of stems.
-        l : STRING
-            Label for printed output specifying the language ('L1' or 'L2').
-        w : INTEGER
-            Number of words to generate.
-        dist : INTEGER
-            The desired LE distance threshold.
-
-        Returns
-        -------
-        words : LIST
-            Generated words list.
-        '''
-        words = []
-        missing = w # to start, all w desired items are missing
-        reps = 0
-        words_dict = {}
-        while len(words) < w: # while word list incomplete
-            reps += 1
-            for i in affixes:
-                for j in stems:
-                    while missing > 0:
-                        s = random.choice(stems)
-                        a = random.choice(affixes)
-                        if s != a and s[-1] != a[0] and s + a not in words: # if stem & affix different, plus if the boundary letters are different, and the word isn't already in the word list
-                            words += [s + a]
-                            missing -= 1
-                            parts = [s, a]
-                            word = s + a
-                            words_dict[word] = parts # add word to dictionary
-            if len(words) == w:
-                print(f'Finished rep {reps} of generating {l} word list. Testing LE distance...')
-            else:
-                print(f'Problem on rep {reps} of generating {l} word list.')
-                break
             
-            dellist = []
-            for i in range(len(words)):
-                for j in range(len(words)):
-                    if i != j:
-                        distance = int(LED(words[i], words[j]))
-                        #print(words[i], words[j], distance) optional: print tested word pairs & the LED
-                        if distance < dist: # if LED below specified threshold LED
-                            dellist.append(words[i])
-            dellist = [*set(dellist)]
-            #print(f'Words to delete: {dellist}') optional: print list of words to delete
-            missing = len(dellist) # calculate how many more words it'll need to generate
-            #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
-            for x in dellist:
-                del words_dict[x] # delete dictionary entry for too-similar words
-            words = [x for x in words if x in words_dict] # delete words in list if they're not in the dictionary
-        if len(words) == w:
-            print(f'Finished testing {l} word list.')
-        return words, reps, words_dict
-    
-    def globalcycle(L1affixes,L1stems,L2affixes,L2stems,l,w,dist):
-        '''
-        Uses the wordcycle function to generate stem + affix pairings in L1 and L2, tests the LE distance between languages, and returns complete word lists.
-
-        Parameters
-        ----------
-        L1affixes : LIST
-            The list of affixes from L1.
-        L1stems : LIST
-            The list of stems from L1.
-        L2affixes : LIST
-            The list of affixes from L2.
-        L2stems : LIST
-            The list of stems from L2.
-        l : STRING
-            The label for what the function is working with (usually, enter 'global').
-        w : INTEGER
-            The total number of words to generate for each language.
-        dist : INTEGER
-            The input for the threshold accepted LE distance.
-
-        Returns
-        -------
-        L1words : LIST
-            A list of words in L1.
-        L2words : LIST
-            A list of words in L2.
-        L1reps : LIST
-            A list of the amount of cycles needed for the function to get all the L1 words for each global cycle.
-        L2reps : LIST
-            A list of the amount of cycles needed for the function to get all the L2 words for each global cycle..
-        L1dict : DICT
-            A dictionary matching L1 words with the stem & affix they're made of (order: stem, then affix).
-        L2dict : DICT
-            A dictionary matching L2 words with the stem & affix they're made of (order: stem, then affix)..
-        globalreps : INTEGER
-            The number of cycles that globalcycle had to go through to get all the L1 & L2 words.
-        '''
-        dist2 = int(input("Desired LE distance threshold for words between languages: ")) # LED threshold prompt
-        missing2 = w # to start, all w desired items are missing
-        L1words = []
-        L1reps = []
-        L2reps = []
-        globalreps = 1
-        L1words, L1reps1, L1dict = wordcycle(L1affixes,L1stems,'L1',missing2,dist)
-        L1reps.append(L1reps1)
-        L2words, L2reps1, L2dict = wordcycle(L2affixes,L2stems,'L2',missing2,dist)
-        L2reps.append(L2reps1)
-        if len(L1words) != len(L2words):
-            print('Warning: L1 words not the same length as L2 words')
-        print('Testing LE distance between languages...')
-        dellist1 = []
-        dellist2 = []            
-        for i in range(len(L1words)):
-            for j in range(len(L2words)):
-                L1testword = L1words[i]
-                L2testword = L2words[j]
-                distance = int(LED(L1testword, L2testword)) # LE distance calculations between L1 & L2 words
-                #print(L1words[i], L2words[j], distance) # optional: print tested word pairs & the LED
-                if distance < dist2: # if LED below specified threshold LED
-                    dellist1.append(L1testword)
-                    dellist2.append(L2testword)
-        if len(dellist1) != len(dellist2):
-            print('Warning: different lengths of the dellists!')
-        dellist1 = [*set(dellist1)]
-        dellist2 = [*set(dellist2)]
-        #print(f'Words to delete: {dellist}') optional: print list of words to delete
-        for x in dellist1:
-            del L1dict[x] # delete dictionary entry for too-similar words
-        for y in dellist2:
-            del L2dict[y] # delete dictionary entry for too-similar words
-        L1words = list(L1dict.keys()) # delete words in list if they're not in the dictionary
-        L2words = list(L2dict.keys()) # delete words in list if they're not in the dictionary
-        missing1 = w - len(L1words) # calculate how many more words it'll need to generate
-        missing2 = w - len(L2words)
-        #print(f'Still missing {missing} word(s).') optional: print how many words it still has to generate
-        print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
-        while len(L1words) < w : # while word lists incomplete
-            globalreps += 1
-            L1words_a, L1reps_a, L1dict_a = wordcycle(L1affixes,L1stems,'L1',missing1,dist)
-            L1reps.append(L1reps_a) # add repetition count to reps list
-            L1dict.update(L1dict_a) # update dictionary
-            L1words += L1words_a # update words list
-            L2words_a, L2reps_a, L2dict_a = wordcycle(L2affixes,L2stems,'L2',missing2,dist)
-            L2reps.append(L2reps_a) # add repetition count to reps list
-            L2dict.update(L2dict_a) # update dictionary
-            L2words += L2words_a # update words list
-            if len(L1words) != len(L2words):
-                print('Warning: L1words length different from L2words length after update')
-            print('Testing LE distance between languages...')
-            dellist1 = []
-            dellist2 = []            
-            for i in range(len(L1words)):
-                for j in range(len(L2words)):
-                    distance = int(LED(L1words[i], L2words[j])) # LE distance calculations between L1 & L2 words
-                    #print(L1words[i], L2words[j], distance) # optional: print tested word pairs & the LED
-                    if distance < dist2: # if LED below specified threshold LED
-                        dellist1.append(L1words[i])
-                        dellist2.append(L2words[j])
-            if len(dellist1) != len(dellist2):
-                print('Warning: different lengths of the dellists!')
-            dellist1 = [*set(dellist1)]
-            dellist2 = [*set(dellist2)]
-            #print(f'Words to delete: {dellist}') optional: print list of words to delete
-            for x in dellist1:
-                del L1dict[x] # delete dictionary entry for too-similar words
-            for y in dellist2:
-                del L2dict[y] # delete dictionary entry for too-similar words
-            L1words = list(L1dict.keys()) # delete words in list if they're not in the dictionary
-            L2words = list(L2dict.keys()) # delete words in list if they're not in the dictionary  
-            missing1 = w - len(L1words)
-            missing2 = w - len(L2words)
-            print(f'Rep {globalreps} of comparing L1 and L2 word lists finished.')
-        if len(L1words) == len(L2words) == w and missing1 == 0 and missing2 == 0:
-            print('Finished comparing L1 and L2 word lists.')
-        elif len(L1words) != len(L2words):
-            print(f'Warning: L1word and L2word length different at end of rep {globalreps}')
-        return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
-        
     # generate character lists for both languages:
     letters1, letters2 = language_characters()
     
-    # generate affix & stem lists for both languages:
+    # generate morpheme lists and dictionaries for both languages:
     intersectiondist = int(input("Desired intersections chunk size for morphemes: ")) # intersections check chunk size prompt
-    L1affixes1_dict, L1affixes1_list, L1affixes2_dict, L1affixes2_list = list_generations(letters1,3,4,(a/2),(a/2),intersectiondist,'affixes') # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
-    L1stems1_dict, L1stems1_list, L1stems2_dict, L1stems2_list = list_generations(letters1,4,5,(s/2),(s/2),intersectiondist,'stems') # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
-    L2affixes1_dict, L2affixes1_list, L2affixes2_dict, L2affixes2_list = list_generations(letters2,3,4,(a/2),(a/2),intersectiondist,'affixes')
-    L2stems1_dict, L2stems1_list, L2stems2_dict, L2stems2_list = list_generations(letters2,4,5,(s/2),(s/2),intersectiondist,'stems')
-    L1affixes_dict = dict(L1affixes1_dict,**L1affixes2_dict)
+    L1affixes1_dict, L1affixes1_list, L1affixes2_dict, L1affixes2_list = list_generations(letters1,3,4,(a/2),(a/2),intersectiondist,'affixes','L1') # a being the total number of affixes to generate, so want a/2 3-character and a/2 4-character affixes
+    L1stems1_dict, L1stems1_list, L1stems2_dict, L1stems2_list = list_generations(letters1,4,5,(s/2),(s/2),intersectiondist,'stems','L1') # s being the total number of stems to generate, so want s/2 4-character and s/2 5-character stems
+    L2affixes1_dict, L2affixes1_list, L2affixes2_dict, L2affixes2_list = list_generations(letters2,3,4,(a/2),(a/2),intersectiondist,'affixes','L2')
+    L2stems1_dict, L2stems1_list, L2stems2_dict, L2stems2_list = list_generations(letters2,4,5,(s/2),(s/2),intersectiondist,'stems','L2')
+
+    # combine morpheme lists and dictionaries for both languages:
+    L1affixes_dict = dict(L1affixes1_dict, **L1affixes2_dict)
     L1affixes_list = L1affixes1_list + L1affixes2_list
-    L1stems_dict = dict(L1stems1_dict,**L1stems2_dict)
+    L1stems_dict = dict(L1stems1_dict, **L1stems2_dict)
     L1stems_list = L1stems1_list + L1stems2_list
-    L2affixes_dict = dict(L2affixes1_dict,**L2affixes2_dict)
+    L2affixes_dict = dict(L2affixes1_dict, **L2affixes2_dict)
     L2affixes_list = L2affixes1_list + L2affixes2_list
-    L2stems_dict = dict(L2stems1_dict,**L2stems2_dict)
+    L2stems_dict = dict(L2stems1_dict, **L2stems2_dict)
     L2stems_list = L2stems1_list + L2stems2_list
-    if len(L1affixes_list) != 0 and len(L1stems_list) != 0 and len(L2affixes_list) != 0 and len(L2stems_list) != 0 and len(L1affixes_list) == len(L2affixes_list) and len(L1stems_list) == len(L2stems_list):
-        print('Finished generating affix and stem lists.')
+    if len(L1affixes_list) == len(L2affixes_list) == a and len(L1stems_list) == len(L2stems_list) == s:
+        print('Finished generating morpheme lists.')
     else:
-        print('Problem generating affix and stem lists.')
+        print('Problem generating morpheme lists.')
+    return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list
+        
+L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list = morpheme_generations(50,100)
     
-    # generate word lists for both languages:
-    dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
-    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list,'global',w,dist_input)
-    if len(L1words) == len(L2words) == w and list(L1dict.keys()) == L1words and list(L2dict.keys()) == L2words:
-        print('Correctly generated complete stimuli set.')
-    elif list(L1dict.keys()) != L1words or list(L2dict.keys()) != L2words:
-        print('Dictionaries not the same length as word lists!')
-    return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
-
-L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(100,200,300)
-
 end_time = time.time()
-elapsed_time = (end_time - start_time)/60
-
-print('Execution time: %.2f minutes' % elapsed_time)
+elapsed_time = end_time - start_time
+print('Execution time: %.1f seconds' % elapsed_time)
