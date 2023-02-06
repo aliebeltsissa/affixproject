@@ -79,21 +79,12 @@ def LEdistance(lst1,lst2,dist_input):
     return dellist
 
 import random
-def cycle_through(a,s,w):
+def cycle_through(L1affixes,L1stems,L2affixes,L2stems,w):
     '''
     Cycles through the permutations and repeats_check function to obtain lists of stems and affixes in each language without repeats.
 
     Parameters
     ----------
-    a : INTEGER
-        The number of affixes to generate in each language.
-    s : INTEGER
-        The number of stems to generate in each language.
-    w : INTEGER
-        The number of words to generate in each language.
-
-    Returns
-    -------
     L1affixes : LIST
         The list of affixes for L1.
     L1stems : LIST
@@ -102,6 +93,11 @@ def cycle_through(a,s,w):
         The list of affixes for L2.
     L2stems : LIST
         The list of stems for L2.
+    w : INTEGER
+        The number of words to generate in each language.
+
+    Returns
+    -------
     L1words : LIST
         The list of words for L1.
     L2words : LIST
@@ -296,13 +292,35 @@ def cycle_through(a,s,w):
     
     # generate word lists for both languages:
     dist_input = int(input("Desired LE distance threshold for words: ")) # LED threshold prompt
-    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list,'global',w,dist_input)
+    L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = globalcycle(L1affixes,L1stems,L2affixes,L2stems,'global',w,dist_input)
     if len(L1words) == len(L2words) == w and list(L1dict.keys()) == L1words and list(L2dict.keys()) == L2words:
         print('Correctly generated complete stimuli set.')
     elif list(L1dict.keys()) != L1words or list(L2dict.keys()) != L2words:
         print('Dictionaries not the same length as word lists!')
-    return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list, L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
+    return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
+L1affixesfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L1affixes.txt", "r")
+data = L1affixesfile.read()
+L1affixes = data.split("\n") # split text file into list
+L1affixesfile.close()
+L1affixes = L1affixes[0:100] # remove last \n from text file
+L1stemsfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L1stems.txt", "r")
+data = L1stemsfile.read()
+L1stems = data.split("\n")
+L1stemsfile.close()
+L1affixes = L1affixes[0:200]
+L2affixesfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L2affixes.txt", "r")
+data = L2affixesfile.read()
+L2affixes = data.split("\n")
+L2affixesfile.close()
+L1affixes = L1affixes[0:100]
+L2stemsfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L2stems.txt", "r")
+data = L2stemsfile.read()
+L2stems = data.split("\n")
+L2stemsfile.close()
+L1affixes = L1affixes[0:200]
+
+cycle_through(L1affixes,L1stems,L2affixes,L2stems,300)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)/60
