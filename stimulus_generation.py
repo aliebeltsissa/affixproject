@@ -312,16 +312,18 @@ def LEdistance(lst1,lst2,dist_input):
 
     '''
     dellist = []
-    l = len(lst1) - 1
+    l1 = len(lst1) - 1
+    l2 = len(lst2) - 1
     i = 0
-    for i in range(l):
+    for i in range(l1):
         j = 0
-        while j <= l:
+        while j <= l2:
             distance = LED(lst1[i],lst2[j]) # computation of LE distance
             #print(lst1[i], lst2[j])
             #print(distance)
             if distance <= dist_input:
-                dellist.append(lst2[i])
+                dellist.append(lst1[i])
+                dellist.append(lst2[j])
             j += 1
     #print(f'Words to delete: {dellist}')
     return dellist

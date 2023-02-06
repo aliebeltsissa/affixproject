@@ -42,6 +42,42 @@ def LED(word1,word2):
                     distances[w1][w2] = c + 1
     return distances[len(word1)][len(word2)]
 
+def LEdistance(lst1,lst2,dist_input):
+    '''
+    Uses the LED function to cycle through 2 lists and compile a list of words too similar between the lists.
+
+    Parameters
+    ----------
+    lst1 : LIST
+        The first list to compare.
+    lst2 : LIST
+        The second list to compare.
+    dist_input : INTEGER
+        The accepted LE threshold value.
+
+    Returns
+    -------
+    dellist : LIST
+        A list of morphemes from lst2 to delete due to too great similarity to lst1.
+
+    '''
+    dellist = []
+    l1 = len(lst1) - 1
+    l2 = len(lst2) - 1
+    i = 0
+    for i in range(l1):
+        j = 0
+        while j <= l2:
+            distance = LED(lst1[i],lst2[j]) # computation of LE distance
+            #print(lst1[i], lst2[j])
+            #print(distance)
+            if distance <= dist_input:
+                dellist.append(lst1[i])
+                dellist.append(lst2[j])
+            j += 1
+    #print(f'Words to delete: {dellist}')
+    return dellist
+
 import random
 def cycle_through(a,s,w):
     '''
