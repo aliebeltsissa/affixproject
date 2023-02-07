@@ -105,13 +105,14 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                 for j in range(len(affix_subset)):
                     stem = stems[i]
                     affix = affixes[j]
-                    if stem != affix and stem[-1] != affix[0]: # if stem & affix different, plus if the boundary letters are different, and the word isn't already in the word list
+                    if stem != affix: # if stem & affix different and the word isn't already in the word list
+                    # HERE: can't have  and stem[-1] != affix[0]: maybe if we get lucky in the morpheme generation
                         words_list += [stem + affix]
                         parts = [stem, affix]
                         word = stem + affix
                         if word not in words_dict:
                             words_dict[word] = parts # add word to dictionary
-                    if i == j and word not in testingwords_list:
+                    if i == j or (i-j) == 5 or (j-i) == 1 or (i-j) == 4 or (i-j) == 9 and word not in testingwords_list:
                         testingwords_list += [stem + affix]
                         testingwords_dict[word] = parts
             words_list = list(words_dict.keys())
