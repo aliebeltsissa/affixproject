@@ -474,34 +474,36 @@ def morpheme_generations(a,s):
         print('Problem generating morpheme lists.')
     return L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list
         
-L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list = morpheme_generations(100,200)
-
 import os.path
-folder = "C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject"
-file_name = 'L1affixes.txt'
-file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output1:
-    for morpheme in L1affixes_list:
-        output1.write(morpheme+"\n")
-output1.close()
-file_name = 'L1stems.txt'
-file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output2:
-    for morpheme in L1stems_list:
-        output2.write(morpheme+"\n")
-output2.close()
-file_name = 'L2affixes.txt'
-file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output3:
-    for morpheme in L2affixes_list:
-        output3.write(morpheme+"\n")
-output3.close()
-file_name = 'L2stems.txt'
-file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output4:
-    for morpheme in L2stems_list:
-        output4.write(morpheme+"\n")
-output4.close()
+def export_morphemes(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list):
+    folder = "C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject"
+    file_name = 'L1affixes.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output1:
+        for morpheme in L1affixes_list:
+            output1.write(morpheme+"\n")
+    output1.close()
+    file_name = 'L1stems.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output2:
+        for morpheme in L1stems_list:
+            output2.write(morpheme+"\n")
+    output2.close()
+    file_name = 'L2affixes.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output3:
+        for morpheme in L2affixes_list:
+            output3.write(morpheme+"\n")
+    output3.close()
+    file_name = 'L2stems.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output4:
+        for morpheme in L2stems_list:
+            output4.write(morpheme+"\n")
+    output4.close()
+
+L1affixes_dict, L1affixes_list, L1stems_dict, L1stems_list, L2affixes_dict, L2affixes_list, L2stems_dict, L2stems_list = morpheme_generations(100,200)
+export_morphemes(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 
 end_time = time.time()
 elapsed_time = end_time - start_time

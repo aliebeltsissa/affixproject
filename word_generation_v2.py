@@ -147,6 +147,34 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         print('Dictionaries not the same length as word lists!')
     return L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list
 
+import os.path
+def export_participant_words(L1trainingwords_list,L1testingwords_list,L2trainingwords_list,L2testingwords_list):
+    folder = "C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject"
+    file_name = 'L1training.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output1:
+        for word in L1trainingwords_list:
+            output1.write(word+"\n")
+    output1.close()
+    file_name = 'L1testing.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output2:
+        for word in L1testingwords_list:
+            output2.write(word+"\n")
+    output2.close()
+    file_name = 'L2training.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output3:
+        for word in L2trainingwords_list:
+            output3.write(word+"\n")
+    output3.close()
+    file_name = 'L2testing.txt'
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, 'w') as output4:
+        for word in L2testingwords_list:
+            output4.write(word+"\n")
+    output4.close()
+
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
 L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 
