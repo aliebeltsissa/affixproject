@@ -302,7 +302,7 @@ def global_intersection(lst1,lst2,intersectiondist,LEdistprompt):
                     #print(distance)
                     if distance <= LEdistprompt:
                         dellist.append(morphemes_list[i])
-                        dellist.append(morphemes_list[i])
+                        dellist.append(morphemes_list[j])
                 j += 1
         dellist = [*set(dellist)]
         for x in dellist:
@@ -480,24 +480,28 @@ import os.path
 folder = "C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject"
 file_name = 'L1affixes.txt'
 file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output:
+with open(file_path, 'w') as output1:
     for morpheme in L1affixes_list:
-        output.write(morpheme+"\n")
+        output1.write(morpheme+"\n")
+output1.close()
 file_name = 'L1stems.txt'
 file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output:
-    for morpheme in L1affixes_list:
-        output.write(morpheme+"\n")
+with open(file_path, 'w') as output2:
+    for morpheme in L1stems_list:
+        output2.write(morpheme+"\n")
+output2.close()
 file_name = 'L2affixes.txt'
 file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output:
-    for morpheme in L1affixes_list:
-        output.write(morpheme+"\n")
+with open(file_path, 'w') as output3:
+    for morpheme in L2affixes_list:
+        output3.write(morpheme+"\n")
+output3.close()
 file_name = 'L2stems.txt'
 file_path = os.path.join(folder, file_name)
-with open(file_path, 'w') as output:
-    for morpheme in L1affixes_list:
-        output.write(morpheme+"\n")
+with open(file_path, 'w') as output4:
+    for morpheme in L2stems_list:
+        output4.write(morpheme+"\n")
+output4.close()
 
 end_time = time.time()
 elapsed_time = end_time - start_time

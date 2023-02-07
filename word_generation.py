@@ -59,7 +59,6 @@ def LEdistance(lst1,lst2,dist_input):
     -------
     dellist : LIST
         A list of morphemes from lst2 to delete due to too great similarity to lst1.
-
     '''
     dellist = []
     l1 = len(lst1) - 1
@@ -300,27 +299,27 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems,w):
     return L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps
 
 L1affixesfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L1affixes.txt", "r")
-data = L1affixesfile.read()
-L1affixes = data.split("\n") # split text file into list
-L1affixesfile.close()
+data1 = L1affixesfile.read()
+L1affixes = data1.split("\n") # split text file into list
 L1affixes = L1affixes[0:100] # remove last \n from text file
+L1affixesfile.close()
 L1stemsfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L1stems.txt", "r")
-data = L1stemsfile.read()
-L1stems = data.split("\n")
+data2 = L1stemsfile.read()
+L1stems = data2.split("\n")
+L1stems = L1stems[0:200]
 L1stemsfile.close()
-L1affixes = L1affixes[0:200]
 L2affixesfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L2affixes.txt", "r")
-data = L2affixesfile.read()
-L2affixes = data.split("\n")
+data3 = L2affixesfile.read()
+L2affixes = data3.split("\n")
+L2affixes = L2affixes[0:100]
 L2affixesfile.close()
-L1affixes = L1affixes[0:100]
 L2stemsfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\L2stems.txt", "r")
-data = L2stemsfile.read()
-L2stems = data.split("\n")
+data4 = L2stemsfile.read()
+L2stems = data4.split("\n")
+L2stems = L2stems[0:200]
 L2stemsfile.close()
-L1affixes = L1affixes[0:200]
 
-cycle_through(L1affixes,L1stems,L2affixes,L2stems,300)
+L1words, L2words, L1reps, L2reps, L1dict, L2dict, globalreps = cycle_through(L1affixes,L1stems,L2affixes,L2stems,300)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)/60
