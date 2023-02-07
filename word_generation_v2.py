@@ -103,8 +103,8 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             reps += 1
             for i in range(len(stem_subset)):
                 for j in range(len(affix_subset)):
-                    stem = stems[i]
-                    affix = affixes[j]
+                    stem = stem_subset[i]
+                    affix = affix_subset[j]
                     if stem != affix: # if stem & affix different and the word isn't already in the word list
                     # HERE: can't have  and stem[-1] != affix[0]: maybe if we get lucky in the morpheme generation
                         words_list += [stem + affix]
@@ -136,19 +136,19 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             for x in testingwords_list:
                 del trainingwords_dict[x]
             trainingwords_list = list(trainingwords_dict.keys())
-        return words_dict, words_list, trainingwords_dict, trainingwords_list, testingwords_dict, testingwords_list
+        return affix_subset, stem_subset, words_dict, words_list, trainingwords_dict, trainingwords_list, testingwords_dict, testingwords_list
     
     # generate word lists for both languages:
-    L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
-    L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = wordcycle(L2affixes_list, L2stems_list, 'L2', 5, 10, 50)
+    L1affixsubset_list, L1stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
+    L2affixsubset_list, L2stemsubset_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = wordcycle(L2affixes_list, L2stems_list, 'L2', 5, 10, 50)
     if len(L1words_list) == len(L2words_list) and list(L1words_dict.keys()) == L1words_list and list(L2words_dict.keys()) == L2words_list:
         print('Correctly generated complete stimuli set.')
     elif list(L1words_dict.keys()) != L1words_list or list(L2words_dict.keys()) != L2words_list:
         print('Dictionaries not the same length as word lists!')
-    return L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list
+    return L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
-L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
+L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)
