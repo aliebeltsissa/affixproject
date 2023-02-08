@@ -89,15 +89,16 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         words : LIST
             Generated words list.
         '''
-        words_list = []
-        testingwords_list = []
-        trainingwords_list = []
-        words_dict = {}
-        testingwords_dict = {}
-        trainingwords_dict = {}
         reps = 0
+        words_list = []
         listlength = len(words_list)
         while listlength < w: # while word list incomplete
+            words_list = []
+            testingwords_list = []
+            trainingwords_list = []
+            words_dict = {}
+            testingwords_dict = {}
+            trainingwords_dict = {}    
             affix_subset = random.sample(affixes,a)
             stem_subset = random.sample(stems,s)        
             reps += 1
@@ -105,7 +106,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                 for j in range(len(affix_subset)):
                     stem = stem_subset[i]
                     affix = affix_subset[j]
-                    if stem != affix: # if stem & affix different and the word isn't already in the word list
+                    if stem != affix and stem[-1] != affix[0]: # if stem & affix different and the word isn't already in the word list
                     # HERE: can't have  and stem[-1] != affix[0]: maybe if we get lucky in the morpheme generation
                         words_list += [stem + affix]
                         parts = [stem, affix]
@@ -114,6 +115,8 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                             words_dict[word] = parts # add word to dictionary
                     if i == j or (i-j) == 5 or (j-i) == 1 or (i-j) == 4 or (i-j) == 9 and word not in testingwords_list:
                         testingwords_list += [stem + affix]
+                        parts = [stem, affix]
+                        word = stem + affix
                         testingwords_dict[word] = parts
             words_list = list(words_dict.keys())
             listlength = len(words_list)
@@ -121,6 +124,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                 print(f'Length of word list: {listlength}')
                 print(f'Finished rep {reps} of generating {l} word list.')
             elif listlength < w: 
+                print('List not yet length of w')
                 words_list = []
                 testingwords_list = []
                 trainingwords_list = []
@@ -174,9 +178,11 @@ def export_participant_words(L1trainingwords_list,L1testingwords_list,L2training
         for word in L2testingwords_list:
             output4.write(word+"\n")
     output4.close()
+    print('Participant stimuli lists exported.')
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
 L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1trainingwords_dict, L1trainingwords_list, L1testingwords_dict, L1testingwords_list, L2words_dict, L2words_list, L2trainingwords_dict, L2trainingwords_list, L2testingwords_dict, L2testingwords_list = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
+export_participant_words(L1trainingwords_list, L1testingwords_list, L2trainingwords_list, L2testingwords_list)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)

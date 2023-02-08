@@ -242,7 +242,7 @@ def global_intersection(lst1,lst2,intersectiondist,LEdistprompt):
     '''
     def intersection(lst1,intersectiondist,LEdistprompt):
         '''
-        Tests for identical chunks of characters in morphemes from 1 list.
+        Tests for identical chunks of characters in morphemes from 1 list, and includes the LEdistance function.
 
         Parameters
         ----------
@@ -320,7 +320,7 @@ def global_intersection(lst1,lst2,intersectiondist,LEdistprompt):
     morphemes2_dict, morphemes2_list = intersection(lst2,intersectiondist,LEdistprompt)
     chunks1_list = morphemes1_dict.values()
     chunks2_list = morphemes2_dict.values()
-    chunks1_list = list(itertools.chain.from_iterable(chunks1_list))
+    chunks1_list = list(itertools.chain.from_iterable(chunks1_list)) # unpacking individual sublists into one big list
     chunks2_list = list(itertools.chain.from_iterable(chunks2_list))
     pooled_list = chunks1_list + chunks2_list
     chunks1_dellist = [x for x in pooled_list if pooled_list.count(x) > 1] # extract duplicates from chunks_list
