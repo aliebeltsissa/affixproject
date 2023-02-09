@@ -41,6 +41,7 @@ import random
 def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     '''
     Runs the wordcycle function to obtain lists of words for each language.
+
     Parameters
     ----------
     L1affixes : LIST
@@ -51,6 +52,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         The list of affixes for L2.
     L2stems : LIST
         The list of stems for L2.
+
     Returns
     -------
     L1words : LIST
@@ -65,6 +67,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     def wordcycle(affixes,stems,l,a,s,w):
         '''
         Combines affixes and stems into words and cycles through again if word list incomplete.
+
         Parameters
         ----------
         affixes : LIST
@@ -79,6 +82,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             Number of stems to pull.
         w : INTEGER
             Number of words to generate.
+
         Returns
         -------
         words : LIST
