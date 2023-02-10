@@ -102,8 +102,8 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             affix_subset = random.sample(affixes,a)
             stem_subset = random.sample(stems,s)        
             reps += 1
-            for i in range(len(stem_subset)):
-                for j in range(len(affix_subset)):
+            for i in range(len(stem_subset)): # for every stem
+                for j in range(len(affix_subset)): # for every affix
                     stem = stem_subset[i]
                     affix = affix_subset[j]
                     if stem != affix and stem[-1] != affix[0]: # if stem & affix different and the word isn't already in the word list
@@ -117,7 +117,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                 affix = affix_subset[indice]
                 stem = stem_subset[i]
                 word = stem + affix
-                if word not in congruenttesting_list:
+                if word not in congruenttesting_list: # add stems & affixes with the same indice to the testing list
                     congruenttesting_list += [stem + affix]
                     parts = [stem, affix]
                     word = stem + affix
@@ -127,7 +127,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             if listlength != 0:
                 #print(f'Length of word list: {listlength}')
                 print(f'Finished rep {reps} of generating {l} word list.')
-            elif listlength < w: 
+            elif listlength < w: # if there are still missing words, start over
                 print('List not yet length of w')
                 words_list = []
                 congruenttesting_list = []
@@ -142,15 +142,15 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             print(f'Finished testing {l} word list.')
             training_dict = words_dict.copy()
             for x in congruenttesting_list:
-                del training_dict[x]
+                del training_dict[x] # make sure the training words dict doesn't have any entries for items selected for testing
             training_list = list(training_dict.keys())
         return affix_subset, stem_subset, words_dict, words_list, training_dict, training_list, congruenttesting_dict, congruenttesting_list
     
     def cross_language_testing(L1affixsubset_list,L1stemsubset_list,L2affixsubset_list,L2stemsubset_list):
-        testingaffix_indices = [0,1,2,3,4,1,2,3,4,0]
+        testingaffix_indices = [0,1,2,3,4,1,2,3,4,0] # indices to match stems & affixes
         incongruenttesting_list = []
         incongruenttesting_dict = {}
-        for i in range(len(L1stemsubset_list)): # L1 stem, L2 affix
+        for i in range(len(L1stemsubset_list)): # L1 stem + L2 affix
             indice = testingaffix_indices[i]
             affix = L1affixsubset_list[indice]
             stem = L2stemsubset_list[i]
@@ -160,7 +160,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                 parts = [stem, affix]
                 word = stem + affix
                 incongruenttesting_dict[word] = parts
-        for j in range(len(L2stemsubset_list)): # L2 stem, L1 affix
+        for j in range(len(L2stemsubset_list)): # L2 stem + L1 affix
             indice = testingaffix_indices[j]
             affix = L2affixsubset_list[indice]
             stem = L1stemsubset_list[j]
@@ -175,18 +175,27 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     # generate word lists for both languages:
     incongruenttesting_list = []
     while len(incongruenttesting_list) < 20: # if cross-language words have the same letter at the word boundary, start again
-        L1affixsubset_list, L1stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
-        L2affixsubset_list, L2stemsubset_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list = wordcycle(L2affixes_list, L2stems_list, 'L2', 5, 10, 50)
+        L1affixsubset_list, L1stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list \
+            = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
+        L2affixsubset_list, L2stemsubset_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list \
+            = wordcycle(L2affixes_list, L2stems_list, 'L2', 5, 10, 50)
         training_list = L1training_list + L2training_list
         training_dict = dict(L1training_dict, **L2training_dict)
         congruenttesting_list = L1congruenttesting_list + L2congruenttesting_list
         congruenttesting_dict = dict(L1congruenttesting_dict, **L2congruenttesting_dict)
         incongruenttesting_list, incongruenttesting_dict = cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list)
+        for x in incongruenttesting_list:
+            if x in training_dict:
+                del training_dict[x] # make sure the training words dict doesn't have any entries for items selected for testing
     if len(L1words_list) == len(L2words_list) and list(L1words_dict.keys()) == L1words_list and list(L2words_dict.keys()) == L2words_list:
         print('Correctly generated complete stimuli set.')
     elif list(L1words_dict.keys()) != L1words_list or list(L2words_dict.keys()) != L2words_list:
         print('Dictionaries not the same length as word lists!')
-    return L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict
+    return L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
+        L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
+        L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
+        training_list, training_dict, congruenttesting_list, \
+        congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict
 
 import os.path
 def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list):
@@ -235,7 +244,11 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
     print('Participant stimuli lists exported.')
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
-L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
+L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
+    L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
+    L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
+    training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict \
+    = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list)
 
 end_time = time.time()
