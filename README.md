@@ -14,4 +14,8 @@ The morpheme_generation.py script is intended to only be run once, prior to any 
 **export_morphemes** function: When the morpheme lists for both languages are complete, the script exports these as text files.
 
 ### Word generation
-The word_generation.py script is for generating the training and testing word lists for each participant. 
+The word_generation.py script is for generating the training and testing word lists for each participant. The training set for each language is composed of only within-language morphemes. However, there are two different testing conditions: congruent testing words are made up of same-language stems and affixes, while incongruent testing words are made up of an L1 stem and L2 affix, or vice versa. The specific combinatorial structure of these incongruent words ensures that unique combinations are created, and that affixes and stems present in testing are shown within both congruent and incongruent words.
+
+**import_morphemes** function: This imports the the morpheme text files for L1 and L2 that were exported at the end of the morpheme_generation.py script as lists.
+
+**cycle_through** function: Similarly to the **morpheme_generations**, this function assembles a stem and an affix from a language, and sorts the words into the training and congruent testing sets (this is the **wordcycle** function). Next, the **cross_language_testing** function takes a stem and affix from different languages and assembles these to form the incongruent testing word set. 
