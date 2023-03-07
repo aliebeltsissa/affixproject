@@ -60,10 +60,15 @@ testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
 
+def escape():
+    win.close()
+if 'escape' not in event.globalKeys.keys():
+    event.globalKeys.add(key='escape', func=escape) # add esc to close window
+
 win = visual.Window(size=[800,600],units="pix",fullscr=False)
 
 gui = gui.Dlg()
-gui.addField("Subject ID:")
+gui.addField("Subject ID:") # ask for subject ID
 gui.show()
 subj_id = gui.data
 
@@ -72,13 +77,14 @@ clock = core.Clock()
 bacsfile = ['BACS1.otf']
 bacs = 'BACS1'
 
-participant_response = []
+participant_responses = []
 stim_duration = 0.5
 isi = 0.5
 trainingreps = 2 # number of times we repeat the training
 
 # training:
 keys = event.getKeys()
+keys = []
 for reps in range(trainingreps):
     if 'escape' in keys:
         core.quit()
