@@ -28,8 +28,8 @@ outputFileName_randStim = 'rs_' + sbjID + '_' + str(timeStamp) + '.csv'
 win = visual.Window(fullscr=True, color=[-1,-1,-1], units='pix')
 
 # variables collecting participant responses
-timingCheck = list()
-pptResponse = list()
+timingCheck = []
+pptResponse = []
 
 # looping over trials
 for trialNumber in range(trainingn):

@@ -1,9 +1,8 @@
 import sys
 import os
 import numpy as np
+import random
 from psychopy import visual, event, core, gui
-
-#win = visual.Window(size=[400,400],units="pix",fullscr=False)
 
 def import_words():
     '''
@@ -56,18 +55,50 @@ def testing_list(congruenttesting, incongruenttesting):
     return testing
 
 training, congruenttesting, incongruenttesting = import_words()
+training = random.sample(training,len(training))
 testing = testing_list(congruenttesting,incongruenttesting)
-print(testing)
+trainingn = len(training)
+testingn = len(testing)
 
-# gui = gui.Dlg()
-# gui.addField("Subject ID:")
-# gui.show()
-# print(gui.data)
-# subj_id = gui.data
+win = visual.Window(size=[800,600],units="pix",fullscr=False)
 
-# clock =core.Clock()
+gui = gui.Dlg()
+gui.addField("Subject ID:")
+gui.show()
+subj_id = gui.data
 
-# data = []
+clock = core.Clock()
+
+bacsfile = ['BACS1.otf']
+bacs = 'BACS1'
+
+participant_response = []
+stim_duration = 0.5
+isi = 0.5
+trainingreps = 2 # number of times we repeat the training
+
+# training:
+keys = event.getKeys()
+for reps in range(trainingreps):
+    if 'escape' in keys:
+        core.quit()
+    for trialn in range(5): # normally, trainingn
+        clock.reset() # resets the trial clock   
+        word = training[trialn]
+        text = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
+        while clock.getTime() < stim_duration:
+            text.draw(win=win)
+            win.flip()
+        while clock.getTime() < isi:
+            win.flip()
+    training = random.sample(training,len(training))
+    if reps == 0:
+        text = visual.TextStim(win, text="End of the first training sequence. Press any key to continue.", height = 60, color=[.8,.8,.8], pos=[0,0], ori=0)
+        text.draw(win=win)
+        win.flip()
+        event.waitKeys()
+win.close()
+
 # for trial in range(10):
 #     keys = event.waitKeys(timeStamped=clock,keyList=["left","right"])
 #     keys = keys[0]
