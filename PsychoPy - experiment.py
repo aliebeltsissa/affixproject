@@ -64,12 +64,12 @@ def escape():
 if 'escape' not in event.globalKeys.keys():
     event.globalKeys.add(key='escape', func=escape) # add esc to close window
 
-win = visual.Window(size=[1000,800],units="pix",fullscr=False)
+win = visual.Window(size=[1800,1000],units="pix",fullscr=False)
 
 gui = gui.Dlg()
 gui.addField("Subject ID:") # ask for subject ID
 gui.show()
-subj_id = gui.data
+sbj_id = int(gui.data[0])
 
 clock = core.Clock()
 
@@ -96,12 +96,14 @@ for reps in range(trainingreps):
         while clock.getTime() < isi:
             win.flip()
     if reps == 0:
-        text = visual.TextStim(win, text="End of the first training sequence. Press any key to continue.", height = 60, color=[.8,.8,.8], pos=[0,0], ori=0)
+        text = visual.TextStim(win, text="End of the first training sequence. Press any key to continue.",
+                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 800)
         text.draw(win=win)
         win.flip()
         event.waitKeys()
 
-inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to begin testing.", height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0)
+inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to begin testing.",
+                             height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 800)
 inter_text.draw(win=win)
 win.flip()
 event.waitKeys()
@@ -110,54 +112,49 @@ event.waitKeys()
 testing = random.sample(testing,len(testing))
 for trialn in range(5): #normally, testingn
     word = testing[trialn][0]
-    stim_text = visual.TextStim(win, text = word, font = bacs, height = 80, color = [.8,.8,.8], pos = [0,0], ori = 0)
-    expl_text = visual.TextStim(win, text = "Does this word belong to what you saw previously?", height = 60,
-                                color = [.8,.8,.8], pos = [0,200], ori = 0)
-    expl2_text = visual.TextStim(win, text = "Press 'd' for yes, 'k' for no", height = 40,
-                                 color = [.8,.8,.8], pos = [0,-200], ori = 0)
+    stim_text = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
+    expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
+                                color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
+    expl2_text = visual.TextStim(win, text = "Press 'd' for yes, 'k' for no", height = 30,
+                                 color = [.8,.8,.8], pos = [0,-300], ori = 0)
     stim_text.draw(win = win)
     expl_text.draw(win = win)
     expl2_text.draw(win = win)
     win.flip()
     keys = event.waitKeys(keyList=["d","k"])
     response = keys[0]
-    participant_responses.append([word,response,testing[trialn][1]])
+    participant_responses.append([word,testing[trialn][1],response])
 win.close()
 
-binary_responses = []
-congruent_responses = []
-incongruent_responses = []
+all_responses = []
 for trial in participant_responses:
-    if trial[2] == 0: # if item congruent
-        if trial[1] == 'd': # if answered yes
-            binary_responses.append(trial[0],0) # 0 means correct
-            congruent_responses.append(trial[0],0)
-        elif trial[1] == 'k': # if answered no
-            binary_responses.append(trial[0],1) # 1 means incorrect
-            congruent_responses.append(trial[0],1)
+    if trial[1] == 0: # if item congruent
+        if trial[2] == 'd': # if answered yes
+            all_responses.append([trial[0],trial[1],0]) # 0 means correct
+        elif trial[2] == 'k': # if answered no
+            all_responses.append([trial[0],trial[1],1]) # 1 means incorrect
         else:
             print(f"Problem sorting responses to word {trial[0]}")
-    if trial[2] == 1: # if item incongruent
-        if trial[1] == 'k': # if answered no
-            binary_responses.append(trial[0],0) # 0 means correct
-            incongruent_responses.append(trial[0],0)
-        elif trial[1] == 'd': # if answered yes
-            binary_responses.append(trial[0],1) # 1 means incorrect
-            incongruent_responses.append(trial[0],1)
+    if trial[1] == 1: # if item incongruent
+        if trial[2] == 'k': # if answered no
+            all_responses.append([trial[0],trial[1],0])
+        elif trial[2] == 'd': # if answered yes
+            all_responses.append([trial[0],trial[1],1])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
 
-# for data_row in data:
-#     if data_row[0] == "left":
-#         data_row = 1
-#     elif data_row[0] == "right":
-#         data_row = 0
-#     binary_responses.append(data_row)
-# print(binary_responses)
+print(participant_responses)
+print(all_responses)
 
-# np.savetxt(f"{subj_id}.tsv",binary_responses,delimiter="\t")
+output_folder = f"Participant_{sbj_id}"
+os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
 
-# data_path="sbj1.tsv"
-# data_path_exists=os.path.exists(data_path)
-# if data_path_exists:
-#     sys.exit("Filename " + data_path + " already exists")
+word  = np.array([x[0] for x in all_responses])
+condition = np.array([x[1] for x in all_responses])
+response = np.array([x[2] for x in all_responses])
+ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int), ('var3', int)])
+ab['var1'] = word
+ab['var2'] = condition
+ab['var3'] = response
+np.savetxt(f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/{output_folder}/participant_responses.tsv"
+           , ab, delimiter = "\t", header = "Word, Condition, Response", fmt = "%10s %i %i")
