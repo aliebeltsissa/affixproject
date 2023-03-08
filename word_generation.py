@@ -250,7 +250,7 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
     ab['var1'] = word
     ab['var2'] = condition
     np.savetxt(file_name, ab, delimiter = ", ", fmt = "%s")
-    print('Participant stimuli lists exported.')
+    print('Participant stimuli lists exported.') 
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
 L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
