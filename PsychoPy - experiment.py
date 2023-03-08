@@ -81,6 +81,13 @@ stim_duration = 0.5
 isi = 0.5
 trainingreps = 2 # number of times we repeat the training
 
+# introduction
+text = visual.TextStim(win, text = "Welcome to the experiment. You will be presented with two training sequences, followed by a testing phase. Please pay attention to the words as they're presented to you. Press any key to begin.",
+                       height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 1000)
+text.draw(win=win)
+win.flip()
+event.waitKeys()
+
 # training:
 keys = event.getKeys()
 keys = []
@@ -124,6 +131,12 @@ for trialn in range(5): #normally, testingn
     keys = event.waitKeys(keyList=["d","k"])
     response = keys[0]
     participant_responses.append([word,testing[trialn][1],response])
+    
+# goodbye
+text = visual.TextStim(win, text = "Thank you for participating! Press any key to exit.",
+                       height = 100, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
+text.draw(win=win)
+win.flip()
 win.close()
 
 all_responses = []
@@ -142,9 +155,6 @@ for trial in participant_responses:
             all_responses.append([trial[0],trial[1],1])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
-
-print(participant_responses)
-print(all_responses)
 
 output_folder = f"Participant_{sbj_id}"
 os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
