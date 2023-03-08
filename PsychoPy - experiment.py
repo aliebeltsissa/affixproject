@@ -121,10 +121,31 @@ for trialn in range(5): #normally, testingn
     win.flip()
     keys = event.waitKeys(keyList=["d","k"])
     response = keys[0]
-    participant_responses.append([response,testing[trialn][1]])
+    participant_responses.append([word,response,testing[trialn][1]])
 win.close()
 
-# binary_responses = []
+binary_responses = []
+congruent_responses = []
+incongruent_responses = []
+for trial in participant_responses:
+    if trial[2] == 0: # if item congruent
+        if trial[1] == 'd': # if answered yes
+            binary_responses.append(trial[0],0) # 0 means correct
+            congruent_responses.append(trial[0],0)
+        elif trial[1] == 'k': # if answered no
+            binary_responses.append(trial[0],1) # 1 means incorrect
+            congruent_responses.append(trial[0],1)
+        else:
+            print(f"Problem sorting responses to word {trial[0]}")
+    if trial[2] == 1: # if item incongruent
+        if trial[1] == 'k': # if answered no
+            binary_responses.append(trial[0],0) # 0 means correct
+            incongruent_responses.append(trial[0],0)
+        elif trial[1] == 'd': # if answered yes
+            binary_responses.append(trial[0],1) # 1 means incorrect
+            incongruent_responses.append(trial[0],1)
+        else:
+            print(f"Problem sorting responses to word {trial[0]}")
 
 # for data_row in data:
 #     if data_row[0] == "left":
