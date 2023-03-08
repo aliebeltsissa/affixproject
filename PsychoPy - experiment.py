@@ -55,7 +55,6 @@ def testing_list(congruenttesting, incongruenttesting):
     return testing
 
 training, congruenttesting, incongruenttesting = import_words()
-training = random.sample(training,len(training))
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
@@ -65,7 +64,7 @@ def escape():
 if 'escape' not in event.globalKeys.keys():
     event.globalKeys.add(key='escape', func=escape) # add esc to close window
 
-win = visual.Window(size=[800,600],units="pix",fullscr=False)
+win = visual.Window(size=[1000,800],units="pix",fullscr=False)
 
 gui = gui.Dlg()
 gui.addField("Subject ID:") # ask for subject ID
@@ -86,8 +85,7 @@ trainingreps = 2 # number of times we repeat the training
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    if 'escape' in keys:
-        core.quit()
+    training = random.sample(training,len(training))
     for trialn in range(5): # normally, trainingn
         clock.reset() # resets the trial clock   
         word = training[trialn]
@@ -97,21 +95,34 @@ for reps in range(trainingreps):
             win.flip()
         while clock.getTime() < isi:
             win.flip()
-    training = random.sample(training,len(training))
     if reps == 0:
         text = visual.TextStim(win, text="End of the first training sequence. Press any key to continue.", height = 60, color=[.8,.8,.8], pos=[0,0], ori=0)
         text.draw(win=win)
         win.flip()
         event.waitKeys()
-win.close()
 
-# for trial in range(10):
-#     keys = event.waitKeys(timeStamped=clock,keyList=["left","right"])
-#     keys = keys[0]
-#     print(keys)
-#     data.append(keys)
-# print(data)
-# win.close()
+inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to begin testing.", height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0)
+inter_text.draw(win=win)
+win.flip()
+event.waitKeys()
+
+# testing:
+testing = random.sample(testing,len(testing))
+for trialn in range(5): #normally, testingn
+    word = testing[trialn][0]
+    stim_text = visual.TextStim(win, text = word, font = bacs, height = 80, color = [.8,.8,.8], pos = [0,0], ori = 0)
+    expl_text = visual.TextStim(win, text = "Does this word belong to what you saw previously?", height = 60,
+                                color = [.8,.8,.8], pos = [0,200], ori = 0)
+    expl2_text = visual.TextStim(win, text = "Press 'd' for yes, 'k' for no", height = 40,
+                                 color = [.8,.8,.8], pos = [0,-200], ori = 0)
+    stim_text.draw(win = win)
+    expl_text.draw(win = win)
+    expl2_text.draw(win = win)
+    win.flip()
+    keys = event.waitKeys(keyList=["d","k"])
+    response = keys[0]
+    participant_responses.append([response,testing[trialn][1]])
+win.close()
 
 # binary_responses = []
 
