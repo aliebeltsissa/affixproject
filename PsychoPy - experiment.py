@@ -149,9 +149,9 @@ for trial in participant_responses:
         else:
             print(f"Problem sorting responses to word {trial[0]}")
     if trial[1] == 1: # if item incongruent
-        if trial[2] == 'k': # if answered no
+        if trial[2] == 'd': # if answered yes
             all_responses.append([trial[0],trial[1],0])
-        elif trial[2] == 'd': # if answered yes
+        elif trial[2] == 'k': # if answered no
             all_responses.append([trial[0],trial[1],1])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
@@ -166,5 +166,5 @@ ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int), ('var3', int)])
 ab['var1'] = word
 ab['var2'] = condition
 ab['var3'] = response
-np.savetxt(f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/{output_folder}/participant_responses.tsv"
+np.savetxt(f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
            , ab, delimiter = "\t", header = "Word, Condition, Response", fmt = "%10s %i %i")
