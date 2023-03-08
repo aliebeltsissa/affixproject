@@ -198,7 +198,9 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict
 
 import os.path
-def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list):
+import csv
+import numpy as np
+def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing):
     '''
     Exports the training and testing word lists as text files.
 
@@ -241,6 +243,13 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
         for word in incongruenttesting_list:
             output5.write(word+"\n")
     output5.close()
+    file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/testing.csv'
+    word  = np.array([x[0] for x in testing])
+    condition = np.array([x[1] for x in testing])
+    ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int)])
+    ab['var1'] = word
+    ab['var2'] = condition
+    np.savetxt(file_name, ab, delimiter = ", ", fmt = "%s")
     print('Participant stimuli lists exported.')
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
@@ -249,7 +258,10 @@ L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
     L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
     training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict \
     = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
-export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list)
+congruenttesting = [[word,int(0)] for word in congruenttesting_list]
+incongruenttesting = [[word,int(1)] for word in incongruenttesting_list]
+testing = congruenttesting + incongruenttesting
+export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)
