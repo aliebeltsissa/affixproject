@@ -198,7 +198,6 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict
 
 import os.path
-import csv
 import numpy as np
 def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing):
     '''
