@@ -1,9 +1,3 @@
-import sys
-import os
-import numpy as np
-import random
-from psychopy import visual, event, core, gui
-
 def import_words():
     '''
     Imports the text files of the different words to be presented from the word_generation.py output.
@@ -59,6 +53,7 @@ testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
 
+from psychopy import visual, event, core, gui
 def escape():
     win.close()
 if 'escape' not in event.globalKeys.keys():
@@ -89,6 +84,7 @@ win.flip()
 event.waitKeys()
 
 # training:
+import random
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
@@ -156,9 +152,11 @@ for trial in participant_responses:
         else:
             print(f"Problem sorting responses to word {trial[0]}")
 
+import os
 output_folder = f"Participant_{sbj_id}"
 os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
 
+import numpy as np
 word  = np.array([x[0] for x in all_responses])
 condition = np.array([x[1] for x in all_responses])
 response = np.array([x[2] for x in all_responses])
