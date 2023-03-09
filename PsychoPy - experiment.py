@@ -89,7 +89,7 @@ keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
     training = random.sample(training,len(training))
-    for trialn in range(5): # normally, trainingn
+    for trialn in range(trainingn): # normally, trainingn
         clock.reset() # resets the trial clock   
         word = training[trialn]
         text = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
@@ -113,7 +113,7 @@ event.waitKeys()
 
 # testing:
 testing = random.sample(testing,len(testing))
-for trialn in range(5): #normally, testingn
+for trialn in range(testingn): #normally, testingn
     word = testing[trialn][0]
     stim_text = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
     expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
