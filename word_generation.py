@@ -243,13 +243,18 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
         for word in incongruenttesting_list:
             output5.write(word+"\n")
     output5.close()
+    file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/training.csv'
+    word  = np.array([x for x in training_list])
+    ab = np.zeros(word.size, dtype=[('var1', 'U6')])
+    ab['var1'] = word
+    np.savetxt(file_name, ab, delimiter = ", ", header = "word", comments = '', fmt = "%s")
     file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/testing.csv'
     word  = np.array([x[0] for x in testing])
     condition = np.array([x[1] for x in testing])
     ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int)])
     ab['var1'] = word
     ab['var2'] = condition
-    np.savetxt(file_name, ab, delimiter = ", ", fmt = "%s")
+    np.savetxt(file_name, ab, delimiter = ", ", header="word,condition", comments = '', fmt = "%s")
     print('Participant stimuli lists exported.') 
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
