@@ -1,0 +1,1977 @@
+3.0475 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+9.2644 	WARNING 	User requested fullscreen with size [1280  720], but screen is actually [1920, 1080]. Using actual size
+11.6331 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x00000229289A80A0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x000002292D8CF8B0>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, units='pix', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+11.6333 	EXP 	window1: mouseVisible = True
+11.6338 	EXP 	window1: mouseVisible = False
+11.6339 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+11.6339 	EXP 	window1: recordFrameIntervals = False
+11.7980 	EXP 	window1: recordFrameIntervals = True
+11.9819 	EXP 	Screen (0) actual frame rate measured at 59.98Hz
+11.9820 	EXP 	window1: recordFrameIntervals = False
+14.8509 	EXP 	Created welcome_text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=50.0, italic=False, languageStyle='LTR', name='welcome_text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='pix', win=Window(...), wrapWidth=800.0)
+14.8592 	EXP 	Created pretrainig_text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=50.0, italic=False, languageStyle='LTR', name='pretrainig_text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='pix', win=Window(...), wrapWidth=800.0)
+14.8614 	EXP 	Created training_word = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='BACS1', fontFiles=[], height=100.0, italic=False, languageStyle='LTR', name='training_word', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='pix', win=Window(...), wrapWidth=500)
+14.8662 	EXP 	Created blank = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='blank', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='pix', win=Window(...), wrapWidth=500)
+14.8714 	EXP 	Created testing_intro = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=50.0, italic=False, languageStyle='LTR', name='testing_intro', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='pix', win=Window(...), wrapWidth=800.0)
+14.8723 	EXP 	Created testing_word = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='BACS1', fontFiles=[], height=100.0, italic=False, languageStyle='LTR', name='testing_word', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='pix', win=Window(...), wrapWidth=500)
+14.8832 	EXP 	Created testing_text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=50.0, italic=False, languageStyle='LTR', name='testing_text', opacity=1.0, ori=0.0, pos=array([  0., 300.]), rgb=UNKNOWN, text=str(...), units='pix', win=Window(...), wrapWidth=800.0)
+14.9047 	EXP 	Created keyboard_instructions = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=25.0, italic=False, languageStyle='LTR', name='keyboard_instructions', opacity=1.0, ori=0.0, pos=array([   0., -300.]), rgb=UNKNOWN, text="Press 'd' for yes, 'k' for no", units='pix', win=Window(...), wrapWidth=800.0)
+14.9188 	EXP 	welcome_text: autoDraw = True
+16.9844 	DATA 	Keypress: space
+17.0020 	EXP 	Created sequence: random, trialTypes=1, nReps=2, seed=None
+17.0025 	EXP 	New trial (rep=0, index=0): None
+17.0124 	EXP 	welcome_text: autoDraw = False
+17.0124 	EXP 	pretrainig_text: autoDraw = True
+17.7951 	EXP 	Imported training.csv as conditions, 80 conditions, 1 params
+17.7987 	EXP 	Created sequence: random, trialTypes=80, nReps=1, seed=None
+17.7999 	EXP 	New trial (rep=0, index=0): OrderedDict([('word', 'bmbNJU')])
+17.8207 	DATA 	Keypress: space
+17.8220 	EXP 	pretrainig_text: autoDraw = False
+17.8220 	EXP 	training_word: height = 100.0
+17.8220 	EXP 	training_word: height = 100.0
+17.8220 	EXP 	training_word: height = 100.0
+17.8220 	EXP 	training_word: text = 'bmbNJU'
+17.8220 	EXP 	training_word: autoDraw = True
+18.3119 	EXP 	training_word: autoDraw = False
+18.3119 	EXP 	blank: autoDraw = True
+18.7960 	EXP 	New trial (rep=0, index=1): OrderedDict([('word', 'dJNrJU')])
+18.8116 	EXP 	blank: autoDraw = False
+18.8116 	EXP 	training_word: height = 100.0
+18.8116 	EXP 	training_word: height = 100.0
+18.8116 	EXP 	training_word: height = 100.0
+18.8116 	EXP 	training_word: text = 'dJNrJU'
+18.8116 	EXP 	training_word: autoDraw = True
+19.3116 	EXP 	training_word: autoDraw = False
+19.3116 	EXP 	blank: autoDraw = True
+19.7958 	EXP 	New trial (rep=0, index=2): OrderedDict([('word', 'LckGNJ')])
+19.8221 	EXP 	blank: autoDraw = False
+19.8221 	EXP 	training_word: height = 100.0
+19.8221 	EXP 	training_word: height = 100.0
+19.8221 	EXP 	training_word: height = 100.0
+19.8221 	EXP 	training_word: text = 'LckGNJ'
+19.8221 	EXP 	training_word: autoDraw = True
+20.3114 	EXP 	training_word: autoDraw = False
+20.3114 	EXP 	blank: autoDraw = True
+20.7950 	EXP 	New trial (rep=0, index=3): OrderedDict([('word', 'Qcladk')])
+20.8109 	EXP 	blank: autoDraw = False
+20.8109 	EXP 	training_word: height = 100.0
+20.8109 	EXP 	training_word: height = 100.0
+20.8109 	EXP 	training_word: height = 100.0
+20.8109 	EXP 	training_word: text = 'Qcladk'
+20.8109 	EXP 	training_word: autoDraw = True
+21.3108 	EXP 	training_word: autoDraw = False
+21.3108 	EXP 	blank: autoDraw = True
+21.7958 	EXP 	New trial (rep=0, index=4): OrderedDict([('word', 'lCbcmP')])
+21.8167 	EXP 	blank: autoDraw = False
+21.8167 	EXP 	training_word: height = 100.0
+21.8167 	EXP 	training_word: height = 100.0
+21.8167 	EXP 	training_word: height = 100.0
+21.8167 	EXP 	training_word: text = 'lCbcmP'
+21.8167 	EXP 	training_word: autoDraw = True
+22.3108 	EXP 	training_word: autoDraw = False
+22.3108 	EXP 	blank: autoDraw = True
+22.7947 	EXP 	New trial (rep=0, index=5): OrderedDict([('word', 'dJNrYA')])
+22.8142 	EXP 	blank: autoDraw = False
+22.8142 	EXP 	training_word: height = 100.0
+22.8142 	EXP 	training_word: height = 100.0
+22.8142 	EXP 	training_word: height = 100.0
+22.8142 	EXP 	training_word: text = 'dJNrYA'
+22.8142 	EXP 	training_word: autoDraw = True
+23.3104 	EXP 	training_word: autoDraw = False
+23.3104 	EXP 	blank: autoDraw = True
+23.7942 	EXP 	New trial (rep=0, index=6): OrderedDict([('word', 'LckGNk')])
+23.8102 	EXP 	blank: autoDraw = False
+23.8102 	EXP 	training_word: height = 100.0
+23.8102 	EXP 	training_word: height = 100.0
+23.8102 	EXP 	training_word: height = 100.0
+23.8102 	EXP 	training_word: text = 'LckGNk'
+23.8102 	EXP 	training_word: autoDraw = True
+24.3102 	EXP 	training_word: autoDraw = False
+24.3102 	EXP 	blank: autoDraw = True
+24.7939 	EXP 	New trial (rep=0, index=7): OrderedDict([('word', 'Qcladl')])
+24.8099 	EXP 	blank: autoDraw = False
+24.8099 	EXP 	training_word: height = 100.0
+24.8099 	EXP 	training_word: height = 100.0
+24.8099 	EXP 	training_word: height = 100.0
+24.8099 	EXP 	training_word: text = 'Qcladl'
+24.8099 	EXP 	training_word: autoDraw = True
+25.3095 	EXP 	training_word: autoDraw = False
+25.3095 	EXP 	blank: autoDraw = True
+25.7936 	EXP 	New trial (rep=0, index=8): OrderedDict([('word', 'mBYlBb')])
+25.8141 	EXP 	blank: autoDraw = False
+25.8141 	EXP 	training_word: height = 100.0
+25.8141 	EXP 	training_word: height = 100.0
+25.8141 	EXP 	training_word: height = 100.0
+25.8141 	EXP 	training_word: text = 'mBYlBb'
+25.8141 	EXP 	training_word: autoDraw = True
+26.3092 	EXP 	training_word: autoDraw = False
+26.3092 	EXP 	blank: autoDraw = True
+26.7943 	EXP 	New trial (rep=0, index=9): OrderedDict([('word', 'dJNrkd')])
+26.8090 	EXP 	blank: autoDraw = False
+26.8090 	EXP 	training_word: height = 100.0
+26.8090 	EXP 	training_word: height = 100.0
+26.8090 	EXP 	training_word: height = 100.0
+26.8090 	EXP 	training_word: text = 'dJNrkd'
+26.8090 	EXP 	training_word: autoDraw = True
+27.3090 	EXP 	training_word: autoDraw = False
+27.3090 	EXP 	blank: autoDraw = True
+27.7932 	EXP 	New trial (rep=0, index=10): OrderedDict([('word', 'tdDdPE')])
+27.8176 	EXP 	blank: autoDraw = False
+27.8176 	EXP 	training_word: height = 100.0
+27.8176 	EXP 	training_word: height = 100.0
+27.8176 	EXP 	training_word: height = 100.0
+27.8176 	EXP 	training_word: text = 'tdDdPE'
+27.8176 	EXP 	training_word: autoDraw = True
+28.3086 	EXP 	training_word: autoDraw = False
+28.3086 	EXP 	blank: autoDraw = True
+28.7928 	EXP 	New trial (rep=0, index=11): OrderedDict([('word', 'tdDdDl')])
+28.8086 	EXP 	blank: autoDraw = False
+28.8086 	EXP 	training_word: height = 100.0
+28.8086 	EXP 	training_word: height = 100.0
+28.8086 	EXP 	training_word: height = 100.0
+28.8086 	EXP 	training_word: text = 'tdDdDl'
+28.8086 	EXP 	training_word: autoDraw = True
+29.3081 	EXP 	training_word: autoDraw = False
+29.3081 	EXP 	blank: autoDraw = True
+29.7920 	EXP 	New trial (rep=0, index=12): OrderedDict([('word', 'EYtYRB')])
+29.8085 	EXP 	blank: autoDraw = False
+29.8085 	EXP 	training_word: height = 100.0
+29.8085 	EXP 	training_word: height = 100.0
+29.8085 	EXP 	training_word: height = 100.0
+29.8085 	EXP 	training_word: text = 'EYtYRB'
+29.8085 	EXP 	training_word: autoDraw = True
+30.3080 	EXP 	training_word: autoDraw = False
+30.3080 	EXP 	blank: autoDraw = True
+30.7926 	EXP 	New trial (rep=0, index=13): OrderedDict([('word', 'tmAKAP')])
+30.8079 	EXP 	blank: autoDraw = False
+30.8079 	EXP 	training_word: height = 100.0
+30.8079 	EXP 	training_word: height = 100.0
+30.8079 	EXP 	training_word: height = 100.0
+30.8079 	EXP 	training_word: text = 'tmAKAP'
+30.8079 	EXP 	training_word: autoDraw = True
+31.3075 	EXP 	training_word: autoDraw = False
+31.3075 	EXP 	blank: autoDraw = True
+31.7921 	EXP 	New trial (rep=0, index=14): OrderedDict([('word', 'LOLkUY')])
+31.8135 	EXP 	blank: autoDraw = False
+31.8135 	EXP 	training_word: height = 100.0
+31.8135 	EXP 	training_word: height = 100.0
+31.8135 	EXP 	training_word: height = 100.0
+31.8135 	EXP 	training_word: text = 'LOLkUY'
+31.8135 	EXP 	training_word: autoDraw = True
+32.3070 	EXP 	training_word: autoDraw = False
+32.3070 	EXP 	blank: autoDraw = True
+32.7913 	EXP 	New trial (rep=0, index=15): OrderedDict([('word', 'EhRmBb')])
+32.8121 	EXP 	blank: autoDraw = False
+32.8121 	EXP 	training_word: height = 100.0
+32.8121 	EXP 	training_word: height = 100.0
+32.8121 	EXP 	training_word: height = 100.0
+32.8121 	EXP 	training_word: text = 'EhRmBb'
+32.8121 	EXP 	training_word: autoDraw = True
+33.3067 	EXP 	training_word: autoDraw = False
+33.3067 	EXP 	blank: autoDraw = True
+33.7910 	EXP 	New trial (rep=0, index=16): OrderedDict([('word', 'bmbNYL')])
+33.8066 	EXP 	blank: autoDraw = False
+33.8066 	EXP 	training_word: height = 100.0
+33.8066 	EXP 	training_word: height = 100.0
+33.8066 	EXP 	training_word: height = 100.0
+33.8066 	EXP 	training_word: text = 'bmbNYL'
+33.8066 	EXP 	training_word: autoDraw = True
+34.3065 	EXP 	training_word: autoDraw = False
+34.3065 	EXP 	blank: autoDraw = True
+34.7912 	EXP 	New trial (rep=0, index=17): OrderedDict([('word', 'LckGNY')])
+34.8068 	EXP 	blank: autoDraw = False
+34.8068 	EXP 	training_word: height = 100.0
+34.8068 	EXP 	training_word: height = 100.0
+34.8068 	EXP 	training_word: height = 100.0
+34.8068 	EXP 	training_word: text = 'LckGNY'
+34.8068 	EXP 	training_word: autoDraw = True
+35.3060 	EXP 	training_word: autoDraw = False
+35.3060 	EXP 	blank: autoDraw = True
+35.7905 	EXP 	New trial (rep=0, index=18): OrderedDict([('word', 'UAcdul')])
+35.8114 	EXP 	blank: autoDraw = False
+35.8114 	EXP 	training_word: height = 100.0
+35.8114 	EXP 	training_word: height = 100.0
+35.8114 	EXP 	training_word: height = 100.0
+35.8114 	EXP 	training_word: text = 'UAcdul'
+35.8114 	EXP 	training_word: autoDraw = True
+36.3059 	EXP 	training_word: autoDraw = False
+36.3059 	EXP 	blank: autoDraw = True
+36.7908 	EXP 	New trial (rep=0, index=19): OrderedDict([('word', 'TAdhMA')])
+36.8119 	EXP 	blank: autoDraw = False
+36.8119 	EXP 	training_word: height = 100.0
+36.8119 	EXP 	training_word: height = 100.0
+36.8119 	EXP 	training_word: height = 100.0
+36.8119 	EXP 	training_word: text = 'TAdhMA'
+36.8119 	EXP 	training_word: autoDraw = True
+37.3056 	EXP 	training_word: autoDraw = False
+37.3056 	EXP 	blank: autoDraw = True
+37.7898 	EXP 	New trial (rep=0, index=20): OrderedDict([('word', 'TAdhMB')])
+37.8053 	EXP 	blank: autoDraw = False
+37.8053 	EXP 	training_word: height = 100.0
+37.8053 	EXP 	training_word: height = 100.0
+37.8053 	EXP 	training_word: height = 100.0
+37.8053 	EXP 	training_word: text = 'TAdhMB'
+37.8053 	EXP 	training_word: autoDraw = True
+38.3050 	EXP 	training_word: autoDraw = False
+38.3050 	EXP 	blank: autoDraw = True
+38.7895 	EXP 	New trial (rep=0, index=21): OrderedDict([('word', 'CmcOPE')])
+38.8050 	EXP 	blank: autoDraw = False
+38.8050 	EXP 	training_word: height = 100.0
+38.8050 	EXP 	training_word: height = 100.0
+38.8050 	EXP 	training_word: height = 100.0
+38.8050 	EXP 	training_word: text = 'CmcOPE'
+38.8050 	EXP 	training_word: autoDraw = True
+39.3049 	EXP 	training_word: autoDraw = False
+39.3049 	EXP 	blank: autoDraw = True
+39.7893 	EXP 	New trial (rep=0, index=22): OrderedDict([('word', 'CmcOBb')])
+39.8047 	EXP 	blank: autoDraw = False
+39.8047 	EXP 	training_word: height = 100.0
+39.8047 	EXP 	training_word: height = 100.0
+39.8047 	EXP 	training_word: height = 100.0
+39.8047 	EXP 	training_word: text = 'CmcOBb'
+39.8047 	EXP 	training_word: autoDraw = True
+40.3045 	EXP 	training_word: autoDraw = False
+40.3045 	EXP 	blank: autoDraw = True
+40.7890 	EXP 	New trial (rep=0, index=23): OrderedDict([('word', 'vAarlv')])
+40.8106 	EXP 	blank: autoDraw = False
+40.8106 	EXP 	training_word: height = 100.0
+40.8106 	EXP 	training_word: height = 100.0
+40.8106 	EXP 	training_word: height = 100.0
+40.8106 	EXP 	training_word: text = 'vAarlv'
+40.8106 	EXP 	training_word: autoDraw = True
+41.3041 	EXP 	training_word: autoDraw = False
+41.3041 	EXP 	blank: autoDraw = True
+41.7879 	EXP 	New trial (rep=0, index=24): OrderedDict([('word', 'bmbNkd')])
+41.8039 	EXP 	blank: autoDraw = False
+41.8039 	EXP 	training_word: height = 100.0
+41.8039 	EXP 	training_word: height = 100.0
+41.8039 	EXP 	training_word: height = 100.0
+41.8039 	EXP 	training_word: text = 'bmbNkd'
+41.8039 	EXP 	training_word: autoDraw = True
+42.3038 	EXP 	training_word: autoDraw = False
+42.3038 	EXP 	blank: autoDraw = True
+42.7882 	EXP 	New trial (rep=0, index=25): OrderedDict([('word', 'LckGNY')])
+42.8037 	EXP 	blank: autoDraw = False
+42.8037 	EXP 	training_word: height = 100.0
+42.8037 	EXP 	training_word: height = 100.0
+42.8037 	EXP 	training_word: height = 100.0
+42.8037 	EXP 	training_word: text = 'LckGNY'
+42.8037 	EXP 	training_word: autoDraw = True
+43.3036 	EXP 	training_word: autoDraw = False
+43.3036 	EXP 	blank: autoDraw = True
+43.7878 	EXP 	New trial (rep=0, index=26): OrderedDict([('word', 'aYQmkd')])
+43.8033 	EXP 	blank: autoDraw = False
+43.8033 	EXP 	training_word: height = 100.0
+43.8033 	EXP 	training_word: height = 100.0
+43.8033 	EXP 	training_word: height = 100.0
+43.8033 	EXP 	training_word: text = 'aYQmkd'
+43.8033 	EXP 	training_word: autoDraw = True
+44.3030 	EXP 	training_word: autoDraw = False
+44.3030 	EXP 	blank: autoDraw = True
+44.7870 	EXP 	New trial (rep=0, index=27): OrderedDict([('word', 'mBYlAP')])
+44.8027 	EXP 	blank: autoDraw = False
+44.8027 	EXP 	training_word: height = 100.0
+44.8027 	EXP 	training_word: height = 100.0
+44.8027 	EXP 	training_word: height = 100.0
+44.8027 	EXP 	training_word: text = 'mBYlAP'
+44.8027 	EXP 	training_word: autoDraw = True
+45.3027 	EXP 	training_word: autoDraw = False
+45.3027 	EXP 	blank: autoDraw = True
+45.7874 	EXP 	New trial (rep=0, index=28): OrderedDict([('word', 'hAROKP')])
+45.8024 	EXP 	blank: autoDraw = False
+45.8024 	EXP 	training_word: height = 100.0
+45.8024 	EXP 	training_word: height = 100.0
+45.8024 	EXP 	training_word: height = 100.0
+45.8024 	EXP 	training_word: text = 'hAROKP'
+45.8024 	EXP 	training_word: autoDraw = True
+46.3025 	EXP 	training_word: autoDraw = False
+46.3025 	EXP 	blank: autoDraw = True
+46.7863 	EXP 	New trial (rep=0, index=29): OrderedDict([('word', 'LuNZlv')])
+46.8019 	EXP 	blank: autoDraw = False
+46.8019 	EXP 	training_word: height = 100.0
+46.8019 	EXP 	training_word: height = 100.0
+46.8019 	EXP 	training_word: height = 100.0
+46.8019 	EXP 	training_word: text = 'LuNZlv'
+46.8019 	EXP 	training_word: autoDraw = True
+47.3019 	EXP 	training_word: autoDraw = False
+47.3019 	EXP 	blank: autoDraw = True
+47.7862 	EXP 	New trial (rep=0, index=30): OrderedDict([('word', 'tmAKPE')])
+47.8022 	EXP 	blank: autoDraw = False
+47.8022 	EXP 	training_word: height = 100.0
+47.8022 	EXP 	training_word: height = 100.0
+47.8022 	EXP 	training_word: height = 100.0
+47.8022 	EXP 	training_word: text = 'tmAKPE'
+47.8022 	EXP 	training_word: autoDraw = True
+48.3020 	EXP 	training_word: autoDraw = False
+48.3020 	EXP 	blank: autoDraw = True
+48.7861 	EXP 	New trial (rep=0, index=31): OrderedDict([('word', 'laYmrk')])
+48.8016 	EXP 	blank: autoDraw = False
+48.8016 	EXP 	training_word: height = 100.0
+48.8016 	EXP 	training_word: height = 100.0
+48.8016 	EXP 	training_word: height = 100.0
+48.8016 	EXP 	training_word: text = 'laYmrk'
+48.8016 	EXP 	training_word: autoDraw = True
+49.3012 	EXP 	training_word: autoDraw = False
+49.3012 	EXP 	blank: autoDraw = True
+49.7857 	EXP 	New trial (rep=0, index=32): OrderedDict([('word', 'LuNZkd')])
+49.8012 	EXP 	blank: autoDraw = False
+49.8012 	EXP 	training_word: height = 100.0
+49.8012 	EXP 	training_word: height = 100.0
+49.8012 	EXP 	training_word: height = 100.0
+49.8012 	EXP 	training_word: text = 'LuNZkd'
+49.8012 	EXP 	training_word: autoDraw = True
+50.3008 	EXP 	training_word: autoDraw = False
+50.3008 	EXP 	blank: autoDraw = True
+50.7844 	EXP 	New trial (rep=0, index=33): OrderedDict([('word', 'LOLkUJ')])
+50.8009 	EXP 	blank: autoDraw = False
+50.8009 	EXP 	training_word: height = 100.0
+50.8009 	EXP 	training_word: height = 100.0
+50.8009 	EXP 	training_word: height = 100.0
+50.8009 	EXP 	training_word: text = 'LOLkUJ'
+50.8009 	EXP 	training_word: autoDraw = True
+51.3006 	EXP 	training_word: autoDraw = False
+51.3006 	EXP 	blank: autoDraw = True
+51.7842 	EXP 	New trial (rep=0, index=34): OrderedDict([('word', 'hAROKB')])
+51.8005 	EXP 	blank: autoDraw = False
+51.8005 	EXP 	training_word: height = 100.0
+51.8005 	EXP 	training_word: height = 100.0
+51.8005 	EXP 	training_word: height = 100.0
+51.8005 	EXP 	training_word: text = 'hAROKB'
+51.8005 	EXP 	training_word: autoDraw = True
+52.3002 	EXP 	training_word: autoDraw = False
+52.3002 	EXP 	blank: autoDraw = True
+52.7839 	EXP 	New trial (rep=0, index=35): OrderedDict([('word', 'laYmrY')])
+52.8000 	EXP 	blank: autoDraw = False
+52.8000 	EXP 	training_word: height = 100.0
+52.8000 	EXP 	training_word: height = 100.0
+52.8000 	EXP 	training_word: height = 100.0
+52.8000 	EXP 	training_word: text = 'laYmrY'
+52.8000 	EXP 	training_word: autoDraw = True
+53.3001 	EXP 	training_word: autoDraw = False
+53.3001 	EXP 	blank: autoDraw = True
+53.7838 	EXP 	New trial (rep=0, index=36): OrderedDict([('word', 'EYtYRP')])
+53.8001 	EXP 	blank: autoDraw = False
+53.8001 	EXP 	training_word: height = 100.0
+53.8001 	EXP 	training_word: height = 100.0
+53.8001 	EXP 	training_word: height = 100.0
+53.8001 	EXP 	training_word: text = 'EYtYRP'
+53.8001 	EXP 	training_word: autoDraw = True
+54.2998 	EXP 	training_word: autoDraw = False
+54.2998 	EXP 	blank: autoDraw = True
+54.7839 	EXP 	New trial (rep=0, index=37): OrderedDict([('word', 'aYQmlv')])
+54.7997 	EXP 	blank: autoDraw = False
+54.7997 	EXP 	training_word: height = 100.0
+54.7997 	EXP 	training_word: height = 100.0
+54.7997 	EXP 	training_word: height = 100.0
+54.7997 	EXP 	training_word: text = 'aYQmlv'
+54.7997 	EXP 	training_word: autoDraw = True
+55.2999 	EXP 	training_word: autoDraw = False
+55.2999 	EXP 	blank: autoDraw = True
+55.7851 	EXP 	New trial (rep=0, index=38): OrderedDict([('word', 'EhRmYD')])
+55.7992 	EXP 	blank: autoDraw = False
+55.7992 	EXP 	blank: autoDraw = False
+55.7992 	EXP 	training_word: height = 100.0
+55.7992 	EXP 	training_word: height = 100.0
+55.7992 	EXP 	training_word: height = 100.0
+55.7992 	EXP 	training_word: text = 'EhRmYD'
+55.7992 	EXP 	training_word: autoDraw = True
+56.2992 	EXP 	training_word: autoDraw = False
+56.2992 	EXP 	blank: autoDraw = True
+56.7846 	EXP 	New trial (rep=0, index=39): OrderedDict([('word', 'hAROKD')])
+56.7990 	EXP 	blank: autoDraw = False
+56.7990 	EXP 	blank: autoDraw = False
+56.7990 	EXP 	training_word: height = 100.0
+56.7990 	EXP 	training_word: height = 100.0
+56.7990 	EXP 	training_word: height = 100.0
+56.7990 	EXP 	training_word: text = 'hAROKD'
+56.7990 	EXP 	training_word: autoDraw = True
+57.2989 	EXP 	training_word: autoDraw = False
+57.2989 	EXP 	training_word: autoDraw = False
+57.2989 	EXP 	blank: autoDraw = True
+57.7839 	EXP 	New trial (rep=0, index=40): OrderedDict([('word', 'vAarYL')])
+57.7985 	EXP 	blank: autoDraw = False
+57.7985 	EXP 	blank: autoDraw = False
+57.7985 	EXP 	training_word: height = 100.0
+57.7985 	EXP 	training_word: height = 100.0
+57.7985 	EXP 	training_word: height = 100.0
+57.7985 	EXP 	training_word: text = 'vAarYL'
+57.7985 	EXP 	training_word: autoDraw = True
+58.2985 	EXP 	training_word: autoDraw = False
+58.2985 	EXP 	training_word: autoDraw = False
+58.2985 	EXP 	blank: autoDraw = True
+58.7840 	EXP 	New trial (rep=0, index=41): OrderedDict([('word', 'bmbNlv')])
+58.7984 	EXP 	blank: autoDraw = False
+58.7984 	EXP 	blank: autoDraw = False
+58.7984 	EXP 	training_word: height = 100.0
+58.7984 	EXP 	training_word: height = 100.0
+58.7984 	EXP 	training_word: height = 100.0
+58.7984 	EXP 	training_word: text = 'bmbNlv'
+58.7984 	EXP 	training_word: autoDraw = True
+59.2980 	EXP 	training_word: autoDraw = False
+59.2980 	EXP 	training_word: autoDraw = False
+59.2980 	EXP 	blank: autoDraw = True
+59.7831 	EXP 	New trial (rep=0, index=42): OrderedDict([('word', 'LOLkUl')])
+59.7999 	EXP 	blank: autoDraw = False
+59.7999 	EXP 	blank: autoDraw = False
+59.7999 	EXP 	training_word: height = 100.0
+59.7999 	EXP 	training_word: height = 100.0
+59.7999 	EXP 	training_word: height = 100.0
+59.7999 	EXP 	training_word: text = 'LOLkUl'
+59.7999 	EXP 	training_word: autoDraw = True
+60.3142 	EXP 	training_word: autoDraw = False
+60.3142 	EXP 	blank: autoDraw = True
+60.7987 	EXP 	New trial (rep=0, index=43): OrderedDict([('word', 'tdDdBb')])
+60.8183 	EXP 	blank: autoDraw = False
+60.8183 	EXP 	training_word: height = 100.0
+60.8183 	EXP 	training_word: height = 100.0
+60.8183 	EXP 	training_word: height = 100.0
+60.8183 	EXP 	training_word: text = 'tdDdBb'
+60.8183 	EXP 	training_word: autoDraw = True
+61.3144 	EXP 	training_word: autoDraw = False
+61.3144 	EXP 	blank: autoDraw = True
+61.7986 	EXP 	New trial (rep=0, index=44): OrderedDict([('word', 'LuNZYA')])
+61.8137 	EXP 	blank: autoDraw = False
+61.8137 	EXP 	training_word: height = 100.0
+61.8137 	EXP 	training_word: height = 100.0
+61.8137 	EXP 	training_word: height = 100.0
+61.8137 	EXP 	training_word: text = 'LuNZYA'
+61.8137 	EXP 	training_word: autoDraw = True
+62.3137 	EXP 	training_word: autoDraw = False
+62.3137 	EXP 	blank: autoDraw = True
+62.7981 	EXP 	New trial (rep=0, index=45): OrderedDict([('word', 'UAcduJ')])
+62.8135 	EXP 	blank: autoDraw = False
+62.8135 	EXP 	training_word: height = 100.0
+62.8135 	EXP 	training_word: height = 100.0
+62.8135 	EXP 	training_word: height = 100.0
+62.8135 	EXP 	training_word: text = 'UAcduJ'
+62.8135 	EXP 	training_word: autoDraw = True
+63.3132 	EXP 	training_word: autoDraw = False
+63.3132 	EXP 	blank: autoDraw = True
+63.7979 	EXP 	New trial (rep=0, index=46): OrderedDict([('word', 'laYmrY')])
+63.8180 	EXP 	blank: autoDraw = False
+63.8180 	EXP 	training_word: height = 100.0
+63.8180 	EXP 	training_word: height = 100.0
+63.8180 	EXP 	training_word: height = 100.0
+63.8180 	EXP 	training_word: text = 'laYmrY'
+63.8180 	EXP 	training_word: autoDraw = True
+64.3130 	EXP 	training_word: autoDraw = False
+64.3130 	EXP 	blank: autoDraw = True
+64.7974 	EXP 	New trial (rep=0, index=47): OrderedDict([('word', 'vAarYA')])
+64.8129 	EXP 	blank: autoDraw = False
+64.8129 	EXP 	training_word: height = 100.0
+64.8129 	EXP 	training_word: height = 100.0
+64.8129 	EXP 	training_word: height = 100.0
+64.8129 	EXP 	training_word: text = 'vAarYA'
+64.8129 	EXP 	training_word: autoDraw = True
+65.3126 	EXP 	training_word: autoDraw = False
+65.3126 	EXP 	blank: autoDraw = True
+65.7967 	EXP 	New trial (rep=0, index=48): OrderedDict([('word', 'tdDdYD')])
+65.8124 	EXP 	blank: autoDraw = False
+65.8124 	EXP 	training_word: height = 100.0
+65.8124 	EXP 	training_word: height = 100.0
+65.8124 	EXP 	training_word: height = 100.0
+65.8124 	EXP 	training_word: text = 'tdDdYD'
+65.8124 	EXP 	training_word: autoDraw = True
+66.3124 	EXP 	training_word: autoDraw = False
+66.3124 	EXP 	blank: autoDraw = True
+66.7966 	EXP 	New trial (rep=0, index=49): OrderedDict([('word', 'hAROKY')])
+66.8122 	EXP 	blank: autoDraw = False
+66.8122 	EXP 	training_word: height = 100.0
+66.8122 	EXP 	training_word: height = 100.0
+66.8122 	EXP 	training_word: height = 100.0
+66.8122 	EXP 	training_word: text = 'hAROKY'
+66.8122 	EXP 	training_word: autoDraw = True
+67.3118 	EXP 	training_word: autoDraw = False
+67.3118 	EXP 	blank: autoDraw = True
+67.7963 	EXP 	New trial (rep=0, index=50): OrderedDict([('word', 'mBYlYD')])
+67.8119 	EXP 	blank: autoDraw = False
+67.8119 	EXP 	training_word: height = 100.0
+67.8119 	EXP 	training_word: height = 100.0
+67.8119 	EXP 	training_word: height = 100.0
+67.8119 	EXP 	training_word: text = 'mBYlYD'
+67.8119 	EXP 	training_word: autoDraw = True
+68.3116 	EXP 	training_word: autoDraw = False
+68.3116 	EXP 	blank: autoDraw = True
+68.7958 	EXP 	New trial (rep=0, index=51): OrderedDict([('word', 'EPERdY')])
+68.8114 	EXP 	blank: autoDraw = False
+68.8114 	EXP 	training_word: height = 100.0
+68.8114 	EXP 	training_word: height = 100.0
+68.8114 	EXP 	training_word: height = 100.0
+68.8114 	EXP 	training_word: text = 'EPERdY'
+68.8114 	EXP 	training_word: autoDraw = True
+69.3114 	EXP 	training_word: autoDraw = False
+69.3114 	EXP 	blank: autoDraw = True
+69.7955 	EXP 	New trial (rep=0, index=52): OrderedDict([('word', 'QcladY')])
+69.8114 	EXP 	blank: autoDraw = False
+69.8114 	EXP 	training_word: height = 100.0
+69.8114 	EXP 	training_word: height = 100.0
+69.8114 	EXP 	training_word: height = 100.0
+69.8114 	EXP 	training_word: text = 'QcladY'
+69.8114 	EXP 	training_word: autoDraw = True
+70.3110 	EXP 	training_word: autoDraw = False
+70.3110 	EXP 	blank: autoDraw = True
+70.7951 	EXP 	New trial (rep=0, index=53): OrderedDict([('word', 'UAcduY')])
+70.8109 	EXP 	blank: autoDraw = False
+70.8109 	EXP 	training_word: height = 100.0
+70.8109 	EXP 	training_word: height = 100.0
+70.8109 	EXP 	training_word: height = 100.0
+70.8109 	EXP 	training_word: text = 'UAcduY'
+70.8109 	EXP 	training_word: autoDraw = True
+71.3108 	EXP 	training_word: autoDraw = False
+71.3108 	EXP 	blank: autoDraw = True
+71.7945 	EXP 	New trial (rep=0, index=54): OrderedDict([('word', 'aYQmYA')])
+71.8107 	EXP 	blank: autoDraw = False
+71.8107 	EXP 	training_word: height = 100.0
+71.8107 	EXP 	training_word: height = 100.0
+71.8107 	EXP 	training_word: height = 100.0
+71.8107 	EXP 	training_word: text = 'aYQmYA'
+71.8107 	EXP 	training_word: autoDraw = True
+72.3103 	EXP 	training_word: autoDraw = False
+72.3103 	EXP 	blank: autoDraw = True
+72.7945 	EXP 	New trial (rep=0, index=55): OrderedDict([('word', 'mBYlDl')])
+72.8101 	EXP 	blank: autoDraw = False
+72.8101 	EXP 	training_word: height = 100.0
+72.8101 	EXP 	training_word: height = 100.0
+72.8101 	EXP 	training_word: height = 100.0
+72.8101 	EXP 	training_word: text = 'mBYlDl'
+72.8101 	EXP 	training_word: autoDraw = True
+73.3101 	EXP 	training_word: autoDraw = False
+73.3101 	EXP 	blank: autoDraw = True
+73.8004 	EXP 	New trial (rep=0, index=56): OrderedDict([('word', 'EPERdD')])
+73.8175 	EXP 	blank: autoDraw = False
+73.8175 	EXP 	training_word: height = 100.0
+73.8175 	EXP 	training_word: height = 100.0
+73.8175 	EXP 	training_word: height = 100.0
+73.8175 	EXP 	training_word: text = 'EPERdD'
+73.8175 	EXP 	training_word: autoDraw = True
+74.3099 	EXP 	training_word: autoDraw = False
+74.3099 	EXP 	blank: autoDraw = True
+74.7934 	EXP 	New trial (rep=0, index=57): OrderedDict([('word', 'TAdhMD')])
+74.8094 	EXP 	blank: autoDraw = False
+74.8094 	EXP 	training_word: height = 100.0
+74.8094 	EXP 	training_word: height = 100.0
+74.8094 	EXP 	training_word: height = 100.0
+74.8094 	EXP 	training_word: text = 'TAdhMD'
+74.8094 	EXP 	training_word: autoDraw = True
+75.3094 	EXP 	training_word: autoDraw = False
+75.3094 	EXP 	blank: autoDraw = True
+75.7934 	EXP 	New trial (rep=0, index=58): OrderedDict([('word', 'vAarJU')])
+75.8095 	EXP 	blank: autoDraw = False
+75.8095 	EXP 	training_word: height = 100.0
+75.8095 	EXP 	training_word: height = 100.0
+75.8095 	EXP 	training_word: height = 100.0
+75.8095 	EXP 	training_word: text = 'vAarJU'
+75.8095 	EXP 	training_word: autoDraw = True
+76.3091 	EXP 	training_word: autoDraw = False
+76.3091 	EXP 	blank: autoDraw = True
+76.7931 	EXP 	New trial (rep=0, index=59): OrderedDict([('word', 'EhRmPE')])
+76.8091 	EXP 	blank: autoDraw = False
+76.8091 	EXP 	training_word: height = 100.0
+76.8091 	EXP 	training_word: height = 100.0
+76.8091 	EXP 	training_word: height = 100.0
+76.8091 	EXP 	training_word: text = 'EhRmPE'
+76.8091 	EXP 	training_word: autoDraw = True
+77.3084 	EXP 	training_word: autoDraw = False
+77.3084 	EXP 	blank: autoDraw = True
+77.7928 	EXP 	New trial (rep=0, index=60): OrderedDict([('word', 'QcladJ')])
+77.8085 	EXP 	blank: autoDraw = False
+77.8085 	EXP 	training_word: height = 100.0
+77.8085 	EXP 	training_word: height = 100.0
+77.8085 	EXP 	training_word: height = 100.0
+77.8085 	EXP 	training_word: text = 'QcladJ'
+77.8085 	EXP 	training_word: autoDraw = True
+78.3088 	EXP 	training_word: autoDraw = False
+78.3088 	EXP 	blank: autoDraw = True
+78.7921 	EXP 	New trial (rep=0, index=61): OrderedDict([('word', 'CmcOAP')])
+78.8082 	EXP 	blank: autoDraw = False
+78.8082 	EXP 	training_word: height = 100.0
+78.8082 	EXP 	training_word: height = 100.0
+78.8082 	EXP 	training_word: height = 100.0
+78.8082 	EXP 	training_word: text = 'CmcOAP'
+78.8082 	EXP 	training_word: autoDraw = True
+79.3081 	EXP 	training_word: autoDraw = False
+79.3081 	EXP 	blank: autoDraw = True
+79.7928 	EXP 	New trial (rep=0, index=62): OrderedDict([('word', 'EPERdA')])
+79.8080 	EXP 	blank: autoDraw = False
+79.8080 	EXP 	training_word: height = 100.0
+79.8080 	EXP 	training_word: height = 100.0
+79.8080 	EXP 	training_word: height = 100.0
+79.8080 	EXP 	training_word: text = 'EPERdA'
+79.8080 	EXP 	training_word: autoDraw = True
+80.3075 	EXP 	training_word: autoDraw = False
+80.3075 	EXP 	blank: autoDraw = True
+80.7917 	EXP 	New trial (rep=0, index=63): OrderedDict([('word', 'EYtYRD')])
+80.8075 	EXP 	blank: autoDraw = False
+80.8075 	EXP 	training_word: height = 100.0
+80.8075 	EXP 	training_word: height = 100.0
+80.8075 	EXP 	training_word: height = 100.0
+80.8075 	EXP 	training_word: text = 'EYtYRD'
+80.8075 	EXP 	training_word: autoDraw = True
+81.3074 	EXP 	training_word: autoDraw = False
+81.3074 	EXP 	blank: autoDraw = True
+81.7910 	EXP 	New trial (rep=0, index=64): OrderedDict([('word', 'UAcduk')])
+81.8078 	EXP 	blank: autoDraw = False
+81.8078 	EXP 	training_word: height = 100.0
+81.8078 	EXP 	training_word: height = 100.0
+81.8078 	EXP 	training_word: height = 100.0
+81.8078 	EXP 	training_word: text = 'UAcduk'
+81.8078 	EXP 	training_word: autoDraw = True
+82.3069 	EXP 	training_word: autoDraw = False
+82.3069 	EXP 	blank: autoDraw = True
+82.7911 	EXP 	New trial (rep=0, index=65): OrderedDict([('word', 'LuNZYL')])
+82.8069 	EXP 	blank: autoDraw = False
+82.8069 	EXP 	training_word: height = 100.0
+82.8069 	EXP 	training_word: height = 100.0
+82.8069 	EXP 	training_word: height = 100.0
+82.8069 	EXP 	training_word: text = 'LuNZYL'
+82.8069 	EXP 	training_word: autoDraw = True
+83.3066 	EXP 	training_word: autoDraw = False
+83.3066 	EXP 	blank: autoDraw = True
+83.7911 	EXP 	New trial (rep=0, index=66): OrderedDict([('word', 'aYQmYL')])
+83.8071 	EXP 	blank: autoDraw = False
+83.8071 	EXP 	training_word: height = 100.0
+83.8071 	EXP 	training_word: height = 100.0
+83.8071 	EXP 	training_word: height = 100.0
+83.8071 	EXP 	training_word: text = 'aYQmYL'
+83.8071 	EXP 	training_word: autoDraw = True
+84.3064 	EXP 	training_word: autoDraw = False
+84.3064 	EXP 	blank: autoDraw = True
+84.7905 	EXP 	New trial (rep=0, index=67): OrderedDict([('word', 'EhRmAP')])
+84.8062 	EXP 	blank: autoDraw = False
+84.8062 	EXP 	training_word: height = 100.0
+84.8062 	EXP 	training_word: height = 100.0
+84.8062 	EXP 	training_word: height = 100.0
+84.8062 	EXP 	training_word: text = 'EhRmAP'
+84.8062 	EXP 	training_word: autoDraw = True
+85.3057 	EXP 	training_word: autoDraw = False
+85.3057 	EXP 	blank: autoDraw = True
+85.7902 	EXP 	New trial (rep=0, index=68): OrderedDict([('word', 'EYtYRA')])
+85.8057 	EXP 	blank: autoDraw = False
+85.8057 	EXP 	training_word: height = 100.0
+85.8057 	EXP 	training_word: height = 100.0
+85.8057 	EXP 	training_word: height = 100.0
+85.8057 	EXP 	training_word: text = 'EYtYRA'
+85.8057 	EXP 	training_word: autoDraw = True
+86.3056 	EXP 	training_word: autoDraw = False
+86.3056 	EXP 	blank: autoDraw = True
+86.7895 	EXP 	New trial (rep=0, index=69): OrderedDict([('word', 'lCbcmB')])
+86.8054 	EXP 	blank: autoDraw = False
+86.8054 	EXP 	training_word: height = 100.0
+86.8054 	EXP 	training_word: height = 100.0
+86.8054 	EXP 	training_word: height = 100.0
+86.8054 	EXP 	training_word: text = 'lCbcmB'
+86.8054 	EXP 	training_word: autoDraw = True
+87.3053 	EXP 	training_word: autoDraw = False
+87.3053 	EXP 	blank: autoDraw = True
+87.7898 	EXP 	New trial (rep=0, index=70): OrderedDict([('word', 'lCbcmD')])
+87.8050 	EXP 	blank: autoDraw = False
+87.8050 	EXP 	training_word: height = 100.0
+87.8050 	EXP 	training_word: height = 100.0
+87.8050 	EXP 	training_word: height = 100.0
+87.8050 	EXP 	training_word: text = 'lCbcmD'
+87.8050 	EXP 	training_word: autoDraw = True
+88.3049 	EXP 	training_word: autoDraw = False
+88.3049 	EXP 	blank: autoDraw = True
+88.7887 	EXP 	New trial (rep=0, index=71): OrderedDict([('word', 'tmAKDl')])
+88.8048 	EXP 	blank: autoDraw = False
+88.8048 	EXP 	training_word: height = 100.0
+88.8048 	EXP 	training_word: height = 100.0
+88.8048 	EXP 	training_word: height = 100.0
+88.8048 	EXP 	training_word: text = 'tmAKDl'
+88.8048 	EXP 	training_word: autoDraw = True
+89.3047 	EXP 	training_word: autoDraw = False
+89.3047 	EXP 	blank: autoDraw = True
+89.7887 	EXP 	New trial (rep=0, index=72): OrderedDict([('word', 'dJNrlv')])
+89.8043 	EXP 	blank: autoDraw = False
+89.8043 	EXP 	training_word: height = 100.0
+89.8043 	EXP 	training_word: height = 100.0
+89.8043 	EXP 	training_word: height = 100.0
+89.8043 	EXP 	training_word: text = 'dJNrlv'
+89.8043 	EXP 	training_word: autoDraw = True
+90.3084 	EXP 	training_word: autoDraw = False
+90.3084 	EXP 	blank: autoDraw = True
+90.7883 	EXP 	New trial (rep=0, index=73): OrderedDict([('word', 'TAdhMY')])
+90.8082 	EXP 	blank: autoDraw = False
+90.8082 	EXP 	training_word: height = 100.0
+90.8082 	EXP 	training_word: height = 100.0
+90.8082 	EXP 	training_word: height = 100.0
+90.8082 	EXP 	training_word: text = 'TAdhMY'
+90.8082 	EXP 	training_word: autoDraw = True
+91.3039 	EXP 	training_word: autoDraw = False
+91.3039 	EXP 	blank: autoDraw = True
+91.7885 	EXP 	New trial (rep=0, index=74): OrderedDict([('word', 'EPERdP')])
+91.8039 	EXP 	blank: autoDraw = False
+91.8039 	EXP 	training_word: height = 100.0
+91.8039 	EXP 	training_word: height = 100.0
+91.8039 	EXP 	training_word: height = 100.0
+91.8039 	EXP 	training_word: text = 'EPERdP'
+91.8039 	EXP 	training_word: autoDraw = True
+92.3036 	EXP 	training_word: autoDraw = False
+92.3036 	EXP 	blank: autoDraw = True
+92.7877 	EXP 	New trial (rep=0, index=75): OrderedDict([('word', 'lCbcmA')])
+92.8035 	EXP 	blank: autoDraw = False
+92.8035 	EXP 	training_word: height = 100.0
+92.8035 	EXP 	training_word: height = 100.0
+92.8035 	EXP 	training_word: height = 100.0
+92.8035 	EXP 	training_word: text = 'lCbcmA'
+92.8035 	EXP 	training_word: autoDraw = True
+93.3062 	EXP 	training_word: autoDraw = False
+93.3062 	EXP 	blank: autoDraw = True
+93.7873 	EXP 	New trial (rep=0, index=76): OrderedDict([('word', 'tmAKYD')])
+93.8031 	EXP 	blank: autoDraw = False
+93.8031 	EXP 	training_word: height = 100.0
+93.8031 	EXP 	training_word: height = 100.0
+93.8031 	EXP 	training_word: height = 100.0
+93.8031 	EXP 	training_word: text = 'tmAKYD'
+93.8031 	EXP 	training_word: autoDraw = True
+94.3032 	EXP 	training_word: autoDraw = False
+94.3032 	EXP 	blank: autoDraw = True
+94.7870 	EXP 	New trial (rep=0, index=77): OrderedDict([('word', 'LOLkUY')])
+94.8030 	EXP 	blank: autoDraw = False
+94.8030 	EXP 	training_word: height = 100.0
+94.8030 	EXP 	training_word: height = 100.0
+94.8030 	EXP 	training_word: height = 100.0
+94.8030 	EXP 	training_word: text = 'LOLkUY'
+94.8030 	EXP 	training_word: autoDraw = True
+95.3026 	EXP 	training_word: autoDraw = False
+95.3026 	EXP 	blank: autoDraw = True
+95.7866 	EXP 	New trial (rep=0, index=78): OrderedDict([('word', 'laYmrJ')])
+95.8026 	EXP 	blank: autoDraw = False
+95.8026 	EXP 	training_word: height = 100.0
+95.8026 	EXP 	training_word: height = 100.0
+95.8026 	EXP 	training_word: height = 100.0
+95.8026 	EXP 	training_word: text = 'laYmrJ'
+95.8026 	EXP 	training_word: autoDraw = True
+96.3027 	EXP 	training_word: autoDraw = False
+96.3027 	EXP 	blank: autoDraw = True
+96.7861 	EXP 	New trial (rep=0, index=79): OrderedDict([('word', 'CmcOYD')])
+96.8019 	EXP 	blank: autoDraw = False
+96.8019 	EXP 	training_word: height = 100.0
+96.8019 	EXP 	training_word: height = 100.0
+96.8019 	EXP 	training_word: height = 100.0
+96.8019 	EXP 	training_word: text = 'CmcOYD'
+96.8019 	EXP 	training_word: autoDraw = True
+97.3018 	EXP 	training_word: autoDraw = False
+97.3018 	EXP 	blank: autoDraw = True
+97.7860 	EXP 	New trial (rep=1, index=0): None
+97.8017 	EXP 	blank: autoDraw = False
+97.8017 	EXP 	pretrainig_text: autoDraw = True
+100.2971 	EXP 	Imported training.csv as conditions, 80 conditions, 1 params
+100.2986 	EXP 	Created sequence: random, trialTypes=80, nReps=1, seed=None
+100.2998 	EXP 	New trial (rep=0, index=0): OrderedDict([('word', 'vAarlv')])
+100.3131 	DATA 	Keypress: space
+100.3147 	EXP 	pretrainig_text: autoDraw = False
+100.3147 	EXP 	training_word: height = 100.0
+100.3147 	EXP 	training_word: height = 100.0
+100.3147 	EXP 	training_word: height = 100.0
+100.3147 	EXP 	training_word: text = 'vAarlv'
+100.3147 	EXP 	training_word: autoDraw = True
+100.8175 	EXP 	training_word: autoDraw = False
+100.8175 	EXP 	blank: autoDraw = True
+101.3019 	EXP 	New trial (rep=0, index=1): OrderedDict([('word', 'tdDdBb')])
+101.3170 	EXP 	blank: autoDraw = False
+101.3170 	EXP 	training_word: height = 100.0
+101.3170 	EXP 	training_word: height = 100.0
+101.3170 	EXP 	training_word: height = 100.0
+101.3170 	EXP 	training_word: text = 'tdDdBb'
+101.3170 	EXP 	training_word: autoDraw = True
+101.8171 	EXP 	training_word: autoDraw = False
+101.8171 	EXP 	blank: autoDraw = True
+102.3014 	EXP 	New trial (rep=0, index=2): OrderedDict([('word', 'UAcduk')])
+102.3203 	EXP 	blank: autoDraw = False
+102.3203 	EXP 	training_word: height = 100.0
+102.3203 	EXP 	training_word: height = 100.0
+102.3203 	EXP 	training_word: height = 100.0
+102.3203 	EXP 	training_word: text = 'UAcduk'
+102.3203 	EXP 	training_word: autoDraw = True
+102.8166 	EXP 	training_word: autoDraw = False
+102.8166 	EXP 	blank: autoDraw = True
+103.3011 	EXP 	New trial (rep=0, index=3): OrderedDict([('word', 'TAdhMB')])
+103.3164 	EXP 	blank: autoDraw = False
+103.3164 	EXP 	training_word: height = 100.0
+103.3164 	EXP 	training_word: height = 100.0
+103.3164 	EXP 	training_word: height = 100.0
+103.3164 	EXP 	training_word: text = 'TAdhMB'
+103.3164 	EXP 	training_word: autoDraw = True
+103.8166 	EXP 	training_word: autoDraw = False
+103.8166 	EXP 	blank: autoDraw = True
+104.3007 	EXP 	New trial (rep=0, index=4): OrderedDict([('word', 'EhRmAP')])
+104.3162 	EXP 	blank: autoDraw = False
+104.3162 	EXP 	training_word: height = 100.0
+104.3162 	EXP 	training_word: height = 100.0
+104.3162 	EXP 	training_word: height = 100.0
+104.3162 	EXP 	training_word: text = 'EhRmAP'
+104.3162 	EXP 	training_word: autoDraw = True
+104.8161 	EXP 	training_word: autoDraw = False
+104.8161 	EXP 	blank: autoDraw = True
+105.3009 	EXP 	New trial (rep=0, index=5): OrderedDict([('word', 'hAROKY')])
+105.3164 	EXP 	blank: autoDraw = False
+105.3164 	EXP 	training_word: height = 100.0
+105.3164 	EXP 	training_word: height = 100.0
+105.3164 	EXP 	training_word: height = 100.0
+105.3164 	EXP 	training_word: text = 'hAROKY'
+105.3164 	EXP 	training_word: autoDraw = True
+105.8156 	EXP 	training_word: autoDraw = False
+105.8156 	EXP 	blank: autoDraw = True
+106.3002 	EXP 	New trial (rep=0, index=6): OrderedDict([('word', 'hAROKB')])
+106.3155 	EXP 	blank: autoDraw = False
+106.3155 	EXP 	training_word: height = 100.0
+106.3155 	EXP 	training_word: height = 100.0
+106.3155 	EXP 	training_word: height = 100.0
+106.3155 	EXP 	training_word: text = 'hAROKB'
+106.3155 	EXP 	training_word: autoDraw = True
+106.8152 	EXP 	training_word: autoDraw = False
+106.8152 	EXP 	blank: autoDraw = True
+107.2993 	EXP 	New trial (rep=0, index=7): OrderedDict([('word', 'CmcOYD')])
+107.3150 	EXP 	blank: autoDraw = False
+107.3150 	EXP 	training_word: height = 100.0
+107.3150 	EXP 	training_word: height = 100.0
+107.3150 	EXP 	training_word: height = 100.0
+107.3150 	EXP 	training_word: text = 'CmcOYD'
+107.3150 	EXP 	training_word: autoDraw = True
+107.8149 	EXP 	training_word: autoDraw = False
+107.8149 	EXP 	blank: autoDraw = True
+108.2993 	EXP 	New trial (rep=0, index=8): OrderedDict([('word', 'QcladJ')])
+108.3147 	EXP 	blank: autoDraw = False
+108.3147 	EXP 	training_word: height = 100.0
+108.3147 	EXP 	training_word: height = 100.0
+108.3147 	EXP 	training_word: height = 100.0
+108.3147 	EXP 	training_word: text = 'QcladJ'
+108.3147 	EXP 	training_word: autoDraw = True
+108.8146 	EXP 	training_word: autoDraw = False
+108.8146 	EXP 	blank: autoDraw = True
+109.2989 	EXP 	New trial (rep=0, index=9): OrderedDict([('word', 'LckGNY')])
+109.3153 	EXP 	blank: autoDraw = False
+109.3153 	EXP 	training_word: height = 100.0
+109.3153 	EXP 	training_word: height = 100.0
+109.3153 	EXP 	training_word: height = 100.0
+109.3153 	EXP 	training_word: text = 'LckGNY'
+109.3153 	EXP 	training_word: autoDraw = True
+109.8141 	EXP 	training_word: autoDraw = False
+109.8141 	EXP 	blank: autoDraw = True
+110.2982 	EXP 	New trial (rep=0, index=10): OrderedDict([('word', 'mBYlAP')])
+110.3142 	EXP 	blank: autoDraw = False
+110.3142 	EXP 	training_word: height = 100.0
+110.3142 	EXP 	training_word: height = 100.0
+110.3142 	EXP 	training_word: height = 100.0
+110.3142 	EXP 	training_word: text = 'mBYlAP'
+110.3142 	EXP 	training_word: autoDraw = True
+110.8137 	EXP 	training_word: autoDraw = False
+110.8137 	EXP 	blank: autoDraw = True
+111.2986 	EXP 	New trial (rep=0, index=11): OrderedDict([('word', 'tdDdPE')])
+111.3138 	EXP 	blank: autoDraw = False
+111.3138 	EXP 	training_word: height = 100.0
+111.3138 	EXP 	training_word: height = 100.0
+111.3138 	EXP 	training_word: height = 100.0
+111.3138 	EXP 	training_word: text = 'tdDdPE'
+111.3138 	EXP 	training_word: autoDraw = True
+111.8136 	EXP 	training_word: autoDraw = False
+111.8136 	EXP 	blank: autoDraw = True
+112.2974 	EXP 	New trial (rep=0, index=12): OrderedDict([('word', 'UAcduJ')])
+112.3134 	EXP 	blank: autoDraw = False
+112.3134 	EXP 	training_word: height = 100.0
+112.3134 	EXP 	training_word: height = 100.0
+112.3134 	EXP 	training_word: height = 100.0
+112.3134 	EXP 	training_word: text = 'UAcduJ'
+112.3134 	EXP 	training_word: autoDraw = True
+112.8130 	EXP 	training_word: autoDraw = False
+112.8130 	EXP 	blank: autoDraw = True
+113.2969 	EXP 	New trial (rep=0, index=13): OrderedDict([('word', 'LOLkUl')])
+113.3132 	EXP 	blank: autoDraw = False
+113.3132 	EXP 	training_word: height = 100.0
+113.3132 	EXP 	training_word: height = 100.0
+113.3132 	EXP 	training_word: height = 100.0
+113.3132 	EXP 	training_word: text = 'LOLkUl'
+113.3132 	EXP 	training_word: autoDraw = True
+113.8127 	EXP 	training_word: autoDraw = False
+113.8127 	EXP 	blank: autoDraw = True
+114.2967 	EXP 	New trial (rep=0, index=14): OrderedDict([('word', 'bmbNYL')])
+114.3127 	EXP 	blank: autoDraw = False
+114.3127 	EXP 	training_word: height = 100.0
+114.3127 	EXP 	training_word: height = 100.0
+114.3127 	EXP 	training_word: height = 100.0
+114.3127 	EXP 	training_word: text = 'bmbNYL'
+114.3127 	EXP 	training_word: autoDraw = True
+114.8124 	EXP 	training_word: autoDraw = False
+114.8124 	EXP 	blank: autoDraw = True
+115.2965 	EXP 	New trial (rep=0, index=15): OrderedDict([('word', 'LckGNk')])
+115.3127 	EXP 	blank: autoDraw = False
+115.3127 	EXP 	training_word: height = 100.0
+115.3127 	EXP 	training_word: height = 100.0
+115.3127 	EXP 	training_word: height = 100.0
+115.3127 	EXP 	training_word: text = 'LckGNk'
+115.3127 	EXP 	training_word: autoDraw = True
+115.8126 	EXP 	training_word: autoDraw = False
+115.8126 	EXP 	blank: autoDraw = True
+116.2965 	EXP 	New trial (rep=0, index=16): OrderedDict([('word', 'lCbcmA')])
+116.3120 	EXP 	blank: autoDraw = False
+116.3120 	EXP 	training_word: height = 100.0
+116.3120 	EXP 	training_word: height = 100.0
+116.3120 	EXP 	training_word: height = 100.0
+116.3120 	EXP 	training_word: text = 'lCbcmA'
+116.3120 	EXP 	training_word: autoDraw = True
+116.8118 	EXP 	training_word: autoDraw = False
+116.8118 	EXP 	blank: autoDraw = True
+117.2967 	EXP 	New trial (rep=0, index=17): OrderedDict([('word', 'TAdhMA')])
+117.3119 	EXP 	blank: autoDraw = False
+117.3119 	EXP 	training_word: height = 100.0
+117.3119 	EXP 	training_word: height = 100.0
+117.3119 	EXP 	training_word: height = 100.0
+117.3119 	EXP 	training_word: text = 'TAdhMA'
+117.3119 	EXP 	training_word: autoDraw = True
+117.8116 	EXP 	training_word: autoDraw = False
+117.8116 	EXP 	blank: autoDraw = True
+118.2961 	EXP 	New trial (rep=0, index=18): OrderedDict([('word', 'CmcOBb')])
+118.3114 	EXP 	blank: autoDraw = False
+118.3114 	EXP 	training_word: height = 100.0
+118.3114 	EXP 	training_word: height = 100.0
+118.3114 	EXP 	training_word: height = 100.0
+118.3114 	EXP 	training_word: text = 'CmcOBb'
+118.3114 	EXP 	training_word: autoDraw = True
+118.8111 	EXP 	training_word: autoDraw = False
+118.8111 	EXP 	blank: autoDraw = True
+119.2957 	EXP 	New trial (rep=0, index=19): OrderedDict([('word', 'tmAKPE')])
+119.3109 	EXP 	blank: autoDraw = False
+119.3109 	EXP 	training_word: height = 100.0
+119.3109 	EXP 	training_word: height = 100.0
+119.3109 	EXP 	training_word: height = 100.0
+119.3109 	EXP 	training_word: text = 'tmAKPE'
+119.3109 	EXP 	training_word: autoDraw = True
+119.8113 	EXP 	training_word: autoDraw = False
+119.8113 	EXP 	blank: autoDraw = True
+120.2950 	EXP 	New trial (rep=0, index=20): OrderedDict([('word', 'laYmrY')])
+120.3109 	EXP 	blank: autoDraw = False
+120.3109 	EXP 	training_word: height = 100.0
+120.3109 	EXP 	training_word: height = 100.0
+120.3109 	EXP 	training_word: height = 100.0
+120.3109 	EXP 	training_word: text = 'laYmrY'
+120.3109 	EXP 	training_word: autoDraw = True
+120.8108 	EXP 	training_word: autoDraw = False
+120.8108 	EXP 	blank: autoDraw = True
+121.2951 	EXP 	New trial (rep=0, index=21): OrderedDict([('word', 'CmcOPE')])
+121.3104 	EXP 	blank: autoDraw = False
+121.3104 	EXP 	training_word: height = 100.0
+121.3104 	EXP 	training_word: height = 100.0
+121.3104 	EXP 	training_word: height = 100.0
+121.3104 	EXP 	training_word: text = 'CmcOPE'
+121.3104 	EXP 	training_word: autoDraw = True
+121.8104 	EXP 	training_word: autoDraw = False
+121.8104 	EXP 	blank: autoDraw = True
+122.2943 	EXP 	New trial (rep=0, index=22): OrderedDict([('word', 'vAarYA')])
+122.3102 	EXP 	blank: autoDraw = False
+122.3102 	EXP 	training_word: height = 100.0
+122.3102 	EXP 	training_word: height = 100.0
+122.3102 	EXP 	training_word: height = 100.0
+122.3102 	EXP 	training_word: text = 'vAarYA'
+122.3102 	EXP 	training_word: autoDraw = True
+122.8099 	EXP 	training_word: autoDraw = False
+122.8099 	EXP 	blank: autoDraw = True
+123.2938 	EXP 	New trial (rep=0, index=23): OrderedDict([('word', 'EYtYRP')])
+123.3098 	EXP 	blank: autoDraw = False
+123.3098 	EXP 	training_word: height = 100.0
+123.3098 	EXP 	training_word: height = 100.0
+123.3098 	EXP 	training_word: height = 100.0
+123.3098 	EXP 	training_word: text = 'EYtYRP'
+123.3098 	EXP 	training_word: autoDraw = True
+123.8095 	EXP 	training_word: autoDraw = False
+123.8095 	EXP 	blank: autoDraw = True
+124.2936 	EXP 	New trial (rep=0, index=24): OrderedDict([('word', 'mBYlDl')])
+124.3098 	EXP 	blank: autoDraw = False
+124.3098 	EXP 	training_word: height = 100.0
+124.3098 	EXP 	training_word: height = 100.0
+124.3098 	EXP 	training_word: height = 100.0
+124.3098 	EXP 	training_word: text = 'mBYlDl'
+124.3098 	EXP 	training_word: autoDraw = True
+124.8117 	EXP 	training_word: autoDraw = False
+124.8117 	EXP 	blank: autoDraw = True
+125.2942 	EXP 	New trial (rep=0, index=25): OrderedDict([('word', 'EhRmBb')])
+125.3091 	EXP 	blank: autoDraw = False
+125.3091 	EXP 	training_word: height = 100.0
+125.3091 	EXP 	training_word: height = 100.0
+125.3091 	EXP 	training_word: height = 100.0
+125.3091 	EXP 	training_word: text = 'EhRmBb'
+125.3091 	EXP 	training_word: autoDraw = True
+125.8090 	EXP 	training_word: autoDraw = False
+125.8090 	EXP 	blank: autoDraw = True
+126.2937 	EXP 	New trial (rep=0, index=26): OrderedDict([('word', 'LuNZYL')])
+126.3088 	EXP 	blank: autoDraw = False
+126.3088 	EXP 	training_word: height = 100.0
+126.3088 	EXP 	training_word: height = 100.0
+126.3088 	EXP 	training_word: height = 100.0
+126.3088 	EXP 	training_word: text = 'LuNZYL'
+126.3088 	EXP 	training_word: autoDraw = True
+126.8087 	EXP 	training_word: autoDraw = False
+126.8087 	EXP 	blank: autoDraw = True
+127.2926 	EXP 	New trial (rep=0, index=27): OrderedDict([('word', 'aYQmYL')])
+127.3086 	EXP 	blank: autoDraw = False
+127.3086 	EXP 	training_word: height = 100.0
+127.3086 	EXP 	training_word: height = 100.0
+127.3086 	EXP 	training_word: height = 100.0
+127.3086 	EXP 	training_word: text = 'aYQmYL'
+127.3086 	EXP 	training_word: autoDraw = True
+127.8083 	EXP 	training_word: autoDraw = False
+127.8083 	EXP 	blank: autoDraw = True
+128.2931 	EXP 	New trial (rep=0, index=28): OrderedDict([('word', 'dJNrkd')])
+128.3082 	EXP 	blank: autoDraw = False
+128.3082 	EXP 	training_word: height = 100.0
+128.3082 	EXP 	training_word: height = 100.0
+128.3082 	EXP 	training_word: height = 100.0
+128.3082 	EXP 	training_word: text = 'dJNrkd'
+128.3082 	EXP 	training_word: autoDraw = True
+128.8079 	EXP 	training_word: autoDraw = False
+128.8079 	EXP 	blank: autoDraw = True
+129.2921 	EXP 	New trial (rep=0, index=29): OrderedDict([('word', 'EPERdP')])
+129.3080 	EXP 	blank: autoDraw = False
+129.3080 	EXP 	training_word: height = 100.0
+129.3080 	EXP 	training_word: height = 100.0
+129.3080 	EXP 	training_word: height = 100.0
+129.3080 	EXP 	training_word: text = 'EPERdP'
+129.3080 	EXP 	training_word: autoDraw = True
+129.8074 	EXP 	training_word: autoDraw = False
+129.8074 	EXP 	blank: autoDraw = True
+130.2915 	EXP 	New trial (rep=0, index=30): OrderedDict([('word', 'tdDdYD')])
+130.3075 	EXP 	blank: autoDraw = False
+130.3075 	EXP 	training_word: height = 100.0
+130.3075 	EXP 	training_word: height = 100.0
+130.3075 	EXP 	training_word: height = 100.0
+130.3075 	EXP 	training_word: text = 'tdDdYD'
+130.3075 	EXP 	training_word: autoDraw = True
+130.8071 	EXP 	training_word: autoDraw = False
+130.8071 	EXP 	blank: autoDraw = True
+131.2909 	EXP 	New trial (rep=0, index=31): OrderedDict([('word', 'vAarJU')])
+131.3073 	EXP 	blank: autoDraw = False
+131.3073 	EXP 	training_word: height = 100.0
+131.3073 	EXP 	training_word: height = 100.0
+131.3073 	EXP 	training_word: height = 100.0
+131.3073 	EXP 	training_word: text = 'vAarJU'
+131.3073 	EXP 	training_word: autoDraw = True
+131.8075 	EXP 	training_word: autoDraw = False
+131.8075 	EXP 	blank: autoDraw = True
+132.2921 	EXP 	New trial (rep=0, index=32): OrderedDict([('word', 'EhRmYD')])
+132.3067 	EXP 	blank: autoDraw = False
+132.3067 	EXP 	training_word: height = 100.0
+132.3067 	EXP 	training_word: height = 100.0
+132.3067 	EXP 	training_word: height = 100.0
+132.3067 	EXP 	training_word: text = 'EhRmYD'
+132.3067 	EXP 	training_word: autoDraw = True
+132.8065 	EXP 	training_word: autoDraw = False
+132.8065 	EXP 	blank: autoDraw = True
+133.2908 	EXP 	New trial (rep=0, index=33): OrderedDict([('word', 'dJNrJU')])
+133.3064 	EXP 	blank: autoDraw = False
+133.3064 	EXP 	training_word: height = 100.0
+133.3064 	EXP 	training_word: height = 100.0
+133.3064 	EXP 	training_word: height = 100.0
+133.3064 	EXP 	training_word: text = 'dJNrJU'
+133.3064 	EXP 	training_word: autoDraw = True
+133.8065 	EXP 	training_word: autoDraw = False
+133.8065 	EXP 	blank: autoDraw = True
+134.2937 	EXP 	New trial (rep=0, index=34): OrderedDict([('word', 'lCbcmB')])
+134.3086 	EXP 	blank: autoDraw = False
+134.3086 	EXP 	training_word: height = 100.0
+134.3086 	EXP 	training_word: height = 100.0
+134.3086 	EXP 	training_word: height = 100.0
+134.3086 	EXP 	training_word: text = 'lCbcmB'
+134.3086 	EXP 	training_word: autoDraw = True
+134.8061 	EXP 	training_word: autoDraw = False
+134.8061 	EXP 	blank: autoDraw = True
+135.2908 	EXP 	New trial (rep=0, index=35): OrderedDict([('word', 'bmbNkd')])
+135.3059 	EXP 	blank: autoDraw = False
+135.3059 	EXP 	training_word: height = 100.0
+135.3059 	EXP 	training_word: height = 100.0
+135.3059 	EXP 	training_word: height = 100.0
+135.3059 	EXP 	training_word: text = 'bmbNkd'
+135.3059 	EXP 	training_word: autoDraw = True
+135.8057 	EXP 	training_word: autoDraw = False
+135.8057 	EXP 	blank: autoDraw = True
+136.2898 	EXP 	New trial (rep=0, index=36): OrderedDict([('word', 'lCbcmD')])
+136.3054 	EXP 	blank: autoDraw = False
+136.3054 	EXP 	training_word: height = 100.0
+136.3054 	EXP 	training_word: height = 100.0
+136.3054 	EXP 	training_word: height = 100.0
+136.3054 	EXP 	training_word: text = 'lCbcmD'
+136.3054 	EXP 	training_word: autoDraw = True
+136.8052 	EXP 	training_word: autoDraw = False
+136.8052 	EXP 	blank: autoDraw = True
+137.2892 	EXP 	New trial (rep=0, index=37): OrderedDict([('word', 'tmAKDl')])
+137.3050 	EXP 	blank: autoDraw = False
+137.3050 	EXP 	training_word: height = 100.0
+137.3050 	EXP 	training_word: height = 100.0
+137.3050 	EXP 	training_word: height = 100.0
+137.3050 	EXP 	training_word: text = 'tmAKDl'
+137.3050 	EXP 	training_word: autoDraw = True
+137.8046 	EXP 	training_word: autoDraw = False
+137.8046 	EXP 	blank: autoDraw = True
+138.2888 	EXP 	New trial (rep=0, index=38): OrderedDict([('word', 'lCbcmP')])
+138.3048 	EXP 	blank: autoDraw = False
+138.3048 	EXP 	training_word: height = 100.0
+138.3048 	EXP 	training_word: height = 100.0
+138.3048 	EXP 	training_word: height = 100.0
+138.3048 	EXP 	training_word: text = 'lCbcmP'
+138.3048 	EXP 	training_word: autoDraw = True
+138.8047 	EXP 	training_word: autoDraw = False
+138.8047 	EXP 	blank: autoDraw = True
+139.2905 	EXP 	New trial (rep=0, index=39): OrderedDict([('word', 'tmAKYD')])
+139.3044 	EXP 	blank: autoDraw = False
+139.3044 	EXP 	blank: autoDraw = False
+139.3044 	EXP 	training_word: height = 100.0
+139.3044 	EXP 	training_word: height = 100.0
+139.3044 	EXP 	training_word: height = 100.0
+139.3044 	EXP 	training_word: text = 'tmAKYD'
+139.3044 	EXP 	training_word: autoDraw = True
+139.8042 	EXP 	training_word: autoDraw = False
+139.8042 	EXP 	training_word: autoDraw = False
+139.8042 	EXP 	blank: autoDraw = True
+140.2903 	EXP 	New trial (rep=0, index=40): OrderedDict([('word', 'dJNrYA')])
+140.3040 	EXP 	blank: autoDraw = False
+140.3040 	EXP 	blank: autoDraw = False
+140.3040 	EXP 	training_word: height = 100.0
+140.3040 	EXP 	training_word: height = 100.0
+140.3040 	EXP 	training_word: height = 100.0
+140.3040 	EXP 	training_word: text = 'dJNrYA'
+140.3040 	EXP 	training_word: autoDraw = True
+140.8415 	EXP 	training_word: autoDraw = False
+140.8415 	EXP 	blank: autoDraw = True
+141.2936 	EXP 	New trial (rep=0, index=41): OrderedDict([('word', 'TAdhMD')])
+141.3102 	EXP 	blank: autoDraw = False
+141.3102 	EXP 	training_word: height = 100.0
+141.3102 	EXP 	training_word: height = 100.0
+141.3102 	EXP 	training_word: height = 100.0
+141.3102 	EXP 	training_word: text = 'TAdhMD'
+141.3102 	EXP 	training_word: autoDraw = True
+141.8118 	EXP 	training_word: autoDraw = False
+141.8118 	EXP 	blank: autoDraw = True
+142.2944 	EXP 	New trial (rep=0, index=42): OrderedDict([('word', 'tmAKAP')])
+142.3105 	EXP 	blank: autoDraw = False
+142.3105 	EXP 	training_word: height = 100.0
+142.3105 	EXP 	training_word: height = 100.0
+142.3105 	EXP 	training_word: height = 100.0
+142.3105 	EXP 	training_word: text = 'tmAKAP'
+142.3105 	EXP 	training_word: autoDraw = True
+142.8073 	EXP 	training_word: autoDraw = False
+142.8073 	EXP 	blank: autoDraw = True
+143.3041 	EXP 	New trial (rep=0, index=43): OrderedDict([('word', 'aYQmlv')])
+143.3199 	EXP 	blank: autoDraw = False
+143.3199 	EXP 	training_word: height = 100.0
+143.3199 	EXP 	training_word: height = 100.0
+143.3199 	EXP 	training_word: height = 100.0
+143.3199 	EXP 	training_word: text = 'aYQmlv'
+143.3199 	EXP 	training_word: autoDraw = True
+143.8196 	EXP 	training_word: autoDraw = False
+143.8196 	EXP 	blank: autoDraw = True
+144.3039 	EXP 	New trial (rep=0, index=44): OrderedDict([('word', 'LOLkUY')])
+144.3196 	EXP 	blank: autoDraw = False
+144.3196 	EXP 	training_word: height = 100.0
+144.3196 	EXP 	training_word: height = 100.0
+144.3196 	EXP 	training_word: height = 100.0
+144.3196 	EXP 	training_word: text = 'LOLkUY'
+144.3196 	EXP 	training_word: autoDraw = True
+144.8192 	EXP 	training_word: autoDraw = False
+144.8192 	EXP 	blank: autoDraw = True
+145.3039 	EXP 	New trial (rep=0, index=45): OrderedDict([('word', 'LckGNY')])
+145.3233 	EXP 	blank: autoDraw = False
+145.3233 	EXP 	training_word: height = 100.0
+145.3233 	EXP 	training_word: height = 100.0
+145.3233 	EXP 	training_word: height = 100.0
+145.3233 	EXP 	training_word: text = 'LckGNY'
+145.3233 	EXP 	training_word: autoDraw = True
+145.8189 	EXP 	training_word: autoDraw = False
+145.8189 	EXP 	blank: autoDraw = True
+146.3034 	EXP 	New trial (rep=0, index=46): OrderedDict([('word', 'vAarYL')])
+146.3188 	EXP 	blank: autoDraw = False
+146.3188 	EXP 	training_word: height = 100.0
+146.3188 	EXP 	training_word: height = 100.0
+146.3188 	EXP 	training_word: height = 100.0
+146.3188 	EXP 	training_word: text = 'vAarYL'
+146.3188 	EXP 	training_word: autoDraw = True
+146.8184 	EXP 	training_word: autoDraw = False
+146.8184 	EXP 	blank: autoDraw = True
+147.3034 	EXP 	New trial (rep=0, index=47): OrderedDict([('word', 'tdDdDl')])
+147.3188 	EXP 	blank: autoDraw = False
+147.3188 	EXP 	training_word: height = 100.0
+147.3188 	EXP 	training_word: height = 100.0
+147.3188 	EXP 	training_word: height = 100.0
+147.3188 	EXP 	training_word: text = 'tdDdDl'
+147.3188 	EXP 	training_word: autoDraw = True
+147.8181 	EXP 	training_word: autoDraw = False
+147.8181 	EXP 	blank: autoDraw = True
+148.3020 	EXP 	New trial (rep=0, index=48): OrderedDict([('word', 'laYmrY')])
+148.3179 	EXP 	blank: autoDraw = False
+148.3179 	EXP 	training_word: height = 100.0
+148.3179 	EXP 	training_word: height = 100.0
+148.3179 	EXP 	training_word: height = 100.0
+148.3179 	EXP 	training_word: text = 'laYmrY'
+148.3179 	EXP 	training_word: autoDraw = True
+148.8180 	EXP 	training_word: autoDraw = False
+148.8180 	EXP 	blank: autoDraw = True
+149.3024 	EXP 	New trial (rep=0, index=49): OrderedDict([('word', 'EYtYRA')])
+149.3179 	EXP 	blank: autoDraw = False
+149.3179 	EXP 	training_word: height = 100.0
+149.3179 	EXP 	training_word: height = 100.0
+149.3179 	EXP 	training_word: height = 100.0
+149.3179 	EXP 	training_word: text = 'EYtYRA'
+149.3179 	EXP 	training_word: autoDraw = True
+149.8177 	EXP 	training_word: autoDraw = False
+149.8177 	EXP 	blank: autoDraw = True
+150.3017 	EXP 	New trial (rep=0, index=50): OrderedDict([('word', 'EPERdD')])
+150.3173 	EXP 	blank: autoDraw = False
+150.3173 	EXP 	training_word: height = 100.0
+150.3173 	EXP 	training_word: height = 100.0
+150.3173 	EXP 	training_word: height = 100.0
+150.3173 	EXP 	training_word: text = 'EPERdD'
+150.3173 	EXP 	training_word: autoDraw = True
+150.8170 	EXP 	training_word: autoDraw = False
+150.8170 	EXP 	blank: autoDraw = True
+151.3018 	EXP 	New trial (rep=0, index=51): OrderedDict([('word', 'Qcladl')])
+151.3169 	EXP 	blank: autoDraw = False
+151.3169 	EXP 	training_word: height = 100.0
+151.3169 	EXP 	training_word: height = 100.0
+151.3169 	EXP 	training_word: height = 100.0
+151.3169 	EXP 	training_word: text = 'Qcladl'
+151.3169 	EXP 	training_word: autoDraw = True
+151.8168 	EXP 	training_word: autoDraw = False
+151.8168 	EXP 	blank: autoDraw = True
+152.3010 	EXP 	New trial (rep=0, index=52): OrderedDict([('word', 'TAdhMY')])
+152.3165 	EXP 	blank: autoDraw = False
+152.3165 	EXP 	training_word: height = 100.0
+152.3165 	EXP 	training_word: height = 100.0
+152.3165 	EXP 	training_word: height = 100.0
+152.3165 	EXP 	training_word: text = 'TAdhMY'
+152.3165 	EXP 	training_word: autoDraw = True
+152.8165 	EXP 	training_word: autoDraw = False
+152.8165 	EXP 	blank: autoDraw = True
+153.3007 	EXP 	New trial (rep=0, index=53): OrderedDict([('word', 'EhRmPE')])
+153.3165 	EXP 	blank: autoDraw = False
+153.3165 	EXP 	training_word: height = 100.0
+153.3165 	EXP 	training_word: height = 100.0
+153.3165 	EXP 	training_word: height = 100.0
+153.3165 	EXP 	training_word: text = 'EhRmPE'
+153.3165 	EXP 	training_word: autoDraw = True
+153.8159 	EXP 	training_word: autoDraw = False
+153.8159 	EXP 	blank: autoDraw = True
+154.3001 	EXP 	New trial (rep=0, index=54): OrderedDict([('word', 'mBYlYD')])
+154.3159 	EXP 	blank: autoDraw = False
+154.3159 	EXP 	training_word: height = 100.0
+154.3159 	EXP 	training_word: height = 100.0
+154.3159 	EXP 	training_word: height = 100.0
+154.3159 	EXP 	training_word: text = 'mBYlYD'
+154.3159 	EXP 	training_word: autoDraw = True
+154.8158 	EXP 	training_word: autoDraw = False
+154.8158 	EXP 	blank: autoDraw = True
+155.2997 	EXP 	New trial (rep=0, index=55): OrderedDict([('word', 'EYtYRB')])
+155.3155 	EXP 	blank: autoDraw = False
+155.3155 	EXP 	training_word: height = 100.0
+155.3155 	EXP 	training_word: height = 100.0
+155.3155 	EXP 	training_word: height = 100.0
+155.3155 	EXP 	training_word: text = 'EYtYRB'
+155.3155 	EXP 	training_word: autoDraw = True
+155.8153 	EXP 	training_word: autoDraw = False
+155.8153 	EXP 	blank: autoDraw = True
+156.2996 	EXP 	New trial (rep=0, index=56): OrderedDict([('word', 'LuNZYA')])
+156.3152 	EXP 	blank: autoDraw = False
+156.3152 	EXP 	training_word: height = 100.0
+156.3152 	EXP 	training_word: height = 100.0
+156.3152 	EXP 	training_word: height = 100.0
+156.3152 	EXP 	training_word: text = 'LuNZYA'
+156.3152 	EXP 	training_word: autoDraw = True
+156.8151 	EXP 	training_word: autoDraw = False
+156.8151 	EXP 	blank: autoDraw = True
+157.2991 	EXP 	New trial (rep=0, index=57): OrderedDict([('word', 'LOLkUY')])
+157.3149 	EXP 	blank: autoDraw = False
+157.3149 	EXP 	training_word: height = 100.0
+157.3149 	EXP 	training_word: height = 100.0
+157.3149 	EXP 	training_word: height = 100.0
+157.3149 	EXP 	training_word: text = 'LOLkUY'
+157.3149 	EXP 	training_word: autoDraw = True
+157.8146 	EXP 	training_word: autoDraw = False
+157.8146 	EXP 	blank: autoDraw = True
+158.2988 	EXP 	New trial (rep=0, index=58): OrderedDict([('word', 'dJNrlv')])
+158.3145 	EXP 	blank: autoDraw = False
+158.3145 	EXP 	training_word: height = 100.0
+158.3145 	EXP 	training_word: height = 100.0
+158.3145 	EXP 	training_word: height = 100.0
+158.3145 	EXP 	training_word: text = 'dJNrlv'
+158.3145 	EXP 	training_word: autoDraw = True
+158.8146 	EXP 	training_word: autoDraw = False
+158.8146 	EXP 	blank: autoDraw = True
+159.2980 	EXP 	New trial (rep=0, index=59): OrderedDict([('word', 'UAcdul')])
+159.3143 	EXP 	blank: autoDraw = False
+159.3143 	EXP 	training_word: height = 100.0
+159.3143 	EXP 	training_word: height = 100.0
+159.3143 	EXP 	training_word: height = 100.0
+159.3143 	EXP 	training_word: text = 'UAcdul'
+159.3143 	EXP 	training_word: autoDraw = True
+159.8140 	EXP 	training_word: autoDraw = False
+159.8140 	EXP 	blank: autoDraw = True
+160.2980 	EXP 	New trial (rep=0, index=60): OrderedDict([('word', 'CmcOAP')])
+160.3216 	EXP 	blank: autoDraw = False
+160.3216 	EXP 	training_word: height = 100.0
+160.3216 	EXP 	training_word: height = 100.0
+160.3216 	EXP 	training_word: height = 100.0
+160.3216 	EXP 	training_word: text = 'CmcOAP'
+160.3216 	EXP 	training_word: autoDraw = True
+160.8138 	EXP 	training_word: autoDraw = False
+160.8138 	EXP 	blank: autoDraw = True
+161.2977 	EXP 	New trial (rep=0, index=61): OrderedDict([('word', 'aYQmYA')])
+161.3134 	EXP 	blank: autoDraw = False
+161.3134 	EXP 	training_word: height = 100.0
+161.3134 	EXP 	training_word: height = 100.0
+161.3134 	EXP 	training_word: height = 100.0
+161.3134 	EXP 	training_word: text = 'aYQmYA'
+161.3134 	EXP 	training_word: autoDraw = True
+161.8133 	EXP 	training_word: autoDraw = False
+161.8133 	EXP 	blank: autoDraw = True
+162.2975 	EXP 	New trial (rep=0, index=62): OrderedDict([('word', 'bmbNlv')])
+162.3133 	EXP 	blank: autoDraw = False
+162.3133 	EXP 	training_word: height = 100.0
+162.3133 	EXP 	training_word: height = 100.0
+162.3133 	EXP 	training_word: height = 100.0
+162.3133 	EXP 	training_word: text = 'bmbNlv'
+162.3133 	EXP 	training_word: autoDraw = True
+162.8130 	EXP 	training_word: autoDraw = False
+162.8130 	EXP 	blank: autoDraw = True
+163.2969 	EXP 	New trial (rep=0, index=63): OrderedDict([('word', 'hAROKD')])
+163.3127 	EXP 	blank: autoDraw = False
+163.3127 	EXP 	training_word: height = 100.0
+163.3127 	EXP 	training_word: height = 100.0
+163.3127 	EXP 	training_word: height = 100.0
+163.3127 	EXP 	training_word: text = 'hAROKD'
+163.3127 	EXP 	training_word: autoDraw = True
+163.8127 	EXP 	training_word: autoDraw = False
+163.8127 	EXP 	blank: autoDraw = True
+164.2967 	EXP 	New trial (rep=0, index=64): OrderedDict([('word', 'QcladY')])
+164.3127 	EXP 	blank: autoDraw = False
+164.3127 	EXP 	training_word: height = 100.0
+164.3127 	EXP 	training_word: height = 100.0
+164.3127 	EXP 	training_word: height = 100.0
+164.3127 	EXP 	training_word: text = 'QcladY'
+164.3127 	EXP 	training_word: autoDraw = True
+164.8126 	EXP 	training_word: autoDraw = False
+164.8126 	EXP 	blank: autoDraw = True
+165.2965 	EXP 	New trial (rep=0, index=65): OrderedDict([('word', 'EYtYRD')])
+165.3122 	EXP 	blank: autoDraw = False
+165.3122 	EXP 	training_word: height = 100.0
+165.3122 	EXP 	training_word: height = 100.0
+165.3122 	EXP 	training_word: height = 100.0
+165.3122 	EXP 	training_word: text = 'EYtYRD'
+165.3122 	EXP 	training_word: autoDraw = True
+165.8137 	EXP 	training_word: autoDraw = False
+165.8137 	EXP 	blank: autoDraw = True
+166.2964 	EXP 	New trial (rep=0, index=66): OrderedDict([('word', 'mBYlBb')])
+166.3119 	EXP 	blank: autoDraw = False
+166.3119 	EXP 	training_word: height = 100.0
+166.3119 	EXP 	training_word: height = 100.0
+166.3119 	EXP 	training_word: height = 100.0
+166.3119 	EXP 	training_word: text = 'mBYlBb'
+166.3119 	EXP 	training_word: autoDraw = True
+166.8117 	EXP 	training_word: autoDraw = False
+166.8117 	EXP 	blank: autoDraw = True
+167.2959 	EXP 	New trial (rep=0, index=67): OrderedDict([('word', 'LckGNJ')])
+167.3116 	EXP 	blank: autoDraw = False
+167.3116 	EXP 	training_word: height = 100.0
+167.3116 	EXP 	training_word: height = 100.0
+167.3116 	EXP 	training_word: height = 100.0
+167.3116 	EXP 	training_word: text = 'LckGNJ'
+167.3116 	EXP 	training_word: autoDraw = True
+167.8114 	EXP 	training_word: autoDraw = False
+167.8114 	EXP 	blank: autoDraw = True
+168.2957 	EXP 	New trial (rep=0, index=68): OrderedDict([('word', 'EPERdA')])
+168.3113 	EXP 	blank: autoDraw = False
+168.3113 	EXP 	training_word: height = 100.0
+168.3113 	EXP 	training_word: height = 100.0
+168.3113 	EXP 	training_word: height = 100.0
+168.3113 	EXP 	training_word: text = 'EPERdA'
+168.3113 	EXP 	training_word: autoDraw = True
+168.8110 	EXP 	training_word: autoDraw = False
+168.8110 	EXP 	blank: autoDraw = True
+169.2947 	EXP 	New trial (rep=0, index=69): OrderedDict([('word', 'bmbNJU')])
+169.3110 	EXP 	blank: autoDraw = False
+169.3110 	EXP 	training_word: height = 100.0
+169.3110 	EXP 	training_word: height = 100.0
+169.3110 	EXP 	training_word: height = 100.0
+169.3110 	EXP 	training_word: text = 'bmbNJU'
+169.3110 	EXP 	training_word: autoDraw = True
+169.8103 	EXP 	training_word: autoDraw = False
+169.8103 	EXP 	blank: autoDraw = True
+170.2944 	EXP 	New trial (rep=0, index=70): OrderedDict([('word', 'hAROKP')])
+170.3102 	EXP 	blank: autoDraw = False
+170.3102 	EXP 	training_word: height = 100.0
+170.3102 	EXP 	training_word: height = 100.0
+170.3102 	EXP 	training_word: height = 100.0
+170.3102 	EXP 	training_word: text = 'hAROKP'
+170.3102 	EXP 	training_word: autoDraw = True
+170.8100 	EXP 	training_word: autoDraw = False
+170.8100 	EXP 	blank: autoDraw = True
+171.2948 	EXP 	New trial (rep=0, index=71): OrderedDict([('word', 'UAcduY')])
+171.3101 	EXP 	blank: autoDraw = False
+171.3101 	EXP 	training_word: height = 100.0
+171.3101 	EXP 	training_word: height = 100.0
+171.3101 	EXP 	training_word: height = 100.0
+171.3101 	EXP 	training_word: text = 'UAcduY'
+171.3101 	EXP 	training_word: autoDraw = True
+171.8097 	EXP 	training_word: autoDraw = False
+171.8097 	EXP 	blank: autoDraw = True
+172.2936 	EXP 	New trial (rep=0, index=72): OrderedDict([('word', 'laYmrJ')])
+172.3096 	EXP 	blank: autoDraw = False
+172.3096 	EXP 	training_word: height = 100.0
+172.3096 	EXP 	training_word: height = 100.0
+172.3096 	EXP 	training_word: height = 100.0
+172.3096 	EXP 	training_word: text = 'laYmrJ'
+172.3096 	EXP 	training_word: autoDraw = True
+172.8096 	EXP 	training_word: autoDraw = False
+172.8096 	EXP 	blank: autoDraw = True
+173.2931 	EXP 	New trial (rep=0, index=73): OrderedDict([('word', 'LuNZkd')])
+173.3093 	EXP 	blank: autoDraw = False
+173.3093 	EXP 	training_word: height = 100.0
+173.3093 	EXP 	training_word: height = 100.0
+173.3093 	EXP 	training_word: height = 100.0
+173.3093 	EXP 	training_word: text = 'LuNZkd'
+173.3093 	EXP 	training_word: autoDraw = True
+173.8093 	EXP 	training_word: autoDraw = False
+173.8093 	EXP 	blank: autoDraw = True
+174.2933 	EXP 	New trial (rep=0, index=74): OrderedDict([('word', 'Qcladk')])
+174.3090 	EXP 	blank: autoDraw = False
+174.3090 	EXP 	training_word: height = 100.0
+174.3090 	EXP 	training_word: height = 100.0
+174.3090 	EXP 	training_word: height = 100.0
+174.3090 	EXP 	training_word: text = 'Qcladk'
+174.3090 	EXP 	training_word: autoDraw = True
+174.8092 	EXP 	training_word: autoDraw = False
+174.8092 	EXP 	blank: autoDraw = True
+175.2936 	EXP 	New trial (rep=0, index=75): OrderedDict([('word', 'laYmrk')])
+175.3088 	EXP 	blank: autoDraw = False
+175.3088 	EXP 	training_word: height = 100.0
+175.3088 	EXP 	training_word: height = 100.0
+175.3088 	EXP 	training_word: height = 100.0
+175.3088 	EXP 	training_word: text = 'laYmrk'
+175.3088 	EXP 	training_word: autoDraw = True
+175.8085 	EXP 	training_word: autoDraw = False
+175.8085 	EXP 	blank: autoDraw = True
+176.2929 	EXP 	New trial (rep=0, index=76): OrderedDict([('word', 'aYQmkd')])
+176.3085 	EXP 	blank: autoDraw = False
+176.3085 	EXP 	training_word: height = 100.0
+176.3085 	EXP 	training_word: height = 100.0
+176.3085 	EXP 	training_word: height = 100.0
+176.3085 	EXP 	training_word: text = 'aYQmkd'
+176.3085 	EXP 	training_word: autoDraw = True
+176.8081 	EXP 	training_word: autoDraw = False
+176.8081 	EXP 	blank: autoDraw = True
+177.2924 	EXP 	New trial (rep=0, index=77): OrderedDict([('word', 'EPERdY')])
+177.3179 	EXP 	blank: autoDraw = False
+177.3179 	EXP 	training_word: height = 100.0
+177.3179 	EXP 	training_word: height = 100.0
+177.3179 	EXP 	training_word: height = 100.0
+177.3179 	EXP 	training_word: text = 'EPERdY'
+177.3179 	EXP 	training_word: autoDraw = True
+177.8077 	EXP 	training_word: autoDraw = False
+177.8077 	EXP 	blank: autoDraw = True
+178.2917 	EXP 	New trial (rep=0, index=78): OrderedDict([('word', 'LuNZlv')])
+178.3075 	EXP 	blank: autoDraw = False
+178.3075 	EXP 	training_word: height = 100.0
+178.3075 	EXP 	training_word: height = 100.0
+178.3075 	EXP 	training_word: height = 100.0
+178.3075 	EXP 	training_word: text = 'LuNZlv'
+178.3075 	EXP 	training_word: autoDraw = True
+178.8077 	EXP 	training_word: autoDraw = False
+178.8077 	EXP 	blank: autoDraw = True
+179.2914 	EXP 	New trial (rep=0, index=79): OrderedDict([('word', 'LOLkUJ')])
+179.3075 	EXP 	blank: autoDraw = False
+179.3075 	EXP 	training_word: height = 100.0
+179.3075 	EXP 	training_word: height = 100.0
+179.3075 	EXP 	training_word: height = 100.0
+179.3075 	EXP 	training_word: text = 'LOLkUJ'
+179.3075 	EXP 	training_word: autoDraw = True
+179.8074 	EXP 	training_word: autoDraw = False
+179.8074 	EXP 	blank: autoDraw = True
+180.3070 	EXP 	blank: autoDraw = False
+180.3070 	EXP 	testing_intro: autoDraw = True
+184.9019 	EXP 	Imported testing.csv as conditions, 40 conditions, 2 params
+184.9030 	EXP 	Created sequence: random, trialTypes=40, nReps=1, seed=None
+184.9034 	EXP 	New trial (rep=0, index=0): OrderedDict([('word', 'CmcODl'), ('condition', 0)])
+184.9165 	DATA 	Keypress: space
+184.9182 	EXP 	testing_intro: autoDraw = False
+184.9182 	EXP 	testing_word: height = 100.0
+184.9182 	EXP 	testing_word: height = 100.0
+184.9182 	EXP 	testing_word: height = 100.0
+184.9182 	EXP 	testing_word: text = 'CmcODl'
+184.9182 	EXP 	testing_word: autoDraw = True
+184.9182 	EXP 	testing_text: autoDraw = True
+184.9182 	EXP 	keyboard_instructions: autoDraw = True
+186.1420 	EXP 	New trial (rep=0, index=1): OrderedDict([('word', 'aYQmJU'), ('condition', 0)])
+186.1500 	DATA 	Keypress: d
+186.1549 	EXP 	testing_word: autoDraw = False
+186.1549 	EXP 	testing_text: autoDraw = False
+186.1549 	EXP 	keyboard_instructions: autoDraw = False
+186.1549 	EXP 	testing_word: height = 100.0
+186.1549 	EXP 	testing_word: height = 100.0
+186.1549 	EXP 	testing_word: height = 100.0
+186.1549 	EXP 	testing_word: text = 'aYQmJU'
+186.1549 	EXP 	testing_word: autoDraw = True
+186.1549 	EXP 	testing_text: autoDraw = True
+186.1549 	EXP 	keyboard_instructions: autoDraw = True
+186.2262 	EXP 	New trial (rep=0, index=2): OrderedDict([('word', 'TAdhMY'), ('condition', 1)])
+186.2449 	DATA 	Keypress: k
+186.2467 	EXP 	testing_word: autoDraw = False
+186.2467 	EXP 	testing_text: autoDraw = False
+186.2467 	EXP 	keyboard_instructions: autoDraw = False
+186.2467 	EXP 	testing_word: height = 100.0
+186.2467 	EXP 	testing_word: height = 100.0
+186.2467 	EXP 	testing_word: height = 100.0
+186.2467 	EXP 	testing_word: text = 'TAdhMY'
+186.2467 	EXP 	testing_word: autoDraw = True
+186.2467 	EXP 	testing_text: autoDraw = True
+186.2467 	EXP 	keyboard_instructions: autoDraw = True
+186.3294 	DATA 	Keypress: d
+186.3421 	EXP 	New trial (rep=0, index=3): OrderedDict([('word', 'hAROKY'), ('condition', 1)])
+186.3552 	EXP 	testing_word: autoDraw = False
+186.3552 	EXP 	testing_text: autoDraw = False
+186.3552 	EXP 	keyboard_instructions: autoDraw = False
+186.3552 	EXP 	testing_word: height = 100.0
+186.3552 	EXP 	testing_word: height = 100.0
+186.3552 	EXP 	testing_word: height = 100.0
+186.3552 	EXP 	testing_word: text = 'hAROKY'
+186.3552 	EXP 	testing_word: autoDraw = True
+186.3552 	EXP 	testing_text: autoDraw = True
+186.3552 	EXP 	keyboard_instructions: autoDraw = True
+186.3930 	EXP 	New trial (rep=0, index=4): OrderedDict([('word', 'EhRmDl'), ('condition', 0)])
+186.4072 	DATA 	Keypress: k
+186.4085 	EXP 	testing_word: autoDraw = False
+186.4085 	EXP 	testing_text: autoDraw = False
+186.4085 	EXP 	keyboard_instructions: autoDraw = False
+186.4085 	EXP 	testing_word: height = 100.0
+186.4085 	EXP 	testing_word: height = 100.0
+186.4085 	EXP 	testing_word: height = 100.0
+186.4085 	EXP 	testing_word: text = 'EhRmDl'
+186.4085 	EXP 	testing_word: autoDraw = True
+186.4085 	EXP 	testing_text: autoDraw = True
+186.4085 	EXP 	keyboard_instructions: autoDraw = True
+186.4747 	EXP 	New trial (rep=0, index=5): OrderedDict([('word', 'tmAKJU'), ('condition', 1)])
+186.4831 	DATA 	Keypress: d
+186.4882 	EXP 	testing_word: autoDraw = False
+186.4882 	EXP 	testing_text: autoDraw = False
+186.4882 	EXP 	keyboard_instructions: autoDraw = False
+186.4882 	EXP 	testing_word: height = 100.0
+186.4882 	EXP 	testing_word: height = 100.0
+186.4882 	EXP 	testing_word: height = 100.0
+186.4882 	EXP 	testing_word: text = 'tmAKJU'
+186.4882 	EXP 	testing_word: autoDraw = True
+186.4882 	EXP 	testing_text: autoDraw = True
+186.4882 	EXP 	keyboard_instructions: autoDraw = True
+186.4920 	EXP 	New trial (rep=0, index=6): OrderedDict([('word', 'lCbcmY'), ('condition', 0)])
+186.4995 	DATA 	Keypress: k
+186.5049 	EXP 	testing_word: autoDraw = False
+186.5049 	EXP 	testing_text: autoDraw = False
+186.5049 	EXP 	keyboard_instructions: autoDraw = False
+186.5049 	EXP 	testing_word: height = 100.0
+186.5049 	EXP 	testing_word: height = 100.0
+186.5049 	EXP 	testing_word: height = 100.0
+186.5049 	EXP 	testing_word: text = 'lCbcmY'
+186.5049 	EXP 	testing_word: autoDraw = True
+186.5049 	EXP 	testing_text: autoDraw = True
+186.5049 	EXP 	keyboard_instructions: autoDraw = True
+186.5934 	EXP 	New trial (rep=0, index=7): OrderedDict([('word', 'dJNrAP'), ('condition', 1)])
+186.6123 	DATA 	Keypress: d
+186.6125 	DATA 	Keypress: k
+186.6136 	EXP 	testing_word: autoDraw = False
+186.6136 	EXP 	testing_text: autoDraw = False
+186.6136 	EXP 	keyboard_instructions: autoDraw = False
+186.6136 	EXP 	testing_word: height = 100.0
+186.6136 	EXP 	testing_word: height = 100.0
+186.6136 	EXP 	testing_word: height = 100.0
+186.6136 	EXP 	testing_word: text = 'dJNrAP'
+186.6136 	EXP 	testing_word: autoDraw = True
+186.6136 	EXP 	testing_text: autoDraw = True
+186.6136 	EXP 	keyboard_instructions: autoDraw = True
+186.6946 	DATA 	Keypress: d
+186.7088 	EXP 	New trial (rep=0, index=8): OrderedDict([('word', 'vAarkd'), ('condition', 0)])
+186.7214 	DATA 	Keypress: k
+186.7235 	EXP 	testing_word: autoDraw = False
+186.7235 	EXP 	testing_text: autoDraw = False
+186.7235 	EXP 	keyboard_instructions: autoDraw = False
+186.7235 	EXP 	testing_word: height = 100.0
+186.7235 	EXP 	testing_word: height = 100.0
+186.7235 	EXP 	testing_word: height = 100.0
+186.7235 	EXP 	testing_word: text = 'vAarkd'
+186.7235 	EXP 	testing_word: autoDraw = True
+186.7235 	EXP 	testing_text: autoDraw = True
+186.7235 	EXP 	keyboard_instructions: autoDraw = True
+186.8191 	DATA 	Keypress: k
+186.8271 	EXP 	New trial (rep=0, index=9): OrderedDict([('word', 'EPERdB'), ('condition', 0)])
+186.8403 	DATA 	Keypress: d
+186.8424 	EXP 	testing_word: autoDraw = False
+186.8424 	EXP 	testing_text: autoDraw = False
+186.8424 	EXP 	keyboard_instructions: autoDraw = False
+186.8424 	EXP 	testing_word: height = 100.0
+186.8424 	EXP 	testing_word: height = 100.0
+186.8424 	EXP 	testing_word: height = 100.0
+186.8424 	EXP 	testing_word: text = 'EPERdB'
+186.8424 	EXP 	testing_word: autoDraw = True
+186.8424 	EXP 	testing_text: autoDraw = True
+186.8424 	EXP 	keyboard_instructions: autoDraw = True
+186.9414 	EXP 	New trial (rep=0, index=10): OrderedDict([('word', 'LckGNY'), ('condition', 1)])
+186.9522 	DATA 	Keypress: k
+186.9524 	DATA 	Keypress: d
+186.9548 	EXP 	testing_word: autoDraw = False
+186.9548 	EXP 	testing_text: autoDraw = False
+186.9548 	EXP 	keyboard_instructions: autoDraw = False
+186.9548 	EXP 	testing_word: height = 100.0
+186.9548 	EXP 	testing_word: height = 100.0
+186.9548 	EXP 	testing_word: height = 100.0
+186.9548 	EXP 	testing_word: text = 'LckGNY'
+186.9548 	EXP 	testing_word: autoDraw = True
+186.9548 	EXP 	testing_text: autoDraw = True
+186.9548 	EXP 	keyboard_instructions: autoDraw = True
+187.0596 	EXP 	New trial (rep=0, index=11): OrderedDict([('word', 'tdDdAP'), ('condition', 0)])
+187.0802 	DATA 	Keypress: k
+187.0813 	EXP 	testing_word: autoDraw = False
+187.0813 	EXP 	testing_text: autoDraw = False
+187.0813 	EXP 	keyboard_instructions: autoDraw = False
+187.0813 	EXP 	testing_word: height = 100.0
+187.0813 	EXP 	testing_word: height = 100.0
+187.0813 	EXP 	testing_word: height = 100.0
+187.0813 	EXP 	testing_word: text = 'tdDdAP'
+187.0813 	EXP 	testing_word: autoDraw = True
+187.0813 	EXP 	testing_text: autoDraw = True
+187.0813 	EXP 	keyboard_instructions: autoDraw = True
+187.1584 	EXP 	New trial (rep=0, index=12): OrderedDict([('word', 'QcladA'), ('condition', 1)])
+187.1647 	DATA 	Keypress: d
+187.1713 	EXP 	testing_word: autoDraw = False
+187.1713 	EXP 	testing_text: autoDraw = False
+187.1713 	EXP 	keyboard_instructions: autoDraw = False
+187.1713 	EXP 	testing_word: height = 100.0
+187.1713 	EXP 	testing_word: height = 100.0
+187.1713 	EXP 	testing_word: height = 100.0
+187.1713 	EXP 	testing_word: text = 'QcladA'
+187.1713 	EXP 	testing_word: autoDraw = True
+187.1713 	EXP 	testing_text: autoDraw = True
+187.1713 	EXP 	keyboard_instructions: autoDraw = True
+187.1752 	DATA 	Keypress: k
+187.1918 	EXP 	New trial (rep=0, index=13): OrderedDict([('word', 'EYtYRl'), ('condition', 1)])
+187.2047 	EXP 	testing_word: autoDraw = False
+187.2047 	EXP 	testing_text: autoDraw = False
+187.2047 	EXP 	keyboard_instructions: autoDraw = False
+187.2047 	EXP 	testing_word: height = 100.0
+187.2047 	EXP 	testing_word: height = 100.0
+187.2047 	EXP 	testing_word: height = 100.0
+187.2047 	EXP 	testing_word: text = 'EYtYRl'
+187.2047 	EXP 	testing_word: autoDraw = True
+187.2047 	EXP 	testing_text: autoDraw = True
+187.2047 	EXP 	keyboard_instructions: autoDraw = True
+187.2773 	DATA 	Keypress: d
+187.2938 	EXP 	New trial (rep=0, index=14): OrderedDict([('word', 'LuNZBb'), ('condition', 1)])
+187.3121 	DATA 	Keypress: k
+187.3136 	EXP 	testing_word: autoDraw = False
+187.3136 	EXP 	testing_text: autoDraw = False
+187.3136 	EXP 	keyboard_instructions: autoDraw = False
+187.3136 	EXP 	testing_word: height = 100.0
+187.3136 	EXP 	testing_word: height = 100.0
+187.3136 	EXP 	testing_word: height = 100.0
+187.3136 	EXP 	testing_word: text = 'LuNZBb'
+187.3136 	EXP 	testing_word: autoDraw = True
+187.3136 	EXP 	testing_text: autoDraw = True
+187.3136 	EXP 	keyboard_instructions: autoDraw = True
+187.3594 	EXP 	New trial (rep=0, index=15): OrderedDict([('word', 'mBYlYA'), ('condition', 1)])
+187.3680 	DATA 	Keypress: d
+187.3711 	EXP 	testing_word: autoDraw = False
+187.3711 	EXP 	testing_text: autoDraw = False
+187.3711 	EXP 	keyboard_instructions: autoDraw = False
+187.3711 	EXP 	testing_word: height = 100.0
+187.3711 	EXP 	testing_word: height = 100.0
+187.3711 	EXP 	testing_word: height = 100.0
+187.3711 	EXP 	testing_word: text = 'mBYlYA'
+187.3711 	EXP 	testing_word: autoDraw = True
+187.3711 	EXP 	testing_text: autoDraw = True
+187.3711 	EXP 	keyboard_instructions: autoDraw = True
+187.4088 	EXP 	New trial (rep=0, index=16): OrderedDict([('word', 'LckGNl'), ('condition', 0)])
+187.4195 	DATA 	Keypress: k
+187.4222 	EXP 	testing_word: autoDraw = False
+187.4222 	EXP 	testing_text: autoDraw = False
+187.4222 	EXP 	keyboard_instructions: autoDraw = False
+187.4222 	EXP 	testing_word: height = 100.0
+187.4222 	EXP 	testing_word: height = 100.0
+187.4222 	EXP 	testing_word: height = 100.0
+187.4222 	EXP 	testing_word: text = 'LckGNl'
+187.4222 	EXP 	testing_word: autoDraw = True
+187.4222 	EXP 	testing_text: autoDraw = True
+187.4222 	EXP 	keyboard_instructions: autoDraw = True
+187.5118 	DATA 	Keypress: k
+187.5264 	EXP 	New trial (rep=0, index=17): OrderedDict([('word', 'bmbNPE'), ('condition', 1)])
+187.5473 	DATA 	Keypress: d
+187.5486 	EXP 	testing_word: autoDraw = False
+187.5486 	EXP 	testing_text: autoDraw = False
+187.5486 	EXP 	keyboard_instructions: autoDraw = False
+187.5486 	EXP 	testing_word: height = 100.0
+187.5486 	EXP 	testing_word: height = 100.0
+187.5486 	EXP 	testing_word: height = 100.0
+187.5486 	EXP 	testing_word: text = 'bmbNPE'
+187.5486 	EXP 	testing_word: autoDraw = True
+187.5486 	EXP 	testing_text: autoDraw = True
+187.5486 	EXP 	keyboard_instructions: autoDraw = True
+187.6261 	DATA 	Keypress: k
+187.6415 	EXP 	New trial (rep=0, index=18): OrderedDict([('word', 'mBYlPE'), ('condition', 0)])
+187.6544 	EXP 	testing_word: autoDraw = False
+187.6544 	EXP 	testing_text: autoDraw = False
+187.6544 	EXP 	keyboard_instructions: autoDraw = False
+187.6544 	EXP 	testing_word: height = 100.0
+187.6544 	EXP 	testing_word: height = 100.0
+187.6544 	EXP 	testing_word: height = 100.0
+187.6544 	EXP 	testing_word: text = 'mBYlPE'
+187.6544 	EXP 	testing_word: autoDraw = True
+187.6544 	EXP 	testing_text: autoDraw = True
+187.6544 	EXP 	keyboard_instructions: autoDraw = True
+187.7092 	EXP 	New trial (rep=0, index=19): OrderedDict([('word', 'UAcduP'), ('condition', 1)])
+187.7201 	DATA 	Keypress: d
+187.7217 	EXP 	testing_word: autoDraw = False
+187.7217 	EXP 	testing_text: autoDraw = False
+187.7217 	EXP 	keyboard_instructions: autoDraw = False
+187.7217 	EXP 	testing_word: height = 100.0
+187.7217 	EXP 	testing_word: height = 100.0
+187.7217 	EXP 	testing_word: height = 100.0
+187.7217 	EXP 	testing_word: text = 'UAcduP'
+187.7217 	EXP 	testing_word: autoDraw = True
+187.7217 	EXP 	testing_text: autoDraw = True
+187.7217 	EXP 	keyboard_instructions: autoDraw = True
+187.7788 	DATA 	Keypress: k
+187.7936 	EXP 	New trial (rep=0, index=20): OrderedDict([('word', 'tmAKBb'), ('condition', 0)])
+187.8190 	EXP 	testing_word: autoDraw = False
+187.8190 	EXP 	testing_text: autoDraw = False
+187.8190 	EXP 	keyboard_instructions: autoDraw = False
+187.8190 	EXP 	testing_word: height = 100.0
+187.8190 	EXP 	testing_word: height = 100.0
+187.8190 	EXP 	testing_word: height = 100.0
+187.8190 	EXP 	testing_word: text = 'tmAKBb'
+187.8190 	EXP 	testing_word: autoDraw = True
+187.8190 	EXP 	testing_text: autoDraw = True
+187.8190 	EXP 	keyboard_instructions: autoDraw = True
+187.9421 	EXP 	New trial (rep=0, index=21): OrderedDict([('word', 'EhRmkd'), ('condition', 1)])
+187.9573 	DATA 	Keypress: k
+187.9587 	EXP 	testing_word: autoDraw = False
+187.9587 	EXP 	testing_text: autoDraw = False
+187.9587 	EXP 	keyboard_instructions: autoDraw = False
+187.9587 	EXP 	testing_word: height = 100.0
+187.9587 	EXP 	testing_word: height = 100.0
+187.9587 	EXP 	testing_word: height = 100.0
+187.9587 	EXP 	testing_word: text = 'EhRmkd'
+187.9587 	EXP 	testing_word: autoDraw = True
+187.9587 	EXP 	testing_text: autoDraw = True
+187.9587 	EXP 	keyboard_instructions: autoDraw = True
+188.1094 	EXP 	New trial (rep=0, index=22): OrderedDict([('word', 'tdDdYL'), ('condition', 1)])
+188.1231 	DATA 	Keypress: k
+188.1251 	EXP 	testing_word: autoDraw = False
+188.1251 	EXP 	testing_text: autoDraw = False
+188.1251 	EXP 	keyboard_instructions: autoDraw = False
+188.1251 	EXP 	testing_word: height = 100.0
+188.1251 	EXP 	testing_word: height = 100.0
+188.1251 	EXP 	testing_word: height = 100.0
+188.1251 	EXP 	testing_word: text = 'tdDdYL'
+188.1251 	EXP 	testing_word: autoDraw = True
+188.1251 	EXP 	testing_text: autoDraw = True
+188.1251 	EXP 	keyboard_instructions: autoDraw = True
+188.3083 	EXP 	New trial (rep=0, index=23): OrderedDict([('word', 'lCbcml'), ('condition', 1)])
+188.3195 	DATA 	Keypress: d
+188.3223 	EXP 	testing_word: autoDraw = False
+188.3223 	EXP 	testing_text: autoDraw = False
+188.3223 	EXP 	keyboard_instructions: autoDraw = False
+188.3223 	EXP 	testing_word: height = 100.0
+188.3223 	EXP 	testing_word: height = 100.0
+188.3223 	EXP 	testing_word: height = 100.0
+188.3223 	EXP 	testing_word: text = 'lCbcml'
+188.3223 	EXP 	testing_word: autoDraw = True
+188.3223 	EXP 	testing_text: autoDraw = True
+188.3223 	EXP 	keyboard_instructions: autoDraw = True
+188.5088 	EXP 	New trial (rep=0, index=24): OrderedDict([('word', 'EYtYRY'), ('condition', 0)])
+188.5177 	DATA 	Keypress: k
+188.5212 	EXP 	testing_word: autoDraw = False
+188.5212 	EXP 	testing_text: autoDraw = False
+188.5212 	EXP 	keyboard_instructions: autoDraw = False
+188.5212 	EXP 	testing_word: height = 100.0
+188.5212 	EXP 	testing_word: height = 100.0
+188.5212 	EXP 	testing_word: height = 100.0
+188.5212 	EXP 	testing_word: text = 'EYtYRY'
+188.5212 	EXP 	testing_word: autoDraw = True
+188.5212 	EXP 	testing_text: autoDraw = True
+188.5212 	EXP 	keyboard_instructions: autoDraw = True
+188.6592 	EXP 	New trial (rep=0, index=25): OrderedDict([('word', 'LOLkUD'), ('condition', 1)])
+188.6743 	DATA 	Keypress: k
+188.6757 	EXP 	testing_word: autoDraw = False
+188.6757 	EXP 	testing_text: autoDraw = False
+188.6757 	EXP 	keyboard_instructions: autoDraw = False
+188.6757 	EXP 	testing_word: height = 100.0
+188.6757 	EXP 	testing_word: height = 100.0
+188.6757 	EXP 	testing_word: height = 100.0
+188.6757 	EXP 	testing_word: text = 'LOLkUD'
+188.6757 	EXP 	testing_word: autoDraw = True
+188.6757 	EXP 	testing_text: autoDraw = True
+188.6757 	EXP 	keyboard_instructions: autoDraw = True
+188.7591 	EXP 	New trial (rep=0, index=26): OrderedDict([('word', 'laYmrY'), ('condition', 1)])
+188.7772 	DATA 	Keypress: d
+188.7786 	EXP 	testing_word: autoDraw = False
+188.7786 	EXP 	testing_text: autoDraw = False
+188.7786 	EXP 	keyboard_instructions: autoDraw = False
+188.7786 	EXP 	testing_word: height = 100.0
+188.7786 	EXP 	testing_word: height = 100.0
+188.7786 	EXP 	testing_word: height = 100.0
+188.7786 	EXP 	testing_word: text = 'laYmrY'
+188.7786 	EXP 	testing_word: autoDraw = True
+188.7786 	EXP 	testing_text: autoDraw = True
+188.7786 	EXP 	keyboard_instructions: autoDraw = True
+188.9259 	EXP 	New trial (rep=0, index=27): OrderedDict([('word', 'TAdhMP'), ('condition', 0)])
+188.9478 	DATA 	Keypress: k
+188.9494 	EXP 	testing_word: autoDraw = False
+188.9494 	EXP 	testing_text: autoDraw = False
+188.9494 	EXP 	keyboard_instructions: autoDraw = False
+188.9494 	EXP 	testing_word: height = 100.0
+188.9494 	EXP 	testing_word: height = 100.0
+188.9494 	EXP 	testing_word: height = 100.0
+188.9494 	EXP 	testing_word: text = 'TAdhMP'
+188.9494 	EXP 	testing_word: autoDraw = True
+188.9494 	EXP 	testing_text: autoDraw = True
+188.9494 	EXP 	keyboard_instructions: autoDraw = True
+189.1256 	EXP 	New trial (rep=0, index=28): OrderedDict([('word', 'LuNZJU'), ('condition', 0)])
+189.1392 	DATA 	Keypress: k
+189.1420 	EXP 	testing_word: autoDraw = False
+189.1420 	EXP 	testing_text: autoDraw = False
+189.1420 	EXP 	keyboard_instructions: autoDraw = False
+189.1420 	EXP 	testing_word: height = 100.0
+189.1420 	EXP 	testing_word: height = 100.0
+189.1420 	EXP 	testing_word: height = 100.0
+189.1420 	EXP 	testing_word: text = 'LuNZJU'
+189.1420 	EXP 	testing_word: autoDraw = True
+189.1420 	EXP 	testing_text: autoDraw = True
+189.1420 	EXP 	keyboard_instructions: autoDraw = True
+189.2418 	EXP 	New trial (rep=0, index=29): OrderedDict([('word', 'EPERdJ'), ('condition', 1)])
+189.2512 	DATA 	Keypress: d
+189.2540 	EXP 	testing_word: autoDraw = False
+189.2540 	EXP 	testing_text: autoDraw = False
+189.2540 	EXP 	keyboard_instructions: autoDraw = False
+189.2540 	EXP 	testing_word: height = 100.0
+189.2540 	EXP 	testing_word: height = 100.0
+189.2540 	EXP 	testing_word: height = 100.0
+189.2540 	EXP 	testing_word: text = 'EPERdJ'
+189.2540 	EXP 	testing_word: autoDraw = True
+189.2540 	EXP 	testing_text: autoDraw = True
+189.2540 	EXP 	keyboard_instructions: autoDraw = True
+189.5080 	EXP 	New trial (rep=0, index=30): OrderedDict([('word', 'laYmrl'), ('condition', 0)])
+189.5214 	DATA 	Keypress: d
+189.5232 	EXP 	testing_word: autoDraw = False
+189.5232 	EXP 	testing_text: autoDraw = False
+189.5232 	EXP 	keyboard_instructions: autoDraw = False
+189.5232 	EXP 	testing_word: height = 100.0
+189.5232 	EXP 	testing_word: height = 100.0
+189.5232 	EXP 	testing_word: height = 100.0
+189.5232 	EXP 	testing_word: text = 'laYmrl'
+189.5232 	EXP 	testing_word: autoDraw = True
+189.5232 	EXP 	testing_text: autoDraw = True
+189.5232 	EXP 	keyboard_instructions: autoDraw = True
+189.7253 	EXP 	New trial (rep=0, index=31): OrderedDict([('word', 'dJNrYL'), ('condition', 0)])
+189.7352 	DATA 	Keypress: d
+189.7371 	EXP 	testing_word: autoDraw = False
+189.7371 	EXP 	testing_text: autoDraw = False
+189.7371 	EXP 	keyboard_instructions: autoDraw = False
+189.7371 	EXP 	testing_word: height = 100.0
+189.7371 	EXP 	testing_word: height = 100.0
+189.7371 	EXP 	testing_word: height = 100.0
+189.7371 	EXP 	testing_word: text = 'dJNrYL'
+189.7371 	EXP 	testing_word: autoDraw = True
+189.7371 	EXP 	testing_text: autoDraw = True
+189.7371 	EXP 	keyboard_instructions: autoDraw = True
+189.9577 	EXP 	New trial (rep=0, index=32): OrderedDict([('word', 'aYQmBb'), ('condition', 1)])
+189.9664 	DATA 	Keypress: d
+189.9710 	EXP 	testing_word: autoDraw = False
+189.9710 	EXP 	testing_text: autoDraw = False
+189.9710 	EXP 	keyboard_instructions: autoDraw = False
+189.9710 	EXP 	testing_word: height = 100.0
+189.9710 	EXP 	testing_word: height = 100.0
+189.9710 	EXP 	testing_word: height = 100.0
+189.9710 	EXP 	testing_word: text = 'aYQmBb'
+189.9710 	EXP 	testing_word: autoDraw = True
+189.9710 	EXP 	testing_text: autoDraw = True
+189.9710 	EXP 	keyboard_instructions: autoDraw = True
+190.0099 	EXP 	New trial (rep=0, index=33): OrderedDict([('word', 'LOLkUk'), ('condition', 0)])
+190.0274 	DATA 	Keypress: k
+190.0290 	EXP 	testing_word: autoDraw = False
+190.0290 	EXP 	testing_text: autoDraw = False
+190.0290 	EXP 	keyboard_instructions: autoDraw = False
+190.0290 	EXP 	testing_word: height = 100.0
+190.0290 	EXP 	testing_word: height = 100.0
+190.0290 	EXP 	testing_word: height = 100.0
+190.0290 	EXP 	testing_word: text = 'LOLkUk'
+190.0290 	EXP 	testing_word: autoDraw = True
+190.0290 	EXP 	testing_text: autoDraw = True
+190.0290 	EXP 	keyboard_instructions: autoDraw = True
+190.2254 	EXP 	New trial (rep=0, index=34): OrderedDict([('word', 'QcladY'), ('condition', 0)])
+190.2432 	DATA 	Keypress: k
+190.2448 	EXP 	testing_word: autoDraw = False
+190.2448 	EXP 	testing_text: autoDraw = False
+190.2448 	EXP 	keyboard_instructions: autoDraw = False
+190.2448 	EXP 	testing_word: height = 100.0
+190.2448 	EXP 	testing_word: height = 100.0
+190.2448 	EXP 	testing_word: height = 100.0
+190.2448 	EXP 	testing_word: text = 'QcladY'
+190.2448 	EXP 	testing_word: autoDraw = True
+190.2448 	EXP 	testing_text: autoDraw = True
+190.2448 	EXP 	keyboard_instructions: autoDraw = True
+190.3251 	EXP 	New trial (rep=0, index=35): OrderedDict([('word', 'bmbNYA'), ('condition', 0)])
+190.3436 	DATA 	Keypress: d
+190.3452 	EXP 	testing_word: autoDraw = False
+190.3452 	EXP 	testing_text: autoDraw = False
+190.3452 	EXP 	keyboard_instructions: autoDraw = False
+190.3452 	EXP 	testing_word: height = 100.0
+190.3452 	EXP 	testing_word: height = 100.0
+190.3452 	EXP 	testing_word: height = 100.0
+190.3452 	EXP 	testing_word: text = 'bmbNYA'
+190.3452 	EXP 	testing_word: autoDraw = True
+190.3452 	EXP 	testing_text: autoDraw = True
+190.3452 	EXP 	keyboard_instructions: autoDraw = True
+190.3913 	EXP 	New trial (rep=0, index=36): OrderedDict([('word', 'CmcOkd'), ('condition', 1)])
+190.4082 	DATA 	Keypress: k
+190.4105 	EXP 	testing_word: autoDraw = False
+190.4105 	EXP 	testing_text: autoDraw = False
+190.4105 	EXP 	keyboard_instructions: autoDraw = False
+190.4105 	EXP 	testing_word: height = 100.0
+190.4105 	EXP 	testing_word: height = 100.0
+190.4105 	EXP 	testing_word: height = 100.0
+190.4105 	EXP 	testing_word: text = 'CmcOkd'
+190.4105 	EXP 	testing_word: autoDraw = True
+190.4105 	EXP 	testing_text: autoDraw = True
+190.4105 	EXP 	keyboard_instructions: autoDraw = True
+190.5083 	EXP 	New trial (rep=0, index=37): OrderedDict([('word', 'vAarDl'), ('condition', 1)])
+190.5262 	DATA 	Keypress: d
+190.5279 	EXP 	testing_word: autoDraw = False
+190.5279 	EXP 	testing_text: autoDraw = False
+190.5279 	EXP 	keyboard_instructions: autoDraw = False
+190.5279 	EXP 	testing_word: height = 100.0
+190.5279 	EXP 	testing_word: height = 100.0
+190.5279 	EXP 	testing_word: height = 100.0
+190.5279 	EXP 	testing_word: text = 'vAarDl'
+190.5279 	EXP 	testing_word: autoDraw = True
+190.5279 	EXP 	testing_text: autoDraw = True
+190.5279 	EXP 	keyboard_instructions: autoDraw = True
+190.5587 	DATA 	Keypress: k
+190.5744 	EXP 	New trial (rep=0, index=38): OrderedDict([('word', 'hAROKA'), ('condition', 0)])
+190.5871 	EXP 	testing_word: autoDraw = False
+190.5871 	EXP 	testing_text: autoDraw = False
+190.5871 	EXP 	keyboard_instructions: autoDraw = False
+190.5871 	EXP 	testing_word: height = 100.0
+190.5871 	EXP 	testing_word: height = 100.0
+190.5871 	EXP 	testing_word: height = 100.0
+190.5871 	EXP 	testing_word: text = 'hAROKA'
+190.5871 	EXP 	testing_word: autoDraw = True
+190.5871 	EXP 	testing_text: autoDraw = True
+190.5871 	EXP 	keyboard_instructions: autoDraw = True
+190.7599 	DATA 	Keypress: k
+190.7747 	EXP 	New trial (rep=0, index=39): OrderedDict([('word', 'UAcduY'), ('condition', 0)])
+190.7919 	EXP 	testing_word: autoDraw = False
+190.7919 	EXP 	testing_text: autoDraw = False
+190.7919 	EXP 	keyboard_instructions: autoDraw = False
+190.7919 	EXP 	testing_word: height = 100.0
+190.7919 	EXP 	testing_word: height = 100.0
+190.7919 	EXP 	testing_word: height = 100.0
+190.7919 	EXP 	testing_word: text = 'UAcduY'
+190.7919 	EXP 	testing_word: autoDraw = True
+190.7919 	EXP 	testing_text: autoDraw = True
+190.7919 	EXP 	keyboard_instructions: autoDraw = True
+190.9585 	DATA 	Keypress: k
+190.9701 	EXP 	testing_word: autoDraw = False
+190.9701 	EXP 	testing_text: autoDraw = False
+190.9701 	EXP 	keyboard_instructions: autoDraw = False
+191.2816 	EXP 	window1: mouseVisible = True
