@@ -72,8 +72,8 @@ bacsfile = ['BACS1.otf']
 bacs = 'BACS1'
 
 participant_responses = []
-stim_duration = 0.5
-isi = 0.5
+stim_duration = 0.8
+isi = 0.2
 trainingreps = 2 # number of times we repeat the training
 
 # introduction
@@ -89,10 +89,10 @@ keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
     training = random.sample(training,len(training))
-    for trialn in range(trainingn): # normally, trainingn
-        clock.reset() # resets the trial clock   
+    for trialn in range(trainingn):
         word = training[trialn]
         text = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
+        clock.reset() # resets the trial clock
         while clock.getTime() < stim_duration:
             text.draw(win=win)
             win.flip()
@@ -113,15 +113,16 @@ event.waitKeys()
 
 # testing:
 testing = random.sample(testing,len(testing))
-for trialn in range(testingn): #normally, testingn
+for trialn in range(testingn):
     word = testing[trialn][0]
     stim_text = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
     expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
-    expl2_text = visual.TextStim(win, text = "Press 'd' for yes, 'k' for no", height = 30,
+    expl2_text = visual.TextStim(win, text = "Press 'k' for yes, 'd' for no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
     stim_text.draw(win = win)
-    expl_text.draw(win = win)
+    if trialn == 0:
+        expl_text.draw(win = win)
     expl2_text.draw(win = win)
     win.flip()
     keys = event.waitKeys(keyList=["d","k"])
@@ -138,17 +139,17 @@ win.close()
 all_responses = []
 for trial in participant_responses:
     if trial[1] == 0: # if item congruent
-        if trial[2] == 'd': # if answered yes
-            all_responses.append([trial[0],trial[1],0]) # 0 means correct
-        elif trial[2] == 'k': # if answered no
-            all_responses.append([trial[0],trial[1],1]) # 1 means incorrect
+        if trial[2] == 'k': # if answered yes
+            all_responses.append([trial[0],trial[1],'yes'])
+        elif trial[2] == 'd': # if answered no
+            all_responses.append([trial[0],trial[1],'no'])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
     if trial[1] == 1: # if item incongruent
-        if trial[2] == 'd': # if answered yes
-            all_responses.append([trial[0],trial[1],0])
-        elif trial[2] == 'k': # if answered no
-            all_responses.append([trial[0],trial[1],1])
+        if trial[2] == 'k': # if answered yes
+            all_responses.append([trial[0],trial[1],'yes'])
+        elif trial[2] == 'd': # if answered no
+            all_responses.append([trial[0],trial[1],'no'])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
 
