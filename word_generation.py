@@ -199,6 +199,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
 
 import os.path
 import numpy as np
+import csv
 def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing):
     '''
     Exports the training and testing word lists as text files.
@@ -243,17 +244,20 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
             output5.write(word+"\n")
     output5.close()
     file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/training.csv'
-    word  = np.array([x for x in training_list])
-    ab = np.zeros(word.size, dtype=[('var1', 'U6')])
-    ab['var1'] = word
-    np.savetxt(file_name, ab, delimiter = ", ", header = "word", comments = '', fmt = "%s")
+    trainingwords = np.array([x for x in training_list])
+    np.savetxt(file_name, trainingwords, delimiter = ", ", header = "word", comments = '', fmt = "%s")
     file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/testing.csv'
-    word  = np.array([x[0] for x in testing])
-    condition = np.array([x[1] for x in testing])
-    ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int)])
-    ab['var1'] = word
-    ab['var2'] = condition
-    np.savetxt(file_name, ab, delimiter = ", ", header="word,condition", comments = '', fmt = "%s")
+    header = ['word','condition']
+    with open(file_name, 'w', newline='') as output6:
+        writer = csv.writer(output6)
+        writer.writerow(header)
+        writer.writerows(testing)
+    output6.close()
+    # word2  = np.array([x[0] for x in testing])
+    # condition = np.array([x[1] for x in testing])
+    # ab['word'] = word2
+    # ab['condition'] = condition
+    # np.savetxt(file_name, ab, delimiter = ", ", header="word,condition", comments = '', fmt = "%s")
     print('Participant stimuli lists exported.') 
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
