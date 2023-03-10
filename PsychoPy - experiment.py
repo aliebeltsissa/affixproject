@@ -121,7 +121,7 @@ for trialn in range(testingn):
     expl2_text = visual.TextStim(win, text = "Press 'k' for yes, 'd' for no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
     stim_text.draw(win = win)
-    if trialn == 0:
+    if trialn <= 2:
         expl_text.draw(win = win)
     expl2_text.draw(win = win)
     win.flip()
@@ -160,8 +160,15 @@ os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Parti
 import csv
 file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
 header = ['word','condition','response']
-with open(file_name, 'w', newline='') as output:
-    writer = csv.writer(output)
+with open(file_name, 'w', newline='') as output1:
+    writer = csv.writer(output1)
     writer.writerow(header)
     writer.writerows(all_responses)
-output.close()
+output1.close()
+folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
+file_name = f"training_{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output2:
+    for word in training:
+        output2.write(word+"\n")
+output2.close()
