@@ -253,11 +253,6 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
         writer.writerow(header)
         writer.writerows(testing)
     output6.close()
-    # word2  = np.array([x[0] for x in testing])
-    # condition = np.array([x[1] for x in testing])
-    # ab['word'] = word2
-    # ab['condition'] = condition
-    # np.savetxt(file_name, ab, delimiter = ", ", header="word,condition", comments = '', fmt = "%s")
     print('Participant stimuli lists exported.') 
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()

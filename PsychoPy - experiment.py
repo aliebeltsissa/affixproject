@@ -156,13 +156,11 @@ import os
 output_folder = f"Participant_{sbj_id}"
 os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
 
-import numpy as np
-word  = np.array([x[0] for x in all_responses])
-condition = np.array([x[1] for x in all_responses])
-response = np.array([x[2] for x in all_responses])
-ab = np.zeros(word.size, dtype=[('var1', 'U6'), ('var2', int), ('var3', int)])
-ab['var1'] = word
-ab['var2'] = condition
-ab['var3'] = response
-np.savetxt(f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
-           , ab, delimiter = "\t", header = "Word, Condition, Response", fmt = "%10s %i %i")
+import csv
+file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
+header = ['word','condition','response']
+with open(file_name, 'w', newline='') as output:
+    writer = csv.writer(output)
+    writer.writerow(header)
+    writer.writerows(all_responses)
+output.close()
