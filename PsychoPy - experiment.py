@@ -124,32 +124,36 @@ for trialn in range(testingn):
     if trialn <= 2:
         expl_text.draw(win = win)
     expl2_text.draw(win = win)
+    clock.reset()
     win.flip()
     keys = event.waitKeys(keyList=["d","k"])
+    RT = clock.getTime()
     response = keys[0]
-    participant_responses.append([word,testing[trialn][1],response])
+    participant_responses.append([word,testing[trialn][1],response,RT])
     
 # goodbye
 text = visual.TextStim(win, text = "Thank you for participating! Press any key to exit.",
                        height = 100, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
 text.draw(win=win)
 win.flip()
+event.waitKeys()
 win.close()
 
 all_responses = []
 for trial in participant_responses:
+    trialRT = round((trial[3]*100),2)
     if trial[1] == 0: # if item congruent
         if trial[2] == 'k': # if answered yes
-            all_responses.append([trial[0],trial[1],'yes'])
+            all_responses.append([trial[0],trial[1],'yes',trialRT])
         elif trial[2] == 'd': # if answered no
-            all_responses.append([trial[0],trial[1],'no'])
+            all_responses.append([trial[0],trial[1],'no',trialRT])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
     if trial[1] == 1: # if item incongruent
         if trial[2] == 'k': # if answered yes
-            all_responses.append([trial[0],trial[1],'yes'])
+            all_responses.append([trial[0],trial[1],'yes',trialRT])
         elif trial[2] == 'd': # if answered no
-            all_responses.append([trial[0],trial[1],'no'])
+            all_responses.append([trial[0],trial[1],'no',trialRT])
         else:
             print(f"Problem sorting responses to word {trial[0]}")
 
@@ -159,7 +163,7 @@ os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Parti
 
 import csv
 file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
-header = ['word','condition','response']
+header = ['word','condition','response','RT']
 with open(file_name, 'w', newline='') as output1:
     writer = csv.writer(output1)
     writer.writerow(header)
