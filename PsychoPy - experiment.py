@@ -149,7 +149,7 @@ win.fullscr=True
 win.winHandle.set_fullscreen(True)
 win.flip()
 
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento. In questa parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni. Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -200,7 +200,7 @@ win.flip()
 event.waitKeys()
 
 # testing:
-text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro. C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue. Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere è una parola aliena e 'd' quando pensi che la combinazione di lettere non è una parola aliena. Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro.\n\n C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue.\n\n Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere è una parola aliena e 'd' quando pensi che la combinazione di lettere non è una parola aliena.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
