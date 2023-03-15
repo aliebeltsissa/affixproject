@@ -148,12 +148,8 @@ win.winHandle.activate()
 win.fullscr=True
 win.winHandle.set_fullscreen(True)
 win.flip()
-text = visual.TextStim(win, text = "Welcome to the experiment. You will be presented with two training sequences, followed by a testing phase. Please pay attention to the words as they're presented to you. Press any key to begin.",
-                       height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 1000)
-text.draw(win=win)
-win.flip()
-event.waitKeys()
-text = visual.TextStim(win, text = "In questa parte di esperimento, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni. Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+
+text = visual.TextStim(win, text = "Buenvenuto all'esperimento. In questa parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni. Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole. Per favore, chiama lo sperimentatore se hai qualche domanda.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -204,7 +200,7 @@ win.flip()
 event.waitKeys()
 
 # testing:
-text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro. C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue. Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere e una parola aliena e 'd' quando pensi che la combinazione di lettere non e una parola aliena. Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro. C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue. Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere è una parola aliena e 'd' quando pensi che la combinazione di lettere non è una parola aliena. Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta. Per favore, chiama lo sperimentatore se hai qualche domanda.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -214,7 +210,7 @@ for trialn in range(testingn):
     stimulus = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
     expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
-    expl2_text = visual.TextStim(win, text = "Press 'k' for yes, 'd' for no", height = 30,
+    expl2_text = visual.TextStim(win, text = "Premi 'k' per sì, 'd' per no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
     stimulus.draw(win = win)
     if trialn <= 2:
@@ -228,13 +224,14 @@ for trialn in range(testingn):
     participant_responses.append([word,testing[trialn][1],response,RT])
     
 # goodbye
-text = visual.TextStim(win, text = "Thank you for participating! Press any key to exit.",
+text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Press any key to exit.",
                        height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
 text.draw(win=win)
 win.flip()
 event.waitKeys()
 win.close()
 
+# initial data sorting
 all_responses = []
 for trial in participant_responses:
     trialRT = round((trial[3]*100),2)
@@ -253,6 +250,7 @@ for trial in participant_responses:
         else:
             print(f"Problem sorting responses to word {trial[0]}")
 
+# data output
 import os
 output_folder = f"Participant_{sbj_id}"
 os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
