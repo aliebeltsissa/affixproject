@@ -48,10 +48,37 @@ def testing_list(congruenttesting, incongruenttesting):
     testing = congruenttesting + incongruenttesting
     return testing
 
+def list_randomisation(lst, lstlen):
+    '''
+    Takes a stimuli list and randomises it to avoid the orthographic structure to be evident.
+
+    Parameters
+    ----------
+    lst : LIST
+        The inputted list of words.
+    lstlen : INTEGER
+        The length of the list.
+
+    Returns
+    -------
+    rand_lst : LIST
+        A randomised training list.
+    '''
+    import random
+    rand_lst = []
+    for i in range(lstlen):
+        inter_lst = random.sample(lst,lstlen)
+        if inter_lst[0][0] != rand_lst[-1][0] and inter_lst[0][-1] != rand_lst[-1][-1]:
+            rand_lst.append(inter_lst[0])
+    return rand_lst
+    
+
 training, congruenttesting, incongruenttesting = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
+training = list_randomisation(training, trainingn)
+testing = list_randomisation(testing, testingn)
 
 from psychopy import visual, event, core, gui
 def escape():
