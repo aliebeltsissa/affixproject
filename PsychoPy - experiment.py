@@ -83,6 +83,18 @@ text.draw(win=win)
 win.flip()
 event.waitKeys()
 
+# example
+ex_text = visual.TextStim(win, text = "Here is an example of what you will be presented with:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1000)
+ex_rect = visual.Rect(win, width = 900, height = 500, pos = [0,0], lineWidth = 5, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+ex_stim = visual.TextStim(win, text = "efjnpqsz", font = bacs, height = 50, color=[.8,.8,.8], pos=[0,0], ori=0)
+next_text = visual.TextStim(win, text = "When you're ready to start, press any key.", height = 30, pos = [0,-350], wrapWidth = 1000)
+ex_text.draw(win=win)
+ex_rect.draw(win=win)
+ex_stim.draw(win=win)
+next_text.draw(win=win)
+win.flip()
+event.waitKeys()
+
 # training:
 import random
 keys = event.getKeys()
