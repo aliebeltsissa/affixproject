@@ -143,6 +143,11 @@ isi = 0.2
 trainingreps = 2 # number of times we repeat the training
 
 # introduction
+win.winHandle.maximize()
+win.winHandle.activate()
+win.fullscr=True
+win.winHandle.set_fullscreen(True)
+win.flip()
 text = visual.TextStim(win, text = "Welcome to the experiment. You will be presented with two training sequences, followed by a testing phase. Please pay attention to the words as they're presented to you. Press any key to begin.",
                        height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 1000)
 text.draw(win=win)
@@ -175,13 +180,14 @@ for reps in range(trainingreps):
             word = rand_training1[trialn]
         elif reps == 1:
             word = rand_training2[trialn]
-        if reps < 1:
+        elif reps > 1:
             print("Error: too many training reps, not enought lists.")
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
         clock.reset() # resets the trial clock
         while clock.getTime() < stim_duration:
             stimulus.draw(win=win)
             win.flip()
+        clock.reset()
         while clock.getTime() < isi:
             win.flip()
     if reps == 0:
