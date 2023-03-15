@@ -65,15 +65,15 @@ def training_randomisation(lst, lstlen):
         A randomised training list.
     '''
     import random
-    rand_lst = ['efjnpqsz']
+    rand_lst = ['efjnpqsz'] # creating a temporary 1st word for the code to compare against
     rep = 0
     while len(rand_lst) < (lstlen+1):
         if rep < 500:
             word = random.choice(lst)
-            if word[0:1] != rand_lst[-1][0:1] and word[-2:-1] != rand_lst[-1][-2:-1] and word not in rand_lst:
+            if word[0:1] != rand_lst[-1][0:1] and word[-2:-1] != rand_lst[-1][-2:-1] and word not in rand_lst: # if there are different 1st and last letters, and not yet in list
                 rand_lst.append(word)
             rep += 1
-        if rep >= 500:
+        if rep >= 500: # timeout: if done too many reps, restart
             rand_lst = ['efjnpqsz']
             rep = 0
     rand_lst.remove('efjnpqsz')
@@ -96,16 +96,16 @@ def testing_randomisation(lst, lstlen):
         A randomised testing list.
     '''
     import random
-    rand_lst = [['efjnpqsz',0]]
+    rand_lst = [['efjnpqsz',0]] # creating a temporary 1st word for the code to compare against
     rep = 0
     while len(rand_lst) < (lstlen+1):
         if rep < 500:
             word = random.choice(lst)
             #print(word)
             if word[0][0:1] != rand_lst[-1][0][0:1] and word[0][-2:-1] != rand_lst[-1][0][-2:-1] and [word[0],word[1]] not in rand_lst:
-                rand_lst.append([word[0],word[1]])
+                rand_lst.append([word[0],word[1]]) # add word and its congruency index
             rep += 1
-        if rep >= 500:
+        if rep >= 500: # timeout: if done too many reps, restart
             rand_lst = [['efjnpqsz',0]]
             rep = 0
     rand_lst.remove(['efjnpqsz',0])
@@ -175,6 +175,8 @@ for reps in range(trainingreps):
             word = rand_training1[trialn]
         elif reps == 1:
             word = rand_training2[trialn]
+        if reps < 1:
+            print("Error: too many training reps, not enought lists.")
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
         clock.reset() # resets the trial clock
         while clock.getTime() < stim_duration:

@@ -96,16 +96,16 @@ def testing_randomisation(lst, lstlen):
         A randomised testing list.
     '''
     import random
-    rand_lst = [['efjnpqsz',0]]
+    rand_lst = [['efjnpqsz',0]] # creating a temporary 1st word for the code to compare against
     rep = 0
     while len(rand_lst) < (lstlen+1):
         if rep < 500:
             word = random.choice(lst)
             #print(word)
             if word[0][0:1] != rand_lst[-1][0][0:1] and word[0][-2:-1] != rand_lst[-1][0][-2:-1] and [word[0],word[1]] not in rand_lst:
-                rand_lst.append([word[0],word[1]])
+                rand_lst.append([word[0],word[1]]) # add word and its congruency index
             rep += 1
-        if rep >= 500:
+        if rep >= 500: # timeout: if done too many reps, restart
             rand_lst = [['efjnpqsz',0]]
             rep = 0
     rand_lst.remove(['efjnpqsz',0])
