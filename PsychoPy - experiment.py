@@ -82,6 +82,11 @@ text = visual.TextStim(win, text = "Welcome to the experiment. You will be prese
 text.draw(win=win)
 win.flip()
 event.waitKeys()
+text = visual.TextStim(win, text = "In questa parte di esperimento, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni. Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+                       height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text.draw(win=win)
+win.flip()
+event.waitKeys()
 
 # example
 ex_text = visual.TextStim(win, text = "Here is an example of what you will be presented with:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1000)
@@ -117,13 +122,18 @@ for reps in range(trainingreps):
         win.flip()
         event.waitKeys()
 
-inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to begin testing.",
+inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to continue the experiment.",
                              height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 800)
 inter_text.draw(win=win)
 win.flip()
 event.waitKeys()
 
 # testing:
+text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro. C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue. Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere e una parola aliena e 'd' quando pensi che la combinazione di lettere non e una parola aliena. Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text.draw(win=win)
+win.flip()
+event.waitKeys()
 testing = random.sample(testing,len(testing))
 for trialn in range(testingn):
     word = testing[trialn][0]
