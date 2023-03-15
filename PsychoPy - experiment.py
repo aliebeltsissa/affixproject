@@ -48,9 +48,40 @@ def testing_list(congruenttesting, incongruenttesting):
     testing = congruenttesting + incongruenttesting
     return testing
 
-def list_randomisation(lst, lstlen):
+def training_randomisation(lst, lstlen):
     '''
-    Takes a stimuli list and randomises it to avoid the orthographic structure to be evident.
+    Takes the training list and randomises it to avoid the orthographic structure to be evident.
+
+    Parameters
+    ----------
+    lst : LIST
+        The inputted training list of words.
+    lstlen : INTEGER
+        The length of the list.
+
+    Returns
+    -------
+    rand_lst : LIST
+        A randomised training list.
+    '''
+    import random
+    rand_lst = ['efjnpqsz']
+    rep = 0
+    while len(rand_lst) < (lstlen+1):
+        if rep < 500:
+            word = random.choice(lst)
+            if word[0:1] != rand_lst[-1][0:1] and word[-2:-1] != rand_lst[-1][-2:-1] and word not in rand_lst:
+                rand_lst.append(word)
+            rep += 1
+        if rep >= 500:
+            rand_lst = ['efjnpqsz']
+            rep = 0
+    rand_lst.remove('efjnpqsz')
+    return rand_lst
+
+def testing_randomisation(lst, lstlen):
+    '''
+    Takes a testing stimuli list and randomises it to avoid the orthographic structure to be evident.
 
     Parameters
     ----------
@@ -62,23 +93,31 @@ def list_randomisation(lst, lstlen):
     Returns
     -------
     rand_lst : LIST
-        A randomised training list.
+        A randomised testing list.
     '''
     import random
-    rand_lst = []
-    for i in range(lstlen):
-        inter_lst = random.sample(lst,lstlen)
-        if inter_lst[0][0] != rand_lst[-1][0] and inter_lst[0][-1] != rand_lst[-1][-1]:
-            rand_lst.append(inter_lst[0])
+    rand_lst = [['efjnpqsz',0]]
+    rep = 0
+    while len(rand_lst) < (lstlen+1):
+        if rep < 500:
+            word = random.choice(lst)
+            #print(word)
+            if word[0][0:1] != rand_lst[-1][0][0:1] and word[0][-2:-1] != rand_lst[-1][0][-2:-1] and [word[0],word[1]] not in rand_lst:
+                rand_lst.append([word[0],word[1]])
+            rep += 1
+        if rep >= 500:
+            rand_lst = [['efjnpqsz',0]]
+            rep = 0
+    rand_lst.remove(['efjnpqsz',0])
     return rand_lst
-    
 
 training, congruenttesting, incongruenttesting = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
-training = list_randomisation(training, trainingn)
-testing = list_randomisation(testing, testingn)
+rand_training1 = training_randomisation(training, trainingn)
+rand_training2 = training_randomisation(training, trainingn)
+rand_testing = testing_randomisation(testing, testingn)
 
 from psychopy import visual, event, core, gui
 def escape():
@@ -128,17 +167,18 @@ win.flip()
 event.waitKeys()
 
 # training:
-import random
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    training = random.sample(training,len(training))
     for trialn in range(trainingn):
-        word = training[trialn]
-        text = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
+        if reps == 0:
+            word = rand_training1[trialn]
+        elif reps == 1:
+            word = rand_training2[trialn]
+        stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
         clock.reset() # resets the trial clock
         while clock.getTime() < stim_duration:
-            text.draw(win=win)
+            stimulus.draw(win=win)
             win.flip()
         while clock.getTime() < isi:
             win.flip()
@@ -161,15 +201,14 @@ text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa ling
 text.draw(win=win)
 win.flip()
 event.waitKeys()
-testing = random.sample(testing,len(testing))
 for trialn in range(testingn):
-    word = testing[trialn][0]
-    stim_text = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
+    word = rand_testing[trialn][0]
+    stimulus = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
     expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Press 'k' for yes, 'd' for no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
-    stim_text.draw(win = win)
+    stimulus.draw(win = win)
     if trialn <= 2:
         expl_text.draw(win = win)
     expl2_text.draw(win = win)
@@ -182,7 +221,7 @@ for trialn in range(testingn):
     
 # goodbye
 text = visual.TextStim(win, text = "Thank you for participating! Press any key to exit.",
-                       height = 100, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
+                       height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
 text.draw(win=win)
 win.flip()
 event.waitKeys()

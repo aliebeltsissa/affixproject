@@ -66,12 +66,16 @@ def training_randomisation(lst, lstlen):
     '''
     import random
     rand_lst = ['efjnpqsz']
+    rep = 0
     while len(rand_lst) < (lstlen+1):
-        for i in range(lstlen+2):
-            while len(rand_lst) < i:
-                inter_lst = random.sample(lst,lstlen) # shuffle list
-                if inter_lst[0][0:1] != rand_lst[-1][0:1] and inter_lst[0][-2:-1] != rand_lst[-1][-2:-1]:
-                    rand_lst.append(inter_lst[0])
+        if rep < 500:
+            word = random.choice(lst)
+            if word[0:1] != rand_lst[-1][0:1] and word[-2:-1] != rand_lst[-1][-2:-1] and word not in rand_lst:
+                rand_lst.append(word)
+            rep += 1
+        if rep >= 500:
+            rand_lst = ['efjnpqsz']
+            rep = 0
     rand_lst.remove('efjnpqsz')
     return rand_lst
 
@@ -92,14 +96,19 @@ def testing_randomisation(lst, lstlen):
         A randomised testing list.
     '''
     import random
-    rand_lst = ['efjnpqsz']
+    rand_lst = [['efjnpqsz',0]]
+    rep = 0
     while len(rand_lst) < (lstlen+1):
-        for i in range(lstlen+2):
-            while len(rand_lst) < i:
-                inter_lst = random.sample(lst,lstlen) # shuffle list
-                if inter_lst[0][0:1] != rand_lst[-1][0:1] and inter_lst[0][-2:-1] != rand_lst[-1][-2:-1]:
-                    rand_lst.append(inter_lst[0])
-    rand_lst.remove('efjnpqsz')
+        if rep < 500:
+            word = random.choice(lst)
+            #print(word)
+            if word[0][0:1] != rand_lst[-1][0][0:1] and word[0][-2:-1] != rand_lst[-1][0][-2:-1] and [word[0],word[1]] not in rand_lst:
+                rand_lst.append([word[0],word[1]])
+            rep += 1
+        if rep >= 500:
+            rand_lst = [['efjnpqsz',0]]
+            rep = 0
+    rand_lst.remove(['efjnpqsz',0])
     return rand_lst
 
 training, congruenttesting, incongruenttesting = import_words()
@@ -108,6 +117,4 @@ trainingn = len(training)
 testingn = len(testing)
 rand_training1 = training_randomisation(training, trainingn)
 rand_training2 = training_randomisation(training, trainingn)
-#testing = list_randomisation(testing, testingn)
-set1 = [x for x in rand_training1 if rand_training1.count(x) > 1] # extract duplicates from chunks_list
-set1 = [*set(set1)]
+rand_testing = testing_randomisation(testing, testingn)
