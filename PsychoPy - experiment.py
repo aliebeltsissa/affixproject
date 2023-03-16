@@ -235,20 +235,12 @@ win.close()
 all_responses = []
 for trial in participant_responses:
     trialRT = round((trial[3]*100),2)
-    if trial[1] == 0: # if item congruent
-        if trial[2] == 'k': # if answered yes
-            all_responses.append([trial[0],trial[1],'yes',trialRT])
-        elif trial[2] == 'd': # if answered no
-            all_responses.append([trial[0],trial[1],'no',trialRT])
-        else:
-            print(f"Problem sorting responses to word {trial[0]}")
-    if trial[1] == 1: # if item incongruent
-        if trial[2] == 'k': # if answered yes
-            all_responses.append([trial[0],trial[1],'yes',trialRT])
-        elif trial[2] == 'd': # if answered no
-            all_responses.append([trial[0],trial[1],'no',trialRT])
-        else:
-            print(f"Problem sorting responses to word {trial[0]}")
+    if trial[2] == 'k': # if answered yes
+        all_responses.append([trial[0],trial[1],'yes',trialRT])
+    elif trial[2] == 'd': # if answered no
+        all_responses.append([trial[0],trial[1],'no',trialRT])
+    else:
+        print(f"Problem sorting responses to word {trial[0]}")
 
 # data output
 import os
