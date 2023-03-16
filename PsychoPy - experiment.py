@@ -171,13 +171,13 @@ event.waitKeys()
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    for trialn in range(trainingn):
+    for trialn in range(5):
         if reps == 0:
             word = rand_training1[trialn]
         elif reps == 1:
             word = rand_training2[trialn]
         elif reps > 1:
-            print("Error: too many training reps, not enought lists.")
+            print("Error: too many training reps, not enough lists.")
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
         clock.reset() # resets the trial clock
         while clock.getTime() < stim_duration:
@@ -221,7 +221,7 @@ for trialn in range(testingn):
     keys = event.waitKeys(keyList=["d","k"])
     RT = clock.getTime()
     response = keys[0]
-    participant_responses.append([word,testing[trialn][1],response,RT])
+    participant_responses.append([(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # goodbye
 text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Press any key to exit.",
@@ -234,13 +234,13 @@ win.close()
 # initial data sorting
 all_responses = []
 for trial in participant_responses:
-    trialRT = round((trial[3]*100),2)
-    if trial[2] == 'k': # if answered yes
-        all_responses.append([trial[0],trial[1],'yes',trialRT])
-    elif trial[2] == 'd': # if answered no
-        all_responses.append([trial[0],trial[1],'no',trialRT])
+    trialRT = round((trial[4]*100),2)
+    if trial[3] == 'k': # if answered yes
+        all_responses.append([trial[0],trial[1],trial[2],'yes',trialRT])
+    elif trial[3] == 'd': # if answered no
+        all_responses.append([trial[0],trial[1],trial[2],'no',trialRT])
     else:
-        print(f"Problem sorting responses to word {trial[0]}")
+        print(f"Problem sorting responses to trial {trial[0]}")
 
 # data output
 import os
@@ -249,7 +249,7 @@ os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Parti
 
 import csv
 file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
-header = ['word','condition','response','RT']
+header = ['trial','word','condition','response','RT']
 with open(file_name, 'w', newline='') as output1:
     writer = csv.writer(output1)
     writer.writerow(header)
@@ -262,3 +262,17 @@ with open(file_path, 'w') as output2:
     for word in training:
         output2.write(word+"\n")
 output2.close()
+folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
+file_name = f"random_training1_{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output3:
+    for word in rand_training1:
+        output3.write(word+"\n")
+output3.close()
+folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
+file_name = f"random_training2_{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output4:
+    for word in rand_training2:
+        output4.write(word+"\n")
+output4.close()
