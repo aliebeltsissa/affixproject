@@ -149,14 +149,14 @@ win.fullscr=True
 win.winHandle.set_fullscreen(True)
 win.flip()
 
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa primaparte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
 event.waitKeys()
 
 # example
-ex_text = visual.TextStim(win, text = "Ecco un esempio di cosa vedrai durante questa parte dell'esperimento':", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1000)
+ex_text = visual.TextStim(win, text = "Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1400)
 ex_rect = visual.Rect(win, width = 900, height = 500, pos = [0,0], lineWidth = 5, lineColor = [-1,-1,-1], fillColor = [0,0,0])
 ex_stim = visual.TextStim(win, text = "efjnpqsz", font = bacs, height = 50, color=[.8,.8,.8], pos=[0,0], ori=0)
 next_text = visual.TextStim(win, text = "Quando sei pronti per iniziare, premi un tasto qualsiasi.", height = 30, pos = [0,-350], wrapWidth = 1000)
@@ -171,7 +171,7 @@ event.waitKeys()
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    for trialn in range(5):
+    for trialn in range(trainingn):
         if reps == 0:
             word = rand_training1[trialn]
         elif reps == 1:
@@ -193,7 +193,7 @@ for reps in range(trainingreps):
         win.flip()
         event.waitKeys()
 
-inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento Premi un tasto qualsiasi per continuare.",
+inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento. Premi un tasto qualsiasi per continuare.",
                              height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 800)
 inter_text.draw(win=win)
 win.flip()
