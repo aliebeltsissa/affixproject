@@ -149,17 +149,17 @@ win.fullscr=True
 win.winHandle.set_fullscreen(True)
 win.flip()
 
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa primaparte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
 event.waitKeys()
 
 # example
-ex_text = visual.TextStim(win, text = "Here is an example of what you will be presented with:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1000)
+ex_text = visual.TextStim(win, text = "Ecco un esempio di cosa vedrai durante questa parte dell'esperimento':", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1000)
 ex_rect = visual.Rect(win, width = 900, height = 500, pos = [0,0], lineWidth = 5, lineColor = [-1,-1,-1], fillColor = [0,0,0])
 ex_stim = visual.TextStim(win, text = "efjnpqsz", font = bacs, height = 50, color=[.8,.8,.8], pos=[0,0], ori=0)
-next_text = visual.TextStim(win, text = "When you're ready to start, press any key.", height = 30, pos = [0,-350], wrapWidth = 1000)
+next_text = visual.TextStim(win, text = "Quando sei pronti per iniziare, premi un tasto qualsiasi.", height = 30, pos = [0,-350], wrapWidth = 1000)
 ex_text.draw(win=win)
 ex_rect.draw(win=win)
 ex_stim.draw(win=win)
@@ -187,20 +187,20 @@ for reps in range(trainingreps):
         while clock.getTime() < isi:
             win.flip()
     if reps == 0:
-        text = visual.TextStim(win, text="End of the first training sequence. Press any key to continue.",
+        text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte. Premi un tasto qualsiasi per continuare.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 800)
         text.draw(win=win)
         win.flip()
         event.waitKeys()
 
-inter_text = visual.TextStim(win, text = "You have now finished training. Press any key to continue the experiment.",
+inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento Premi un tasto qualsiasi per continuare.",
                              height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 800)
 inter_text.draw(win=win)
 win.flip()
 event.waitKeys()
 
 # testing:
-text = visual.TextStim(win, text = "Adesso vedrai altre parole nella stessa lingua aliena. Ma vedrai anche delle combinazioni di lettere che sono simili alle parole aliene, ma che sono qualcos'altro.\n\n C'è una differenza molto sottile tra le parole aliene e le nonparole. Non ti chiediamo di dirci qual è la differenza - cerca solo di capire cosa le distingue.\n\n Il tuo compito è quello di premere 'k' quando pensi che la combinazione di lettere è una parola aliena e 'd' quando pensi che la combinazione di lettere non è una parola aliena.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio. Se non conosci la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no. \n\n C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tu meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, una semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere sia una parola aliena e 'd' quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -208,7 +208,7 @@ event.waitKeys()
 for trialn in range(testingn):
     word = rand_testing[trialn][0]
     stimulus = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
-    expl_text = visual.TextStim(win, text = "Does this word belong to what you previously saw?", height = 60,
+    expl_text = visual.TextStim(win, text = "Questa parola appartiene alla lingua aliena?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Premi 'k' per sì, 'd' per no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
@@ -224,7 +224,7 @@ for trialn in range(testingn):
     participant_responses.append([(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # goodbye
-text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Press any key to exit.",
+text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.",
                        height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
 text.draw(win=win)
 win.flip()
