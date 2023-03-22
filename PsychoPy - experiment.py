@@ -145,13 +145,53 @@ stim_duration = 0.8
 isi = 0.2
 trainingreps = 2 # number of times we repeat the training
 
-# introduction
 win.winHandle.maximize()
 win.winHandle.activate()
 win.fullscr=True
 win.winHandle.set_fullscreen(True)
 win.flip()
 
+# consent
+text = visual.TextStim(win, text="Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.\n\n La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori riconoscono le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.\n\n Per la Sua partecipazione all’esperimento riceverà un compenso di X euro.\n\n Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.\n\n Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).\n\n Le chiediamo di premere un tasto qualsiasi per continuare al consenso.",
+                       height = 28, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1800)
+text.draw(win=win)
+win.flip()
+event.waitKeys()
+
+text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello",
+                   height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
+box1 = visual.Rect(win, width = 25, height = 25, pos = [-885,160], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+box2 = visual.Rect(win, width = 25, height = 25, pos = [-885,90], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+box3 = visual.Rect(win, width = 25, height = 25, pos = [-885,20], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+box4 = visual.Rect(win, width = 25, height = 25, pos = [-885,-85], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+box5 = visual.Rect(win, width = 25, height = 25, pos = [-885,-155], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+box6 = visual.Rect(win, width = 25, height = 25, pos = [-885,-225], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
+boxes = [box1, box2, box3, box4, box5, box6]
+
+cont = False
+# while cont == False:
+mouse = event.Mouse(win=win)
+text.draw(win=win)
+box1.draw(win=win)
+box2.draw(win=win)
+box3.draw(win=win)
+box4.draw(win=win)
+box5.draw(win=win)
+box6.draw(win=win)
+win.flip()
+event.waitKeys()
+for box in boxes:
+    if mouse.isPressedIn(box):
+        print("Clicked!")
+        win.flip()
+        box.fillColor = [-0.73, 0.09, -0.73]
+        box.draw(win=win)
+win.flip()
+event.waitKeys()
+# if box1.fillColor == [-0.73, 0.09, -0.73] and box2.fillColor == [-0.73, 0.09, -0.73] and box3.fillColor == [-0.73, 0.09, -0.73] and box4.fillColor == [-0.73, 0.09, -0.73] and box5.fillColor == [-0.73, 0.09, -0.73] and box6.fillColor == [-0.73, 0.09, -0.73]:
+#     cont == True
+
+# introduction
 text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
