@@ -221,7 +221,7 @@ for trialn in range(testingn):
     keys = event.waitKeys(keyList=["d","k"])
     RT = clock.getTime()
     response = keys[0]
-    participant_responses.append([(trialn+1),word,rand_testing[trialn][1],response,RT])
+    participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # goodbye
 text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.",
@@ -234,11 +234,11 @@ win.close()
 # initial data sorting
 all_responses = []
 for trial in participant_responses:
-    trialRT = round((trial[4]*100),2)
-    if trial[3] == 'k': # if answered yes
-        all_responses.append([trial[0],trial[1],trial[2],'yes',trialRT])
+    trialRT = round((trial[5]*100),2)
+    if trial[4] == 'k': # if answered yes
+        all_responses.append([trial[0],trial[1],trial[2],trial[3],'yes',trialRT])
     elif trial[3] == 'd': # if answered no
-        all_responses.append([trial[0],trial[1],trial[2],'no',trialRT])
+        all_responses.append([trial[0],trial[1],trial[2],trial[3],'no',trialRT])
     else:
         print(f"Problem sorting responses to trial {trial[0]}")
 
