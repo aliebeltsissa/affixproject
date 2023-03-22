@@ -1,3 +1,6 @@
+import os
+os.chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject") # set working directory to affix project folder
+
 def import_words():
     '''
     Imports the text files of the different words to be presented from the word_generation.py output.
@@ -10,17 +13,17 @@ def import_words():
     incongruenttesting : LIST
         A list of the between-language testing words.
     '''
-    trainingfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\training.txt", "r")
+    trainingfile = open("training.txt", "r")
     data1 = trainingfile.read()
     training = data1.split("\n") # split text file into list
     training = training[0:80] # remove last \n from text file
     trainingfile.close()
-    congruenttestingfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\congruenttesting.txt", "r")
+    congruenttestingfile = open("congruenttesting.txt", "r")
     data2 = congruenttestingfile.read()
     congruenttesting = data2.split("\n")
     congruenttesting = congruenttesting[0:20]
     congruenttestingfile.close()
-    incongruenttestingfile = open("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\incongruenttesting.txt", "r")
+    incongruenttestingfile = open("incongruenttesting.txt", "r")
     data3 = incongruenttestingfile.read()
     incongruenttesting = data3.split("\n")
     incongruenttesting = incongruenttesting[0:20]
@@ -243,34 +246,33 @@ for trial in participant_responses:
         print(f"Problem sorting responses to trial {trial[0]}")
 
 # data output
-import os
 output_folder = f"Participant_{sbj_id}"
-os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Participant Responses//{output_folder}", exist_ok=True) # change to False for real collection
+os.makedirs(f"Participant_Responses//{output_folder}", exist_ok=True) # change to False for real collection
 
 import csv
-file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
+file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_responses.tsv"
 header = ['sbjID','trialn','word','condition','response','RT']
 with open(file_name, 'w', newline='') as output1:
     writer = csv.writer(output1)
     writer.writerow(header)
     writer.writerows(all_responses)
 output1.close()
-folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
-file_name = f"training_{sbj_id}.txt"
+folder = f"Participant_Responses\\{output_folder}"
+file_name = f"training_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output2:
     for word in training:
         output2.write(word+"\n")
 output2.close()
-folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
-file_name = f"random_training1_{sbj_id}.txt"
+folder = f"Participant_Responses\\{output_folder}"
+file_name = f"random_training1_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output3:
     for word in rand_training1:
         output3.write(word+"\n")
 output3.close()
-folder = f"C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Participant Responses\\Participant_{sbj_id}"
-file_name = f"random_training2_{sbj_id}.txt"
+folder = f"Participant_Responses\\{output_folder}"
+file_name = f"random_training2_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output4:
     for word in rand_training2:
