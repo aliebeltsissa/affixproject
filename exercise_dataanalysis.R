@@ -1,0 +1,26 @@
+setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses");
+data1 <- read.table("./Participant_1/participant1_responses.tsv",header=T,sep=",");
+dim(data1);
+str(data1);
+head(data1);
+summary(data1);
+data2 <- read.table("./Participant_2/participant2_responses.tsv",header=T,sep=",");
+data3 <- read.table("./Participant_3/participant3_responses.tsv",header=T,sep=",");
+data4 <- read.table("./Participant_4/participant4_responses.tsv",header=T,sep=",");
+data5 <- read.table("./Participant_5/participant5_responses.tsv",header=T,sep=",");
+data6 <- read.table("./Participant_6/participant6_responses.tsv",header=T,sep=",");
+data7 <- read.table("./Participant_7/participant7_responses.tsv",header=T,sep=",");
+data8 <- read.table("./Participant_8/participant8_responses.tsv",header=T,sep=",");
+data9 <- read.table("./Participant_9/participant9_responses.tsv",header=T,sep=",");
+data10 <- read.table("./Participant_10/participant10_responses.tsv",header=T,sep=",");
+data <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9,data10);
+dim(data);
+str(data);
+head(data);
+summary(data);
+table(data$sbjID);
+table(data$trialn);
+table(data$word);
+table(data$condition);
+table(data$response);
+table(data$condition, data$response)

@@ -187,14 +187,14 @@ for reps in range(trainingreps):
         while clock.getTime() < isi:
             win.flip()
     if reps == 0:
-        text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte. Premi un tasto qualsiasi per continuare.",
-                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 800)
+        text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
+                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
         event.waitKeys()
 
-inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento. Premi un tasto qualsiasi per continuare.",
-                             height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 800)
+inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento.\n\n Premi un tasto qualsiasi per continuare.",
+                             height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 1200)
 inter_text.draw(win=win)
 win.flip()
 event.waitKeys()
@@ -237,7 +237,7 @@ for trial in participant_responses:
     trialRT = round((trial[5]*100),2)
     if trial[4] == 'k': # if answered yes
         all_responses.append([trial[0],trial[1],trial[2],trial[3],'yes',trialRT])
-    elif trial[3] == 'd': # if answered no
+    elif trial[4] == 'd': # if answered no
         all_responses.append([trial[0],trial[1],trial[2],trial[3],'no',trialRT])
     else:
         print(f"Problem sorting responses to trial {trial[0]}")
@@ -249,7 +249,7 @@ os.makedirs(f"C://Users//annal//OneDrive//Documents//GitHub//affixproject//Parti
 
 import csv
 file_name = f"C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses/Participant_{sbj_id}/participant{sbj_id}_responses.tsv"
-header = ['trial','word','condition','response','RT']
+header = ['sbjID','trialn','word','condition','response','RT']
 with open(file_name, 'w', newline='') as output1:
     writer = csv.writer(output1)
     writer.writerow(header)
