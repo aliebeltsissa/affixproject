@@ -158,45 +158,95 @@ text.draw(win=win)
 win.flip()
 event.waitKeys()
 
-text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello",
-                   height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
-box1 = visual.Rect(win, width = 25, height = 25, pos = [-885,160], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-box2 = visual.Rect(win, width = 25, height = 25, pos = [-885,90], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-box3 = visual.Rect(win, width = 25, height = 25, pos = [-885,20], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-box4 = visual.Rect(win, width = 25, height = 25, pos = [-885,-85], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-box5 = visual.Rect(win, width = 25, height = 25, pos = [-885,-155], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-box6 = visual.Rect(win, width = 25, height = 25, pos = [-885,-225], lineWidth = 2, lineColor = [-1,-1,-1], fillColor = [0,0,0])
-boxes = [box1, box2, box3, box4, box5, box6]
+from psychopy.constants import (NOT_STARTED, STARTED, FINISHED)
+box1 = visual.ButtonStim(win, text="X",pos=[-885,160],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent1')
+box2 = visual.ButtonStim(win, text="X",pos=[-885,90],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent2')
+box3 = visual.ButtonStim(win, text="X",pos=[-885,20],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent3')
+box4 = visual.ButtonStim(win, text="X",pos=[-885,-85],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent4')
+box5 = visual.ButtonStim(win, text="X",pos=[-885,-155],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent5')
+box6 = visual.ButtonStim(win, text="X",pos=[-885,-225],letterHeight=16,
+    size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
+    color=[0,0,0],name='consent6')
+boxes = [box1,box2,box3,box4,box5,box6]
 
-cont = False
-# while cont == False:
 mouse = event.Mouse(win=win)
-text.draw(win=win)
-box1.draw(win=win)
-box2.draw(win=win)
-box3.draw(win=win)
-box4.draw(win=win)
-box5.draw(win=win)
-box6.draw(win=win)
-win.flip()
-event.waitKeys()
-for box in boxes:
-    if mouse.isPressedIn(box):
-        print("Clicked!")
-        win.flip()
-        box.fillColor = [-0.73, 0.09, -0.73]
-        box.draw(win=win)
-win.flip()
-event.waitKeys()
-# if box1.fillColor == [-0.73, 0.09, -0.73] and box2.fillColor == [-0.73, 0.09, -0.73] and box3.fillColor == [-0.73, 0.09, -0.73] and box4.fillColor == [-0.73, 0.09, -0.73] and box5.fillColor == [-0.73, 0.09, -0.73] and box6.fillColor == [-0.73, 0.09, -0.73]:
-#     cont == True
+continueRoutine = True
+routineForceEnded = False
+mouseup = True
+trialComponents = [box1,box2,box3,box4,box5,box6,mouse]
 
-# introduction
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederti di guardare queste parole aliene. Nella parte successiva, testeremo se hai prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se hai qualche domanda.",
-                       height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
-text.draw(win=win)
-win.flip()
-event.waitKeys()
+while continueRoutine:
+    for box in boxes:
+        text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello",
+                           height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
+        exittext = visual.TextStim(win, text = "Oppure, per uscire dell'esperimento, premi il tasto 'esc'", height = 30, color = [.8,.8,.8], pos = [0,-300], wrapWidth = 1400)
+        text.draw(win=win)
+        exittext.draw(win=win)
+        if mouseup:
+            if mouse.isPressedIn(box):
+                mouseup = False
+                if list(box.color) == [0, 0, 0]:
+                    box.color = [-1, -0.22, -1]
+                else:
+                    box.color = [0,0,0]
+        else:
+            if not 1 in mouse.getPressed():
+                mouseup = True
+    
+        # *button* updates
+        if box.status == NOT_STARTED:
+            box.setAutoDraw(True)
+        if box.status == STARTED:
+            # check whether button has been pressed
+            if box.isClicked:
+                box.wasClicked = True  # if button is still clicked next frame, it is not a new click
+            else:
+                box.wasClicked = False  # if button is clicked next frame, it is a new click
+        else:
+            box.wasClicked = False  # if button is clicked next frame, it is a new click
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in trialComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    if list(box1.color) == [-1, -0.22, -1] and list(box2.color) == [-1, -0.22, -1] and list(box3.color) == [-1, -0.22, -1] and list(box4.color) == [-1, -0.22, -1] and list(box5.color) == [-1, -0.22, -1] and list(box6.color) == [-1, -0.22, -1]:
+        textcont = visual.TextStim(win, text = "Per cominciare l'esperimento, premi il tasto 'invio'.", height = 40, color = [.8,.8,.8], pos = [0,-400], wrapWidth = 1400)
+        textcont.draw(win=win)
+        text.draw(win=win)
+        exittext.draw(win=win)
+        win.flip()
+        event.waitKeys(keyList=['return'])
+        continueRoutine = False
+        win.flip()
+box1.color = [0,0,0]
+box2.color = [0,0,0]
+box3.color = [0,0,0]
+box4.color = [0,0,0]
+box5.color = [0,0,0]
+box6.color = [0,0,0]
+box1.borderColor = [0,0,0]
+box2.borderColor = [0,0,0]
+box3.borderColor = [0,0,0]
+box4.borderColor = [0,0,0]
+box5.borderColor = [0,0,0]
+box6.borderColor = [0,0,0]
 
 # example
 ex_text = visual.TextStim(win, text = "Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1400)
