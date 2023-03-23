@@ -227,6 +227,7 @@ while continueRoutine:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     if list(box1.color) == [-1, -0.22, -1] and list(box2.color) == [-1, -0.22, -1] and list(box3.color) == [-1, -0.22, -1] and list(box4.color) == [-1, -0.22, -1] and list(box5.color) == [-1, -0.22, -1] and list(box6.color) == [-1, -0.22, -1]:
+        consent = ['yes','yes','yes','yes','yes','yes']
         textcont = visual.TextStim(win, text = "Per cominciare l'esperimento, premi il tasto 'invio'.", height = 40, color = [.8,.8,.8], pos = [0,-400], wrapWidth = 1400)
         textcont.draw(win=win)
         text.draw(win=win)
@@ -348,23 +349,30 @@ with open(file_name, 'w', newline='') as output1:
     writer.writerows(all_responses)
 output1.close()
 folder = f"Participant_Responses\\{output_folder}"
-file_name = f"training_sbj{sbj_id}.txt"
+file_name = f"consent_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output2:
-    for word in training:
+    for word in consent:
         output2.write(word+"\n")
 output2.close()
 folder = f"Participant_Responses\\{output_folder}"
-file_name = f"random_training1_sbj{sbj_id}.txt"
+file_name = f"training_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output3:
-    for word in rand_training1:
+    for word in training:
         output3.write(word+"\n")
 output3.close()
 folder = f"Participant_Responses\\{output_folder}"
-file_name = f"random_training2_sbj{sbj_id}.txt"
+file_name = f"random_training1_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output4:
-    for word in rand_training2:
+    for word in rand_training1:
         output4.write(word+"\n")
 output4.close()
+folder = f"Participant_Responses\\{output_folder}"
+file_name = f"random_training2_sbj{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output5:
+    for word in rand_training2:
+        output5.write(word+"\n")
+output5.close()
