@@ -1,19 +1,22 @@
-setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant Responses");
-data1 <- read.table("./Participant_1/participant1_responses.tsv",header=T,sep=",");
+getwd()
+setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant_Responses");
+data1 <- read.table("./Participant_1/sbj1_responses.tsv",header=T,sep=",");
+data2 <- read.table("./Participant_2/sbj2_responses.tsv",header=T,sep=",");
+data3 <- read.table("./Participant_3/sbj3_responses.tsv",header=T,sep=",");
+data4 <- read.table("./Participant_4/sbj4_responses.tsv",header=T,sep=",");
+data5 <- read.table("./Participant_5/sbj5_responses.tsv",header=T,sep=",");
+data6 <- read.table("./Participant_6/sbj6_responses.tsv",header=T,sep=",");
+data7 <- read.table("./Participant_7/sbj7_responses.tsv",header=T,sep=",");
+data8 <- read.table("./Participant_8/sbj8_responses.tsv",header=T,sep=",");
+data9 <- read.table("./Participant_9/sbj9_responses.tsv",header=T,sep=",");
+data10 <- read.table("./Participant_10/sbj10_responses.tsv",header=T,sep=",");
+data <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9,data10);
+data$response <- as.factor(data$response);
+data$condition <- as.factor(data$condition);
 dim(data1);
 str(data1);
 head(data1);
 summary(data1);
-data2 <- read.table("./Participant_2/participant2_responses.tsv",header=T,sep=",");
-data3 <- read.table("./Participant_3/participant3_responses.tsv",header=T,sep=",");
-data4 <- read.table("./Participant_4/participant4_responses.tsv",header=T,sep=",");
-data5 <- read.table("./Participant_5/participant5_responses.tsv",header=T,sep=",");
-data6 <- read.table("./Participant_6/participant6_responses.tsv",header=T,sep=",");
-data7 <- read.table("./Participant_7/participant7_responses.tsv",header=T,sep=",");
-data8 <- read.table("./Participant_8/participant8_responses.tsv",header=T,sep=",");
-data9 <- read.table("./Participant_9/participant9_responses.tsv",header=T,sep=",");
-data10 <- read.table("./Participant_10/participant10_responses.tsv",header=T,sep=",");
-data <- rbind(data1,data2,data3,data4,data5,data6,data7,data8,data9,data10);
 dim(data);
 str(data);
 head(data);
@@ -23,4 +26,19 @@ table(data$trialn);
 table(data$word);
 table(data$condition);
 table(data$response);
-table(data$condition, data$response)
+table(data$condition, data$response);
+hist(data$RT);
+plot(density(data$RT,bw=.5));
+warnings()
+library(ggplot2);
+ggplot(data, aes(condition)) + geom_bar(fill = "#0073C2FF");
+ggplot(data, aes(response)) + geom_bar(fill = "#0073C2FF");
+fivenum(data$RT);
+data$strictfilter <- TRUE;
+data$strictfilter[data$RT<25 | data$RT>150] <- FALSE;
+data$lenientfilter <- TRUE;
+data$lenientfilter[data$RT>175] <- FALSE;
+summary(data);
+plot(density(data$RT),xlim=c(0,250),ylim=c(0,.016));
+lines(density(data$RT[data$strictfilter],na.rm=T),col="#0073C2FF");
+lines(density(data$RT[data$lenientfilter],na.rm=T),col="#ad2b07")
