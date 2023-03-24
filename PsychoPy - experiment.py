@@ -114,6 +114,7 @@ def testing_randomisation(lst, lstlen):
     rand_lst.remove(['efjnpqsz',0])
     return rand_lst
 
+# importing & generating lists
 training, congruenttesting, incongruenttesting = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
@@ -123,13 +124,16 @@ rand_training2 = training_randomisation(training, trainingn)
 rand_testing = testing_randomisation(testing, testingn)
 
 from psychopy import visual, event, core, gui
+
+# press esc to close window
 def escape():
     win.close()
 if 'escape' not in event.globalKeys.keys():
-    event.globalKeys.add(key='escape', func=escape) # add esc to close window
+    event.globalKeys.add(key='escape', func=escape)
 
 win = visual.Window(size=[1800,1000],units="pix",fullscr=False)
 
+# gui for subject ID prompt
 gui = gui.Dlg()
 gui.addField("Subject ID:") # ask for subject ID
 gui.show()
@@ -140,11 +144,13 @@ clock = core.Clock()
 bacsfile = ['BACS1.otf']
 bacs = 'BACS1'
 
+# experimental parameters
 participant_responses = []
 stim_duration = 0.8
 isi = 0.2
 trainingreps = 2 # number of times we repeat the training
 
+# when inputted participant ID, go fullscreen
 win.winHandle.maximize()
 win.winHandle.activate()
 win.fullscr=True
@@ -159,6 +165,7 @@ win.flip()
 event.waitKeys()
 
 from psychopy.constants import (NOT_STARTED, STARTED, FINISHED)
+# create checkboxes
 box1 = visual.ButtonStim(win, text="X",pos=[-885,160],letterHeight=16,
     size=(30, 30),borderWidth=1,borderColor =[-1,-1,-1],fillColor=[0,0,0],
     color=[0,0,0],name='consent1')
@@ -195,15 +202,15 @@ while continueRoutine:
         if mouseup:
             if mouse.isPressedIn(box):
                 mouseup = False
-                if list(box.color) == [0, 0, 0]:
+                if list(box.color) == [0, 0, 0]: # if checkbox was blank, turn X green
                     box.color = [-1, -0.22, -1]
-                else:
-                    box.color = [0,0,0]
+                elif list(box.color) == [-1, -0.22, -1]:
+                    box.color = [0,0,0] # if checkbox X was green, turn it blank again
         else:
             if not 1 in mouse.getPressed():
                 mouseup = True
     
-        # *button* updates
+        # button updates
         if box.status == NOT_STARTED:
             box.setAutoDraw(True)
         if box.status == STARTED:
@@ -227,16 +234,16 @@ while continueRoutine:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     if list(box1.color) == [-1, -0.22, -1] and list(box2.color) == [-1, -0.22, -1] and list(box3.color) == [-1, -0.22, -1] and list(box4.color) == [-1, -0.22, -1] and list(box5.color) == [-1, -0.22, -1] and list(box6.color) == [-1, -0.22, -1]:
-        consent = ['yes','yes','yes','yes','yes','yes']
+        consent = ['yes','yes','yes','yes','yes','yes'] # participant must have ticked all consent boxes
         textcont = visual.TextStim(win, text = "Per cominciare l'esperimento, premi il tasto 'invio'.", height = 40, color = [.8,.8,.8], pos = [0,-400], wrapWidth = 1400)
         textcont.draw(win=win)
         text.draw(win=win)
         exittext.draw(win=win)
         win.flip()
-        event.waitKeys(keyList=['return'])
+        event.waitKeys(keyList=['return']) # participant must press 'return' to continue
         continueRoutine = False
         win.flip()
-box1.color = [0,0,0]
+box1.color = [0,0,0] # change all checkboxes to the same colour as background (can't make them go away otherwise)
 box2.color = [0,0,0]
 box3.color = [0,0,0]
 box4.color = [0,0,0]
@@ -273,9 +280,9 @@ keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
     for trialn in range(trainingn):
-        if reps == 0:
+        if reps == 0: # the first training session, use random training list 1
             word = rand_training1[trialn]
-        elif reps == 1:
+        elif reps == 1: # the second training session, use random training list 2
             word = rand_training2[trialn]
         elif reps > 1:
             print("Error: too many training reps, not enough lists.")
