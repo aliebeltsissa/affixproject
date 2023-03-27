@@ -194,7 +194,7 @@ trialComponents = [box1,box2,box3,box4,box5,box6,mouse]
 
 while continueRoutine:
     for box in boxes:
-        text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello",
+        text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello studio.",
                            height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
         exittext = visual.TextStim(win, text = "Oppure, per uscire dell'esperimento, premi il tasto 'esc'", height = 30, color = [.8,.8,.8], pos = [0,-300], wrapWidth = 1400)
         text.draw(win=win)
@@ -242,19 +242,13 @@ while continueRoutine:
         win.flip()
         event.waitKeys(keyList=['return']) # participant must press 'return' to continue
         continueRoutine = False
+        box1.setAutoDraw(False)
+        box2.setAutoDraw(False)
+        box3.setAutoDraw(False)
+        box4.setAutoDraw(False)
+        box5.setAutoDraw(False)
+        box6.setAutoDraw(False)
         win.flip()
-box1.color = [0,0,0] # change all checkboxes to the same colour as background (can't make them go away otherwise)
-box2.color = [0,0,0]
-box3.color = [0,0,0]
-box4.color = [0,0,0]
-box5.color = [0,0,0]
-box6.color = [0,0,0]
-box1.borderColor = [0,0,0]
-box2.borderColor = [0,0,0]
-box3.borderColor = [0,0,0]
-box4.borderColor = [0,0,0]
-box5.borderColor = [0,0,0]
-box6.borderColor = [0,0,0]
 
 # welcome
 text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se ha qualche domanda.",
@@ -286,15 +280,16 @@ for reps in range(trainingreps):
             word = rand_training2[trialn]
         elif reps > 1:
             print("Error: too many training reps, not enough lists.")
+            win.close()
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
         clock.reset() # resets the trial clock
-        while clock.getTime() < stim_duration:
+        while clock.getTime() < stim_duration: # show word for desired time
             stimulus.draw(win=win)
             win.flip()
         clock.reset()
-        while clock.getTime() < isi:
+        while clock.getTime() < isi: # show blank screen for ISI length
             win.flip()
-    if reps == 0:
+    if reps == 0: # show inter-training session message
         text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
@@ -314,19 +309,19 @@ text.draw(win=win)
 win.flip()
 event.waitKeys()
 for trialn in range(testingn):
-    word = rand_testing[trialn][0]
+    word = rand_testing[trialn][0] # get the next testing word
     stimulus = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
     expl_text = visual.TextStim(win, text = "Questa parola appartiene alla lingua aliena?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Premi 'k' per sì, 'd' per no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
     stimulus.draw(win = win)
-    if trialn <= 2:
+    if trialn <= 2: # show instruction text for first 3 words
         expl_text.draw(win = win)
     expl2_text.draw(win = win)
     clock.reset()
     win.flip()
-    keys = event.waitKeys(keyList=["d","k"])
+    keys = event.waitKeys(keyList=["d","k"]) # only accept 'd' and 'k' keypresses
     RT = clock.getTime()
     response = keys[0]
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
@@ -342,7 +337,7 @@ win.close()
 # initial data sorting
 all_responses = []
 for trial in participant_responses:
-    trialRT = round((trial[5]*100),2)
+    trialRT = round((trial[5]*100),2) # round RTs
     if trial[4] == 'k': # if answered yes
         all_responses.append([trial[0],trial[1],trial[2],trial[3],'yes',trialRT])
     elif trial[4] == 'd': # if answered no
