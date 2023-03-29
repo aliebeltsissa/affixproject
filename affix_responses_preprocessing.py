@@ -20,6 +20,7 @@ score = []
 all_scores = []
 all_numerical_scores = []
 for participantn in range(participantsn):
+    score = []
     for n in range(40): # all testing items
         if all_data[participantn][n][3] == "0" and all_data[participantn][n][4] == "yes":
             score.append("hit")
@@ -37,6 +38,7 @@ for participantn in range(participantsn):
 data_preprocessed = []
 all_data_preprocessed = []
 for participantn in range(participantsn):
+    data_preprocessed = []
     for n in range(40):
         data_preprocessed = [all_data[participantn][n][0],all_data[participantn][n][1],
                              all_data[participantn][n][3],all_scores[participantn][n],
