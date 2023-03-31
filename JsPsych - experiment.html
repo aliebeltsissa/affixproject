@@ -17,8 +17,177 @@
 
     var timeline = [];
 
-    const L1affixes = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv']
-    const L1stems = ['ukcY', 'bYuQ', 'adkr', 'bvkr', 'mrOd', 'Udbd', 'bvuZ', 'rkYL', 'rckO', 'rvAJ', 'YQbc', 'Yadr', 'YJkb', 'kNua', 'mdla', 'ldAa', 'amJm', 'LGkA', 'aONd', 'krGu', 'UvOG', 'OZkb', 'NaJb', 'vQdO', 'alJY', 'vclY', 'JvaA', 'LQur', 'ArQu', 'rLaZ', 'GZJY', 'vAar', 'JAaG', 'JauQ', 'krUQ', 'kZUb', 'Gabk', 'uauO', 'vYLU', 'rkJu', 'kulZ', 'udkm', 'cAZu', 'YZJm', 'OkGY', 'UmNJ', 'uAkr', 'YOZN', 'AlNU', 'JNka', 'rLkm', 'LdQv', 'AlUY', 'mbZl', 'bmbN', 'rvUb', 'lkAk', 'bGuO', 'lZcu', 'uvaU', 'aUZA', 'Ydud', 'UrOQ', 'AJLr', 'lrZG', 'vblr', 'aYQm', 'dkLl', 'GAcY', 'NvYJ', 'ALGZ', 'NQZv', 'JdGm', 'kGlU', 'NkUA', 'UaYL', 'GJZm', 'dNZA', 'vJab', 'GQrc', 'JmNk', 'UJkG', 'LuaU', 'lmbY', 'UJmr', 'aYaN', 'ZdlO', 'JrGv', 'ukYZ', 'mcOJ', 'muYN', 'NJZl', 'Abka', 'OJGQ', 'Nulk', 'lGZv', 'dJNr', 'lcOc', 'YcdO', 'LuNZ', 'uQuZc', 'GLYrA', 'YuaNd', 'QcQAJ', 'YOaAb', 'UYZlZ', 'vuJZu', 'JAdLm', 'NaAQd', 'UAcdu', 'UdlGQ', 'Amacl', 'NLQGm', 'ZcGdN', 'UdYUQ', 'laYmr', 'auYAk', 'YUNkZ', 'OAblc', 'OLJbl', 'Udumd', 'LckGN', 'ALOrl', 'AmQOY', 'kabJb', 'ZYcQU', 'GumLl', 'kGamN', 'NAacQ', 'kbmZO', 'aOLZU', 'OYuvb', 'lYrua', 'Zvalv', 'Qclad', 'GNAca', 'adYrc', 'LvuOG', 'mZUrQ', 'cuOJb', 'mkmJN', 'YNrAm', 'GJGcZ', 'rbYbu', 'QbkAc', 'dvNvA', 'Juaml', 'rvOvU', 'kLvdN', 'NbmQU', 'rdLJa', 'OAmGr', 'advYO', 'vkYGl', 'uQkrd', 'mLdkZ', 'bNdmG', 'ObZbA', 'QOLmu', 'dmZvm', 'ZNLOv', 'AlQaQ', 'bYGOZ', 'vAuNl', 'LNUrJ', 'QLrOJ', 'ubALm', 'UaZma', 'kdaAJ', 'LcNUJ', 'ZdNmU', 'bdUNu', 'ckLAL', 'NvuGr', 'NbacA', 'YJLcA', 'aNYmb', 'rcmuv', 'vmuLl', 'ZkGmY', 'YLQmG', 'dGLAl', 'aLNlk', 'ObOQl', 'AZlLN', 'mUOcO', 'Ldrbv', 'damYb', 'AZaJc', 'LOLkU', 'ckduA', 'OQarQ', 'ZJLmr', 'rGUAY', 'GLluA', 'OdlNm', 'LAclA', 'JmvmO', 'JZOAk', 'JdOAY']
-    const L2affixes = ['TAm', 'YcM', 'tAY', 'OMC', 'DKP', 'mAM', 'DOk', 'mhc', 'YBO', 'ATc', 'PTl', 'Cdt', 'lRE', 'BCD', 'cDR', 'Akd', 'EcR', 'RDM', 'cPK', 'PMd', 'Tmc', 'tcB', 'ABb', 'OYK', 'Dmh', 'mCd', 'OBT', 'PED', 'dPc', 'OPE', 'TRK', 'tRb', 'dRA', 'YDE', 'bRC', 'Yht', 'OtM', 'APT', 'EAO', 'bTE', 'CEM', 'kBD', 'dBC', 'BbM', 'KmE', 'kPM', 'kKE', 'hBK', 'Tbk', 'MAB', 'TRkY', 'MCkm', 'AdYl', 'RCdc', 'CmYA', 'KlkD', 'dmRb', 'YKPB', 'dTAh', 'dEPD', 'KEdl', 'EKBO', 'EPBT', 'CPMl', 'YTOM', 'OdOP', 'KOYC', 'dCKc', 'RYlD', 'cthB', 'bAMO', 'BCAd', 'CMdP', 'APEM', 'AlKD', 'lMck', 'BYhT', 'RdCc', 'mtKP', 'cMRl', 'MKmY', 'khMD', 'YbBT', 'bdtK', 'TmTm', 'kDOm', 'kMEC', 'DlDT', 'CKOb', 'BRDh', 'PMYm', 'TPOM', 'DbMR', 'hRKm', 'DOAK', 'hEct', 'mKcD', 'PEdK', 'Ckbd', 'YDTk']
-    const L2stems = ['hbmA', 'bROC', 'OCmk', 'kKRC', 'KdAR', 'BbOD', 'DhCP', 'AdDb', 'TdTD', 'TdmA', 'EMYK', 'AbKD', 'RhPm', 'OdYP', 'DCmh', 'KElB', 'BPAl', 'hkRK', 'KDPA', 'TEBK', 'mARM', 'dKRD', 'AMkC', 'mdkK', 'tdDd', 'Ctmb', 'CYPc', 'DBkl', 'PYkC', 'tRdM', 'kPOt', 'hTDd', 'YObA', 'Ehbt', 'RCcE', 'ctkt', 'TklD', 'hChY', 'chAh', 'COTK', 'mBYl', 'lBlE', 'EhRm', 'TDKh', 'CmcO', 'TKDk', 'dYdA', 'tmYh', 'BEPO', 'OtlR', 'McMD', 'khmh', 'OEPk', 'lRCB', 'YmBd', 'ORbk', 'mBbK', 'OcYM', 'AlTd', 'DhMt', 'lTmO', 'EdBb', 'DlDd', 'ACcO', 'bAdk', 'RtRh', 'KMOc', 'DBlh', 'bcOR', 'MhKd', 'kcOY', 'blMk', 'MBmE', 'OMlT', 'mhtc', 'tmAK', 'MDKP', 'PlEK', 'kCRm', 'Ddck', 'tRPD', 'RKYk', 'hbkd', 'MTdY', 'PdDT', 'bcbM', 'PcBT', 'DMRP', 'TPCb', 'YlYc', 'Mlth', 'ktBd', 'PEtE', 'YKRk', 'hCkt', 'hlkT', 'lBKt', 'BECk', 'KABA', 'dRht', 'kKEdM', 'dClOC', 'DmAME', 'EltMB', 'KRARm', 'tKDmh', 'PCMPK', 'kcCRt', 'EPMDk', 'htmhC', 'KAERM', 'DOchl', 'EtMDM', 'DRPkY', 'BKDRY', 'EPERd', 'bmdAB', 'CDEmY', 'lhCTC', 'hYDmt', 'PMPtk', 'BOCRM', 'kcdOt', 'TObCO', 'OAmAd', 'lbBDE', 'hAROK', 'hlbtb', 'hmKPM', 'DcPTc', 'btlck', 'kDRKc', 'cdKBY', 'BMEMA', 'dTmED', 'TAdhM', 'KMDYt', 'ECtbD', 'KBKBE', 'bRABt', 'RkmdC', 'AYkEh', 'lAOKM', 'MkmEd', 'Blmcl', 'chEDO', 'dRbDb', 'kdEdY', 'PctRC', 'dMThk', 'BOckP', 'hTtBb', 'lKdbc', 'hlctE', 'ODBDA', 'COtBD', 'YlCPB', 'DkTCP', 'EYtYR', 'kRCkO', 'cBROB', 'dCtMA', 'thbOM', 'TbKME', 'ckdAm', 'OmtlD', 'cDOEB', 'KTDTB', 'CkBOP', 'RdPtD', 'PDPhl', 'dKDth', 'cRElD', 'lRckA', 'cROMt', 'PCPDh', 'BATOc', 'Phktk', 'PEkhA', 'dMYBP', 'Cchtd', 'DBPhc', 'tcYbd', 'MBKRE', 'BdtAC', 'hBmMC', 'RYtkc', 'DOBhY', 'RlAKc', 'mBmlA', 'kPkRA', 'tDPRk', 'dOYml', 'kMbTR', 'ABPRB', 'tmtEM', 'lCbcm', 'EMbDP', 'CRdBd', 'TCbDC']
-    const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0]
+    /* WORD_GENERATION SCRIPT */
+    function import_morphemes() {
+      const L1affixes_list = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv'];
+      const L1stems_list = ['ukcY', 'bYuQ', 'adkr', 'bvkr', 'mrOd', 'Udbd', 'bvuZ', 'rkYL', 'rckO', 'rvAJ', 'YQbc', 'Yadr', 'YJkb', 'kNua', 'mdla', 'ldAa', 'amJm', 'LGkA', 'aONd', 'krGu', 'UvOG', 'OZkb', 'NaJb', 'vQdO', 'alJY', 'vclY', 'JvaA', 'LQur', 'ArQu', 'rLaZ', 'GZJY', 'vAar', 'JAaG', 'JauQ', 'krUQ', 'kZUb', 'Gabk', 'uauO', 'vYLU', 'rkJu', 'kulZ', 'udkm', 'cAZu', 'YZJm', 'OkGY', 'UmNJ', 'uAkr', 'YOZN', 'AlNU', 'JNka', 'rLkm', 'LdQv', 'AlUY', 'mbZl', 'bmbN', 'rvUb', 'lkAk', 'bGuO', 'lZcu', 'uvaU', 'aUZA', 'Ydud', 'UrOQ', 'AJLr', 'lrZG', 'vblr', 'aYQm', 'dkLl', 'GAcY', 'NvYJ', 'ALGZ', 'NQZv', 'JdGm', 'kGlU', 'NkUA', 'UaYL', 'GJZm', 'dNZA', 'vJab', 'GQrc', 'JmNk', 'UJkG', 'LuaU', 'lmbY', 'UJmr', 'aYaN', 'ZdlO', 'JrGv', 'ukYZ', 'mcOJ', 'muYN', 'NJZl', 'Abka', 'OJGQ', 'Nulk', 'lGZv', 'dJNr', 'lcOc', 'YcdO', 'LuNZ', 'uQuZc', 'GLYrA', 'YuaNd', 'QcQAJ', 'YOaAb', 'UYZlZ', 'vuJZu', 'JAdLm', 'NaAQd', 'UAcdu', 'UdlGQ', 'Amacl', 'NLQGm', 'ZcGdN', 'UdYUQ', 'laYmr', 'auYAk', 'YUNkZ', 'OAblc', 'OLJbl', 'Udumd', 'LckGN', 'ALOrl', 'AmQOY', 'kabJb', 'ZYcQU', 'GumLl', 'kGamN', 'NAacQ', 'kbmZO', 'aOLZU', 'OYuvb', 'lYrua', 'Zvalv', 'Qclad', 'GNAca', 'adYrc', 'LvuOG', 'mZUrQ', 'cuOJb', 'mkmJN', 'YNrAm', 'GJGcZ', 'rbYbu', 'QbkAc', 'dvNvA', 'Juaml', 'rvOvU', 'kLvdN', 'NbmQU', 'rdLJa', 'OAmGr', 'advYO', 'vkYGl', 'uQkrd', 'mLdkZ', 'bNdmG', 'ObZbA', 'QOLmu', 'dmZvm', 'ZNLOv', 'AlQaQ', 'bYGOZ', 'vAuNl', 'LNUrJ', 'QLrOJ', 'ubALm', 'UaZma', 'kdaAJ', 'LcNUJ', 'ZdNmU', 'bdUNu', 'ckLAL', 'NvuGr', 'NbacA', 'YJLcA', 'aNYmb', 'rcmuv', 'vmuLl', 'ZkGmY', 'YLQmG', 'dGLAl', 'aLNlk', 'ObOQl', 'AZlLN', 'mUOcO', 'Ldrbv', 'damYb', 'AZaJc', 'LOLkU', 'ckduA', 'OQarQ', 'ZJLmr', 'rGUAY', 'GLluA', 'OdlNm', 'LAclA', 'JmvmO', 'JZOAk', 'JdOAY'];
+      const L2affixes_list = ['TAm', 'YcM', 'tAY', 'OMC', 'DKP', 'mAM', 'DOk', 'mhc', 'YBO', 'ATc', 'PTl', 'Cdt', 'lRE', 'BCD', 'cDR', 'Akd', 'EcR', 'RDM', 'cPK', 'PMd', 'Tmc', 'tcB', 'ABb', 'OYK', 'Dmh', 'mCd', 'OBT', 'PED', 'dPc', 'OPE', 'TRK', 'tRb', 'dRA', 'YDE', 'bRC', 'Yht', 'OtM', 'APT', 'EAO', 'bTE', 'CEM', 'kBD', 'dBC', 'BbM', 'KmE', 'kPM', 'kKE', 'hBK', 'Tbk', 'MAB', 'TRkY', 'MCkm', 'AdYl', 'RCdc', 'CmYA', 'KlkD', 'dmRb', 'YKPB', 'dTAh', 'dEPD', 'KEdl', 'EKBO', 'EPBT', 'CPMl', 'YTOM', 'OdOP', 'KOYC', 'dCKc', 'RYlD', 'cthB', 'bAMO', 'BCAd', 'CMdP', 'APEM', 'AlKD', 'lMck', 'BYhT', 'RdCc', 'mtKP', 'cMRl', 'MKmY', 'khMD', 'YbBT', 'bdtK', 'TmTm', 'kDOm', 'kMEC', 'DlDT', 'CKOb', 'BRDh', 'PMYm', 'TPOM', 'DbMR', 'hRKm', 'DOAK', 'hEct', 'mKcD', 'PEdK', 'Ckbd', 'YDTk'];
+      const L2stems_list = ['hbmA', 'bROC', 'OCmk', 'kKRC', 'KdAR', 'BbOD', 'DhCP', 'AdDb', 'TdTD', 'TdmA', 'EMYK', 'AbKD', 'RhPm', 'OdYP', 'DCmh', 'KElB', 'BPAl', 'hkRK', 'KDPA', 'TEBK', 'mARM', 'dKRD', 'AMkC', 'mdkK', 'tdDd', 'Ctmb', 'CYPc', 'DBkl', 'PYkC', 'tRdM', 'kPOt', 'hTDd', 'YObA', 'Ehbt', 'RCcE', 'ctkt', 'TklD', 'hChY', 'chAh', 'COTK', 'mBYl', 'lBlE', 'EhRm', 'TDKh', 'CmcO', 'TKDk', 'dYdA', 'tmYh', 'BEPO', 'OtlR', 'McMD', 'khmh', 'OEPk', 'lRCB', 'YmBd', 'ORbk', 'mBbK', 'OcYM', 'AlTd', 'DhMt', 'lTmO', 'EdBb', 'DlDd', 'ACcO', 'bAdk', 'RtRh', 'KMOc', 'DBlh', 'bcOR', 'MhKd', 'kcOY', 'blMk', 'MBmE', 'OMlT', 'mhtc', 'tmAK', 'MDKP', 'PlEK', 'kCRm', 'Ddck', 'tRPD', 'RKYk', 'hbkd', 'MTdY', 'PdDT', 'bcbM', 'PcBT', 'DMRP', 'TPCb', 'YlYc', 'Mlth', 'ktBd', 'PEtE', 'YKRk', 'hCkt', 'hlkT', 'lBKt', 'BECk', 'KABA', 'dRht', 'kKEdM', 'dClOC', 'DmAME', 'EltMB', 'KRARm', 'tKDmh', 'PCMPK', 'kcCRt', 'EPMDk', 'htmhC', 'KAERM', 'DOchl', 'EtMDM', 'DRPkY', 'BKDRY', 'EPERd', 'bmdAB', 'CDEmY', 'lhCTC', 'hYDmt', 'PMPtk', 'BOCRM', 'kcdOt', 'TObCO', 'OAmAd', 'lbBDE', 'hAROK', 'hlbtb', 'hmKPM', 'DcPTc', 'btlck', 'kDRKc', 'cdKBY', 'BMEMA', 'dTmED', 'TAdhM', 'KMDYt', 'ECtbD', 'KBKBE', 'bRABt', 'RkmdC', 'AYkEh', 'lAOKM', 'MkmEd', 'Blmcl', 'chEDO', 'dRbDb', 'kdEdY', 'PctRC', 'dMThk', 'BOckP', 'hTtBb', 'lKdbc', 'hlctE', 'ODBDA', 'COtBD', 'YlCPB', 'DkTCP', 'EYtYR', 'kRCkO', 'cBROB', 'dCtMA', 'thbOM', 'TbKME', 'ckdAm', 'OmtlD', 'cDOEB', 'KTDTB', 'CkBOP', 'RdPtD', 'PDPhl', 'dKDth', 'cRElD', 'lRckA', 'cROMt', 'PCPDh', 'BATOc', 'Phktk', 'PEkhA', 'dMYBP', 'Cchtd', 'DBPhc', 'tcYbd', 'MBKRE', 'BdtAC', 'hBmMC', 'RYtkc', 'DOBhY', 'RlAKc', 'mBmlA', 'kPkRA', 'tDPRk', 'dOYml', 'kMbTR', 'ABPRB', 'tmtEM', 'lCbcm', 'EMbDP', 'CRdBd', 'TCbDC'];
+      };
+
+    function cycle_through(L1affixes, L1stems, L2affixes, L2stems) {
+      const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0];
+
+      function wordcycle(affixes,stems,l,a,s,w) {
+        var reps = 0;
+        var words_list = [];
+        var listlength = words_list.length;
+        while (listlength < w) {
+          var words_list = [];
+          var congruenttesting_list = [];
+          var words_dict = {};
+          var congruenttesting_dict = {};
+          var training_dict = {};
+          const affix_subset = jsPsych.randomization.sampleWithoutReplacement([affixes, a);
+          const stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, s);
+          reps++; /* increase by 1 */
+          for (let i = 0; i < stem_subset.length; i++) {
+            for (let j = 0; j < affix_subset.length; j++) {
+              var stem = stem_subset[i];
+              var affix = affix_subset[j];
+              if (stem != affix and stem[-1] != affix[0]) {
+                words_list.push([stem + affix]); /* append */
+                var parts = [stem, affix];
+                var word = stem + affix;
+                if (words_dict.includes(word) == False) {
+                  words_dict[word] = parts
+                };
+              };
+            };
+            var indice = testingaffix_indices[i];
+            var affix = affix_subset[indice];
+            var stems = stem_subset[i];
+            var word = stem + affix;
+            if (congruenttesting_list.includes(word) == False) {
+              congruenttesting_list.push([stem + affix]);
+              var parts = [stem, affix];
+              var word = stem + affix;
+              congruenttesting_dict[word] = parts
+            for(var key in words_dict) {
+              words_list.push(key)
+            };
+            var listlength = words_list.length;
+            if (listlength < w) {
+              var words_list = [];
+              var congruenttesting_list = [];
+              var words_dict = {};
+              var congruenttesting_dict = {};
+              var training_dict = {}
+            };
+          };
+          if (words_list.length == w) {
+            var training_dict = Object.assign({}, words_dict);
+            for (var x in congruenttesting_list) {
+              var index = training_dict.indexOf(x);
+              var training_dict = training_dict.splice(index, 1);
+            };
+            training_list = []
+            for(var key in training_dict) {
+              training_list.push(key)
+            };
+          };
+        };
+        return [affix_subset, stem_subset, words_dict, words_list, training_dict, training_list, congruenttesting_dict, congruenttesting_list]
+      };
+
+      function cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list) {
+        const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0];
+        incongruenttesting_list = [];
+        incongruenttesting_dict = {};
+        for (let i = 0; i < L1stemsubset_list.length; i++) {
+          var indice = testingaffix_indices[i];
+          var affix = L1affixsubset_list[indice];
+          var stem = L2stemsubset_list[i];
+          var word = stem + affix;
+          if (stem[-1] != affix[0]) and (incongruenttesting_list.includes(word) == False) {
+            var incongruenttesting_list.push([stem + affix]);
+            var word = stem + affix;
+            var incongruenttesting_dict[word] = parts
+          };
+        };
+        for (let j = 0; j < L2stemsubset_list; j++) {
+          var indice = testingaffix_indices[j];
+          var affix = L2affixsubset_list[indice];
+          var stem = L1affixsubset_list[j];
+          var word = stem + affix;
+          if (stem[-1] != affix[0]) and (incongruenttesting_list.includes(word)) {
+            incongruenttesting_list.push([stem + affix]);
+            var parts = [stem, affix];
+            var word = stem + affix;
+            var incongruenttesting_dict[word] = parts
+          };
+        };
+        return [incongruenttesting_list, incongruenttesting_dict]
+    
+      /* generate word lists for both languages */
+      incongruenttesting_list = [];
+      while (incongruenttesting_list.length < 20) {
+        var values = wordcycle(L1affixes_list, L1stems_list, 5, 10, 50);
+        var L1affixsubset_list = values[0];
+        var L1stemsubset_list = values[1];
+        var L1words_dict = values[2];
+        var L1words_list = values[3];
+        var L1training_dict = values[4];
+        var L1training_list = values[5];
+        var L1congruenttesting_dict = values[6];
+        var L1congruenttesting_list = values[7];
+        var values2 = wordcycle(L2affixes_list, L2stems_list, 5, 10, 50);
+        var L2affixsubset_list = values[0];
+        var L2stemsubset_list = values[1];
+        var L2words_dict = values[2];
+        var L2words_list = values[3];
+        var L2training_dict = values[4];
+        var L2training_list = values[5];
+        var L2congruenttesting_dict = values[6];
+        var L2congruenttesting_list = values[7];
+        var training_list = L1training_list + L2training_list;
+        var training_dict = L1training_dict + L2training_dict;
+        var congruenttesting_list = L1congruenttesting_list + L2congruenttesting_list;
+        var congruenttesting_dict = L1congruenttesting_dict + L2congruenttesting_dict;
+        for (x in incongruenttesting_list) {
+          if (training_dict.includes(x)) {
+            var index = training_dict.indexOf(x);
+                var training_dict = training_dict.splice(index, 1);
+          };
+        };
+        return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict]
+        };
+      }; 
+    };
+
+    var values3 = cycle_through(L1affixes_list, L1stems_list, L2affixes_list, L2stems_list);
+    var L1affixsubset_list = values3[0];
+    var L1stemsubset_list = values3[1];
+    var L2affixsubset_list = values3[2];
+    var L2stemsubset_list = values3[3];
+    var L1words_dict = values3[4];
+    var L1words_list = values3[5];
+    var L1training_dict = values3[6];
+    var L1training_list = values3[7];
+    var L1congruenttesting_dict = values3[8];
+    var L1congruenttesting_list = values3[9];
+    var L2words_dict = values3[10];
+    var L2words_list = values3[11];
+    var L2training_dict = values3[12];
+    var L2training_list = values3[13];
+    var L2congruenttesting_dict = values3[14];
+    var L2congruenttesting_list = values3[15];
+    var training_list = values3[16];
+    var training_dict = values3[17];
+    var congruenttesting_list = values3[18];
+    var congruenttesting_dict = values3[19];
+    var incongruenttesting_list = values3[20];
+    var incongruenttesting_dict = values3[21]
+    var congruenttesting = []
+    for (x in congruenttesting_list) {
+      congruenttesting.push([word,0])
+    };
+    for (x in incongruenttesting_list) {
+      incongruenttesting.push([word,1])
+    };
+    var testing = congruenttesting + incongruenttesting;
+
+    console.log(training_list);
+    console.log(testing)
+  </script>
+</html>
