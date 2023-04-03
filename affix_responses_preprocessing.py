@@ -19,6 +19,8 @@ for participantn in range(participantsn):
 score = []
 all_scores = []
 all_numerical_scores = []
+yes_no_scores = []
+yes_no_responses = []
 for participantn in range(participantsn):
     score = []
     for n in range(40): # all testing items
@@ -33,6 +35,12 @@ for participantn in range(participantsn):
     all_scores.append(score)
     numerical_score = (score.count("hit") + score.count("correct_rejection"))/0.4 # calculate % correct
     all_numerical_scores.append(numerical_score)
+    yes_score = (score.count("hit"))/0.2
+    no_score = (score.count("correct_rejection"))/0.2
+    yes_no_scores.append([yes_score, no_score]) # calculate accuracy for hits & correct rejections
+    yes_responses = (score.count("hit") + score.count("false_alarm"))/0.4
+    no_responses = (score.count("miss") + score.count("correct_rejection"))/0.4
+    yes_no_responses.append([yes_responses, no_responses]) # calculate whether participants biased to yes or no
 
 # collating preprocessed data
 data_preprocessed = []
