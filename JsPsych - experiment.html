@@ -34,8 +34,7 @@
         var reps = 0;
         var words_list = [];
         var listlength = words_list.length;
-        while (listlength < 10) {
-          console.log(reps);
+        while (listlength < 50) {
           var words_list = [];
           var congruenttesting_list = [];
           var words_dict = {};
@@ -44,12 +43,12 @@
           var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
           var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
           reps++; /* increase by 1 */
+          console.log(reps);
           for (let i = 0; i < stem_subset.length; i++) {
             var j = 0;
             while (j < affix_subset.length) {
               var stem = stem_subset[i];
               var affix = affix_subset[j];
-              console.log([i,j]);
               if (stem != affix && stem[-1] != affix[0]) {
                 words_list.push([stem + affix]); /* append */
                 var parts = [stem, affix];
@@ -72,11 +71,9 @@
               congruenttesting_dict[word] = parts
             };
           };
-          for(var key in words_dict) {
-            words_list.push(key)
-          };
+          var words_list = Object.keys(words_dict);
           var listlength = words_list.length;
-          console.log(listlength);
+          console.log(words_list);
           if (listlength < 50) {
             var affix_subset = [];
             var stem_subset = [];
@@ -89,14 +86,8 @@
           if (words_list.length == 50) {
             console.log("wordcycle done")
             var training_dict = Object.assign({}, words_dict);
-            for (var x in congruenttesting_list) {
-              var index = training_dict.indexOf(x);
-              var training_dict = training_dict.splice(index, 1);
-            };
-            var training_list = []
-            for(var key in training_dict) {
-              training_list.push(key)
-            };
+            var training_list = Object.keys(training_dict)
+            training_list = training_list.filter( ( el ) => !congruenttesting_list.includes( el ) );
           };
         };
         return [affix_subset, stem_subset, words_dict, words_list, training_dict, training_list, congruenttesting_dict, congruenttesting_list]
@@ -153,10 +144,15 @@
         var L2training_list = values[5];
         var L2congruenttesting_dict = values[6];
         var L2congruenttesting_list = values[7];
-        var training_list = L1training_list + L2training_list;
-        var training_dict = L1training_dict + L2training_dict;
-        var congruenttesting_list = L1congruenttesting_list + L2congruenttesting_list;
-        var congruenttesting_dict = L1congruenttesting_dict + L2congruenttesting_dict;
+        console.log(L1training_list);
+        console.log(L2training_list); /* RETURNS L1 TRAINING LIST */
+        var training_list = L1training_list.concat(L2training_list);
+        var training_dict = L1training_dict.concat(L2training_dict);
+        var congruenttesting_list = L1congruenttesting_list.concat(L2congruenttesting_list);
+        var congruenttesting_dict = L1congruenttesting_dict.concat(L2congruenttesting_dict);
+        var values3 = cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list);
+        var incongruenttesting_list = values3[0];
+        var incongruenttesting_dict = values3[1];
         for (x in incongruenttesting_list) {
           if (training_dict.includes(x)) {
             var index = training_dict.indexOf(x);
@@ -167,45 +163,52 @@
       };
     };
 
-    var values3 = import_morphemes();
-    var L1affixes_list = values3[0];
-    var L1stems_list = values3[1];
-    var L2affixes_list = values3[2];
-    var L2stems_list = values3[3];
-    var values4 = cycle_through(L1affixes_list, L1stems_list, L2affixes_list, L2stems_list);
-    var L1affixsubset_list = values4[0];
-    var L1stemsubset_list = values4[1];
-    var L2affixsubset_list = values4[2];
-    var L2stemsubset_list = values4[3];
-    var L1words_dict = values4[4];
-    var L1words_list = values4[5];
-    var L1training_dict = values4[6];
-    var L1training_list = values4[7];
-    var L1congruenttesting_dict = values4[8];
-    var L1congruenttesting_list = values4[9];
-    var L2words_dict = values4[10];
-    var L2words_list = values4[11];
-    var L2training_dict = values4[12];
-    var L2training_list = values4[13];
-    var L2congruenttesting_dict = values4[14];
-    var L2congruenttesting_list = values4[15];
-    var training_list = values4[16];
-    var training_dict = values4[17];
-    var congruenttesting_list = values4[18];
-    var congruenttesting_dict = values4[19];
-    var incongruenttesting_list = values4[20];
-    var incongruenttesting_dict = values4[21];
+    var values4 = import_morphemes();
+    var L1affixes_list = values4[0];
+    var L1stems_list = values4[1];
+    var L2affixes_list = values4[2];
+    var L2stems_list = values4[3];
+    var values5 = cycle_through(L1affixes_list, L1stems_list, L2affixes_list, L2stems_list);
+    var L1affixsubset_list = values5[0];
+    var L1stemsubset_list = values5[1];
+    var L2affixsubset_list = values5[2];
+    var L2stemsubset_list = values5[3];
+    var L1words_dict = values5[4];
+    var L1words_list = values5[5];
+    var L1training_dict = values5[6];
+    var L1training_list = values5[7];
+    var L1congruenttesting_dict = values5[8];
+    var L1congruenttesting_list = values5[9];
+    var L2words_dict = values5[10];
+    var L2words_list = values5[11];
+    var L2training_dict = values5[12];
+    var L2training_list = values5[13];
+    var L2congruenttesting_dict = values5[14];
+    var L2congruenttesting_list = values5[15];
+    var training_list = values5[16];
+    var training_list = training_list.split(",");
+    var training_dict = values5[17];
+    var congruenttesting_list = values5[18];
+    var congruenttesting_dict = values5[19];
+    var incongruenttesting_list2 = values5[20];
+    var incongruenttesting_list = [];
+    for (word of incongruenttesting_list2) {
+      var word = word.toString();
+      incongruenttesting_list.push(word)
+    };
+    var incongruenttesting_dict = values5[21];
     var congruenttesting = [];
     var incongruenttesting = [];
-    for (x in congruenttesting_list) {
+    var congruenttesting_list = congruenttesting_list.split(",");
+    for (word of congruenttesting_list) {
       congruenttesting.push([word,0])
     };
-    for (x in incongruenttesting_list) {
+    for (word of incongruenttesting_list) {
       incongruenttesting.push([word,1])
     };
-    var testing = congruenttesting + incongruenttesting;
+    var testing = congruenttesting.concat(incongruenttesting);
 
     console.log(training_list);
-    console.log(testing)
+    console.log(testing.length)
   </script>
 </html>
