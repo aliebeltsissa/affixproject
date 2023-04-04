@@ -8,6 +8,10 @@ data5 <- read.table("./Participant_5/sbj5_responses.tsv",header=T,sep=",");
 data6 <- read.table("./Participant_6/sbj6_responses.tsv",header=T,sep=",");
 data7 <- read.table("./Participant_7/sbj7_responses.tsv",header=T,sep=",");
 data <- rbind(data1,data2,data3,data4,data5,data6,data7);
+all_data <- read.table("preprocessed_data.tsv",header=T,sep=",");
+dim(all_data);
+head(all_data);
+summary(all_data);
 data_clean <- rbind(data1,data2,data3,data5,data6,data7);
 data$response <- as.factor(data$response);
 data$condition <- as.factor(data$condition);
@@ -58,3 +62,28 @@ plot(unlist(mean_RTs),unlist(scores),pch=16)
 scores2 <- list(42.5,57.5,35.0,50.0,37.5,52.5);
 mean_RTs2 <- list(344.5735,461.22575,187.264,260.111,211.34025,530.5685);
 plot(unlist(mean_RTs2),unlist(scores2),pch=16)
+
+# d'
+dPrime <- function(sbj, expectedResp, observedResp)
+{
+  sbjNumbers <- unique(sbj);
+  dprimes <- vector(length=length(sbjNumbers), mode="numeric");
+  bias <- vector(length=length(sbjNumbers), mode="numeric");
+  subjects <- vector(length=length(sbjNumbers), mode="integer");
+  counter<-1;
+  for (s in sbjNumbers)
+  {
+    contingencyTable <- xtabs(~ expectedResp[sbj==s] + observedResp[sbj==s]); 
+    percVector <- contingencyTable[,2] / xtabs(~ expectedResp[sbj==s]);
+    nTrials <- length(expectedResp);
+    zhr <- ifelse( percVector[2]==1, qnorm( 1-(1/(2*nTrials))), qnorm(percVector[2]));
+    zfar <- ifelse(percVector[1]==0, qnorm( 1/(2*nTrials) ), qnorm(percVector[1])); 
+    dprimes[counter] <- round(zhr - zfar, digits = 3);
+    bias[counter] <- exp(-zhr*zhr/2+zfar*zfar/2);
+    subjects[counter] <- s;
+    counter <- counter+1;
+  };
+  print(data.frame(sbj=subjects, dprime=dprimes, bias=bias));
+};
+dPrime(all_data$sbjID,all_data$expected,all_data$observed)
+all_data$response[sbjID==4]
