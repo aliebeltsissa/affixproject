@@ -48,8 +48,9 @@
             var j = 0;
             while (j < affix_subset.length) {
               var stem = stem_subset[i];
+              var last = stem.slice(-1);
               var affix = affix_subset[j];
-              if (stem != affix && stem[-1] != affix[0]) {
+              if (stem != affix && last != affix[0]) {
                 words_list.push([stem + affix]); /* append */
                 var parts = [stem, affix];
                 var word = stem + affix;
