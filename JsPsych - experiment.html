@@ -43,7 +43,7 @@
           var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
           var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
           reps++; /* increase by 1 */
-          console.log(reps);
+          console.log('Finished rep ' + reps + ' of generating word list.')
           for (let i = 0; i < stem_subset.length; i++) {
             var j = 0;
             while (j < affix_subset.length) {
@@ -73,7 +73,6 @@
           };
           var words_list = Object.keys(words_dict);
           var listlength = words_list.length;
-          console.log(words_list);
           if (listlength < 50) {
             var affix_subset = [];
             var stem_subset = [];
@@ -83,12 +82,25 @@
             var congruenttesting_dict = {};
             var training_dict = {}
           };
-          if (words_list.length == 50) {
-            console.log("wordcycle done")
-            var training_dict = Object.assign({}, words_dict);
-            var training_list = Object.keys(training_dict)
-            training_list = training_list.filter( ( el ) => !congruenttesting_list.includes( el ) );
+        };
+        if (words_list.length == 50) {
+          console.log('Finished testing word list.');
+          congruenttesting_list2 = [...congruenttesting_list];
+          var congruenttesting_list = [];
+          var training_dict = Object.assign({}, words_dict);
+          var training_list = Object.keys(training_dict);
+          for (word of congruenttesting_list2) {
+            var word = word.toString();
+            congruenttesting_list.push(word)
           };
+          for (let i = 0; i < congruenttesting_list.length; i++) {
+            var word = congruenttesting_list[i];
+            var training_list = Object.keys(training_dict);
+            if (training_list.includes(word)) {
+              delete training_dict[word];
+            };
+          };
+          var training_list = Object.keys(training_dict);
         };
         return [affix_subset, stem_subset, words_dict, words_list, training_dict, training_list, congruenttesting_dict, congruenttesting_list]
       };
@@ -108,12 +120,12 @@
             incongruenttesting_dict[word] = parts
           };
         };
-        for (let j = 0; j < L2stemsubset_list; j++) {
+        for (let j = 0; j < L2stemsubset_list.length; j++) {
           var indice = testingaffix_indices[j];
           var affix = L2affixsubset_list[indice];
-          var stem = L1affixsubset_list[j];
+          var stem = L1stemsubset_list[j];
           var word = stem + affix;
-          if (stem[-1] != affix[0] && incongruenttesting_list.includes(word)) {
+          if (stem[-1] != affix[0] && incongruenttesting_list.includes(word) == false) {
             incongruenttesting_list.push([stem + affix]);
             var parts = [stem, affix];
             var word = stem + affix;
@@ -136,29 +148,29 @@
         var L1congruenttesting_dict = values[6];
         var L1congruenttesting_list = values[7];
         var values2 = wordcycle(L2affixes_list, L2stems_list);
-        var L2affixsubset_list = values[0];
-        var L2stemsubset_list = values[1];
-        var L2words_dict = values[2];
-        var L2words_list = values[3];
-        var L2training_dict = values[4];
-        var L2training_list = values[5];
-        var L2congruenttesting_dict = values[6];
-        var L2congruenttesting_list = values[7];
-        console.log(L1training_list);
-        console.log(L2training_list); /* RETURNS L1 TRAINING LIST */
+        var L2affixsubset_list = values2[0];
+        var L2stemsubset_list = values2[1];
+        var L2words_dict = values2[2];
+        var L2words_list = values2[3];
+        var L2training_dict = values2[4];
+        var L2training_list = values2[5];
+        var L2congruenttesting_dict = values2[6];
+        var L2congruenttesting_list = values2[7];
         var training_list = L1training_list.concat(L2training_list);
-        var training_dict = L1training_dict.concat(L2training_dict);
+        var training_dict = Object.assign({},L1training_dict,L2training_dict);
         var congruenttesting_list = L1congruenttesting_list.concat(L2congruenttesting_list);
-        var congruenttesting_dict = L1congruenttesting_dict.concat(L2congruenttesting_dict);
+        var congruenttesting_dict = Object.assign({},L1congruenttesting_dict,L2congruenttesting_dict);
         var values3 = cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list);
         var incongruenttesting_list = values3[0];
         var incongruenttesting_dict = values3[1];
-        for (x in incongruenttesting_list) {
-          if (training_dict.includes(x)) {
-            var index = training_dict.indexOf(x);
-                var training_dict = training_dict.splice(index, 1);
+        for (let i = 0; i < incongruenttesting_list.length; i++) {
+            var word = congruenttesting_list[i];
+            var training_list = Object.keys(training_dict);
+            if (training_list.includes(word)) {
+              delete training_dict[word];
+            };
           };
-        };
+        var training_list = Object.keys(training_dict);
         return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict]
       };
     };
@@ -186,20 +198,23 @@
     var L2congruenttesting_dict = values5[14];
     var L2congruenttesting_list = values5[15];
     var training_list = values5[16];
-    var training_list = training_list.split(",");
     var training_dict = values5[17];
-    var congruenttesting_list = values5[18];
+    var congruenttesting_list2 = values5[18];
     var congruenttesting_dict = values5[19];
     var incongruenttesting_list2 = values5[20];
+    var incongruenttesting_dict = values5[21];
     var incongruenttesting_list = [];
     for (word of incongruenttesting_list2) {
       var word = word.toString();
       incongruenttesting_list.push(word)
     };
-    var incongruenttesting_dict = values5[21];
+    var congruenttesting_list = [];
     var congruenttesting = [];
     var incongruenttesting = [];
-    var congruenttesting_list = congruenttesting_list.split(",");
+    for (word of congruenttesting_list2) {
+      var word = word.toString();
+      congruenttesting_list.push(word)
+    };
     for (word of congruenttesting_list) {
       congruenttesting.push([word,0])
     };
@@ -207,8 +222,11 @@
       incongruenttesting.push([word,1])
     };
     var testing = congruenttesting.concat(incongruenttesting);
+    if (training_list.length == 80 && testing.length == 40) {
+      console.log('Correctly generated complete stimuli set.')
+    };
 
-    console.log(training_list);
-    console.log(testing.length)
+    console.log('Training list: ' + training_list);
+    console.log(testing)
   </script>
 </html>
