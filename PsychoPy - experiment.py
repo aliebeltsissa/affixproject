@@ -1,6 +1,7 @@
 import os
 os.chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject") # set working directory to affix project folder
 
+import csv
 def import_words():
     '''
     Imports the text files of the different words to be presented from the word_generation.py output.
@@ -28,7 +29,21 @@ def import_words():
     incongruenttesting = data3.split("\n")
     incongruenttesting = incongruenttesting[0:20]
     incongruenttestingfile.close()
-    return training, congruenttesting, incongruenttesting
+    threefile = open("familiarisation_extra3s.txt", "r")
+    data4 = threefile.read()
+    extra_threes = data4.split("\n") # split text file into list
+    extra_threes = extra_threes[0:27] # remove last \n from text file
+    threefile.close()
+    fourfile = open("familiarisation_extra4s.txt", "r")
+    data5 = fourfile.read()
+    extra_fours = data5.split("\n")
+    extra_fours = extra_fours[0:67]
+    fourfile.close()
+    import pandas as pd
+    df = pd.read_csv("training_dict.csv", index_col=0)
+    training_dict = df.to_dict("split")
+    training_dict = dict(zip(training_dict["index"], training_dict["data"]))
+    return training, congruenttesting, incongruenttesting, training_dict
 
 def testing_list(congruenttesting, incongruenttesting):
     '''
@@ -115,7 +130,7 @@ def testing_randomisation(lst, lstlen):
     return rand_lst
 
 # importing & generating lists
-training, congruenttesting, incongruenttesting = import_words()
+training, congruenttesting, incongruenttesting, training_dict = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
@@ -148,7 +163,7 @@ bacs = 'BACS1'
 participant_responses = []
 stim_duration = 0.8
 isi = 0.2
-trainingreps = 2 # number of times we repeat the training
+trainingreps = 3 # number of times we repeat the training
 
 # when inputted participant ID, go fullscreen
 win.winHandle.maximize()

@@ -107,7 +107,6 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
                     stem = stem_subset[i]
                     affix = affix_subset[j]
                     if stem != affix and stem[-1] != affix[0]: # if stem & affix different and the word isn't already in the word list
-                    # HERE: can't have  and stem[-1] != affix[0]: maybe if we get lucky in the morpheme generation
                         words_list += [stem + affix]
                         parts = [stem, affix]
                         word = stem + affix
@@ -174,6 +173,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     
     # generate word lists for both languages:
     incongruenttesting_list = []
+    
     while len(incongruenttesting_list) < 20: # if cross-language words have the same letter at the word boundary, start again
         L1affixsubset_list, L1stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list \
             = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
@@ -194,13 +194,13 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     return L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
         L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
         L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
-        training_list, training_dict, congruenttesting_list, \
-        congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict
+        training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, \
+        incongruenttesting_dict, extras_3, extras_4, extras_5
 
 import os.path
 import numpy as np
 import csv
-def export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing):
+def export_participant_words(L1training_list, L2training_list, training_list, training_dict, congruenttesting_list, incongruenttesting_list, testing):
     '''
     Exports the training and testing word lists as text files.
 
@@ -253,18 +253,21 @@ def export_participant_words(L1training_list, L2training_list, training_list, co
         writer.writerow(header)
         writer.writerows(testing)
     output6.close()
+    import pandas as pd
+    df = pd.DataFrame.from_dict(training_dict, orient="index", index=False)
+    df.to_csv("training_dict.csv")
     print('Participant stimuli lists exported.') 
 
 L1affixes_list, L1stems_list, L2affixes_list, L2stems_list = import_morphemes()
 L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
     L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
     L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
-    training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict \
-    = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
+    training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, \
+    extras_3, extras_4, extras_5 = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 congruenttesting = [[word,int(0)] for word in congruenttesting_list]
 incongruenttesting = [[word,int(1)] for word in incongruenttesting_list]
 testing = congruenttesting + incongruenttesting
-export_participant_words(L1training_list, L2training_list, training_list, congruenttesting_list, incongruenttesting_list, testing)
+export_participant_words(L1training_list, L2training_list, training_list, training_dict, congruenttesting_list, incongruenttesting_list, testing)
 
 end_time = time.time()
 elapsed_time = (end_time - start_time)
