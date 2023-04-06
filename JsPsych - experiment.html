@@ -48,7 +48,7 @@
             var j = 0;
             while (j < affix_subset.length) {
               var stem = stem_subset[i];
-              var last = stem.slice(-1);
+              var last = stem.slice(-1); //
               var affix = affix_subset[j];
               if (stem != affix && last != affix[0]) {
                 words_list.push([stem + affix]); /* append */
@@ -228,6 +228,33 @@
     };
 
     console.log('Training list: ' + training_list);
-    console.log(testing)
+    console.log(testing);
+
+    /* JSPSYCH EXPERIMENT SCRIPT */
+    var timeline = [];
+
+    function training_randomisation(training_list) {
+      var listlength = training_list.length;
+      var rand_lst = ['efjnpqsz'];
+      var rep = 0;
+      while (rand_lst.length < (listlength + 1)) {
+        if (rep < 500) {
+          var word = jsPsych.randomization.sampleWithoutReplacement(training_list, 1);
+          var last2_word = word.slice(-2);
+          var last_training = training_list.slice(-1);
+          var last2_training = last_training.slice(-1);
+          if (word[0:1] != last_training[0:1] && last2_word != last2_training && rand_lst.includes(word) == false) {
+            rand_lst.push(word)
+          };
+          rep++;
+        };
+        if (rep >= 500) {
+          var rand_lst = ['efjnpqsz'];
+          var rep = 0
+        }
+      };
+      var rand_lst = rand_lst.shift();
+      return [rand_lst]
+    }
   </script>
 </html>
