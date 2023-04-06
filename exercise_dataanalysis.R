@@ -58,6 +58,7 @@ legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("ca
 scores <- list(42.5,57.5,35.0,42.5,50.0,37.5,52.5);
 mean_RTs <- list(344.5735,461.22575,187.264,505.766,260.111,211.34025,530.5685);
 plot(unlist(mean_RTs),unlist(scores),pch=16)
+plot(density(all_data$RT[all_data$sbjID == 3],bw=20))
 # scores & RTs without participant 4
 scores2 <- list(42.5,57.5,35.0,50.0,37.5,52.5);
 mean_RTs2 <- list(344.5735,461.22575,187.264,260.111,211.34025,530.5685);
@@ -85,5 +86,23 @@ dPrime <- function(sbj, expectedResp, observedResp)
   };
   print(data.frame(sbj=subjects, dprime=dprimes, bias=bias));
 };
-dPrime(all_data$sbjID,all_data$expected,all_data$observed)
-all_data$response[sbjID==4]
+dprimes <- dPrime(all_data$sbjID,all_data$expected,all_data$observed);
+summary(dprimes)
+dim(dprimes)
+dim(all_data)
+head(all_data)
+mean_data <- data.frame(mean_RTs = c(344.5735,461.22575,187.264,505.766,260.111,211.34025,530.5685), 
+                        mean_scores = c(42.5,57.5,35.0,42.5,50.0,37.5,52.5),
+                        dprimes = c(-0.379,0.399,-0.842,-0.399,0,-0.639,0.15),
+                        bias = c(0.9760934,1.1383759,1.4249877,0.8784445,1,0.9587321,1.0941417))
+head(mean_data)
+summary(mean_data)
+plot(mean_data$dprimes, mean_data$bias)
+plot(mean_data$dprimes, mean_data$mean_RTs)
+plot(mean_data$dprimes, mean_data$mean_scores)#
+plot(mean_data$bias, mean_data$mean_RTs)
+plot(mean_data$bias, mean_data$mean_scores)#
+res <- cor.test(mean_data$bias, mean_data$mean_RTs, 
+                method = "pearson")
+res
+plot(density(mean_data$bias))

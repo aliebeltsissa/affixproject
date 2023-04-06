@@ -23,6 +23,7 @@ all_observed_responses = []
 all_scores = []
 all_numerical_scores = []
 yes_no_scores = []
+yes_no_scores2 = []
 yes_no_responses = []
 RTs = []
 mean_RTs = []
@@ -58,6 +59,9 @@ for participantn in range(participantsn):
     yes_score = (score.count("hit"))/0.2
     no_score = (score.count("correct_rejection"))/0.2
     yes_no_scores.append([yes_score, no_score]) # calculate accuracy for hits & correct rejections
+    no_score2 = (score.count("miss"))/0.2
+    yes_score2 = (score.count("false_alarm"))/0.2
+    yes_no_scores2.append([no_score2, yes_score2]) # calculate accuracy for hits & correct rejections
     yes_responses = (score.count("hit") + score.count("false_alarm"))/0.4
     no_responses = (score.count("miss") + score.count("correct_rejection"))/0.4
     yes_no_responses.append([yes_responses, no_responses]) # calculate whether participants biased to yes or no
