@@ -229,10 +229,21 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     L2stem4s = [x for x in L2stems if len(x) == 4]
     L2stem5s = [x for x in L2stems if len(x) == 5]
     # extract the required number of morphemes
-    confound_threes = random.sample(L1affix3s, (int(len(exp_threes)/2)) + int3s) + random.sample(L2affix3s, int(len(exp_threes)/2))
-    confound_fours = random.sample(L1affix4s, (int(len(exp_fours)/4)) + int4s) + random.sample(L1stem4s, (int(len(exp_fours)/4)) + int4s_3) + random.sample(L2affix4s, (int(len(exp_fours)/4)) + int4s_2) + random.sample(L2stem4s, int(len(exp_fours)/4))
-    confound_fives = random.sample(L1stem5s, (int(len(exp_fives)/2)) + int5s) + random.sample(L2stem5s, int(len(exp_fives)/2))
-    all_confounds = confound_threes + confound_fours + confound_fives
+    all_confounds = []
+    while len(all_confounds) < 30:
+        confound_threes = []
+        confound_fours = []
+        confound_fives = []
+        confound_threes = random.sample(L1affix3s, (int(len(exp_threes)/2)) + int3s) + random.sample(L2affix3s, int(len(exp_threes)/2))
+        confound_fours = random.sample(L1affix4s, (int(len(exp_fours)/4)) + int4s) + random.sample(L1stem4s, (int(len(exp_fours)/4)) + int4s_3) + random.sample(L2affix4s, (int(len(exp_fours)/4)) + int4s_2) + random.sample(L2stem4s, int(len(exp_fours)/4))
+        confound_fives = random.sample(L1stem5s, (int(len(exp_fives)/2)) + int5s) + random.sample(L2stem5s, int(len(exp_fives)/2))
+        all_confounds = confound_threes + confound_fours + confound_fives
+        confound_dellist = [x for x in all_confounds if x in all_morphemes]
+        if len(confound_dellist) != 0:
+            print("Some confounds identical to experiment words. Trying again.")
+        all_confounds = [x for x in all_confounds if x not in confound_dellist]
+    if len(all_confounds) == len(all_morphemes) and len(confound_threes) == len(exp_threes) and len(confound_fours) == len(exp_fours) and len(confound_fives) == len(exp_fives):
+        print("Correctly generated familiarity confound set.")
     familiarity_pairs = []
     for i in range(30): # group into pairs
         familiarity_pairs.append([all_morphemes[i], all_confounds[i]])

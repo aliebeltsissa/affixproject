@@ -124,6 +124,7 @@ def testing_randomisation(lst, lstlen):
     return rand_lst
     
 # importing & generating lists
+from random import shuffle
 training, congruenttesting, incongruenttesting, training_dict, familiarity_pairs = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
@@ -132,6 +133,7 @@ rand_training1 = training_randomisation(training, trainingn)
 rand_training2 = training_randomisation(training, trainingn)
 rand_training3 = training_randomisation(training, trainingn)
 rand_testing = testing_randomisation(testing, testingn)
+shuffle(familiarity_pairs)
 
 from psychopy import visual, event, core, gui
 
@@ -358,14 +360,14 @@ sides = [-300,300]
 for trialn in range(30):
     confound_side = random.choice(sides) # randomly puts the confounds to the right or left on each trial
     if confound_side == -300:
-        exp_word_side.append("right")
+        exp_word_side = "right"
     elif confound_side == 300:
-        exp_word_side.append("left")
+        exp_word_side = "left"
     exp_word = visual.TextStim(win, text = familiarity_pairs[trialn][0], 
         font = bacs, height = 100, color = [.8,.8,.8], pos = [(-confound_side),0], ori = 0)
     confound = visual.TextStim(win, text = familiarity_pairs[trialn][1], 
         font = bacs, height = 100, color = [.8,.8,.8], pos = [confound_side, 0], ori = 0)
-    expl_text = visual.TextStim(win, text = "Ha già visto quella combinazione di lettere?", height = 60,
+    expl_text = visual.TextStim(win, text = "Ha già visto quale combinazione di lettere?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Premi 'd' per questa combinazione di lettere", height = 30,
                                  color = [.8,.8,.8], pos = [-300,-200], ori = 0, wrapWidth = 300)
@@ -373,7 +375,7 @@ for trialn in range(30):
                                  color = [.8,.8,.8], pos = [300,-200], ori = 0, wrapWidth = 300)
     exp_word.draw(win=win)
     confound.draw(win=win)
-    if trialn <= 2: # show instruction text for first 3 words
+    if trialn <= 2: # show instruction text for first 3 trials
         expl_text.draw(win = win)
     expl2_text.draw(win = win)
     expl3_text.draw(win=win)
@@ -382,7 +384,7 @@ for trialn in range(30):
     keys = event.waitKeys(keyList=["d","k"]) # only accept 'd' and 'k' keypresses
     RT = clock.getTime()
     response = keys[0]
-    familiarity_responses.append([sbj_id,(trialn+1),familiarity_pairs[trialn][0],familiarity_pairs[trialn][1],response,RT])
+    familiarity_responses.append([sbj_id,(trialn+1),familiarity_pairs[trialn][0],familiarity_pairs[trialn][1],exp_word_side,response,RT])
 
 # goodbye
 text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.",
@@ -402,6 +404,17 @@ for trial in participant_responses:
         all_responses.append([trial[0],trial[1],trial[2],trial[3],'no',trialRT])
     else:
         print(f"Problem sorting responses to trial {trial[0]}")
+all_familiarity_responses = []
+for i in range(30):
+    RT = round((familiarity_responses[i][6]*100),2) # round RTs
+    if familiarity_responses[i][5] == 'k' and familiarity_responses[i][4] == 'right':
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"exp_word",RT])
+    elif familiarity_responses[i][5] == 'd' and familiarity_responses[i][4] == 'right':
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"confound",RT])
+    elif familiarity_responses[i][5] == 'k' and familiarity_responses[i][4] == 'left':
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"confound",RT])
+    elif familiarity_responses[i][5] == 'd' and familiarity_responses[i][4] == 'left':
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"exp_word",RT])
 
 # data output
 output_folder = f"Participant_{sbj_id}"
@@ -441,4 +454,11 @@ file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output5:
     for word in rand_training2:
         output5.write(word+"\n")
+file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_familiarity_responses.tsv"
+header = ['sbjID','trialn','word','confound','response','RT']
+with open(file_name, 'w', newline='') as output1:
+    writer = csv.writer(output1)
+    writer.writerow(header)
+    writer.writerows(all_familiarity_responses)
+output1.close()
 output5.close()
