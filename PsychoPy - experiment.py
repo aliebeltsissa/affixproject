@@ -29,21 +29,6 @@ def import_words():
     incongruenttesting = data3.split("\n")
     incongruenttesting = incongruenttesting[0:20]
     incongruenttestingfile.close()
-    threefile = open("familiarisation_extra3s.txt", "r")
-    data4 = threefile.read()
-    extra_threes = data4.split("\n") # split text file into list
-    extra_threes = extra_threes[0:27] # remove last \n from text file
-    threefile.close()
-    fourfile = open("familiarisation_extra4s.txt", "r")
-    data5 = fourfile.read()
-    extra_fours = data5.split("\n")
-    extra_fours = extra_fours[0:67]
-    fourfile.close()
-    fivefile = open("familiarisation_extra5s.txt", "r")
-    data6 = fivefile.read()
-    extra_fives = data6.split("\n")
-    extra_fives = extra_fives[0:54]
-    fivefile.close()
     import pandas as pd
     df = pd.read_csv("training_dict.csv", index_col=0)
     training_dict = df.to_dict("split")
@@ -52,7 +37,7 @@ def import_words():
         csv_reader = csv.reader(read_obj)
         familiarity_pairs = list(csv_reader)
         familiarity_pairs = familiarity_pairs[1:31]
-    return training, congruenttesting, incongruenttesting, training_dict, extra_threes, extra_fours, extra_fives, familiarity_pairs
+    return training, congruenttesting, incongruenttesting, training_dict, familiarity_pairs
 
 def testing_list(congruenttesting, incongruenttesting):
     '''
@@ -139,12 +124,13 @@ def testing_randomisation(lst, lstlen):
     return rand_lst
     
 # importing & generating lists
-training, congruenttesting, incongruenttesting, training_dict, extra_threes, extra_fours, extra_fives, familiarity_pairs = import_words()
+training, congruenttesting, incongruenttesting, training_dict, familiarity_pairs = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
 rand_training1 = training_randomisation(training, trainingn)
 rand_training2 = training_randomisation(training, trainingn)
+rand_training3 = training_randomisation(training, trainingn)
 rand_testing = testing_randomisation(testing, testingn)
 
 from psychopy import visual, event, core, gui
@@ -297,12 +283,14 @@ event.waitKeys()
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    for trialn in range(trainingn):
+    for trialn in range(2):
         if reps == 0: # the first training session, use random training list 1
             word = rand_training1[trialn]
         elif reps == 1: # the second training session, use random training list 2
             word = rand_training2[trialn]
-        elif reps > 1:
+        elif reps == 2:
+            word = rand_training3[trialn]
+        elif reps > 2:
             print("Error: too many training reps, not enough lists.")
             win.close()
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
@@ -315,6 +303,12 @@ for reps in range(trainingreps):
             win.flip()
     if reps == 0: # show inter-training session message
         text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
+                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
+        text.draw(win=win)
+        win.flip()
+        event.waitKeys()
+    if reps == 1: # show inter-training session message
+        text = visual.TextStim(win, text="Hai completato la seconda sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
@@ -351,12 +345,18 @@ for trialn in range(testingn):
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # familiarity test
+text = visual.TextStim(win, text = "Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali ha già visto, mentre altre no. \n\n Non preoccuparti di riconoscerli; cerca solo di intuire se ciascuna parola la sembra familiare oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e 'd' quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text.draw(win=win)
+win.flip()
+event.waitKeys()
+
 import random
 familiarity_responses = []
 exp_word_side = []
-side = [-300,300]
+sides = [-300,300]
 for trialn in range(30):
-    confound_side = random.choice(side) # randomly puts the confounds to the right or left on each trial
+    confound_side = random.choice(sides) # randomly puts the confounds to the right or left on each trial
     if confound_side == -300:
         exp_word_side.append("right")
     elif confound_side == 300:
@@ -365,9 +365,24 @@ for trialn in range(30):
         font = bacs, height = 100, color = [.8,.8,.8], pos = [(-confound_side),0], ori = 0)
     confound = visual.TextStim(win, text = familiarity_pairs[trialn][1], 
         font = bacs, height = 100, color = [.8,.8,.8], pos = [confound_side, 0], ori = 0)
+    expl_text = visual.TextStim(win, text = "Ha già visto quella combinazione di lettere?", height = 60,
+                                color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
+    expl2_text = visual.TextStim(win, text = "Premi 'd' per questa combinazione di lettere", height = 30,
+                                 color = [.8,.8,.8], pos = [-300,-200], ori = 0, wrapWidth = 300)
+    expl3_text = visual.TextStim(win, text = "Premi 'k' per questa combinazione di lettere", height = 30,
+                                 color = [.8,.8,.8], pos = [300,-200], ori = 0, wrapWidth = 300)
     exp_word.draw(win=win)
     confound.draw(win=win)
+    if trialn <= 2: # show instruction text for first 3 words
+        expl_text.draw(win = win)
+    expl2_text.draw(win = win)
+    expl3_text.draw(win=win)
+    clock.reset()
     win.flip()
+    keys = event.waitKeys(keyList=["d","k"]) # only accept 'd' and 'k' keypresses
+    RT = clock.getTime()
+    response = keys[0]
+    familiarity_responses.append([sbj_id,(trialn+1),familiarity_pairs[trialn][0],familiarity_pairs[trialn][1],response,RT])
 
 # goodbye
 text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.",
@@ -392,7 +407,6 @@ for trial in participant_responses:
 output_folder = f"Participant_{sbj_id}"
 os.makedirs(f"Participant_Responses//{output_folder}", exist_ok=True) # change to False for real collection
 
-import csv
 file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_responses.tsv"
 header = ['sbjID','trialn','word','condition','response','RT']
 with open(file_name, 'w', newline='') as output1:
