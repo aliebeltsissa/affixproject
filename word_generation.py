@@ -174,6 +174,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     # generate word lists for both languages:
     incongruenttesting_list = []
     
+    import itertools
     while len(incongruenttesting_list) < 20: # if cross-language words have the same letter at the word boundary, start again
         L1affixsubset_list, L1stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list \
             = wordcycle(L1affixes_list, L1stems_list, 'L1', 5, 10, 50)
@@ -187,6 +188,61 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         for x in incongruenttesting_list:
             if x in training_dict:
                 del training_dict[x] # make sure the training words dict doesn't have any entries for items selected for testing
+    all_morphemes = list(training_dict.values())
+    all_morphemes = list(itertools.chain.from_iterable(all_morphemes))
+    all_morphemes = [*set(all_morphemes)]
+    all_morphemes.sort(key=len)
+    exp_threes = []
+    exp_fours = []
+    exp_fives = []
+    for morpheme in all_morphemes:
+        if len(morpheme) == 3:
+            exp_threes.append(morpheme)
+        elif len(morpheme) == 4:
+            exp_fours.append(morpheme)
+        elif len(morpheme) == 5:
+            exp_fives.append(morpheme)
+    int3s = 0
+    if (len(exp_threes) % 2) != 0:
+        int3s = 1
+    int4s = 0
+    int4s_2 = 0
+    int4s_3 = 0
+    if (len(exp_fours) % 4) == 1:
+        int4s = 1
+    elif (len(exp_fours) % 4) == 2:
+        int4s = 1
+        int4s_2 = 1
+    elif (len(exp_fours) % 4) == 3:
+        int4s = 1
+        int4s_2 = 1
+        int4s_3 = 1
+    int5s = 0
+    if (len(exp_fives) % 2) != 0:
+        int5s = 1
+    L1affix3s = [x for x in L1affixes if len(x) == 3]
+    L1affix4s = [x for x in L1affixes if len(x) == 4]
+    L1stem4s = [x for x in L1stems if len(x) == 4]
+    L1stem5s = [x for x in L1stems if len(x) == 5]
+    L2affix3s = [x for x in L2affixes if len(x) == 3]
+    L2affix4s = [x for x in L2affixes if len(x) == 4]
+    L2stem4s = [x for x in L2stems if len(x) == 4]
+    L2stem5s = [x for x in L2stems if len(x) == 5]
+    confound_threes = random.sample(L1affix3s, (int(len(exp_threes)/2)) + int3s) + random.sample(L2affix3s, int(len(exp_threes)/2))
+    confound_fours = random.sample(L1affix4s, (int(len(exp_fours)/4)) + int4s) + random.sample(L1stem4s, (int(len(exp_fours)/4)) + int4s_3) + random.sample(L2affix4s, (int(len(exp_fours)/4)) + int4s_2) + random.sample(L2stem4s, int(len(exp_fours)/4))
+    confound_fives = random.sample(L1stem5s, (int(len(exp_fives)/2)) + int5s) + random.sample(L2stem5s, int(len(exp_fives)/2))
+    print(len(exp_threes))
+    print(len(confound_threes))
+    print(len(exp_fours))
+    print(len(confound_fours))
+    print(len(exp_fives))
+    print(len(confound_fives))
+    all_confounds = confound_threes + confound_fours + confound_fives
+    print(len(all_morphemes))
+    print(len(all_confounds))
+    familiarity_pairs = []
+    for i in range(30):
+        familiarity_pairs.append([all_morphemes[i], all_confounds[i]])
     if len(L1words_list) == len(L2words_list) and list(L1words_dict.keys()) == L1words_list and list(L2words_dict.keys()) == L2words_list:
         print('Correctly generated complete stimuli set.')
     elif list(L1words_dict.keys()) != L1words_list or list(L2words_dict.keys()) != L2words_list:
@@ -195,7 +251,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
         L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
         training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, \
-        incongruenttesting_dict, extras_3, extras_4, extras_5
+        incongruenttesting_dict, familiarity_pairs
 
 import os.path
 import numpy as np
@@ -246,15 +302,22 @@ def export_participant_words(L1training_list, L2training_list, training_list, tr
     file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/training.csv'
     trainingwords = np.array([x for x in training_list])
     np.savetxt(file_name, trainingwords, delimiter = ", ", header = "word", comments = '', fmt = "%s")
-    file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/testing.csv'
-    header = ['word','condition']
+    file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/familiarity_pairs.csv'
+    header = ['exp','confound']
     with open(file_name, 'w', newline='') as output6:
         writer = csv.writer(output6)
         writer.writerow(header)
-        writer.writerows(testing)
+        writer.writerows(familiarity_pairs)
     output6.close()
+    file_name = 'C:/Users/annal/OneDrive/Documents/GitHub/affixproject/testing.csv'
+    header = ['word','condition']
+    with open(file_name, 'w', newline='') as output7:
+        writer = csv.writer(output7)
+        writer.writerow(header)
+        writer.writerows(testing)
+    output7.close()
     import pandas as pd
-    df = pd.DataFrame.from_dict(training_dict, orient="index", index=False)
+    df = pd.DataFrame.from_dict(training_dict, orient="index")
     df.to_csv("training_dict.csv")
     print('Participant stimuli lists exported.') 
 
@@ -263,7 +326,7 @@ L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, \
     L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, \
     L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, \
     training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, \
-    extras_3, extras_4, extras_5 = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
+    familiarity_pairs = cycle_through(L1affixes_list,L1stems_list,L2affixes_list,L2stems_list)
 congruenttesting = [[word,int(0)] for word in congruenttesting_list]
 incongruenttesting = [[word,int(1)] for word in incongruenttesting_list]
 testing = congruenttesting + incongruenttesting

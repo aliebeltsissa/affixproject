@@ -39,11 +39,20 @@ def import_words():
     extra_fours = data5.split("\n")
     extra_fours = extra_fours[0:67]
     fourfile.close()
+    fivefile = open("familiarisation_extra5s.txt", "r")
+    data6 = fivefile.read()
+    extra_fives = data6.split("\n")
+    extra_fives = extra_fives[0:54]
+    fivefile.close()
     import pandas as pd
     df = pd.read_csv("training_dict.csv", index_col=0)
     training_dict = df.to_dict("split")
     training_dict = dict(zip(training_dict["index"], training_dict["data"]))
-    return training, congruenttesting, incongruenttesting, training_dict
+    with open('familiarity_pairs.csv', 'r') as read_obj:
+        csv_reader = csv.reader(read_obj)
+        familiarity_pairs = list(csv_reader)
+        familiarity_pairs = familiarity_pairs[1:31]
+    return training, congruenttesting, incongruenttesting, training_dict, extra_threes, extra_fours, extra_fives, familiarity_pairs
 
 def testing_list(congruenttesting, incongruenttesting):
     '''
@@ -128,9 +137,9 @@ def testing_randomisation(lst, lstlen):
             rep = 0
     rand_lst.remove(['efjnpqsz',0])
     return rand_lst
-
+    
 # importing & generating lists
-training, congruenttesting, incongruenttesting, training_dict = import_words()
+training, congruenttesting, incongruenttesting, training_dict, extra_threes, extra_fours, extra_fives, familiarity_pairs = import_words()
 testing = testing_list(congruenttesting,incongruenttesting)
 trainingn = len(training)
 testingn = len(testing)
@@ -284,7 +293,7 @@ next_text.draw(win=win)
 win.flip()
 event.waitKeys()
 
-# training:
+# training
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
@@ -317,7 +326,7 @@ inter_text.draw(win=win)
 win.flip()
 event.waitKeys()
 
-# testing:
+# testing
 text = visual.TextStim(win, text = "Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no. \n\n C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere sia una parola aliena e 'd' quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
@@ -341,6 +350,25 @@ for trialn in range(testingn):
     response = keys[0]
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
     
+# familiarity test
+import random
+familiarity_responses = []
+exp_word_side = []
+side = [-300,300]
+for trialn in range(30):
+    confound_side = random.choice(side) # randomly puts the confounds to the right or left on each trial
+    if confound_side == -300:
+        exp_word_side.append("right")
+    elif confound_side == 300:
+        exp_word_side.append("left")
+    exp_word = visual.TextStim(win, text = familiarity_pairs[trialn][0], 
+        font = bacs, height = 100, color = [.8,.8,.8], pos = [(-confound_side),0], ori = 0)
+    confound = visual.TextStim(win, text = familiarity_pairs[trialn][1], 
+        font = bacs, height = 100, color = [.8,.8,.8], pos = [confound_side, 0], ori = 0)
+    exp_word.draw(win=win)
+    confound.draw(win=win)
+    win.flip()
+
 # goodbye
 text = visual.TextStim(win, text = "Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.",
                        height = 60, color=[.8,.8,.8], pos = [0,0], wrapWidth = 800)
