@@ -188,14 +188,14 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
         for x in incongruenttesting_list:
             if x in training_dict:
                 del training_dict[x] # make sure the training words dict doesn't have any entries for items selected for testing
-    all_morphemes = list(training_dict.values())
+    all_morphemes = list(training_dict.values()) # split all words into the morphemes
     all_morphemes = list(itertools.chain.from_iterable(all_morphemes))
     all_morphemes = [*set(all_morphemes)]
-    all_morphemes.sort(key=len)
+    all_morphemes.sort(key=len) # sort by length
     exp_threes = []
     exp_fours = []
     exp_fives = []
-    for morpheme in all_morphemes:
+    for morpheme in all_morphemes: # sort morphemes into different lengths based on their length
         if len(morpheme) == 3:
             exp_threes.append(morpheme)
         elif len(morpheme) == 4:
@@ -220,7 +220,7 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     int5s = 0
     if (len(exp_fives) % 2) != 0:
         int5s = 1
-    L1affix3s = [x for x in L1affixes if len(x) == 3]
+    L1affix3s = [x for x in L1affixes if len(x) == 3] # sort big database by length
     L1affix4s = [x for x in L1affixes if len(x) == 4]
     L1stem4s = [x for x in L1stems if len(x) == 4]
     L1stem5s = [x for x in L1stems if len(x) == 5]
@@ -228,20 +228,13 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
     L2affix4s = [x for x in L2affixes if len(x) == 4]
     L2stem4s = [x for x in L2stems if len(x) == 4]
     L2stem5s = [x for x in L2stems if len(x) == 5]
+    # extract the required number of morphemes
     confound_threes = random.sample(L1affix3s, (int(len(exp_threes)/2)) + int3s) + random.sample(L2affix3s, int(len(exp_threes)/2))
     confound_fours = random.sample(L1affix4s, (int(len(exp_fours)/4)) + int4s) + random.sample(L1stem4s, (int(len(exp_fours)/4)) + int4s_3) + random.sample(L2affix4s, (int(len(exp_fours)/4)) + int4s_2) + random.sample(L2stem4s, int(len(exp_fours)/4))
     confound_fives = random.sample(L1stem5s, (int(len(exp_fives)/2)) + int5s) + random.sample(L2stem5s, int(len(exp_fives)/2))
-    print(len(exp_threes))
-    print(len(confound_threes))
-    print(len(exp_fours))
-    print(len(confound_fours))
-    print(len(exp_fives))
-    print(len(confound_fives))
     all_confounds = confound_threes + confound_fours + confound_fives
-    print(len(all_morphemes))
-    print(len(all_confounds))
     familiarity_pairs = []
-    for i in range(30):
+    for i in range(30): # group into pairs
         familiarity_pairs.append([all_morphemes[i], all_confounds[i]])
     if len(L1words_list) == len(L2words_list) and list(L1words_dict.keys()) == L1words_list and list(L2words_dict.keys()) == L2words_list:
         print('Correctly generated complete stimuli set.')
