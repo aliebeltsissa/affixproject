@@ -285,7 +285,7 @@ event.waitKeys()
 keys = event.getKeys()
 keys = []
 for reps in range(trainingreps):
-    for trialn in range(2):
+    for trialn in range(trainingn):
         if reps == 0: # the first training session, use random training list 1
             word = rand_training1[trialn]
         elif reps == 1: # the second training session, use random training list 2
@@ -323,7 +323,7 @@ win.flip()
 event.waitKeys()
 
 # testing
-text = visual.TextStim(win, text = "Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no. \n\n C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere sia una parola aliena e 'd' quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no. \n\n C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere sia una parola aliena e 'd' quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.\n\n Premi un tasto qualsiasi per continuare.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -347,7 +347,7 @@ for trialn in range(testingn):
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # familiarity test
-text = visual.TextStim(win, text = "Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali ha già visto, mentre altre no. \n\n Non preoccuparti di riconoscerli; cerca solo di intuire se ciascuna parola la sembra familiare oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e 'd' quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.",
+text = visual.TextStim(win, text = "Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no. \n\n Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e 'd' quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.\n\n Premi un tasto qualsiasi per continuare.",
                            height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
@@ -367,7 +367,7 @@ for trialn in range(30):
         font = bacs, height = 100, color = [.8,.8,.8], pos = [(-confound_side),0], ori = 0)
     confound = visual.TextStim(win, text = familiarity_pairs[trialn][1], 
         font = bacs, height = 100, color = [.8,.8,.8], pos = [confound_side, 0], ori = 0)
-    expl_text = visual.TextStim(win, text = "Ha già visto quale combinazione di lettere?", height = 60,
+    expl_text = visual.TextStim(win, text = "Quale combinazione di lettere hai già visto?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Premi 'd' per questa combinazione di lettere", height = 30,
                                  color = [.8,.8,.8], pos = [-300,-200], ori = 0, wrapWidth = 300)
@@ -408,13 +408,13 @@ all_familiarity_responses = []
 for i in range(30):
     RT = round((familiarity_responses[i][6]*100),2) # round RTs
     if familiarity_responses[i][5] == 'k' and familiarity_responses[i][4] == 'right':
-        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"exp_word",RT])
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"right","target",RT])
     elif familiarity_responses[i][5] == 'd' and familiarity_responses[i][4] == 'right':
-        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"confound",RT])
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"right","confound",RT])
     elif familiarity_responses[i][5] == 'k' and familiarity_responses[i][4] == 'left':
-        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"confound",RT])
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"left","confound",RT])
     elif familiarity_responses[i][5] == 'd' and familiarity_responses[i][4] == 'left':
-        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"exp_word",RT])
+        all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"left","target",RT])
 
 # data output
 output_folder = f"Participant_{sbj_id}"
@@ -455,7 +455,7 @@ with open(file_path, 'w') as output5:
     for word in rand_training2:
         output5.write(word+"\n")
 file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_familiarity_responses.tsv"
-header = ['sbjID','trialn','word','confound','response','RT']
+header = ['sbjID','trialn','target','confound','target_side','response','RT']
 with open(file_name, 'w', newline='') as output1:
     writer = csv.writer(output1)
     writer.writerow(header)
