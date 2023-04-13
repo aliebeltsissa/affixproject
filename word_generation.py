@@ -202,46 +202,16 @@ def cycle_through(L1affixes,L1stems,L2affixes,L2stems):
             exp_fours.append(morpheme)
         elif len(morpheme) == 5:
             exp_fives.append(morpheme)
-    int3s = 0
-    if (len(exp_threes) % 2) != 0:
-        int3s = 1
-    int4s = 0
-    int4s_2 = 0
-    int4s_3 = 0
-    if (len(exp_fours) % 4) == 1:
-        int4s = 1
-    elif (len(exp_fours) % 4) == 2:
-        int4s = 1
-        int4s_2 = 1
-    elif (len(exp_fours) % 4) == 3:
-        int4s = 1
-        int4s_2 = 1
-        int4s_3 = 1
-    int5s = 0
-    if (len(exp_fives) % 2) != 0:
-        int5s = 1
-    L1affix3s = [x for x in L1affixes if len(x) == 3] # sort big database by length
-    L1affix4s = [x for x in L1affixes if len(x) == 4]
-    L1stem4s = [x for x in L1stems if len(x) == 4]
-    L1stem5s = [x for x in L1stems if len(x) == 5]
-    L2affix3s = [x for x in L2affixes if len(x) == 3]
-    L2affix4s = [x for x in L2affixes if len(x) == 4]
-    L2stem4s = [x for x in L2stems if len(x) == 4]
-    L2stem5s = [x for x in L2stems if len(x) == 5]
+    # sort big database by length
+    big_threes = [x for x in L1affixes if len(x) == 3 and x not in exp_threes] + [x for x in L2affixes if len(x) == 3 and x not in exp_threes]
+    big_fours = [x for x in L1affixes if len(x) == 4 and x not in exp_fours] + [x for x in L1stems if len(x) == 4 and x not in exp_fours] + [x for x in L2affixes if len(x) == 4 and x not in exp_fours] + [x for x in L2stems if len(x) == 4 and x not in exp_fours]
+    big_fives = [x for x in L1stems if len(x) == 5 and x not in exp_fives] + [x for x in L2stems if len(x) == 5 and x not in exp_fives]
     # extract the required number of morphemes
     all_confounds = []
-    while len(all_confounds) < 30:
-        confound_threes = []
-        confound_fours = []
-        confound_fives = []
-        confound_threes = random.sample(L1affix3s, (int(len(exp_threes)/2)) + int3s) + random.sample(L2affix3s, int(len(exp_threes)/2))
-        confound_fours = random.sample(L1affix4s, (int(len(exp_fours)/4)) + int4s) + random.sample(L1stem4s, (int(len(exp_fours)/4)) + int4s_3) + random.sample(L2affix4s, (int(len(exp_fours)/4)) + int4s_2) + random.sample(L2stem4s, int(len(exp_fours)/4))
-        confound_fives = random.sample(L1stem5s, (int(len(exp_fives)/2)) + int5s) + random.sample(L2stem5s, int(len(exp_fives)/2))
-        all_confounds = confound_threes + confound_fours + confound_fives
-        confound_dellist = [x for x in all_confounds if x in all_morphemes]
-        if len(confound_dellist) != 0:
-            print("Some confounds identical to experiment words. Trying again.")
-        all_confounds = [x for x in all_confounds if x not in confound_dellist]
+    confound_threes = random.sample(big_threes, int(len(exp_threes)))
+    confound_fours = random.sample(big_fours, int(len(exp_fours)))
+    confound_fives = random.sample(big_fives, int(len(exp_fives)))
+    all_confounds = confound_threes + confound_fours + confound_fives
     if len(all_confounds) == len(all_morphemes) and len(confound_threes) == len(exp_threes) and len(confound_fours) == len(exp_fours) and len(confound_fives) == len(exp_fives):
         print("Correctly generated familiarity confound set.")
     familiarity_pairs = []
