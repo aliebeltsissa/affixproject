@@ -165,15 +165,125 @@
         var incongruenttesting_list = values3[0];
         var incongruenttesting_dict = values3[1];
         for (let i = 0; i < incongruenttesting_list.length; i++) {
-            var word = congruenttesting_list[i];
-            var training_list = Object.keys(training_dict);
-            if (training_list.includes(word)) {
-              delete training_dict[word];
-            };
+          var word = congruenttesting_list[i];
+          var training_list = Object.keys(training_dict);
+          if (training_list.includes(word)) {
+            delete training_dict[word];
           };
+        };
         var training_list = Object.keys(training_dict);
-        return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict]
+        
       };
+      var all_morphemes = Object.values(training_dict);
+      var all_morphemes = all_morphemes.flat();
+      var all_morphemes = [...new Set(all_morphemes)];
+      all_morphemes.sort((a, b) => a.length - b.length);
+      var exp_threes = [];
+      var exp_fours = [];
+      var exp_fives = [];
+      for (morpheme of all_morphemes) {
+        if (morpheme.length == 3) {
+          exp_threes.push(morpheme)
+        };
+        if (morpheme.length == 4) {
+          exp_fours.push(morpheme)
+        };
+        if (morpheme.length == 5) {
+          exp_fives.push(morpheme)
+        };
+      };
+      var int3s = 0;
+      if ((exp_threes.length % 2) != 0) {
+        var ints3s = 1
+      };
+      var int4s = 0;
+      var int4s_2 = 0;
+      var int4s_3 = 0;
+      if ((exp_fours.length % 4) == 1) {
+        var int4s = 1
+      };
+      if ((exp_fours.length % 4) == 2) {
+        var int4s = 1;
+        var int4s_2 = 1
+      };
+      if ((exp_fours.length % 4) == 3) {
+        var int4s = 1;
+        var int4s_2 = 1;
+        var int4s_3 = 1
+      };
+      var int5s = 0;
+      if ((exp_fives.length % 2) != 0) {
+        var int5s = 1
+      };
+      var L1affix3s = [];
+      var L1affix4s = [];
+      var L1stem4s = [];
+      var L1stem5s = [];
+      var L2affix3s = [];
+      var L2affix4s = [];
+      var L2stem4s = [];
+      var L2stem5s = [];
+      for (morpheme of L1affixes_list) {
+        if (morpheme.length == 3) {
+          L1affix3s.push(morpheme)
+        };
+        if (morpheme.length == 4) {
+          L1affix4s.push(morpheme)
+        };
+      };
+      for (morpheme of L1stems_list) {
+        if (morpheme.length == 4) {
+          L1stem4s.push(morpheme)
+        };
+        if (morpheme.length == 5) {
+          L1stem5s.push(morpheme)
+        };
+      };
+      for (morpheme of L2affixes_list) {
+        if (morpheme.length == 3) {
+          L2affix3s.push(morpheme)
+        };
+        if (morpheme.length == 4) {
+          L2affix4s.push(morpheme)
+        };
+      };
+      for (morpheme of L2stems_list) {
+        if (morpheme.length == 4) {
+          L2stem4s.push(morpheme)
+        };
+        if (morpheme.length == 5) {
+          L2stem5s.push(morpheme)
+        };
+      };
+      var all_confounds = [];
+      while (all_confounds.length < 30) {
+        var confound_threes = [];
+        var confound_fours = [];
+        var confound_fives = [];
+        confound_threes_1 = jsPsych.randomization.sampleWithoutReplacement(L1affix3s, parseInt((exp_threes.length/2) + int3s));
+        confound_threes_2 =  jsPsych.randomization.sampleWithoutReplacement(L2affix3s, parseInt(exp_threes.length/2));
+        var confound_threes = confound_threes_1.concat(confound_threes_2);
+        confound_fours_1 = jsPsych.randomization.sampleWithoutReplacement(L1affix4s, parseInt((exp_fours.length/4) + int4s));
+        confound_fours_2 = jsPsych.randomization.sampleWithoutReplacement(L1stem4s, parseInt((exp_fours.length/4) + int4s_3));
+        confound_fours_3 = jsPsych.randomization.sampleWithoutReplacement(L2affix4s, parseInt((exp_fours.length/4) + int4s_2));
+        confound_fours_4 = jsPsych.randomization.sampleWithoutReplacement(L2stem4s, parseInt(exp_fours.length/4));
+        var confound_fours = confound_fours_1.concat(confound_fours_2, confound_fours_3, confound_fours_4);
+        confound_fives_1 = jsPsych.randomization.sampleWithoutReplacement(L1stem5s, parseInt((exp_fives.length/2) + int5s));
+        confound_fives_2 =  jsPsych.randomization.sampleWithoutReplacement(L2stem5s, parseInt(exp_fives.length/2));
+        var confound_fives = confound_fives_1.concat(confound_fives_2);
+        var all_confounds = confound_threes.concat(confound_fours, confound_fives)
+        var confound_dellist = [];
+        for (morpheme of all_confounds) {
+          if (training_list.includes(morpheme)) {
+            confound_dellist.push(morpheme)
+          }
+        };
+      console.log(confound_threes);
+      console.log(confound_fours);
+      console.log(confound_fives);
+      console.log(all_confounds);
+
+      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict]
     };
 
     var values4 = import_morphemes();
@@ -230,7 +340,7 @@
     console.log('Training list: ' + training_list);
     console.log(testing);
 
-    /* JSPSYCH EXPERIMENT SCRIPT */
+    /* JSPSYCH EXPERIMENT SCRIPT 
     var timeline = [];
 
     function training_randomisation(training_list) {
@@ -255,6 +365,6 @@
       };
       var rand_lst = rand_lst.shift();
       return [rand_lst]
-    }
+    } */
   </script>
 </html>
