@@ -2,10 +2,11 @@
 <html>
   <head>
     <title>My experiment</title>
-    <script src="jspsych/dist/jspsych.js"></script>
-    <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
-    <script src="jspsych/dist/plugin-image-keyboard-response.js"></script>
-    <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/jspsych@7.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
+    <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
   <script>
@@ -300,7 +301,7 @@
     console.log('Training list: ' + training_list);
     console.log(testing);
 
-    /* JSPSYCH EXPERIMENT SCRIPT 
+    /* JSPSYCH EXPERIMENT SCRIPT */
     var timeline = [];
 
     function training_randomisation(training_list) {
@@ -313,7 +314,9 @@
           var last2_word = word.slice(-2);
           var last_training = training_list.slice(-1);
           var last2_training = last_training.slice(-1);
-          if (word[0:1] != last_training[0:1] && last2_word != last2_training && rand_lst.includes(word) == false) {
+          var first2_word = word.slice(0, 2);
+          var first2_training = last_training.slice(0, 2);
+          if (first2_word != first2_training && last2_word != last2_training && rand_lst.includes(word) == false) {
             rand_lst.push(word)
           };
           rep++;
@@ -323,8 +326,60 @@
           var rep = 0
         }
       };
-      var rand_lst = rand_lst.shift();
-      return [rand_lst]
-    } */
+      rand_lst.shift();
+      var rand_lst = rand_lst.flat();
+      return rand_lst
+    };
+
+    
+    function testing_randomisation(testing) {
+      var listlength = testing.length;
+      var rand_lst = [['efjnpqsz',0]];
+      var rep = 0;
+      while (rand_lst.length < (listlength+1)) {
+        if (rep < 500) {
+          var item = jsPsych.randomization.sampleWithoutReplacement(testing, 1);
+          var word = item[0];
+          var word_condition = item[1];
+          var last_item = rand_lst.slice(-1);
+          var last_word = last_item.slice(0);
+          var first2_word = word.slice(0, 2);
+          var first2_last_word = last_word.slice(0, 2);
+          var last2_word = word.slice(-2);
+          var last2_last_word = last_word.slice(-2);
+          if (first2_word != first2_last_word && last2_word != last2_last_word && rand_lst.includes([word, word_condition]) == false) {
+            rand_lst.push(item)
+          };
+          rep++
+        };
+        if (rep >= 500) {
+          var rand_lst = [['efjnpqsz',0]];
+          var rep = 0;
+        }
+      };
+      rand_lst.shift();
+      return rand_lst
+    };
+
+    function FisherYatesShuffle(array) {
+      var m = array.length, t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+      }
+    return array;
+    };
+
+    var rand_training1 = training_randomisation(training_list);
+    var rand_training2 = training_randomisation(training_list);
+    var rand_training3 = training_randomisation(training_list);
+    var rand_testing = testing_randomisation(testing);
+    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
+
+    /* Participant ID GUI */
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "text");
   </script>
 </html>
