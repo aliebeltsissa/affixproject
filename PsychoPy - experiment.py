@@ -434,31 +434,34 @@ with open(file_path, 'w') as output2:
     for word in consent:
         output2.write(word+"\n")
 output2.close()
-folder = f"Participant_Responses\\{output_folder}"
 file_name = f"training_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output3:
     for word in training:
         output3.write(word+"\n")
 output3.close()
-folder = f"Participant_Responses\\{output_folder}"
 file_name = f"random_training1_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output4:
     for word in rand_training1:
         output4.write(word+"\n")
 output4.close()
-folder = f"Participant_Responses\\{output_folder}"
 file_name = f"random_training2_sbj{sbj_id}.txt"
 file_path = os.path.join(folder, file_name)
 with open(file_path, 'w') as output5:
     for word in rand_training2:
         output5.write(word+"\n")
+output5.close()
+file_name = f"random_training3_sbj{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output6:
+    for word in rand_training3:
+        output6.write(word+"\n")
+output6.close()
 file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_familiarity_responses.tsv"
 header = ['sbjID','trialn','target','confound','target_side','response','RT']
-with open(file_name, 'w', newline='') as output1:
-    writer = csv.writer(output1)
+with open(file_name, 'w', newline='') as output7:
+    writer = csv.writer(output7)
     writer.writerow(header)
     writer.writerows(all_familiarity_responses)
-output1.close()
-output5.close()
+output7.close()
