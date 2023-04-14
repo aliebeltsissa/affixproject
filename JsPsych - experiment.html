@@ -5,6 +5,8 @@
     <script src="https://unpkg.com/jspsych@7.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
     <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
@@ -17,9 +19,7 @@
       }
     });
 
-    var timeline = [];
-
-    /* WORD_GENERATION SCRIPT */
+    /* WORD_GENERATION SCRIPT 
     function import_morphemes() {
       const L1affixes_list = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv'];
       const L1stems_list = ['ukcY', 'bYuQ', 'adkr', 'bvkr', 'mrOd', 'Udbd', 'bvuZ', 'rkYL', 'rckO', 'rvAJ', 'YQbc', 'Yadr', 'YJkb', 'kNua', 'mdla', 'ldAa', 'amJm', 'LGkA', 'aONd', 'krGu', 'UvOG', 'OZkb', 'NaJb', 'vQdO', 'alJY', 'vclY', 'JvaA', 'LQur', 'ArQu', 'rLaZ', 'GZJY', 'vAar', 'JAaG', 'JauQ', 'krUQ', 'kZUb', 'Gabk', 'uauO', 'vYLU', 'rkJu', 'kulZ', 'udkm', 'cAZu', 'YZJm', 'OkGY', 'UmNJ', 'uAkr', 'YOZN', 'AlNU', 'JNka', 'rLkm', 'LdQv', 'AlUY', 'mbZl', 'bmbN', 'rvUb', 'lkAk', 'bGuO', 'lZcu', 'uvaU', 'aUZA', 'Ydud', 'UrOQ', 'AJLr', 'lrZG', 'vblr', 'aYQm', 'dkLl', 'GAcY', 'NvYJ', 'ALGZ', 'NQZv', 'JdGm', 'kGlU', 'NkUA', 'UaYL', 'GJZm', 'dNZA', 'vJab', 'GQrc', 'JmNk', 'UJkG', 'LuaU', 'lmbY', 'UJmr', 'aYaN', 'ZdlO', 'JrGv', 'ukYZ', 'mcOJ', 'muYN', 'NJZl', 'Abka', 'OJGQ', 'Nulk', 'lGZv', 'dJNr', 'lcOc', 'YcdO', 'LuNZ', 'uQuZc', 'GLYrA', 'YuaNd', 'QcQAJ', 'YOaAb', 'UYZlZ', 'vuJZu', 'JAdLm', 'NaAQd', 'UAcdu', 'UdlGQ', 'Amacl', 'NLQGm', 'ZcGdN', 'UdYUQ', 'laYmr', 'auYAk', 'YUNkZ', 'OAblc', 'OLJbl', 'Udumd', 'LckGN', 'ALOrl', 'AmQOY', 'kabJb', 'ZYcQU', 'GumLl', 'kGamN', 'NAacQ', 'kbmZO', 'aOLZU', 'OYuvb', 'lYrua', 'Zvalv', 'Qclad', 'GNAca', 'adYrc', 'LvuOG', 'mZUrQ', 'cuOJb', 'mkmJN', 'YNrAm', 'GJGcZ', 'rbYbu', 'QbkAc', 'dvNvA', 'Juaml', 'rvOvU', 'kLvdN', 'NbmQU', 'rdLJa', 'OAmGr', 'advYO', 'vkYGl', 'uQkrd', 'mLdkZ', 'bNdmG', 'ObZbA', 'QOLmu', 'dmZvm', 'ZNLOv', 'AlQaQ', 'bYGOZ', 'vAuNl', 'LNUrJ', 'QLrOJ', 'ubALm', 'UaZma', 'kdaAJ', 'LcNUJ', 'ZdNmU', 'bdUNu', 'ckLAL', 'NvuGr', 'NbacA', 'YJLcA', 'aNYmb', 'rcmuv', 'vmuLl', 'ZkGmY', 'YLQmG', 'dGLAl', 'aLNlk', 'ObOQl', 'AZlLN', 'mUOcO', 'Ldrbv', 'damYb', 'AZaJc', 'LOLkU', 'ckduA', 'OQarQ', 'ZJLmr', 'rGUAY', 'GLluA', 'OdlNm', 'LAclA', 'JmvmO', 'JZOAk', 'JdOAY'];
@@ -43,7 +43,7 @@
           var training_dict = {};
           var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
           var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
-          reps++; /* increase by 1 */
+          reps++; /* increase by 1 */ /*
           console.log('Finished rep ' + reps + ' of generating word list.')
           for (let i = 0; i < stem_subset.length; i++) {
             var j = 0;
@@ -52,7 +52,7 @@
               var last = stem.slice(-1); //
               var affix = affix_subset[j];
               if (stem != affix && last != affix[0]) {
-                words_list.push([stem + affix]); /* append */
+                words_list.push([stem + affix]); /* append */ /*
                 var parts = [stem, affix];
                 var word = stem + affix;
                 var dictkeys = Object.keys(words_dict);
@@ -137,7 +137,7 @@
         return [incongruenttesting_list, incongruenttesting_dict]
       };
     
-      /* generate word lists for both languages */
+      /* generate word lists for both languages */ /*
       var incongruenttesting_list = [];
       while (incongruenttesting_list.length < 20) {
         var values = wordcycle(L1affixes_list, L1stems_list);
@@ -301,8 +301,8 @@
     console.log('Training list: ' + training_list);
     console.log(testing);
 
-    /* JSPSYCH EXPERIMENT SCRIPT */
-    var timeline = [];
+    /* JSPSYCH EXPERIMENT SCRIPT */ 
+    var timeline = []; /*
 
     function training_randomisation(training_list) {
       var listlength = training_list.length;
@@ -376,10 +376,23 @@
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
     var rand_testing = testing_randomisation(testing);
-    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
+    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs); */
 
-    /* Participant ID GUI */
-    var x = document.createElement("INPUT");
-    x.setAttribute("type", "text");
+    /* Participant ID textbox */
+    var sbjIDPrompt = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p>Participant ID:</b></p>',
+      html: '<input name="ID" type="text" /></p>'
+    };
+    timeline.push(sbjIDPrompt);
+
+    var contButton = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '',
+      choices: ['Continue']
+    };
+    timeline.push(contButton);
+
+    jsPsych.run(timeline);
   </script>
 </html>
