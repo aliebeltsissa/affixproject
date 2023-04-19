@@ -263,7 +263,7 @@ while continueRoutine:
         win.flip()
 
 # welcome
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se ha qualche domanda.",
+text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se ha qualche domanda.\n\n Premi un tasto qualsiasi per vedere un esempio.",
                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
 text.draw(win=win)
 win.flip()
