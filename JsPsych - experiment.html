@@ -7,14 +7,17 @@
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.1"></script>
+    <script src="jspsych/dist/jspsych-psychophysics.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
     <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/jspsych@7.2.3/css/jspsych.css">
   </head>
   <style>
     @font-face {
-    font-family: "BACS";
-    src: url('BACS1.otf') format('opentype');
-    }
+      font-family: "BACS";
+      src: url('BACS1.otf') format('opentype');
+    };
   </style>
   <body></body>
   <script>
@@ -25,7 +28,14 @@
       }
     });
 
-    /* WORD_GENERATION SCRIPT 
+    function changeTextColor(color) {
+      var body = document.getElementsByTagName("body")[0];
+      body.style.color = color;
+    };
+
+    changeTextColor("white");
+
+    /* WORD_GENERATION SCRIPT */
     function import_morphemes() {
       const L1affixes_list = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv'];
       const L1stems_list = ['ukcY', 'bYuQ', 'adkr', 'bvkr', 'mrOd', 'Udbd', 'bvuZ', 'rkYL', 'rckO', 'rvAJ', 'YQbc', 'Yadr', 'YJkb', 'kNua', 'mdla', 'ldAa', 'amJm', 'LGkA', 'aONd', 'krGu', 'UvOG', 'OZkb', 'NaJb', 'vQdO', 'alJY', 'vclY', 'JvaA', 'LQur', 'ArQu', 'rLaZ', 'GZJY', 'vAar', 'JAaG', 'JauQ', 'krUQ', 'kZUb', 'Gabk', 'uauO', 'vYLU', 'rkJu', 'kulZ', 'udkm', 'cAZu', 'YZJm', 'OkGY', 'UmNJ', 'uAkr', 'YOZN', 'AlNU', 'JNka', 'rLkm', 'LdQv', 'AlUY', 'mbZl', 'bmbN', 'rvUb', 'lkAk', 'bGuO', 'lZcu', 'uvaU', 'aUZA', 'Ydud', 'UrOQ', 'AJLr', 'lrZG', 'vblr', 'aYQm', 'dkLl', 'GAcY', 'NvYJ', 'ALGZ', 'NQZv', 'JdGm', 'kGlU', 'NkUA', 'UaYL', 'GJZm', 'dNZA', 'vJab', 'GQrc', 'JmNk', 'UJkG', 'LuaU', 'lmbY', 'UJmr', 'aYaN', 'ZdlO', 'JrGv', 'ukYZ', 'mcOJ', 'muYN', 'NJZl', 'Abka', 'OJGQ', 'Nulk', 'lGZv', 'dJNr', 'lcOc', 'YcdO', 'LuNZ', 'uQuZc', 'GLYrA', 'YuaNd', 'QcQAJ', 'YOaAb', 'UYZlZ', 'vuJZu', 'JAdLm', 'NaAQd', 'UAcdu', 'UdlGQ', 'Amacl', 'NLQGm', 'ZcGdN', 'UdYUQ', 'laYmr', 'auYAk', 'YUNkZ', 'OAblc', 'OLJbl', 'Udumd', 'LckGN', 'ALOrl', 'AmQOY', 'kabJb', 'ZYcQU', 'GumLl', 'kGamN', 'NAacQ', 'kbmZO', 'aOLZU', 'OYuvb', 'lYrua', 'Zvalv', 'Qclad', 'GNAca', 'adYrc', 'LvuOG', 'mZUrQ', 'cuOJb', 'mkmJN', 'YNrAm', 'GJGcZ', 'rbYbu', 'QbkAc', 'dvNvA', 'Juaml', 'rvOvU', 'kLvdN', 'NbmQU', 'rdLJa', 'OAmGr', 'advYO', 'vkYGl', 'uQkrd', 'mLdkZ', 'bNdmG', 'ObZbA', 'QOLmu', 'dmZvm', 'ZNLOv', 'AlQaQ', 'bYGOZ', 'vAuNl', 'LNUrJ', 'QLrOJ', 'ubALm', 'UaZma', 'kdaAJ', 'LcNUJ', 'ZdNmU', 'bdUNu', 'ckLAL', 'NvuGr', 'NbacA', 'YJLcA', 'aNYmb', 'rcmuv', 'vmuLl', 'ZkGmY', 'YLQmG', 'dGLAl', 'aLNlk', 'ObOQl', 'AZlLN', 'mUOcO', 'Ldrbv', 'damYb', 'AZaJc', 'LOLkU', 'ckduA', 'OQarQ', 'ZJLmr', 'rGUAY', 'GLluA', 'OdlNm', 'LAclA', 'JmvmO', 'JZOAk', 'JdOAY'];
@@ -49,7 +59,7 @@
           var training_dict = {};
           var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
           var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
-          reps++; /* increase by 1 */ /*
+          reps++; /* increase by 1 */ 
           console.log('Finished rep ' + reps + ' of generating word list.')
           for (let i = 0; i < stem_subset.length; i++) {
             var j = 0;
@@ -58,7 +68,7 @@
               var last = stem.slice(-1); //
               var affix = affix_subset[j];
               if (stem != affix && last != affix[0]) {
-                words_list.push([stem + affix]); /* append */ /*
+                words_list.push([stem + affix]); /* append */ 
                 var parts = [stem, affix];
                 var word = stem + affix;
                 var dictkeys = Object.keys(words_dict);
@@ -143,7 +153,7 @@
         return [incongruenttesting_list, incongruenttesting_dict]
       };
     
-      /* generate word lists for both languages */ /*
+      /* generate word lists for both languages */
       var incongruenttesting_list = [];
       while (incongruenttesting_list.length < 20) {
         var values = wordcycle(L1affixes_list, L1stems_list);
@@ -308,7 +318,15 @@
     console.log(testing);
 
     /* JSPSYCH EXPERIMENT SCRIPT */ 
-    var timeline = []; /*
+    var timeline = []; 
+
+    var preload = {
+      type: jsPsychPreload,
+      images: ['esempio.png']
+    };
+    timeline.push(preload);
+
+    document.body.style.backgroundColor = "#808080";
 
     function training_randomisation(training_list) {
       var listlength = training_list.length;
@@ -336,7 +354,6 @@
       var rand_lst = rand_lst.flat();
       return rand_lst
     };
-
     
     function testing_randomisation(testing) {
       var listlength = testing.length;
@@ -378,19 +395,20 @@
     return array;
     };
 
+    var trainingn = 3;
     var rand_training1 = training_randomisation(training_list);
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
     var rand_testing = testing_randomisation(testing);
-    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs); */
+    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
     /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p>Participant ID:</b></p>',
-      html: '<input name="ID" type="text" required/></p>'
+      preamble: '<p>ID Partecipante:</b></p>',
+      html: '<input name="ID" type="text" required/></p>',
+      button_label: "Continuare"
     };
-    timeline.push(sbjIDPrompt);
 
     var contButton = {
       type: jsPsychHtmlButtonResponse,
@@ -400,15 +418,93 @@
 
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere un tasto qualsiasi per continuare al consenso.</p>`
+      stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere un tasto qualsiasi per continuare al consenso.</p>`,
     };
-    timeline.push(instructions);
 
-    var test = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '<p style="font-family: BACS; font-size: 40px;">OMG this is BACS!</p>',
+    var consent = {
+      type: jsPsychSurveyMultiSelect,
+      questions: [
+        {
+          prompt: "Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:", 
+          options: ["di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;"],
+          required: true
+        },
+        {
+          prompt: "",
+          options: ["di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;"],
+          required: true
+        },
+        {
+          prompt: "", 
+          options: ["di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;"],
+          required: true
+        },
+        {
+          prompt: "", 
+          options: ["di essere a conoscenza dei disagi eventualmente causati dall’esperimento;"],
+          required: true
+        },
+        {
+          prompt: "", 
+          options: ["di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;"],
+          required: true
+        },
+        {
+          prompt: "", 
+          options: ["di essere consapevole di potersi ritirare in qualsiasi fase dello studio."],
+          required: true
+        },
+      ],
+      button_label: "Continuare"
     };
-    timeline.push(test);
+
+    var welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi un tasto qualsiasi per vedere un esempio.</p>`,
+    };
+
+    var example = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi un tasto qualsiasi.</p></div",
+    };
+    
+    for (let i = 1; i < trainingn; i++) {
+      for (let j = 0; j < 80; j++) {
+        if (i == 1) {
+          var current_training_list = [...rand_training1]
+        };
+        if (i == 2) {
+          var current_training_list = [...rand_training2]
+        };
+        if (i == 3) {
+          var current_training_list = [...rand_training3]
+        };
+        var stim = {
+          obj_type: 'text',
+          content: current_training_list[j],
+          font: "60px BACS",
+          show_end_time: 800
+        };
+
+        var isi = {
+          obj_type: 'text',
+          content: '',
+          show_end_time: 200
+        };
+
+        var trial_stim = {
+          type: jsPsychPsychophysics,
+          stimuli: [stim],
+        };
+        timeline.push(trial_stim);
+
+        var trial_isi = {
+          type: jsPsychPsychophysics,
+          stimuli: [isi]
+        };
+        timeline.push(trial_isi)
+      }
+    };
 
     jsPsych.run(timeline);
   </script>
