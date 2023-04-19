@@ -334,10 +334,10 @@
       var rep = 0;
       while (rand_lst.length < (listlength + 1)) {
         if (rep < 500) {
-          var word = jsPsych.randomization.sampleWithoutReplacement(training_list, 1);
+          var word = jsPsych.randomization.sampleWithoutReplacement(training_list, 1)[0];
           var last2_word = word.slice(-2);
-          var last_training = training_list.slice(-1);
-          var last2_training = last_training.slice(-1);
+          var last_training = rand_lst.slice(-1)[0];
+          var last2_training = last_training.slice(-2);
           var first2_word = word.slice(0, 2);
           var first2_training = last_training.slice(0, 2);
           if (first2_word != first2_training && last2_word != last2_training && rand_lst.includes(word) == false) {
@@ -361,16 +361,16 @@
       var rep = 0;
       while (rand_lst.length < (listlength+1)) {
         if (rep < 500) {
-          var item = jsPsych.randomization.sampleWithoutReplacement(testing, 1);
+          var item = jsPsych.randomization.sampleWithoutReplacement(testing, 1)[0];
           var word = item[0];
           var word_condition = item[1];
-          var last_item = rand_lst.slice(-1);
-          var last_word = last_item.slice(0);
+          var last_item = rand_lst.slice(-1)[0];
+          var last_word = last_item.slice(0)[0];
           var first2_word = word.slice(0, 2);
           var first2_last_word = last_word.slice(0, 2);
           var last2_word = word.slice(-2);
           var last2_last_word = last_word.slice(-2);
-          if (first2_word != first2_last_word && last2_word != last2_last_word && rand_lst.includes([word, word_condition]) == false) {
+          if (first2_word != first2_last_word && last2_word != last2_last_word && rand_lst.includes(item) == false) {
             rand_lst.push(item)
           };
           rep++
@@ -467,44 +467,131 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi un tasto qualsiasi.</p></div",
     };
-    
-    for (let i = 1; i < trainingn; i++) {
-      for (let j = 0; j < 80; j++) {
-        if (i == 1) {
-          var current_training_list = [...rand_training1]
-        };
-        if (i == 2) {
-          var current_training_list = [...rand_training2]
-        };
-        if (i == 3) {
-          var current_training_list = [...rand_training3]
-        };
-        var stim = {
-          obj_type: 'text',
-          content: current_training_list[j],
-          font: "60px BACS",
-          show_end_time: 800
-        };
 
-        var isi = {
-          obj_type: 'text',
-          content: '',
-          show_end_time: 200
-        };
+    /* TRAINING */
+    var stimulus_object1 = [];
 
-        var trial_stim = {
-          type: jsPsychPsychophysics,
-          stimuli: [stim],
-        };
-        timeline.push(trial_stim);
+    for (let i = 0; i < rand_training1.length; i++) {
+      const temporal_object1 = {
+        obj_type: 'text',
+        content: rand_training1[i],
+        font: "60px BACS",
+        text_color: "white"
+      };
+      stimulus_object1.push(temporal_object1)
+    };
 
-        var trial_isi = {
-          type: jsPsychPsychophysics,
-          stimuli: [isi]
-        };
-        timeline.push(trial_isi)
+    const viewing_time = 800;
+    const isi = 200;
+
+    const rsvp_trial1 = {
+      type: jsPsychPsychophysics,
+      stimuli: stimulus_object1,
+      response_start_time: (viewing_time + isi) * rand_training1.length - isi,
+      on_start: function(trial) {
+        for (let i = 0; i < rand_training1.length; i++) {
+          trial.stimuli[i].file = rand_training1[i]
+          const start = (viewing_time + isi)  * i;
+          trial.stimuli[i].show_start_time = start;
+          trial.stimuli[i].show_end_time = start  + viewing_time 
+        }
       }
     };
+    timeline.push(rsvp_trial1);
+
+    var inter_training1 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+        };
+    timeline.push(inter_training1);
+    
+    var stimulus_object2 = [];
+
+    for (let i = 0; i < rand_training2.length; i++) {
+      const temporal_object2 = {
+        obj_type: 'text',
+        content: rand_training2[i],
+        font: "60px BACS",
+        text_color: "white"
+      };
+      stimulus_object2.push(temporal_object2)
+    };
+
+    const rsvp_trial2 = {
+      type: jsPsychPsychophysics,
+      stimuli: stimulus_object2,
+      response_start_time: (viewing_time + isi) * rand_training2.length - isi,
+      on_start: function(trial) {
+        for (let i = 0; i < rand_training1.length; i++) {
+          trial.stimuli[i].file = rand_training2[i]
+          const start = (viewing_time + isi)  * i;
+          trial.stimuli[i].show_start_time = start;
+          trial.stimuli[i].show_end_time = start  + viewing_time 
+        }
+      }
+    };
+
+    const loop_node2 = {
+      timeline: [rsvp_trial2],
+      loop_function: function(data){
+        if(jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
+          return true;
+        } else {
+          return false;
+        }
+      }
+    };
+    timeline.push(rsvp_trial2);
+
+    var inter_training2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+    };
+    timeline.push(inter_training2);
+
+    var stimulus_object3 = [];
+
+    for (let i = 0; i < rand_training3.length; i++) {
+      const temporal_object3 = {
+        obj_type: 'text',
+        content: rand_training3[i],
+        font: "60px BACS",
+        text_color: "white"
+      };
+      stimulus_object3.push(temporal_object3)
+    };
+
+    const rsvp_trial3 = {
+      type: jsPsychPsychophysics,
+      stimuli: stimulus_object3,
+      response_start_time: (viewing_time + isi) * rand_training3.length - isi,
+      on_start: function(trial) {
+        for (let i = 0; i < rand_training3.length; i++) {
+          trial.stimuli[i].file = rand_training1[i]
+          const start = (viewing_time + isi)  * i;
+          trial.stimuli[i].show_start_time = start;
+          trial.stimuli[i].show_end_time = start  + viewing_time 
+        }
+      }
+    };
+
+    const loop_node3 = {
+      timeline: [rsvp_trial3],
+      loop_function: function(data){
+        if(jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
+          return true;
+        } else {
+          return false;
+        }
+      }
+    };
+    timeline.push(rsvp_trial3);
+
+    var post_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+    };
+    timeline.push(post_training);
 
     jsPsych.run(timeline);
   </script>
