@@ -409,6 +409,7 @@
       html: '<input name="ID" type="text" required/></p>',
       button_label: "Continuare"
     };
+    // timeline.push(sbjIDPrompt);
 
     var contButton = {
       type: jsPsychHtmlButtonResponse,
@@ -420,6 +421,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere un tasto qualsiasi per continuare al consenso.</p>`,
     };
+    // timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyMultiSelect,
@@ -457,16 +459,19 @@
       ],
       button_label: "Continuare"
     };
+    // timeline.push(consent);
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi un tasto qualsiasi per vedere un esempio.</p>`,
     };
+    // timeline.push(welcome);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi un tasto qualsiasi.</p></div",
     };
+    // timeline.push(example);
 
     /* TRAINING */
     var stimulus_object1 = [];
@@ -497,13 +502,13 @@
         }
       }
     };
-    timeline.push(rsvp_trial1);
+    // timeline.push(rsvp_trial1);
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
           stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
         };
-    timeline.push(inter_training1);
+    // timeline.push(inter_training1);
     
     var stimulus_object2 = [];
 
@@ -534,20 +539,20 @@
     const loop_node2 = {
       timeline: [rsvp_trial2],
       loop_function: function(data){
-        if(jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
+        if (jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
           return true;
         } else {
           return false;
         }
       }
     };
-    timeline.push(rsvp_trial2);
+    // timeline.push(rsvp_trial2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(inter_training2);
+    // timeline.push(inter_training2);
 
     var stimulus_object3 = [];
 
@@ -578,20 +583,122 @@
     const loop_node3 = {
       timeline: [rsvp_trial3],
       loop_function: function(data){
-        if(jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
+        if (jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
           return true;
         } else {
           return false;
         }
       }
     };
-    timeline.push(rsvp_trial3);
+    // timeline.push(rsvp_trial3);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(post_training);
+    // timeline.push(post_training);
+
+    /* TESTING */
+    var pre_testing = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+    };
+    // timeline.push(pre_testing);
+
+    var testing_stimuli = [];
+    for (let i = 0; i < rand_testing.length; i++) {
+      var item = rand_testing[i];
+      var condition = item[1];
+      var java1 = item[0];
+      if (i < 3) {
+        var java2 = '<p style="font-size: 30px;">Questa parola appartiene alla lingua aliena?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
+      };
+      if (i >= 3) {
+        var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
+      };
+      if (condition == 0) {
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2}
+      };
+      if (condition == 1) {
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2}
+      };
+      testing_stimuli.push(testing_stimuli_dict)
+    };
+
+    var testing_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('java'),
+      choices: ['d', 'k'],
+      data: {
+        task: 'response',
+        correct_response: jsPsych.timelineVariable('correct_response')
+      },
+      on_finish: function(data){
+        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+      }
+    };
+
+    var testing_procedure = {
+      timeline: [testing_trial],
+      timeline_variables: testing_stimuli,
+    };
+    timeline.push(testing_procedure);
+
+    /* FAMILIARITY TEST */
+    var pre_familiarity = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi un tasto qualsiasi per continuare.</p>`
+    };
+    // timeline.push(pre_familiarity);
+
+    var familiarity_pairs_sides = [];
+    for (let i = 0; i < familiarity_pairs.length; i++) {
+      var side = Math.random() * 2 | 0;
+      if (side == 0) {
+        familiarity_pairs_sides.push([familiarity_pairs[i][0], familiarity_pairs[i][1], 'd'])
+      };
+      if (side == 1) {
+        familiarity_pairs_sides.push([familiarity_pairs[i][1], familiarity_pairs[i][0], 'k'])
+      }
+    };
+
+    var familiarity_stimuli = [];
+    for (let i = 0; i < familiarity_pairs_sides.length; i++){
+      var java1 = String(familiarity_pairs_sides[i][0]+'&emsp;&emsp;&emsp;&emsp;&emsp;'+familiarity_pairs_sides[i][1]);
+      if (i < 3) {
+        var java2 = '<p style="font-size: 30px;">Quale combinazione di lettere hai già visto?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>d</strong> per questa combinazione di lettere&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Premi <strong>k</strong> per questa combinazione di lettere</p>'
+      };
+      if (i >= 3) {
+        var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>d</strong> per questa combinazione di lettere&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Premi <strong>k</strong> per questa combinazione di lettere</p>'
+      };
+      var familiarity_pairs_dict = {stimulus1: familiarity_pairs_sides[i][0], stimulus2: familiarity_pairs_sides[i][1], correct_response: familiarity_pairs_sides[i][2], java: java2};
+      familiarity_stimuli.push(familiarity_pairs_dict)
+    };
+
+    var familiarity_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('java'),
+      choices: ['d', 'k'],
+      data: {
+        task: 'response',
+        correct_response: jsPsych.timelineVariable('correct_response')
+      },
+      on_finish: function(data){
+        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+      }
+    };
+
+    var familiarity_procedure = {
+      timeline: [familiarity_trial],
+      timeline_variables: familiarity_stimuli,
+    };
+    // timeline.push(familiarity_procedure);
+
+    var goodbye = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.</p>`
+    };
+    // timeline.push(goodbye);
 
     jsPsych.run(timeline);
   </script>
