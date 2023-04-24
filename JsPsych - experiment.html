@@ -474,35 +474,28 @@
     timeline.push(example);
 
     /* TRAINING */
-    var stimulus_object1 = [];
-
+    var training_stimuli1 = [];
     for (let i = 0; i < rand_training1.length; i++) {
-      const temporal_object1 = {
-        obj_type: 'text',
-        content: rand_training1[i],
-        font: "60px BACS",
-        text_color: "white"
-      };
-      stimulus_object1.push(temporal_object1)
+      var item = rand_training1[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict1 = {stimulus: java, correct_response: ''};
+      training_stimuli1.push(training_stimuli_dict1)
+    };
+    
+    var training_trial1 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
     };
 
-    const viewing_time = 800;
-    const isi = 200;
-
-    const rsvp_trial1 = {
-      type: jsPsychPsychophysics,
-      stimuli: stimulus_object1,
-      response_start_time: (viewing_time + isi) * rand_training1.length - isi,
-      on_start: function(trial) {
-        for (let i = 0; i < rand_training1.length; i++) {
-          trial.stimuli[i].file = rand_training1[i]
-          const start = (viewing_time + isi)  * i;
-          trial.stimuli[i].show_start_time = start;
-          trial.stimuli[i].show_end_time = start  + viewing_time 
-        }
-      }
+    var training_procedure1 = {
+      timeline: [training_trial1],
+      timeline_variables: training_stimuli1,
     };
-    timeline.push(rsvp_trial1);
+    timeline.push(training_procedure1);
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
@@ -510,43 +503,28 @@
         };
     timeline.push(inter_training1);
     
-    var stimulus_object2 = [];
-
+    var training_stimuli2 = [];
     for (let i = 0; i < rand_training2.length; i++) {
-      const temporal_object2 = {
-        obj_type: 'text',
-        content: rand_training2[i],
-        font: "60px BACS",
-        text_color: "white"
-      };
-      stimulus_object2.push(temporal_object2)
+      var item = rand_training2[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict2 = {stimulus: java, correct_response: ''};
+      training_stimuli2.push(training_stimuli_dict2)
+    };
+    
+    var training_trial2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
     };
 
-    const rsvp_trial2 = {
-      type: jsPsychPsychophysics,
-      stimuli: stimulus_object2,
-      response_start_time: (viewing_time + isi) * rand_training2.length - isi,
-      on_start: function(trial) {
-        for (let i = 0; i < rand_training1.length; i++) {
-          trial.stimuli[i].file = rand_training2[i]
-          const start = (viewing_time + isi)  * i;
-          trial.stimuli[i].show_start_time = start;
-          trial.stimuli[i].show_end_time = start  + viewing_time 
-        }
-      }
+    var training_procedure2 = {
+      timeline: [training_trial2],
+      timeline_variables: training_stimuli2,
     };
-
-    const loop_node2 = {
-      timeline: [rsvp_trial2],
-      loop_function: function(data){
-        if (jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
-          return true;
-        } else {
-          return false;
-        }
-      }
-    };
-    timeline.push(rsvp_trial2);
+    timeline.push(training_procedure2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -554,43 +532,28 @@
     };
     timeline.push(inter_training2);
 
-    var stimulus_object3 = [];
-
+    var training_stimuli3 = [];
     for (let i = 0; i < rand_training3.length; i++) {
-      const temporal_object3 = {
-        obj_type: 'text',
-        content: rand_training3[i],
-        font: "60px BACS",
-        text_color: "white"
-      };
-      stimulus_object3.push(temporal_object3)
+      var item = rand_training3[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict3 = {stimulus: java, correct_response: ''};
+      training_stimuli3.push(training_stimuli_dict3)
+    };
+    
+    var training_trial3 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
     };
 
-    const rsvp_trial3 = {
-      type: jsPsychPsychophysics,
-      stimuli: stimulus_object3,
-      response_start_time: (viewing_time + isi) * rand_training3.length - isi,
-      on_start: function(trial) {
-        for (let i = 0; i < rand_training3.length; i++) {
-          trial.stimuli[i].file = rand_training1[i]
-          const start = (viewing_time + isi)  * i;
-          trial.stimuli[i].show_start_time = start;
-          trial.stimuli[i].show_end_time = start  + viewing_time 
-        }
-      }
+    var training_procedure3 = {
+      timeline: [training_trial3],
+      timeline_variables: training_stimuli3,
     };
-
-    const loop_node3 = {
-      timeline: [rsvp_trial3],
-      loop_function: function(data){
-        if (jsPsych.pluginAPI.compareKeys(data.values()[0].response, ' ')){
-          return true;
-        } else {
-          return false;
-        }
-      }
-    };
-    timeline.push(rsvp_trial3);
+    timeline.push(training_procedure3);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
