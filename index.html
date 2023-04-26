@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.1"></script>
     <script src="jspsych/dist/jspsych-psychophysics.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
+    <script type="text/javascript" src="lib/vendors/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="lib/jspsych-pavlovia-3.0.0.js"></script>
     <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/jspsych@7.2.3/css/jspsych.css">
   </head>
@@ -21,12 +23,25 @@
   </style>
   <body></body>
   <script>
+    var timeline = []; 
+
+    var preload = {
+      type: jsPsychPreload,
+      images: ['esempio.png']
+    };
+    timeline.push(preload);
 
     var jsPsych = initJsPsych({
       on_finish: function() {
         jsPsych.data.displayData(); /* when all trials finished, display data */
       }
     });
+
+    var pavlovia_init = {
+      type: "pavlovia",
+      command: "init"
+    };
+    timeline.push(pavlovia_init);
 
     function changeTextColor(color) {
       var body = document.getElementsByTagName("body")[0];
@@ -318,14 +333,6 @@
     console.log(testing);
 
     /* JSPSYCH EXPERIMENT SCRIPT */ 
-    var timeline = []; 
-
-    var preload = {
-      type: jsPsychPreload,
-      images: ['esempio.png']
-    };
-    timeline.push(preload);
-
     document.body.style.backgroundColor = "#808080";
 
     function training_randomisation(training_list) {
@@ -662,6 +669,12 @@
       stimulus: `<p>Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.</p>`
     };
     timeline.push(goodbye);
+
+    var pavlovia_finish = {
+      type: "pavlovia",
+      command: "finish"
+    };
+    timeline.push(pavlovia_finish);
 
     jsPsych.run(timeline);
   </script>
