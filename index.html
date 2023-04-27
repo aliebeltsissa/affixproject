@@ -21,25 +21,25 @@
   </style>
   <body></body>
   <script>
-    var timeline = []; 
-
-    var preload = {
-      type: jsPsychPreload,
-      images: ['esempio.png']
-    };
-    timeline.push(preload);
-
     var jsPsych = initJsPsych({
       on_finish: function() {
         jsPsych.data.displayData(); /* when all trials finished, display data */
       }
     });
 
+    var timeline = []; 
+
     var pavlovia_init = {
       type: "pavlovia",
       command: "init"
     };
     timeline.push(pavlovia_init);
+    
+    var preload = {
+      type: jsPsychPreload,
+      images: ['esempio.png']
+    };
+    timeline.push(preload);
 
     function changeTextColor(color) {
       var body = document.getElementsByTagName("body")[0];
