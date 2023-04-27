@@ -2,17 +2,16 @@
 <html>
   <head>
     <title>My experiment</title>
-    <script src="lib/vendors/jspsych-7.1.2/jspsych.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-html-keyboard-response.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-image-keyboard-response.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-preload.js"></script>
-    <script type="text/javascript" src="lib/jspsych-7-pavlovia-2022.1.1.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-html-button-response.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-survey-html-form.js"></script>
-    <script src="lib/vendors/jspsych-7.1.2/plugin-survey-multi-select.js"></script>
-    <script type="text/javascript" src="lib/vendors/jquery-2.2.0.min.js"></script>
-    <link rel="stylesheet" href="lib/vendors/jspsych-7.1.2/jspsych.css">
-    <meta charset="utf-8"/>
+    <script src="https://unpkg.com/jspsych@7.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.1"></script>
+    <script src="jspsych/dist/jspsych-psychophysics.js"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
+    <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/jspsych@7.2.3/css/jspsych.css">
   </head>
   <style>
     @font-face {
@@ -27,14 +26,14 @@
         jsPsych.data.displayData(); /* when all trials finished, display data */
       }
     });
-
+    
     var timeline = []; 
 
-    var pavlovia_init = {
-      type: jsPsychPavlovia,
-      command: "init"
-    };
-    timeline.push(pavlovia_init);
+    //var pavlovia_init = {
+      //type: jsPsychPavlovia,
+      //command: "init"
+    //};
+    //timeline.push(pavlovia_init);
 
     var preload = {
       type: jsPsychPreload,
@@ -415,7 +414,7 @@
       html: '<input name="ID" type="text" required/></p>',
       button_label: "Continuare"
     };
-    timeline.push(sbjIDPrompt);
+    // timeline.push(sbjIDPrompt);
 
     var contButton = {
       type: jsPsychHtmlButtonResponse,
@@ -427,7 +426,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere un tasto qualsiasi per continuare al consenso.</p>`,
     };
-    timeline.push(instructions);
+    // timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyMultiSelect,
@@ -465,19 +464,19 @@
       ],
       button_label: "Continuare"
     };
-    timeline.push(consent);
+    // timeline.push(consent);
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi un tasto qualsiasi per vedere un esempio.</p>`,
     };
-    timeline.push(welcome);
+    // timeline.push(welcome);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi un tasto qualsiasi.</p></div",
     };
-    timeline.push(example);
+    // timeline.push(example);
 
     /* TRAINING */
     var training_stimuli1 = [];
@@ -501,13 +500,13 @@
       timeline: [training_trial1],
       timeline_variables: training_stimuli1,
     };
-    timeline.push(training_procedure1);
+    // timeline.push(training_procedure1);
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
           stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
         };
-    timeline.push(inter_training1);
+    // timeline.push(inter_training1);
     
     var training_stimuli2 = [];
     for (let i = 0; i < rand_training2.length; i++) {
@@ -530,13 +529,13 @@
       timeline: [training_trial2],
       timeline_variables: training_stimuli2,
     };
-    timeline.push(training_procedure2);
+    // timeline.push(training_procedure2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(inter_training2);
+    // timeline.push(inter_training2);
 
     var training_stimuli3 = [];
     for (let i = 0; i < rand_training3.length; i++) {
@@ -559,20 +558,20 @@
       timeline: [training_trial3],
       timeline_variables: training_stimuli3,
     };
-    timeline.push(training_procedure3);
+    // timeline.push(training_procedure3);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(post_training);
+    // timeline.push(post_training);
 
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(pre_testing);
+    // timeline.push(pre_testing);
 
     var testing_stimuli = [];
     for (let i = 0; i < rand_testing.length; i++) {
@@ -611,14 +610,14 @@
       timeline: [testing_trial],
       timeline_variables: testing_stimuli,
     };
-    timeline.push(testing_procedure);
+    // timeline.push(testing_procedure);
 
     /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi un tasto qualsiasi per continuare.</p>`
     };
-    timeline.push(pre_familiarity);
+    // timeline.push(pre_familiarity);
 
     var familiarity_pairs_sides = [];
     for (let i = 0; i < familiarity_pairs.length; i++) {
@@ -661,19 +660,194 @@
       timeline: [familiarity_trial],
       timeline_variables: familiarity_stimuli,
     };
-    timeline.push(familiarity_procedure);
+    // timeline.push(familiarity_procedure);
+
+    var pre_BLP = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Grazie, ha finito questa parte! Avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Grazie mille per il suo aiuto.</p>`
+    };
+    // timeline.push(pre_BLP);
+
+    var bio_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 20px;">INFORMAZIONI BIOGRAFICHE</b></p>',
+      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><p><legend>Luogo attuale di residenza: Città</legend><input name="Città" type="text" required/></p><p><legend>Luogo attuale di residenza: Stato</legend><input name="Stato" type="text" required/></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
+      button_label: "Continuare"
+    };
+    //timeline.push(bio_info);
+
+    function anni (question) {
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var options = [];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var name = nameL1;
+          var color = "royalblue"
+        };
+        if (l == 1) {
+          var name = nameL2;
+          var color = "firebrick"
+        };
+        if (l == 2) {
+          var name = nameL3;
+          var color = "green"
+        };
+        if (l == 3) {
+          var name = nameL4;
+          var color = "goldenrod"
+        };
+        if (question == 'AoA') {
+        var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">Dalla nascita</label>'
+        };
+        if (question == 'AoAgio') {
+          var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">Da quando ne ho ricordo</label><input type="radio" id="notyet" name="'+ name +'" value="notyet"><label for="notyet">Non ancora</label>'
+        };
+        if (question == 'anniInstr' || question == 'anniPaese' || question == 'anniFamiglia' || question == 'anniLavoro') {
+          var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0</label>'
+        };
+        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label>'+ extras +'<input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6</label><input type="radio" id="7" name="'+ name +'" value="7"><label for="7">7</label><input type="radio" id="8" name="'+ name +'" value="8"><label for="8">8</label><input type="radio" id="9" name="'+ name +'" value="9"><label for="9">9</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10</label><input type="radio" id="11" name="'+ name +'" value="11"><label for="11">11</label><input type="radio" id="12" name="'+ name +'" value="12"><label for="12">12</label><input type="radio" id="13" name="'+ name +'" value="13"><label for="13">13</label><input type="radio" id="14" name="'+ name +'" value="14"><label for="14">14</label><input type="radio" id="15" name="'+ name +'" value="15"><label for="15">15</label><input type="radio" id="16" name="'+ name +'" value="16"><label for="16">16</label><input type="radio" id="17" name="'+ name +'" value="17"><label for="17">17</label><input type="radio" id="18" name="'+ name +'" value="18"><label for="18">18</label><input type="radio" id="19" name="'+ name +'" value="19"><label for="19">19</label><input type="radio" id="20+" name="'+ name +'" value="20+"><label for="20+">20+</label></p>';
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'')
+      return options
+    };
+
+    var history_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 25px; color: black">ANAMNESI LINGUISTICA</p><p style="color: black">In questa sezione, le chiediamo di rispondere alle seguenti domande sulla sua storia linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      html: '<p style="color: black"><legend>1. A quanti anni iniziò ad imparare le seguenti lingue?</legend></p>' + anni('AoA') + '</p><p style="color: black"><legend>2. A quanti anni iniziò a sentirsi a proprio agio usando le seguenti lingue?</legend></p>' + anni('AoAgio') + '</p><p style="color: black"><legend>3. Per quanti anni ha ricevuto un’ istruzione (grammatica, storia, matematica, etc..) nelle seguenti lingue (a partire dalla scuola primaria fino all’università)?</legend></p>' + anni('anniInstr') + '</p><p style="color: black"><legend>4. Quanti anni ha passato in un Paese/regione in cui si parlano le seguenti lingue?</legend></p>' + anni('anniPaese') + '</p><p style="color: black"><legend>5. Quanti anni ha trascorso in famiglia parlando le seguenti lingue?</legend></p>' + anni('anniFamiglia') + '</p><p style="color: black"><legend>6. Quanti anni ha trascorso in un ambiente di lavoro in cui si parlano le seguenti lingue?</legend></p>' + anni('anniLavoro')
+    };
+    // timeline.push(history_info);
+
+    function percent (question) {
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var options = [];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var name = nameL1;
+          var color = "royalblue"
+        };
+        if (l == 1) {
+          var name = nameL2;
+          var color = "firebrick"
+        };
+        if (l == 2) {
+          var name = nameL3;
+          var color = "green"
+        };
+        if (l == 3) {
+          var name = nameL4;
+          var color = "goldenrod"
+        };
+        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0%</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10%</label><input type="radio" id="20" name="'+ name +'" value="20"><label for="20">20%</label><input type="radio" id="30" name="'+ name +'" value="30"><label for="30">30%</label><input type="radio" id="40" name="'+ name +'" value="40"><label for="40">40%</label><input type="radio" id="50" name="'+ name +'" value="50"><label for="50">50%</label><input type="radio" id="60" name="'+ name +'" value="60"><label for="60">60%</label><input type="radio" id="70" name="'+ name +'" value="70"><label for="70">70%</label><input type="radio" id="80" name="'+ name +'" value="80"><label for="80">80%</label><input type="radio" id="90" name="'+ name +'" value="90"><label for="90">90%</label><input type="radio" id="100" name="'+ name +'" value="100"><label for="100">100%</label></p>';
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'')
+      return options
+    };
+
+    var use_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 25px; color: black">USO DELLE LINGUE</p><p style="color: black">In questa sezione, le chiediamo di fornirci le sue risposte sull’uso delle lingue. La somma delle percentuali scelte per ogni lingua presentata nelle singole domande deve essere 100%. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      html: '<p style="color: black"><legend>7. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con i suoi amici?</legend></p>' + percent('PercAmici') + '</p><p style="color: black"><legend>8. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con la sua famiglia?</legend></p>' + percent('PercFamiglia') + '</p><p style="color: black"><legend>9. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue a scuola/al lavoro?</legend></p>' + percent('PercLavoro') + '</p><p style="color: black"><legend>10. Quando parla con se stesso, con quale frequenza parla a se stesso nelle seguenti lingue?</legend></p>' + percent('PercStesso') + '</p><p style="color: black"><legend>11. Quando fa calcoli contando, con quale frequenza conta nelle seguenti lingue?</legend></p>' + percent('PercCalcoli')
+    };
+    // timeline.push(use_info);
+
+    function proficiency (question) {
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var options = [];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var name = nameL1;
+          var color = "royalblue"
+        };
+        if (l == 1) {
+          var name = nameL2;
+          var color = "firebrick"
+        };
+        if (l == 2) {
+          var name = nameL3;
+          var color = "green"
+        };
+        if (l == 3) {
+          var name = nameL4;
+          var color = "goldenrod"
+        };
+        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0 (non molto bene)</label><input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6 (molto bene)</label></p>';
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'')
+      return options
+    };
+
+    var proficiency_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 25px; color: black">COMPETENZA</p><p style="color: black">In questa sezione, le chiediamo di rispondere relativamente alla competenza linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      html: '<p style="color: black"><legend>12. Come parla le seguenti lingue?</legend></p>' + proficiency('ProfParla') + '<p style="color: black"><legend>13. Come capisce le seguenti lingue?</legend></p>' + proficiency('ProfCapisce') + '<p style="color: black"><legend>14. Come legge nelle seguenti lingue?</legend></p>' + proficiency('ProfLegge') + '<p style="color: black"><legend>15. Come scrive nelle seguenti lingue?</legend></p>' + proficiency('ProfScrive')
+    };
+    // timeline.push(proficiency_info);
+
+    function attitudes (question) {
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var options = [];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var name = nameL1;
+          var color = "royalblue"
+        };
+        if (l == 1) {
+          var name = nameL2;
+          var color = "firebrick"
+        };
+        if (l == 2) {
+          var name = nameL3;
+          var color = "green"
+        };
+        if (l == 3) {
+          var name = nameL4;
+          var color = "goldenrod"
+        };
+        var option = `<strong><font color="`+ color +`">L`+(l+1)+`:</strong></font><input name="`+ name +`" type="radio" id="N/A" name="`+ name +`" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="`+ name +`" value="0"><label for="0">0 (non sono d'accordo)</label><input type="radio" id="1" name="`+ name +`" value="1"><label for="1">1</label><input type="radio" id="2" name="`+ name +`" value="2"><label for="2">2</label><input type="radio" id="3" name="`+ name +`" value="3"><label for="3">3</label><input type="radio" id="4" name="`+ name +`" value="4"><label for="4">4</label><input type="radio" id="5" name="`+ name +`" value="5"><label for="5">5</label><input type="radio" id="6" name="`+ name +`" value="6"><label for="6">6 (sono d'accordo)</label></p>`;
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'')
+      return options
+    };
+
+    var attitudes_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 25px; color: black">ATTEGGIAMENTO LINGUISTICO</p><p style="color: black">In questa sezione, le chiediamo di fornirci risposte alle seguenti affermazioni relative ad atteggiamenti linguistici. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      html: '<p style="color: black"><legend>16. Mi sento “me stesso” quando parlo le seguenti lingue.</legend></p>' + attitudes('AttMiStesso') + '<p style="color: black"><legend>17. Mi identifico con una cultura che parla le seguenti lingue.</legend></p>' + attitudes('AttCultura') + '<p style="color: black"><legend>18. Per me è importante raggiungere un livello nativo e usare ad un livello nativo le seguenti lingue.</legend></p>' + attitudes('AttLivNativo') + '<p style="color: black"><legend>19. Voglio che gli altri pensino che io sia un madrelingua delle seguenti lingue.</legend></p>' + attitudes('AttMadrelingua')
+    };
+    timeline.push(attitudes_info);
 
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Grazie per la tua partecipazione! Premi un tasto qualsiasi per uscire.</p>`
+      stimulus: `<p>Grazie per la tua partecipazione! Premi un tasto qualsiasi per finire.</p>`
     };
     timeline.push(goodbye);
 
-    var pavlovia_finish = {
-      type: jsPsychPavlovia,
-      command: "finish"
-    };
-    timeline.push(pavlovia_finish);
+    //var pavlovia_finish = {
+      //type: jsPsychPavlovia,
+      //command: "finish"
+    //};
+    //timeline.push(pavlovia_finish);
 
     jsPsych.run(timeline);
   </script>
