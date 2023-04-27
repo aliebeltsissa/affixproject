@@ -30,11 +30,11 @@
     var timeline = []; 
 
     var pavlovia_init = {
-      type: "pavlovia",
+      type: jsPsychPavlovia,
       command: "init"
     };
     timeline.push(pavlovia_init);
-    
+
     var preload = {
       type: jsPsychPreload,
       images: ['esempio.png']
@@ -669,7 +669,7 @@
     timeline.push(goodbye);
 
     var pavlovia_finish = {
-      type: "pavlovia",
+      type: jsPsychPavlovia,
       command: "finish"
     };
     timeline.push(pavlovia_finish);
