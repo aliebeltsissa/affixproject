@@ -417,15 +417,10 @@
     };
     timeline.push(sbjIDPrompt);
 
-    var contButton = {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: '',
-      choices: ['Continue']
-    };
-
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere un tasto qualsiasi per continuare al consenso.</p>`,
+      stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p><p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p><p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p><p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).</p><p style="font-size: 15px;"> Le chiediamo di premere il tasto 'spazio' per continuare al consenso.</p>`,
+      choices: [' ']
     };
     timeline.push(instructions);
 
@@ -469,13 +464,15 @@
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi un tasto qualsiasi per vedere un esempio.</p>`,
+      stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi il tasto 'spazio' per vedere un esempio.</p>`,
+      choices: [' ']
     };
     timeline.push(welcome);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi un tasto qualsiasi.</p></div",
+      stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi il tasto 'spazio'.</p></div",
+      choices: [' ']
     };
     timeline.push(example);
 
@@ -505,7 +502,8 @@
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+          stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+          choices: [' ']
         };
     timeline.push(inter_training1);
     
@@ -534,7 +532,8 @@
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+      stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+      choices: [' ']
     };
     timeline.push(inter_training2);
 
@@ -563,14 +562,16 @@
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+      stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+      choices: [' ']
     };
     timeline.push(post_training);
 
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi un tasto qualsiasi per continuare.</p>`
+      stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+      choices: [' ']
     };
     timeline.push(pre_testing);
 
@@ -616,7 +617,8 @@
     /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi un tasto qualsiasi per continuare.</p>`
+      stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi il tasto 'spazio' per continuare.</p>`,
+      choices: [' ']
     };
     timeline.push(pre_familiarity);
 
@@ -665,7 +667,8 @@
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Grazie, ha finito questa parte! Avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Grazie mille per il suo aiuto.</p>`
+      stimulus: `<p>Grazie, ha finito questa parte! Avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Premi il tasto 'spazio' per iniziare.</p>`,
+      choices: [' ']
     };
     timeline.push(pre_BLP);
 
