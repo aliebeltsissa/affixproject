@@ -42,16 +42,16 @@ data$lenientfilter <- TRUE;
 data$lenientfilter[data$RT>175] <- FALSE;
 summary(data);
 
-# RT plot with all participants
-plot(density(data1$RT),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="cadetblue");
+# RT plot with all pilot 1
+plot(density(data1$RT),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00");
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800));
-lines(density(data2$RT),col="coral");
-lines(density(data3$RT),col="darkgoldenrod");
-lines(density(data4$RT),col="darkgreen");
-lines(density(data5$RT),col="indianred4");
-lines(density(data6$RT),col="lightslateblue");
-lines(density(data7$RT),col="navy");
-legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen","indianred4","lightslateblue","navy"),bty = "n",
+lines(density(data2$RT),col="#56B4E9");
+lines(density(data3$RT),col="#009E73");
+lines(density(data4$RT),col="#F0E442");
+lines(density(data5$RT),col="#0072B2");
+lines(density(data6$RT),col="#D55E00");
+lines(density(data7$RT),col="#CC79A7");
+legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"),bty = "n",
        cex=0.75,y.intersp=0.5);
 
 # scores & RTs with all participants
@@ -116,9 +116,92 @@ res <- cor.test(mean_data$bias, mean_data$mean_RTs,
                 method = "pearson");
 res;
 plot(density(mean_data$bias));
+boxplot(mean_data$mean_scores, ylab = "Accuracy score");
+abline(h=50, lty=5);
+summary(mean_data$mean_scores);
 
 setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Pilot1_data");
-BLP_data <- read.table("BLP_preprocessed.csv",header=T,sep=",");
+BLP_data_pilot1 <- read.table("BLP_preprocessed_pilot1.csv",header=T,sep=",");
+dim(BLP_data_pilot1);
+head(BLP_data_pilot1);
+summary(BLP_data_pilot1);
+BLP_data_pilot1$Sex <- as.factor(BLP_data_pilot1$Sex);
+BLP_data_pilot1$MaxEdu <- as.factor(BLP_data_pilot1$MaxEdu);
+BLP_data_pilot1$L1 <- as.factor(BLP_data_pilot1$L1);
+BLP_data_pilot1$L2 <- as.factor(BLP_data_pilot1$L2);
+BLP_data_pilot1$L3 <- as.factor(BLP_data_pilot1$L3);
+BLP_data_pilot1$L4 <- as.factor(BLP_data_pilot1$L4);
+BLP_data_pilot1$AttentionCheck <- as.factor(BLP_data_pilot1$AttentionCheck);
+summary(BLP_data_pilot1);
+str(BLP_data_pilot1);
+
+# remove datapoints if participant doesn't know additional languages
+BLP_data_pilot1$langfilter1 <- TRUE;
+BLP_data_pilot1$langfilter2 <- TRUE;
+BLP_data_pilot1$langfilter3 <- TRUE;
+BLP_data_pilot1$langfilter4 <- TRUE;
+BLP_data_pilot1$langfilter2[BLP_data_pilot1$L2Score==0] <- FALSE;
+BLP_data_pilot1$langfilter3[BLP_data_pilot1$L3Score==0] <- FALSE;
+BLP_data_pilot1$langfilter4[BLP_data_pilot1$L4Score==0] <- FALSE;
+BLP_data_pilot1$L2Score[BLP_data_pilot1$langfilter2==FALSE] <- NA;
+BLP_data_pilot1$L3Score[BLP_data_pilot1$langfilter3==FALSE] <- NA;
+BLP_data_pilot1$L4Score[BLP_data_pilot1$langfilter4==FALSE] <- NA;
+ok2 <- ! is.na(BLP_data_pilot1$L2Score);
+ok3 <- ! is.na(BLP_data_pilot1$L3Score);
+ok4 <- ! is.na(BLP_data_pilot1$L4Score);
+
+# plot language scores per participant
+plot(BLP_data_pilot1$L1Score~BLP_data_pilot1$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
+points(BLP_data_pilot1$L2Score~BLP_data_pilot1$ID.partecipante,subset=ok2,pch=19,col="#FD6467");
+points(BLP_data_pilot1$L3Score~BLP_data_pilot1$ID.partecipante,subset=ok3,pch=19,col="#5B1A18");
+points(BLP_data_pilot1$L4Score~BLP_data_pilot1$ID.partecipante,subset=ok4,pch=19,col="#D67236");
+legend("right",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+plot(density(data1$RT),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="cadetblue");
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800));
+lines(density(data2$RT),col="coral");
+lines(density(data3$RT),col="darkgoldenrod");
+lines(density(data4$RT),col="darkgreen");
+lines(density(data5$RT),col="indianred4");
+lines(density(data6$RT),col="lightslateblue");
+lines(density(data7$RT),col="navy");
+legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen","indianred4","lightslateblue","navy"),bty = "n",
+       cex=0.75,y.intersp=0.5)
+
+# PILOT 2
+pilot2_data <- read.table("preprocessed_data.tsv",header=T,sep=",");
+head(pilot2_data)
+summary(pilot2_data)
+pilot2_data <- pilot2_data[pilot2_data$sbjID>7,]
+head(pilot2_data)
+summary(pilot2_data)
+pilot2_data$response <- as.factor(pilot2_data$response)
+
+pilot2_data$correct <- 0;
+pilot2_data$correct[pilot2_data$expected!=pilot2_data$observed] <- 1;
+
+mean_data2 <- data.frame(mean_scores2 = c(35,52.5,52.5,65,52.5,47.5,35,57.5));
+boxplot(mean_data2$mean_scores2, ylab = "Accuracy score");
+abline(h=50, lty=5);
+summary(mean_data2$mean_scores2);
+
+# RTs
+plot(density(pilot2_data$RT[pilot2_data$sbjID==8]),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00");
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800));
+lines(density(pilot2_data$RT[pilot2_data$sbjID==9]),col="#56B4E9");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==10]),col="#009E73");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==11]),col="#F0E442");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==12]),col="#0072B2");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==13]),col="#D55E00");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==14]),col="#CC79A7");
+lines(density(pilot2_data$RT[pilot2_data$sbjID==15]),col="#999999")
+legend("topright",title="Participant:",c("8","9","10","11","12","13","14","15"),fill=c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7","#999999"),bty = "n",
+       cex=0.75,y.intersp=0.5)
+
+# BLP
+setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Pilot2_data");
+BLP_data <- read.table("BLP_preprocessed_pilot2.csv",header=T,sep=",");
 dim(BLP_data);
 head(BLP_data);
 summary(BLP_data);
@@ -131,31 +214,39 @@ BLP_data$L4 <- as.factor(BLP_data$L4);
 BLP_data$AttentionCheck <- as.factor(BLP_data$AttentionCheck);
 summary(BLP_data);
 str(BLP_data);
+library(dplyr);
+BLP_data_pilot2 <- BLP_data %>% filter(ID.partecipante>7);
+summary(BLP_data_pilot2);
 
 # remove datapoints if participant doesn't know additional languages
-BLP_data$langfilter1 <- TRUE;
-BLP_data$langfilter2 <- TRUE;
-BLP_data$langfilter3 <- TRUE;
-BLP_data$langfilter4 <- TRUE;
-BLP_data$langfilter2[BLP_data$L2Score==0] <- FALSE;
-BLP_data$langfilter3[BLP_data$L3Score==0] <- FALSE;
-BLP_data$langfilter4[BLP_data$L4Score==0] <- FALSE;
+BLP_data_pilot2$langfilter1 <- TRUE;
+BLP_data_pilot2$langfilter2 <- TRUE;
+BLP_data_pilot2$langfilter3 <- TRUE;
+BLP_data_pilot2$langfilter4 <- TRUE;
+BLP_data_pilot2$langfilter2[BLP_data_pilot2$L2Score==0] <- FALSE;
+BLP_data_pilot2$langfilter3[BLP_data_pilot2$L3Score==0] <- FALSE;
+BLP_data_pilot2$langfilter4[BLP_data_pilot2$L4Score==0] <- FALSE;
+BLP_data_pilot2$L2Score[BLP_data_pilot2$langfilter2==FALSE] <- NA;
+BLP_data_pilot2$L3Score[BLP_data_pilot2$langfilter3==FALSE] <- NA;
+BLP_data_pilot2$L4Score[BLP_data_pilot2$langfilter4==FALSE] <- NA;
+ok2 <- ! is.na(BLP_data_pilot2$L2Score);
+ok3 <- ! is.na(BLP_data_pilot2$L3Score);
+ok4 <- ! is.na(BLP_data_pilot2$L4Score);
+plot(L3Score~ID.partecipante,BLP_data_pilot2,subset=ok3,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
 
 # plot language scores per participant
-plot(BLP_data$L1Score[BLP_data$langfilter1==TRUE],ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="cadetblue");
-points(BLP_data$L2Score[BLP_data$langfilter2==TRUE],pch=19,col="coral");
-points(BLP_data$L3Score[BLP_data$langfilter3==TRUE],pch=19,col="darkgoldenrod");
-points(BLP_data$L4Score[BLP_data$langfilter4==TRUE],pch=19,col="darkgreen");
-legend("right",title="Language:",c("L1","L2","L3","L4"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen"),bty = "n",
-       cex=0.75,y.intersp=0.5)
+plot(BLP_data_pilot2$L1Score~BLP_data_pilot2$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
+points(BLP_data_pilot2$L2Score~BLP_data_pilot2$ID.partecipante,subset=ok2,pch=19,col="#FD6467");
+points(BLP_data_pilot2$L3Score~BLP_data_pilot2$ID.partecipante,subset=ok3,pch=19,col="#5B1A18");
+points(BLP_data_pilot2$L4Score~BLP_data_pilot2$ID.partecipante,subset=ok4,pch=19,col="#D67236");
+legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
+       cex=0.75,y.intersp=0.5);
 
-plot(density(data1$RT),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="cadetblue");
-axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800));
-lines(density(data2$RT),col="coral");
-lines(density(data3$RT),col="darkgoldenrod");
-lines(density(data4$RT),col="darkgreen");
-lines(density(data5$RT),col="indianred4");
-lines(density(data6$RT),col="lightslateblue");
-lines(density(data7$RT),col="navy");
-legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen","indianred4","lightslateblue","navy"),bty = "n",
-       cex=0.75,y.intersp=0.5)
+# familiarity
+familiarity_data_pilot2 <- read.table("preprocessed_familiarity_pilot2.tsv",header=T,sep=",");
+dim(familiarity_data_pilot2);
+head(familiarity_data_pilot2);
+summary(familiarity_data_pilot2);
+boxplot(familiarity_data_pilot2$familiarity_score, ylab = "Familiarity score");
+abline(h=50, lty=5);
+summary(familiarity_data_pilot2$familiarity_score)
