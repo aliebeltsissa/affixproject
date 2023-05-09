@@ -151,10 +151,10 @@ ok3 <- ! is.na(BLP_data_pilot1$L3Score);
 ok4 <- ! is.na(BLP_data_pilot1$L4Score);
 
 # plot language scores per participant
-plot(BLP_data_pilot1$L1Score~BLP_data_pilot1$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
-points(BLP_data_pilot1$L2Score~BLP_data_pilot1$ID.partecipante,subset=ok2,pch=19,col="#FD6467");
-points(BLP_data_pilot1$L3Score~BLP_data_pilot1$ID.partecipante,subset=ok3,pch=19,col="#5B1A18");
-points(BLP_data_pilot1$L4Score~BLP_data_pilot1$ID.partecipante,subset=ok4,pch=19,col="#D67236");
+plot(BLP_data_pilot1$L1Score~BLP_data_pilot1$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B");
+points(BLP_data_pilot1$L2Score~BLP_data_pilot1$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
+points(BLP_data_pilot1$L3Score~BLP_data_pilot1$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
+points(BLP_data_pilot1$L4Score~BLP_data_pilot1$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
 legend("right",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
        cex=0.75,y.intersp=0.5);
 
@@ -235,10 +235,10 @@ ok4 <- ! is.na(BLP_data_pilot2$L4Score);
 plot(L3Score~ID.partecipante,BLP_data_pilot2,subset=ok3,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
 
 # plot language scores per participant
-plot(BLP_data_pilot2$L1Score~BLP_data_pilot2$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
-points(BLP_data_pilot2$L2Score~BLP_data_pilot2$ID.partecipante,subset=ok2,pch=19,col="#FD6467");
-points(BLP_data_pilot2$L3Score~BLP_data_pilot2$ID.partecipante,subset=ok3,pch=19,col="#5B1A18");
-points(BLP_data_pilot2$L4Score~BLP_data_pilot2$ID.partecipante,subset=ok4,pch=19,col="#D67236");
+plot(BLP_data_pilot2$L1Score~BLP_data_pilot2$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B");
+points(BLP_data_pilot2$L2Score~BLP_data_pilot2$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
+points(BLP_data_pilot2$L3Score~BLP_data_pilot2$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
+points(BLP_data_pilot2$L4Score~BLP_data_pilot2$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
        cex=0.75,y.intersp=0.5);
 
