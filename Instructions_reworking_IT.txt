@@ -1,0 +1,37 @@
+PRE-TRAINING
+Welcome to the experiment. In this first part, we'd like you to imagine that you're a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. The technician is new at his job, so he wasn't able to slow the communication down to show the words to you one at a time, so you'll be shown the words as quickly as we received them. Try to pay close attention, since you'll have to answer questions from world leaders later about what you saw.
+
+Benvenuta/o, e grazie mille del tuo tempo! In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-) Premi la barra per continuare.
+
+TRAINING EXAMPLE
+Here is an example of what the alien words look like:
+
+Ecco un esempio delle parole che vedrai:
+
+INTER-TRAINING
+Great, you've seen the [first/second/third] part! You can take a short break, and click 'space' when you're ready to continue.
+
+Ottimo, hai visto il [primo/secondo/terzo] blocco di parole. Ora puoi prenderti una piccola pausa. Premi la barra quando sei pronta/o per riprendere.
+
+POST-TRAINING
+Amazing, you've seen all the words from this communication! Please press 'space' to continue.
+
+Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio. Premi la barra quando sei pronta/o per continuare.
+
+PRE-TESTING
+In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the technician messed up, and they're all mixed up! You need to pick just the words that belong to the same group of aliens as the communication you just saw. This is a very tricky task, since both alien groups live on the same planet and use very similar words with the same characters. Your meeting with the world leaders starts very soon, so you need to work quickly. Try to do your best by just using your intuition about which words are from the group of aliens you know, you don't have time to think about each decision you make. Press 'k' when you think that the word you see is from the same group of aliens as before, and 'd' when you think it's from a communication from the other alien group. Please press 'space' when you're ready to start.
+
+In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento. Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola. Premi 'k' quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e 'd' quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni. Premi la barra quando sei pronta/o per iniziare. 
+
+TESTING QUESTION
+Does this word come from the first group of aliens?
+
+La parola viene del gruppo di alieni che hai studiato prima?
+
+PRE-FAMILIARITY
+You've made it to the meeting on time! The world leaders want to write a message back to the aliens, and need you to recognise which letter combinations you saw in the communication from them. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that you've never seen that the technician added to try to trip you up. It's important to be friendly with these aliens, so it's important that you make the right choice! Press 'd' if you think the letter combination on the left is the one you saw, or 'k' if you think the combination on the right is correct. Please press 'space' when you're ready to start.
+
+Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta! Premi 'd' se pensi che la combinazione di lettere sulla sinistra sia quella che era presente nella comunicazione degli alieni, oppure 'k' se invece pensi che sia quella sulla destra. Premi la barra quando sei pronta/o per cominciare.
+
+POST-FAMILIARITY
+Fantastic, thank you for your help deciphering these alien communications! In this final part, we'd like you to answer a short questionnaire on your experience with your own languages. 

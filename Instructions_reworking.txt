@@ -1,0 +1,23 @@
+PRE-TRAINING
+Welcome to the experiment. In this first part, we'd like you to imagine that you're a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. The technician is new at his job, so he wasn't able to slow the communication down to show the words to you one at a time, so you'll be shown the words as quickly as we received them. Try to pay close attention, since you'll have to answer questions from world leaders later about what you saw.
+
+TRAINING EXAMPLE
+Here is an example of what the alien words look like:
+
+INTER-TRAINING
+Great, you've seen the [first/second/third] part! You can take a short break, and click 'space' when you're ready to continue.
+
+POST-TRAINING
+Amazing, you've seen all the words from this communication! Please press 'space' to continue.
+
+PRE-TESTING
+In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the technician messed up, and they're all mixed up! You need to pick just the words that belong to the same group of aliens as the communication you just saw. This is a very tricky task, since both alien groups live on the same planet and use very similar words with the same characters. Your meeting with the world leaders starts very soon, so you need to work quickly. Try to do your best by just using your intuition about which words are from the group of aliens you know, you don't have time to think about each decision you make. Press 'k' when you think that the word you see is from the same group of aliens as before, and 'd' when you think it's from a communication from the other alien group. Please press 'space' when you're ready to start.
+
+TESTING QUESTION
+Does this word come from the first group of aliens?
+
+PRE-FAMILIARITY
+You've made it to the meeting on time! The world leaders want to write a message back to the aliens, and need you to recognise which letter combinations you saw in the communication from them. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that you've never seen that the technician added to try to trip you up. It's important to be friendly with these aliens, so it's important that you make the right choice! Press 'd' if you think the letter combination on the left is the one you saw, or 'k' if you think the combination on the right is correct. Please press 'space' when you're ready to start.
+
+POST-FAMILIARITY
+Fantastic, thank you for your help deciphering these alien communications! In this final part, we'd like you to answer a short questionnaire on your experience with your own languages. 
