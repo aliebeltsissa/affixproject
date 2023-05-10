@@ -465,14 +465,14 @@
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Buenvenuto all'esperimento.</p><p> In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.</p><p> Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.</p><p> Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p> Premi il tasto 'spazio' per vedere un esempio.</p>`,
+      stimulus: `<p>Benvenuta/o, e grazie mille del tuo tempo! </p><p>In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-) </p><p>Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p>Premi la barra per continuare.</p>`
       choices: [' ']
     };
     timeline.push(welcome);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "<p>Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi il tasto 'spazio'.</p></div",
+      stimulus: "<p>Ecco un esempio delle parole che vedrai:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi la barra.</p></div",
       choices: [' ']
     };
     timeline.push(example);
@@ -504,7 +504,7 @@
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: `<p>Hai completato la prima sezione di questa parte.</p><p>Puo prendere una piccolo pausa, e premere il tasto 'spazio' quando è pronto da continuare.</p>`,
+          stimulus: `<p>Ottimo, hai visto il primo blocco di parole. Ora puoi prenderti una piccola pausa. Premi la barra quando sei pronta/o per riprendere.</p>`,
           choices: [' ']
         };
     timeline.push(inter_training1);
@@ -534,7 +534,7 @@
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Hai completato la seconda sezione di questa parte.</p><p>Puo prendere una piccolo pausa, e premere il tasto 'spazio' quando è pronto da continuare.</p>`,
+      stimulus: `<p>Ottimo, hai visto il secondo blocco di parole. Ora puoi prenderti una piccola pausa. Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training2);
@@ -564,7 +564,7 @@
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Hai completato la terza sezione di questa parte.</p><p>Puo prendere una piccolo pausa, e premere il tasto 'spazio' quando è pronto da continuare.</p>`,
+      stimulus: `<p>Ottimo, hai visto il terzo blocco di parole. Ora puoi prenderti una piccola pausa. Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training3);
@@ -594,7 +594,7 @@
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Benissimo, hai completato la prima parte dell'esperimento.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+      stimulus: `<p>Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio.</p><p>Premi la barra quando sei pronta/o per continuare.</p>`,
       choices: [' ']
     };
     timeline.push(post_training);
@@ -603,6 +603,7 @@
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
+      stimulus: `<p>In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento.</p><p>Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.</p><p>Premi <strong>k</strong> quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e <strong>d</strong> quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.</p><p>Premi la barra quando sei pronta/o per iniziare.</p>`
       choices: [' ']
     };
     timeline.push(pre_testing);
@@ -613,7 +614,7 @@
       var condition = item[1];
       var java1 = item[0];
       if (i < 3) {
-        var java2 = '<p style="font-size: 30px;">Questa parola appartiene alla lingua aliena?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
+        var java2 = '<p style="font-size: 30px;">La parola viene del gruppo di alieni che hai studiato prima?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
       };
       if (i >= 3) {
         var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
@@ -650,6 +651,7 @@
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi il tasto 'spazio' per continuare.</p>`,
+      stimulus: `<p>Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!</p><p>Premi <strong>d</strong> se pensi che la combinazione di lettere sulla <strong>sinistra</strong> sia quella che era presente nella comunicazione degli alieni, oppure <strong>k</strong> se invece pensi che sia quella sulla <strong>destra</strong>.</p><p>Premi la barra quando sei pronta/o per cominciare.</p>`
       choices: [' ']
     };
     timeline.push(pre_familiarity);
@@ -699,7 +701,7 @@
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Grazie, ha finito questa parte! Avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Premi il tasto 'spazio' per iniziare.</p>`,
+      stimulus: `<p>Grazie per il tuo aiuto! Per finire, avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Premi la barra per iniziare.</p>`,
       choices: [' ']
     };
     timeline.push(pre_BLP);
@@ -707,7 +709,7 @@
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 20px;">INFORMAZIONI BIOGRAFICHE</b></p>',
-      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><p><legend>Luogo attuale di residenza: Città</legend><input name="Città" type="text" required/></p><p><legend>Luogo attuale di residenza: Stato</legend><input name="Stato" type="text" required/></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
+      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
       button_label: "Continuare"
     };
     timeline.push(bio_info);

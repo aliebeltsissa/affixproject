@@ -264,23 +264,23 @@ while continueRoutine:
         win.flip()
 
 # welcome
-text = visual.TextStim(win, text = "Buenvenuto all'esperimento.\n\n In questa prima parte, vedrai delle parole prese da una lingua inventata. Le parole saranno scrite in un alfabeto nuovo. Facciamo finta che questa lingua sia una lingua parlata dagli alieni.\n\n Vorremmo chiederle di guardare queste parole aliene. Nella parte successiva, testeremo se ha prestato attenzione a queste parole.\n\n Per favore, chiama lo sperimentatore se ha qualche domanda.\n\n Premi un tasto qualsiasi per vedere un esempio.",
-                       height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text = visual.TextStim(win, text = "Benvenuta/o, e grazie mille del tuo tempo!\n\n In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-)\n\n Premi la barra per continuare.",
+                       height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1500)
 text.draw(win=win)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList=["space"])
 
 # example
-ex_text = visual.TextStim(win, text = "Ecco un esempio di cosa vedrai durante questa parte dell'esperimento:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1400)
+ex_text = visual.TextStim(win, text = "Ecco un esempio delle parole che vedrai:", height = 60, color = [.8,.8,.8], pos = [0,350], wrapWidth = 1400)
 ex_rect = visual.Rect(win, width = 900, height = 500, pos = [0,0], lineWidth = 5, lineColor = [-1,-1,-1], fillColor = [0,0,0])
 ex_stim = visual.TextStim(win, text = "efjnpqsz", font = bacs, height = 50, color=[.8,.8,.8], pos=[0,0], ori=0)
-next_text = visual.TextStim(win, text = "Quando sei pronti per iniziare, premi un tasto qualsiasi.", height = 30, pos = [0,-350], wrapWidth = 1000)
+next_text = visual.TextStim(win, text = "Quando sei pronti per iniziare, premi la barra.", height = 30, pos = [0,-350], wrapWidth = 1000)
 ex_text.draw(win=win)
 ex_rect.draw(win=win)
 ex_stim.draw(win=win)
 next_text.draw(win=win)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList=["space"])
 
 # training
 keys = event.getKeys()
@@ -307,40 +307,40 @@ for reps in range(trainingreps):
         while clock.getTime() < isi: # show blank screen for ISI length
             win.flip()
     if reps == 0: # show inter-training session message
-        text = visual.TextStim(win, text="Hai completato la prima sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
-                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
+        text = visual.TextStim(win, text="Ottimo, hai visto il primo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
+                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1500)
         text.draw(win=win)
         win.flip()
-        event.waitKeys()
+        event.waitKeys(keyList=["space"])
     if reps == 1: # show inter-training session message
-        text = visual.TextStim(win, text="Hai completato la seconda sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
+        text = visual.TextStim(win, text="Ottimo, hai visto il secondo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
-        event.waitKeys()
+        event.waitKeys(keyList=["space"])
     if reps == 2: # show inter-training session message
-        text = visual.TextStim(win, text="Hai completato la terza sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
+        text = visual.TextStim(win, text="Ottimo, hai visto il terzo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
-        event.waitKeys()
+        event.waitKeys(keyList=["space"])
 
-inter_text = visual.TextStim(win, text = "Benissimo, hai completato la prima parte dell'esperimento.\n\n Premi un tasto qualsiasi per continuare.",
+inter_text = visual.TextStim(win, text = "Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio. Premi la barra quando sei pronta/o per continuare.",
                              height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 1200)
 inter_text.draw(win=win)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList=["space"])
 
 # testing
-text = visual.TextStim(win, text = "Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no. \n\n C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere sia una parola aliena e 'd' quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.\n\n Premi un tasto qualsiasi per continuare.",
-                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text = visual.TextStim(win, text = "In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro.\n\n Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento. Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri.\n\n Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.\n\n Premi 'k' quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e 'd' quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.\n\n Premi la barra quando sei pronta/o per iniziare.",
+                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1500)
 text.draw(win=win)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList=["space"])
 for trialn in range(testingn):
     word = rand_testing[trialn][0] # get the next testing word
     stimulus = visual.TextStim(win, text = word, font = bacs, height = 100, color = [.8,.8,.8], pos = [0,0], ori = 0)
-    expl_text = visual.TextStim(win, text = "Questa parola appartiene alla lingua aliena?", height = 60,
+    expl_text = visual.TextStim(win, text = "La parola viene del gruppo di alieni che hai studiato prima?", height = 60,
                                 color = [.8,.8,.8], pos = [0,300], ori = 0, wrapWidth = 800)
     expl2_text = visual.TextStim(win, text = "Premi 'k' per sì, 'd' per no", height = 30,
                                  color = [.8,.8,.8], pos = [0,-300], ori = 0)
@@ -356,11 +356,11 @@ for trialn in range(testingn):
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
     
 # familiarity test
-text = visual.TextStim(win, text = "Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no. \n\n Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.\n\n Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.\n\n Premi 'k' quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e 'd' quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.\n\n Premi un tasto qualsiasi per continuare.",
-                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1200)
+text = visual.TextStim(win, text = "Sei arrivata/o al meeting giusto in tempo, ottimo!\n\n I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!\n\n Premi 'd' se pensi che la combinazione di lettere sulla sinistra sia quella che era presente nella comunicazione degli alieni, oppure 'k' se invece pensi che sia quella sulla destra.\n\n Premi la barra quando sei pronta/o per cominciare.",
+                           height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1500)
 text.draw(win=win)
 win.flip()
-event.waitKeys()
+event.waitKeys(keyList=["space"])
 
 import random
 familiarity_responses = []
@@ -467,10 +467,16 @@ with open(file_path, 'w') as output6:
     for word in rand_training3:
         output6.write(word+"\n")
 output6.close()
+file_name = f"random_training4_sbj{sbj_id}.txt"
+file_path = os.path.join(folder, file_name)
+with open(file_path, 'w') as output7:
+    for word in rand_training4:
+        output7.write(word+"\n")
+output7.close()
 file_name = f"Participant_Responses/{output_folder}/sbj{sbj_id}_familiarity_responses.tsv"
 header = ['sbjID','trialn','target','confound','target_side','response','RT']
-with open(file_name, 'w', newline='') as output7:
-    writer = csv.writer(output7)
+with open(file_name, 'w', newline='') as output8:
+    writer = csv.writer(output8)
     writer.writerow(header)
     writer.writerows(all_familiarity_responses)
-output7.close()
+output8.close()
