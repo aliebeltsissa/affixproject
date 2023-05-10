@@ -401,10 +401,11 @@
     return array;
     };
 
-    var trainingn = 3;
+    var trainingn = 4;
     var rand_training1 = training_randomisation(training_list);
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
+    var rand_training4 = training_randomisation(training_list);
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
@@ -560,6 +561,36 @@
       timeline_variables: training_stimuli3,
     };
     timeline.push(training_procedure3);
+
+    var inter_training3 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Hai completato la terza sezione di questa parte.</p><p>Puo prendere una piccolo pausa, e premere il tasto 'spazio' quando è pronto da continuare.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training3);
+
+    var training_stimuli4 = [];
+    for (let i = 0; i < rand_training4.length; i++) {
+      var item = rand_training4[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict4 = {stimulus: java, correct_response: ''};
+      training_stimuli4.push(training_stimuli_dict4)
+    };
+    
+    var training_trial4 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
+    };
+
+    var training_procedure4 = {
+      timeline: [training_trial4],
+      timeline_variables: training_stimuli4,
+    };
+    timeline.push(training_procedure4);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,

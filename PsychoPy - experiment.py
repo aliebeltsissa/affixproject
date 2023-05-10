@@ -132,6 +132,7 @@ testingn = len(testing)
 rand_training1 = training_randomisation(training, trainingn)
 rand_training2 = training_randomisation(training, trainingn)
 rand_training3 = training_randomisation(training, trainingn)
+rand_training4 = training_randomisation(training, trainingn)
 rand_testing = testing_randomisation(testing, testingn)
 shuffle(familiarity_pairs)
 
@@ -160,7 +161,7 @@ bacs = 'BACS1'
 participant_responses = []
 stim_duration = 0.8
 isi = 0.2
-trainingreps = 3 # number of times we repeat the training
+trainingreps = 4 # number of times we repeat the training
 
 # when inputted participant ID, go fullscreen
 win.winHandle.maximize()
@@ -292,7 +293,9 @@ for reps in range(trainingreps):
             word = rand_training2[trialn]
         elif reps == 2:
             word = rand_training3[trialn]
-        elif reps > 2:
+        elif reps == 3:
+            word = rand_training4[trialn]
+        elif reps > 3:
             print("Error: too many training reps, not enough lists.")
             win.close()
         stimulus = visual.TextStim(win, text=word, font = bacs, height = 100, color=[.8,.8,.8], pos=[0,0], ori=0)
@@ -311,6 +314,12 @@ for reps in range(trainingreps):
         event.waitKeys()
     if reps == 1: # show inter-training session message
         text = visual.TextStim(win, text="Hai completato la seconda sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
+                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
+        text.draw(win=win)
+        win.flip()
+        event.waitKeys()
+    if reps == 2: # show inter-training session message
+        text = visual.TextStim(win, text="Hai completato la terza sezione di questa parte.\n\n Premi un tasto qualsiasi per continuare.",
                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
