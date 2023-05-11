@@ -30,11 +30,11 @@
     
     var timeline = []; 
 
-    //var pavlovia_init = {
-      //type: jsPsychPavlovia,
-      //command: "init"
-    //};
-    //timeline.push(pavlovia_init);
+    var pavlovia_init = {
+      type: jsPsychPavlovia,
+      command: "init"
+    };
+    timeline.push(pavlovia_init);
 
     var preload = {
       type: jsPsychPreload,
@@ -409,7 +409,7 @@
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
-    /* Participant ID textbox
+    /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p>ID Partecipante:</b></p>',
@@ -477,7 +477,7 @@
     };
     timeline.push(example);
 
-    /* TRAINING 
+    /* TRAINING */
     var training_stimuli1 = [];
     var item = ' '
     for (let i = 0; i < rand_training1.length; i++) {
@@ -599,7 +599,7 @@
     };
     timeline.push(post_training);
 
-    /* TESTING 
+    /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi la barra per continuare.</p>`,
@@ -655,7 +655,7 @@
     };
     timeline.push(strategy_prompt);
 
-    /* FAMILIARITY TEST 
+    /* FAMILIARITY TEST */ 
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi la barra per continuare.</p>`,
@@ -714,6 +714,7 @@
     };
     timeline.push(pre_BLP);
 
+    /* BLP */
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 20px;">INFORMAZIONI BIOGRAFICHE</b></p>',
