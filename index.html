@@ -647,6 +647,14 @@
     };
     timeline.push(testing_procedure);
 
+    var strategy_prompt = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p>Quale strategia (se ne avevi) hai utilizzato nel compito precedente?</b></p>',
+      html: '<input name="ID" type="text" required/></p>',
+      button_label: "Continuare"
+    };
+    timeline.push(strategy_prompt);
+
     /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
