@@ -603,7 +603,7 @@
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi il tasto 'spazio' per continuare.</p>`,
-      stimulus: `<p>In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento.</p><p>Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.</p><p>Premi <strong>k</strong> quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e <strong>d</strong> quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.</p><p>Premi la barra quando sei pronta/o per iniziare.</p>`
+      stimulus: `<p>In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento.</p><p>Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.</p><p>Premi <strong>k</strong> quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e <strong>d</strong> quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.</p><p>Premi la barra quando sei pronta/o per iniziare.</p>`,
       choices: ' '
     };
     timeline.push(pre_testing);
@@ -659,7 +659,7 @@
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi il tasto 'spazio' per continuare.</p>`,
-      stimulus: `<p>Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!</p><p>Premi <strong>d</strong> se pensi che la combinazione di lettere sulla <strong>sinistra</strong> sia quella che era presente nella comunicazione degli alieni, oppure <strong>k</strong> se invece pensi che sia quella sulla <strong>destra</strong>.</p><p>Premi la barra quando sei pronta/o per cominciare.</p>`
+      stimulus: `<p>Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!</p><p>Premi <strong>d</strong> se pensi che la combinazione di lettere sulla <strong>sinistra</strong> sia quella che era presente nella comunicazione degli alieni, oppure <strong>k</strong> se invece pensi che sia quella sulla <strong>destra</strong>.</p><p>Premi la barra quando sei pronta/o per cominciare.</p>`,
       choices: ' '
     };
     timeline.push(pre_familiarity);
@@ -758,7 +758,7 @@
         options.push(option)
       };
       var options = options.toString();
-      var options = options.replace(/,/g,'')
+      var options = options.replace(/,/g,'');
       return options
     };
 
@@ -796,7 +796,7 @@
         options.push(option)
       };
       var options = options.toString();
-      var options = options.replace(/,/g,'')
+      var options = options.replace(/,/g,'');
       return options
     };
 
@@ -834,7 +834,7 @@
         options.push(option)
       };
       var options = options.toString();
-      var options = options.replace(/,/g,'')
+      var options = options.replace(/,/g,'');
       return options
     };
 
@@ -872,7 +872,7 @@
         options.push(option)
       };
       var options = options.toString();
-      var options = options.replace(/,/g,'')
+      var options = options.replace(/,/g,'');
       return options
     };
 
