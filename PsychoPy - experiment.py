@@ -416,7 +416,7 @@ win.close()
 # initial data sorting
 all_responses = []
 for trial in participant_responses:
-    trialRT = round((trial[5]*100),2) # round RTs
+    trialRT = round((trial[5]*1000),2) # round RTs
     if trial[4] == 'k': # if answered yes
         all_responses.append([trial[0],trial[1],trial[2],trial[3],'yes',trialRT])
     elif trial[4] == 'd': # if answered no
@@ -425,7 +425,7 @@ for trial in participant_responses:
         print(f"Problem sorting responses to trial {trial[0]}")
 all_familiarity_responses = []
 for i in range(30):
-    RT = round((familiarity_responses[i][6]*100),2) # round RTs
+    RT = round((familiarity_responses[i][6]*1000),2) # round RTs
     if familiarity_responses[i][5] == 'k' and familiarity_responses[i][4] == 'right':
         all_familiarity_responses.append([familiarity_responses[i][0],familiarity_responses[i][1],familiarity_responses[i][2],familiarity_responses[i][3],"right","target",RT])
     elif familiarity_responses[i][5] == 'd' and familiarity_responses[i][4] == 'right':
