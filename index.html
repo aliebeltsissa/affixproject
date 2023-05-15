@@ -427,43 +427,6 @@
     };
     timeline.push(consent);
 
-    var consent = {
-      type: jsPsychSurveyMultiSelect,
-      questions: [
-        {
-          prompt: "Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:", 
-          options: ["di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;"],
-          required: true
-        },
-        {
-          options: ["di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;"],
-          required: true
-        },
-        {
-          
-          options: ["di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;"],
-          required: true
-        },
-        {
-          
-          options: ["di essere a conoscenza dei disagi eventualmente causati dall’esperimento;"],
-          required: true
-        },
-        {
-          
-          options: ["di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;"],
-          required: true
-        },
-        {
-          
-          options: ["di essere consapevole di potersi ritirare in qualsiasi fase dello studio."],
-          required: true
-        },
-      ],
-      button_label: "Continuare"
-    };
-    timeline.push(consent);
-
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
@@ -648,33 +611,32 @@
         data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
       }
     };
-/*
+
     var if_trial = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: 'You were too slow. Please be faster.'
-    }
+        stimulus: 'You were too slow. Please be faster.</p><p>Press space to continue.',
+        choices: ' '
+    };
 
     var if_node = {
         timeline: [if_trial],
         conditional_function: function(){
             // get the data from the previous trial,
             // and check which key was pressed
-            var data = jsPsych.data.get().last(1).values()[0];
-            if(jsPsych.pluginAPI.compareKeys(data.response, 's')){
-                return false;
-            } else {
+            var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt');
+            if(lasttrial_rt >= 1000) {
                 return true;
+            } else {
+                return false
             }
         }
-    } */
+    };
 
     var testing_procedure = {
-      timeline: [testing_trial],
+      timeline: [testing_trial, if_node],
       timeline_variables: testing_stimuli,
     };
     timeline.push(testing_procedure);
-
-    console.log(jsPsych.data.getLastTrialData());
 
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
