@@ -621,7 +621,7 @@
     var if_node = {
         timeline: [if_trial],
         conditional_function: function(){
-            var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt');
+            var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt')[0];
             console.log(lasttrial_rt);
             if(lasttrial_rt >= 1000) {
                 return true;
