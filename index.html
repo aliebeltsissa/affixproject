@@ -621,11 +621,9 @@
     var if_node = {
         timeline: [if_trial],
         conditional_function: function(){
-            // get the data from the previous trial,
-            // and check which key was pressed
             var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt');
+            console.log(lasttrial_rt);
             if(lasttrial_rt >= 1000) {
-                console.log(lasttrial_rt);
                 return true;
             } else {
                 return false
