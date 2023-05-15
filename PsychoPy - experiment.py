@@ -172,7 +172,7 @@ win.flip()
 
 # consent
 text = visual.TextStim(win, text="Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.\n\n La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborno le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.\n\n Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.\n\n Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (aliebelt@sissa.it, davide.crepaldi@sissa.it).\n\n Le chiediamo di premere un tasto qualsiasi per continuare al consenso.",
-                       height = 28, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1800)
+                        height = 28, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1800)
 text.draw(win=win)
 win.flip()
 event.waitKeys()
@@ -208,7 +208,7 @@ trialComponents = [box1,box2,box3,box4,box5,box6,mouse]
 while continueRoutine:
     for box in boxes:
         text = visual.TextStim(win, text="Dichiaro di esprimere il mio consenso a partecipare allo studio e dichiaro:\n\n     di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;\n\n     di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;\n\n     di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;\n\n     di essere a conoscenza dei disagi eventualmente causati dall’esperimento;\n\n     di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;\n\n     di essere consapevole di potersi ritirare in qualsiasi fase dello studio.",
-                           height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
+                            height = 30, color = [.8,.8,.8], pos = [0,0], alignText='left', wrapWidth = 1800)
         exittext = visual.TextStim(win, text = "Oppure, per uscire dell'esperimento, premi il tasto 'esc'", height = 30, color = [.8,.8,.8], pos = [0,-300], wrapWidth = 1400)
         text.draw(win=win)
         exittext.draw(win=win)
@@ -265,7 +265,7 @@ while continueRoutine:
 
 # welcome
 text = visual.TextStim(win, text = "Benvenuta/o, e grazie mille del tuo tempo!\n\n In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-)\n\n Premi la barra per continuare.",
-                       height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1500)
+                        height = 40, color = [.8,.8,.8], pos = [0,0], wrapWidth = 1500)
 text.draw(win=win)
 win.flip()
 event.waitKeys(keyList=["space"])
@@ -308,25 +308,25 @@ for reps in range(trainingreps):
             win.flip()
     if reps == 0: # show inter-training session message
         text = visual.TextStim(win, text="Ottimo, hai visto il primo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
-                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1500)
+                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1500)
         text.draw(win=win)
         win.flip()
         event.waitKeys(keyList=["space"])
     if reps == 1: # show inter-training session message
         text = visual.TextStim(win, text="Ottimo, hai visto il secondo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
-                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
+                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
         event.waitKeys(keyList=["space"])
     if reps == 2: # show inter-training session message
         text = visual.TextStim(win, text="Ottimo, hai visto il terzo blocco di parole. Ora puoi prenderti una piccola pausa.\n\n Premi la barra quando sei pronta/o per riprendere.",
-                               height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
+                                height = 60, color=[.8,.8,.8], pos=[0,0], ori=0, wrapWidth = 1200)
         text.draw(win=win)
         win.flip()
         event.waitKeys(keyList=["space"])
 
 inter_text = visual.TextStim(win, text = "Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio. Premi la barra quando sei pronta/o per continuare.",
-                             height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 1200)
+                              height = 60, color  = [.8,.8,.8], pos = [0,0], ori = 0, wrapWidth = 1200)
 inter_text.draw(win=win)
 win.flip()
 event.waitKeys(keyList=["space"])
@@ -352,8 +352,18 @@ for trialn in range(testingn):
     win.flip()
     keys = event.waitKeys(keyList=["d","k"]) # only accept 'd' and 'k' keypresses
     RT = clock.getTime()
+    if RT > 1:
+        timeout_text = visual.TextStim(win, text = "Attenzione! Sei stato troppo lento con questa parola.\n\n Cerca di essere piu veloce.", height = 60,
+                                    color = 'red', pos = [0,0], ori = 0, wrapWidth = 1400)
+        timeout2_text = visual.TextStim(win, text = "Premi la barra per continuare.", height = 40,
+                                     color = [.8,.8,.8], pos = [0,-300], ori = 0, wrapWidth = 1000)
+        timeout_text.draw(win=win)
+        timeout2_text.draw(win=win)
+        win.flip()
+        event.waitKeys(keyList=["space"])
     response = keys[0]
     participant_responses.append([sbj_id,(trialn+1),word,rand_testing[trialn][1],response,RT])
+        
     
 # familiarity test
 text = visual.TextStim(win, text = "Sei arrivata/o al meeting giusto in tempo, ottimo!\n\n I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!\n\n Premi 'd' se pensi che la combinazione di lettere sulla sinistra sia quella che era presente nella comunicazione degli alieni, oppure 'k' se invece pensi che sia quella sulla destra.\n\n Premi la barra quando sei pronta/o per cominciare.",
