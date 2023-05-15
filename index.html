@@ -625,6 +625,7 @@
             // and check which key was pressed
             var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt');
             if(lasttrial_rt >= 1000) {
+                console.log(lasttrial_rt);
                 return true;
             } else {
                 return false
