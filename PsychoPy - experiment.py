@@ -352,7 +352,7 @@ for trialn in range(testingn):
     win.flip()
     keys = event.waitKeys(keyList=["d","k"]) # only accept 'd' and 'k' keypresses
     RT = clock.getTime()
-    if RT > 1:
+    if RT > 2:
         timeout_text = visual.TextStim(win, text = "Attenzione! Sei stato troppo lento con questa parola.\n\n Cerca di essere piu veloce.", height = 60,
                                     color = 'red', pos = [0,0], ori = 0, wrapWidth = 1400)
         timeout2_text = visual.TextStim(win, text = "Premi la barra per continuare.", height = 40,
