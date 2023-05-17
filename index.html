@@ -614,7 +614,7 @@
 
     var if_trial = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: 'You were too slow. Please be faster.</p><p>Press space to continue.',
+        stimulus: '<p style="font-size: 30px; color: red">Attenzione! Sei stato troppo lento con questa parola. Cerca di essere più veloce.</p><p>Premi la barra per continuare.</p>',
         choices: ' '
     };
 
@@ -622,7 +622,6 @@
         timeline: [if_trial],
         conditional_function: function(){
             var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt').values[0];
-            console.log(lasttrial_rt);
             if(lasttrial_rt > 2000) {
                 return true;
             } else {
