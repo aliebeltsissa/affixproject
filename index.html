@@ -430,7 +430,8 @@
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
-      message: '<p>Si prega di premere un tasto qualsiasi per accedere alla modalità a schermo intero</p>'
+      message: `<p>Si prega di premere il pulsante per accedere alla modalità a schermo intero. Se non vuole più partecipare, può uscire in qualsiasi momento con il tasto 'esc'.</p>`,
+      button_label: 'Passare al schermo intero'
     };
     timeline.push(enter_fullscreen);
 
@@ -448,7 +449,7 @@
     };
     timeline.push(example);
 
-    /* TRAINING 
+    /* TRAINING */
     var training_stimuli1 = [];
     var item = ' '
     for (let i = 0; i < rand_training1.length; i++) {
@@ -639,7 +640,7 @@
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p>Quale strategia (se ne avevi) hai utilizzato nel compito precedente?</b></p>',
-      html: '<input name="ID" type="text" required/></p>',
+      html: '<input name="testing_strategy" type="text" required/></p>',
       button_label: "Continuare"
     };
     timeline.push(strategy_prompt);
