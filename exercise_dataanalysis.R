@@ -151,7 +151,7 @@ ok3 <- ! is.na(BLP_data_pilot1$L3Score);
 ok4 <- ! is.na(BLP_data_pilot1$L4Score);
 
 # plot language scores per participant
-plot(BLP_data_pilot1$L1Score~BLP_data_pilot1$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B");
+plot(BLP_data_pilot1$L1Score~BLP_data_pilot1$ID.partecipante,ylab="Language Score",ylim=c(0,218),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B",yaxs="i");
 points(BLP_data_pilot1$L2Score~BLP_data_pilot1$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
 points(BLP_data_pilot1$L3Score~BLP_data_pilot1$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
 points(BLP_data_pilot1$L4Score~BLP_data_pilot1$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
@@ -168,6 +168,21 @@ lines(density(data6$RT),col="lightslateblue");
 lines(density(data7$RT),col="navy");
 legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen","indianred4","lightslateblue","navy"),bty = "n",
        cex=0.75,y.intersp=0.5)
+
+plot(BLP_data_pilot1$L1Score ~ BLP_data_pilot1$ID.partecipante,  
+     ylab = "Language Score",  
+     ylim = c(0, 230),  
+     xlab = "Participant", 
+     main = "",
+     pch = 19,
+     cex = 2,  
+     col = "#F1BB7B",
+     xlim = c(0,max(BLP_data_pilot1$ID.partecipante)),
+     yaxt = "n",  
+     mar = c(5, 4, 4, 8) + 0.1)
+
+axis(2, at = c(0, 50, 100, 150, 200, 230), 
+     labels = c(0, 50, 100, 150, 200, 230))
 
 # PILOT 2
 pilot2_data <- read.table("preprocessed_data.tsv",header=T,sep=",");
@@ -187,7 +202,7 @@ abline(h=50, lty=5);
 summary(mean_data2$mean_scores2);
 
 # RTs
-plot(density(pilot2_data$RT[pilot2_data$sbjID==8]),xlim=c(0,1750),ylim=c(0,0.0055),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00");
+plot(density(pilot2_data$RT[pilot2_data$sbjID==8]),xlim=c(0,1750),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00",yaxs="i");
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800));
 lines(density(pilot2_data$RT[pilot2_data$sbjID==9]),col="#56B4E9");
 lines(density(pilot2_data$RT[pilot2_data$sbjID==10]),col="#009E73");
@@ -235,7 +250,7 @@ ok4 <- ! is.na(BLP_data_pilot2$L4Score);
 plot(L3Score~ID.partecipante,BLP_data_pilot2,subset=ok3,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,col="#F1BB7B");
 
 # plot language scores per participant
-plot(BLP_data_pilot2$L1Score~BLP_data_pilot2$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B");
+plot(BLP_data_pilot2$L1Score~BLP_data_pilot2$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B",yaxs="i");
 points(BLP_data_pilot2$L2Score~BLP_data_pilot2$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
 points(BLP_data_pilot2$L3Score~BLP_data_pilot2$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
 points(BLP_data_pilot2$L4Score~BLP_data_pilot2$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
