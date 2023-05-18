@@ -605,6 +605,7 @@
       stimulus: jsPsych.timelineVariable('java'),
       choices: ['d', 'k'],
       data: {
+        item: jsPsych.timelineVariable('stimulus'),
         task: 'response',
         correct_response: jsPsych.timelineVariable('correct_response')
       },
