@@ -708,12 +708,13 @@
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 20px;">INFORMAZIONI BIOGRAFICHE</b></p>',
-      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
+      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</p><p style="font-size: 5px;">Se non so una seconda lingua, scrive "n/a" per favore</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
       button_label: "Continuare"
     };
     timeline.push(bio_info);
 
     function anni (question) {
+      var options = [];
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
@@ -759,38 +760,55 @@
       var options = options.replace(/,/g,'');
       return options
     };
-
+    
     var history_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 25px; color: black">ANAMNESI LINGUISTICA</p><p style="color: black">In questa sezione, le chiediamo di rispondere alle seguenti domande sulla sua storia linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
-      html: '<p style="color: black"><legend>1. A quanti anni iniziò ad imparare le seguenti lingue?</legend></p>' + anni('AoA') + '</p><p style="color: black"><legend>2. A quanti anni iniziò a sentirsi a proprio agio usando le seguenti lingue?</legend></p>' + anni('AoAgio') + '</p><p style="color: black"><legend>3. Per quanti anni ha ricevuto un’ istruzione (grammatica, storia, matematica, etc..) nelle seguenti lingue (a partire dalla scuola primaria fino all’università)?</legend></p>' + anni('anniInstr') + '</p><p style="color: black"><legend>4. Quanti anni ha passato in un Paese/regione in cui si parlano le seguenti lingue?</legend></p>' + anni('anniPaese') + '</p><p style="color: black"><legend>5. Quanti anni ha trascorso in famiglia parlando le seguenti lingue?</legend></p>' + anni('anniFamiglia') + '</p><p style="color: black"><legend>6. Quanti anni ha trascorso in un ambiente di lavoro in cui si parlano le seguenti lingue?</legend></p>' + anni('anniLavoro')
+      html: function(){
+        var AoA = anni('AoA');
+        var AoAgio = anni('AoAgio');
+        var anniInstr = anni('anniInstr');
+        var anniPaese = anni('anniPaese');
+        var anniFamiglia = anni('anniFamiglia');
+        var anniLavoro = anni('anniLavoro');
+        var big_html = '<p style="color: black"><legend>1. A quanti anni iniziò ad imparare le seguenti lingue?</legend></p>' + AoA + '</p><p style="color: black"><legend>2. A quanti anni iniziò a sentirsi a proprio agio usando le seguenti lingue?</legend></p>' + AoAgio + '</p><p style="color: black"><legend>3. Per quanti anni ha ricevuto un’ istruzione (grammatica, storia, matematica, etc..) nelle seguenti lingue (a partire dalla scuola primaria fino all’università)?</legend></p>' + anniInstr + '</p><p style="color: black"><legend>4. Quanti anni ha passato in un Paese/regione in cui si parlano le seguenti lingue?</legend></p>' + anniPaese + '</p><p style="color: black"><legend>5. Quanti anni ha trascorso in famiglia parlando le seguenti lingue?</legend></p>' + anniFamiglia + '</p><p style="color: black"><legend>6. Quanti anni ha trascorso in un ambiente di lavoro in cui si parlano le seguenti lingue?</legend></p>' + anniLavoro;
+        return big_html
+      }
     };
     timeline.push(history_info);
 
     function percent (question) {
+      var options = []
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      var options = [];
+      var L1_tag = jsPsych.data.get().last(1).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().last(1).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().last(1).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().last(1).values()[0].response['L4'];
       for (let l=0; l < 4; l++) {
         if (l == 0) {
+          var tag = L1_tag
           var name = nameL1;
           var color = "royalblue"
         };
         if (l == 1) {
+          var tag = L2_tag
           var name = nameL2;
           var color = "firebrick"
         };
         if (l == 2) {
+          var tag = L3_tag
           var name = nameL3;
           var color = "green"
         };
         if (l == 3) {
+          var tag = L4_tag
           var name = nameL4;
           var color = "goldenrod"
         };
-        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0%</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10%</label><input type="radio" id="20" name="'+ name +'" value="20"><label for="20">20%</label><input type="radio" id="30" name="'+ name +'" value="30"><label for="30">30%</label><input type="radio" id="40" name="'+ name +'" value="40"><label for="40">40%</label><input type="radio" id="50" name="'+ name +'" value="50"><label for="50">50%</label><input type="radio" id="60" name="'+ name +'" value="60"><label for="60">60%</label><input type="radio" id="70" name="'+ name +'" value="70"><label for="70">70%</label><input type="radio" id="80" name="'+ name +'" value="80"><label for="80">80%</label><input type="radio" id="90" name="'+ name +'" value="90"><label for="90">90%</label><input type="radio" id="100" name="'+ name +'" value="100"><label for="100">100%</label></p>';
+        var option = '<strong><font color="'+ color +'">'+tag+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0%</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10%</label><input type="radio" id="20" name="'+ name +'" value="20"><label for="20">20%</label><input type="radio" id="30" name="'+ name +'" value="30"><label for="30">30%</label><input type="radio" id="40" name="'+ name +'" value="40"><label for="40">40%</label><input type="radio" id="50" name="'+ name +'" value="50"><label for="50">50%</label><input type="radio" id="60" name="'+ name +'" value="60"><label for="60">60%</label><input type="radio" id="70" name="'+ name +'" value="70"><label for="70">70%</label><input type="radio" id="80" name="'+ name +'" value="80"><label for="80">80%</label><input type="radio" id="90" name="'+ name +'" value="90"><label for="90">90%</label><input type="radio" id="100" name="'+ name +'" value="100"><label for="100">100%</label></p>';
         options.push(option)
       };
       var options = options.toString();
@@ -801,34 +819,50 @@
     var use_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 25px; color: black">USO DELLE LINGUE</p><p style="color: black">In questa sezione, le chiediamo di fornirci le sue risposte sull’uso delle lingue. La somma delle percentuali scelte per ogni lingua presentata nelle singole domande deve essere 100%. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
-      html: '<p style="color: black"><legend>7. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con i suoi amici?</legend></p>' + percent('PercAmici') + '</p><p style="color: black"><legend>8. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con la sua famiglia?</legend></p>' + percent('PercFamiglia') + '</p><p style="color: black"><legend>9. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue a scuola/al lavoro?</legend></p>' + percent('PercLavoro') + '</p><p style="color: black"><legend>10. Quando parla con se stesso, con quale frequenza parla a se stesso nelle seguenti lingue?</legend></p>' + percent('PercStesso') + '</p><p style="color: black"><legend>11. Quando fa calcoli contando, con quale frequenza conta nelle seguenti lingue?</legend></p>' + percent('PercCalcoli')
+      html: function() {
+        var PercAmici = percent('PercAmici');
+        var PercFamiglia = percent('PercFamiglia');
+        var PercLavoro = percent('PercLavoro');
+        var PercStesso = percent('PercStesso');
+        var PercCalcoli = percent('PercCalcoli');
+        var big_html = '<p style="color: black"><legend>7. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con i suoi amici?</legend></p>' + PercAmici + '</p><p style="color: black"><legend>8. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con la sua famiglia?</legend></p>' + PercFamiglia + '</p><p style="color: black"><legend>9. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue a scuola/al lavoro?</legend></p>' + PercLavoro + '</p><p style="color: black"><legend>10. Quando parla con se stesso, con quale frequenza parla a se stesso nelle seguenti lingue?</legend></p>' + PercStesso + '</p><p style="color: black"><legend>11. Quando fa calcoli contando, con quale frequenza conta nelle seguenti lingue?</legend></p>' + PercCalcoli;
+        return big_html
+      }
     };
     timeline.push(use_info);
 
     function proficiency (question) {
+      var options = [];
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      var options = [];
+      var L1_tag = jsPsych.data.get().last(1).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().last(1).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().last(1).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().last(1).values()[0].response['L4'];
       for (let l=0; l < 4; l++) {
         if (l == 0) {
+          var tag = L1_tag
           var name = nameL1;
           var color = "royalblue"
         };
         if (l == 1) {
+          var tag = L2_tag
           var name = nameL2;
           var color = "firebrick"
         };
         if (l == 2) {
+          var tag = L3_tag
           var name = nameL3;
           var color = "green"
         };
         if (l == 3) {
+          var tag = L4_tag
           var name = nameL4;
           var color = "goldenrod"
-        };
-        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0 (non molto bene)</label><input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6 (molto bene)</label></p>';
+        };      
+        var option = '<strong><font color="'+ color +'">'+tag+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0 (non molto bene)</label><input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6 (molto bene)</label></p>';
         options.push(option)
       };
       var options = options.toString();
@@ -839,34 +873,49 @@
     var proficiency_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 25px; color: black">COMPETENZA</p><p style="color: black">In questa sezione, le chiediamo di rispondere relativamente alla competenza linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
-      html: '<p style="color: black"><legend>12. Come parla le seguenti lingue?</legend></p>' + proficiency('ProfParla') + '<p style="color: black"><legend>13. Come capisce le seguenti lingue?</legend></p>' + proficiency('ProfCapisce') + '<p style="color: black"><legend>14. Come legge nelle seguenti lingue?</legend></p>' + proficiency('ProfLegge') + '<p style="color: black"><legend>Se legge questa frase, la prega di rispondere "2" per tutte le lingue.</legend></p>' + proficiency('Attention') + '<p style="color: black"><legend>15. Come scrive nelle seguenti lingue?</legend></p>' + proficiency('ProfScrive')
+      html: function() {
+        var ProfParla = proficiency('ProfParla');
+        var ProfCapisce = proficiency('ProfCapisce');
+        var ProfLegge = proficiency('ProfLegge');
+        var Attention = proficiency('Attention');
+        var ProfScrive = proficiency('ProfScrive');
+        '<p style="color: black"><legend>12. Come parla le seguenti lingue?</legend></p>' + ProfParla + '<p style="color: black"><legend>13. Come capisce le seguenti lingue?</legend></p>' + ProfCapisce + '<p style="color: black"><legend>14. Come legge nelle seguenti lingue?</legend></p>' + ProfLegge + '<p style="color: black"><legend>Se legge questa frase, la prega di rispondere "2" per tutte le lingue.</legend></p>' + Attention + '<p style="color: black"><legend>15. Come scrive nelle seguenti lingue?</legend></p>' + ProfScrive
+      }
     };
     timeline.push(proficiency_info);
 
     function attitudes (question) {
+      var options = [];
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      var options = [];
+      var L1_tag = jsPsych.data.get().last(1).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().last(1).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().last(1).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().last(1).values()[0].response['L4'];
       for (let l=0; l < 4; l++) {
         if (l == 0) {
+          var tag = L1_tag
           var name = nameL1;
           var color = "royalblue"
         };
         if (l == 1) {
+          var tag = L2_tag
           var name = nameL2;
           var color = "firebrick"
         };
         if (l == 2) {
+          var tag = L3_tag
           var name = nameL3;
           var color = "green"
         };
         if (l == 3) {
+          var tag = L4_tag
           var name = nameL4;
           var color = "goldenrod"
         };
-        var option = `<strong><font color="`+ color +`">L`+(l+1)+`:</strong></font><input name="`+ name +`" type="radio" id="N/A" name="`+ name +`" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="`+ name +`" value="0"><label for="0">0 (non sono d'accordo)</label><input type="radio" id="1" name="`+ name +`" value="1"><label for="1">1</label><input type="radio" id="2" name="`+ name +`" value="2"><label for="2">2</label><input type="radio" id="3" name="`+ name +`" value="3"><label for="3">3</label><input type="radio" id="4" name="`+ name +`" value="4"><label for="4">4</label><input type="radio" id="5" name="`+ name +`" value="5"><label for="5">5</label><input type="radio" id="6" name="`+ name +`" value="6"><label for="6">6 (sono d'accordo)</label></p>`;
+        var option = `<strong><font color="`+ color +`">`+tag+`:</strong></font><input name="`+ name +`" type="radio" id="N/A" name="`+ name +`" value="N/A" required/><label for="N/A">Non so questa lingua</label><input type="radio" id="0" name="`+ name +`" value="0"><label for="0">0 (non sono d'accordo)</label><input type="radio" id="1" name="`+ name +`" value="1"><label for="1">1</label><input type="radio" id="2" name="`+ name +`" value="2"><label for="2">2</label><input type="radio" id="3" name="`+ name +`" value="3"><label for="3">3</label><input type="radio" id="4" name="`+ name +`" value="4"><label for="4">4</label><input type="radio" id="5" name="`+ name +`" value="5"><label for="5">5</label><input type="radio" id="6" name="`+ name +`" value="6"><label for="6">6 (sono d'accordo)</label></p>`;
         options.push(option)
       };
       var options = options.toString();
@@ -877,7 +926,13 @@
     var attitudes_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 25px; color: black">ATTEGGIAMENTO LINGUISTICO</p><p style="color: black">In questa sezione, le chiediamo di fornirci risposte alle seguenti affermazioni relative ad atteggiamenti linguistici. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
-      html: '<p style="color: black"><legend>16. Mi sento “me stesso” quando parlo le seguenti lingue.</legend></p>' + attitudes('AttMiStesso') + '<p style="color: black"><legend>17. Mi identifico con una cultura che parla le seguenti lingue.</legend></p>' + attitudes('AttCultura') + '<p style="color: black"><legend>18. Per me è importante raggiungere un livello nativo e usare ad un livello nativo le seguenti lingue.</legend></p>' + attitudes('AttLivNativo') + '<p style="color: black"><legend>19. Voglio che gli altri pensino che io sia un madrelingua delle seguenti lingue.</legend></p>' + attitudes('AttMadrelingua')
+      html: function() {
+        var AttMiStesso = attitudes('AttMiStesso');
+        var AttCultura = attitudes('AttCultura');
+        var AttLivNativo = attitudes('AttLivNativo');
+        var AttMadrelingua = attitudes('AttMadrelingua');
+        var big_html = '<p style="color: black"><legend>16. Mi sento “me stesso” quando parlo le seguenti lingue.</legend></p>' + AttMiStesso + '<p style="color: black"><legend>17. Mi identifico con una cultura che parla le seguenti lingue.</legend></p>' + AttCultura + '<p style="color: black"><legend>18. Per me è importante raggiungere un livello nativo e usare ad un livello nativo le seguenti lingue.</legend></p>' + AttLivNativo + '<p style="color: black"><legend>19. Voglio che gli altri pensino che io sia un madrelingua delle seguenti lingue.</legend></p>' + AttMadrelingua
+      }
     };
     timeline.push(attitudes_info);
 
