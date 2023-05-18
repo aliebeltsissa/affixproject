@@ -713,8 +713,9 @@
     };
     timeline.push(bio_info);
 
+    /*
     var lang_rank = {
-      type: jsPsychSurvey,
+      type: jsPsychSurveyHtmlForm,
       stimulus: '',
       pages: function() {
         return [
@@ -724,13 +725,15 @@
         ]
       }
     };
-    timeline.push(lang_rank);
+    timeline.push(lang_rank); */
 
     function anni (question) {
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
+      var myinput = jsPsych.data.get().filter({trial: 'bio_info'}).values()[0]['L1'];
+      console.log(myinput);
       //lasttimelinedata = function() {
         //return jsPsych.data.getLastTrialData().trials[0].response.L1}
       //var tag = lasttimelinedata();
