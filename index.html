@@ -713,6 +713,9 @@
     };
     timeline.push(bio_info);
 
+    var L1 = jsPsych.data.getLastTrialData().select('L1').values[0];
+    console.log(L1);
+
     function anni (question) {
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
