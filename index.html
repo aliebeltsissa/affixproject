@@ -709,70 +709,37 @@
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 20px;">INFORMAZIONI BIOGRAFICHE</b></p>',
       html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>.</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>.</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
-      button_label: "Continuare",
-      on_finish: function(data) {
-          L1= data.response.L1;
-          L2= data.response.L2;
-          L3= data.response.L3;
-          L4= data.response.L4
-      }
+      button_label: "Continuare"
     };
     timeline.push(bio_info);
-
-    source = function() {
-      var L1_input = jsPsych.data.get().last(1).values()[0].L1;
-        var L2_input = jsPsych.data.get().last(1).values()[0].L2;
-        var L3_input = jsPsych.data.get().last(1).values()[0].L3;
-        var L4_input = jsPsych.data.get().last(1).values()[0].L4;
-        return '<p>L1: ${L1_input}</p><p>L2: ${L2_input}</p><p>L3: ${L3_input}</p><p>L4: ${L4_input}</p><input type="text" name="answer">';
-    };
-
-    var later_trial = {
-      type: jsPsychSurveyHtmlForm,
-      preamble: '<p>Thank you for completing the survey, please answer this question:</p>',
-      html: source(),
-      button_label: 'Submit'
-    };
-    timeline.push(later_trial);
-
-    /*
-    var lang_rank = {
-      type: jsPsychSurveyHtmlForm,
-      stimulus: '',
-      pages: function() {
-        return [
-          [
-            {type: 'ranking', prompt: 'Proficiency with languages', options: ['English', jsPsych.data.getLastTrialData().trials[0].response.L1]}
-          ]
-        ]
-      }
-    };
-    timeline.push(lang_rank); */
 
     function anni (question) {
       var nameL1 = String(question + 'L1');
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      //lasttimelinedata = function() {
-        //return jsPsych.data.getLastTrialData().trials[0].response.L1}
-      //var tag = lasttimelinedata();
-      //console.log(tag);
-      var options = [];
+      var L1_tag = jsPsych.data.get().last(1).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().last(1).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().last(1).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().last(1).values()[0].response['L4'];
       for (let l=0; l < 4; l++) {
         if (l == 0) {
+          var tag = L1_tag
           var name = nameL1;
           var color = "royalblue"
         };
         if (l == 1) {
+          var tag = L2_tag
           var name = nameL2;
           var color = "firebrick"
         };
         if (l == 2) {
+          var tag = L3_tag
           var name = nameL3;
           var color = "green"
         };
         if (l == 3) {
+          var tag = L4_tag
           var name = nameL4;
           var color = "goldenrod"
         };
@@ -785,7 +752,7 @@
         if (question == 'anniInstr' || question == 'anniPaese' || question == 'anniFamiglia' || question == 'anniLavoro') {
           var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0</label>'
         };
-        var option = '<strong><font color="'+ color +'">L'+(l+1)+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label>'+ extras +'<input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6</label><input type="radio" id="7" name="'+ name +'" value="7"><label for="7">7</label><input type="radio" id="8" name="'+ name +'" value="8"><label for="8">8</label><input type="radio" id="9" name="'+ name +'" value="9"><label for="9">9</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10</label><input type="radio" id="11" name="'+ name +'" value="11"><label for="11">11</label><input type="radio" id="12" name="'+ name +'" value="12"><label for="12">12</label><input type="radio" id="13" name="'+ name +'" value="13"><label for="13">13</label><input type="radio" id="14" name="'+ name +'" value="14"><label for="14">14</label><input type="radio" id="15" name="'+ name +'" value="15"><label for="15">15</label><input type="radio" id="16" name="'+ name +'" value="16"><label for="16">16</label><input type="radio" id="17" name="'+ name +'" value="17"><label for="17">17</label><input type="radio" id="18" name="'+ name +'" value="18"><label for="18">18</label><input type="radio" id="19" name="'+ name +'" value="19"><label for="19">19</label><input type="radio" id="20+" name="'+ name +'" value="20+"><label for="20+">20+</label></p>';
+        var option = '<strong><font color="'+ color +'">'+tag+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="N/A" required/><label for="N/A">Non so questa lingua</label>'+ extras +'<input type="radio" id="1" name="'+ name +'" value="1"><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2"><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3"><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4"><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5"><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6"><label for="6">6</label><input type="radio" id="7" name="'+ name +'" value="7"><label for="7">7</label><input type="radio" id="8" name="'+ name +'" value="8"><label for="8">8</label><input type="radio" id="9" name="'+ name +'" value="9"><label for="9">9</label><input type="radio" id="10" name="'+ name +'" value="10"><label for="10">10</label><input type="radio" id="11" name="'+ name +'" value="11"><label for="11">11</label><input type="radio" id="12" name="'+ name +'" value="12"><label for="12">12</label><input type="radio" id="13" name="'+ name +'" value="13"><label for="13">13</label><input type="radio" id="14" name="'+ name +'" value="14"><label for="14">14</label><input type="radio" id="15" name="'+ name +'" value="15"><label for="15">15</label><input type="radio" id="16" name="'+ name +'" value="16"><label for="16">16</label><input type="radio" id="17" name="'+ name +'" value="17"><label for="17">17</label><input type="radio" id="18" name="'+ name +'" value="18"><label for="18">18</label><input type="radio" id="19" name="'+ name +'" value="19"><label for="19">19</label><input type="radio" id="20+" name="'+ name +'" value="20+"><label for="20+">20+</label></p>';
         options.push(option)
       };
       var options = options.toString();
