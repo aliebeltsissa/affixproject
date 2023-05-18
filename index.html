@@ -718,7 +718,7 @@
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      var lasttimelinedata = jsPsych.data.get().select('L1').values;
+      var lasttimelinedata = jsPsych.data.getLastTrialData().trials[0].response.L1;
       console.log(lasttimelinedata);
       var options = [];
       for (let l=0; l < 4; l++) {
