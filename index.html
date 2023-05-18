@@ -404,7 +404,7 @@
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
-    /* Participant ID textbox 
+    /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p>ID Partecipante:</b></p>',
@@ -449,7 +449,7 @@
     };
     timeline.push(example);
 
-    /* TRAINING 
+    /* TRAINING */
     var training_stimuli1 = [];
     var item = ' '
     for (let i = 0; i < rand_training1.length; i++) {
@@ -571,7 +571,7 @@
     };
     timeline.push(post_training);
 
-    /* TESTING 
+    /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Adesso vedrai altre parole, alcune delle quali appartengono alla stessa lingua aliena, mentre altre no.</p><p> C'è una differenza molto sottile tra le parole aliene e gli altri stimuli. Non preoccuparti di capire qual è questa differenza; cerca solo di intuire se ciascuna parola appartiene alla lingua aliena oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del suo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p> Premi <strong>'k'</strong> quando pensi che la combinazione di lettere sia una parola aliena e <strong>'d'</strong> quanda pensi che invece non lo sia. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p> Premi la barra per continuare.</p>`,
@@ -645,7 +645,7 @@
     };
     timeline.push(strategy_prompt);
 
-    /* FAMILIARITY TEST 
+    /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Abbiamo quasi finito. Adesso vedrai altre parole, alcune delle quali hai già visto, mentre altre no.</p><p> Non preoccuparti di riconoscerle; cerca solo di intuire se ciascuna parola ti sembra familiare oppure no.</p><p> Questo compito potrebbe sembrare difficile, ma non ti preoccupare! Cerca di fare del tuo meglio, e, anche se ti sembrerà di non conosciere la risposta giusta, usa semplicemente il tuo intuito e dai una risposta.</p><p>Premi <strong>k</strong> quando pensi che la combinazione di lettere a destra sia una parola che ha già visto e <strong>d</strong> quanda pensi che ha già visto quella a sinistra. Per favore, chiama lo sperimentatore se hai qualche domanda.</p><p>Premi la barra per continuare.</p>`,
@@ -708,7 +708,7 @@
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="font-size: 25px; color: black">INFORMAZIONI BIOGRAFICHE</b></p>',
-      html: '<p style="color: black"><legend>Età</legend><div><input name="Età" type="text" required/></p><p style="color: black"><legend>Sesso</legend><div><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label></div><div><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></div></p><p style="color: black"><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p style="color: black"><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p style="color: black"><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>. Se non so una seconda lingua, scrive "n/a" per favore.</legend><input name="L2" type="text" required/></p><p style="color: black"><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>. Se non so una terza lingua, scrive "n/a" per favore</legend><input name="L3" type="text" required/></p><p style="color: black"><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>. Se non so una quarta lingua, scrive "n/a" per favore</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
+      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria"><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>. Se non so una seconda lingua, scrive "n/a" per favore.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>. Se non so una terza lingua, scrive "n/a" per favore</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>. Se non so una quarta lingua, scrive "n/a" per favore</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
       button_label: "Continuare",
       data: {name: 'bio_info'}
     };
