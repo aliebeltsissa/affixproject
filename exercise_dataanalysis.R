@@ -116,7 +116,7 @@ res <- cor.test(mean_data$bias, mean_data$mean_RTs,
                 method = "pearson");
 res;
 plot(density(mean_data$bias));
-boxplot(mean_data$mean_scores, ylab = "Accuracy score");
+boxplot(mean_data$mean_scores, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
 summary(mean_data$mean_scores);
 
@@ -197,7 +197,7 @@ pilot2_data$correct <- 0;
 pilot2_data$correct[pilot2_data$expected!=pilot2_data$observed] <- 1;
 
 mean_data2 <- data.frame(mean_scores2 = c(35,52.5,52.5,65,52.5,47.5,35,57.5));
-boxplot(mean_data2$mean_scores2, ylab = "Accuracy score");
+boxplot(mean_data2$mean_scores2, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
 summary(mean_data2$mean_scores2);
 
