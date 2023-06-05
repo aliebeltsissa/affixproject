@@ -206,7 +206,7 @@ summary(familiarity_data_pilot2$familiarity_score)
 
 # PILOT 3
 # Pilot 3 accuracy boxplot
-mean_data3 <- data.frame(mean_scores3 = c());
+mean_data3 <- data.frame(mean_scores3 = c(50,57.5,40,50,52.5,50));
 summary(mean_data3$mean_scores3);
 boxplot(mean_data3$mean_scores3, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
