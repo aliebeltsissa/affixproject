@@ -106,6 +106,7 @@ def BLP_preprocessing(BLP_file):
         all_attitude_scoreL3.append(attitude_scoreL3)
         all_attitude_scoreL4.append(attitude_scoreL4)
         
+    # this code doesn't work
     attention_mapping = {"0": False, "1": False, "2": True, "3": False, "4": False, "5": False, "6": False}
     BLP_data3 = BLP_data2.replace({"AttentionCheck": attention_mapping})
     

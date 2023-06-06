@@ -4,7 +4,7 @@ setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant_Respons
 # import participant files
 all_data = data.frame()
 all_data2 = data.frame()
-for (x in 21:1) { # for 21 participants
+for (x in 22:1) { # for 22 participants
   name <- sprintf("./Participant_%s/sbj%s_responses.tsv", x, x)
   temp <- read.table(name,header=T,sep=",");
   all_data <- rbind(temp,all_data2)
@@ -206,14 +206,14 @@ summary(familiarity_data_pilot2$familiarity_score)
 
 # PILOT 3
 # Pilot 3 accuracy boxplot
-mean_data3 <- data.frame(mean_scores3 = c(50,57.5,40,50,52.5,50));
+mean_data3 <- data.frame(mean_scores3 = c(50,57.5,40,50,52.5,50,57.5));
 summary(mean_data3$mean_scores3);
 boxplot(mean_data3$mean_scores3, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
 
 # Pilot 3 RTs
-plot(density(all_data$RT[all_data$sbjID==16]),xlim=c(0,2200),ylim=c(0,0.0005),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00",yaxs="i");
-axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000));
+plot(density(all_data$RT[all_data$sbjID==16]),xlim=c(0,2200),ylim=c(0,0.003),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00",yaxs="i");
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 lines(density(all_data$RT[all_data$sbjID==17]),col="#56B4E9");
 lines(density(all_data$RT[all_data$sbjID==18]),col="#009E73");
 lines(density(all_data$RT[all_data$sbjID==19]),col="#F0E442");
@@ -222,13 +222,14 @@ lines(density(all_data$RT[all_data$sbjID==21]),col="#D55E00");
 lines(density(all_data$RT[all_data$sbjID==22]),col="#CC79A7");
 legend("topright",title="Participant:",c("16","17","18","19","20","21","22"),fill=c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"),bty = "n",
        cex=0.75,y.intersp=0.5)
+# still get some RTs way above 2s: this is because the trials with a response of over 2s are still recorded
 
 # Pilot 3 BLP scores
 setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Pilot3_data");
 BLP_data3 <- read.table("BLP_preprocessed_pilot3.csv",header=T,sep=",");
 dim(BLP_data3);
 head(BLP_data3);
-summary(BLP_data3);
+summary(BLP_data3); # for some reason AttentionCheck is  0000602? Check code. Last participant did fail check
 BLP_data3$Sex <- as.factor(BLP_data3$Sex);
 BLP_data3$MaxEdu <- as.factor(BLP_data3$MaxEdu);
 BLP_data3$L1 <- as.factor(BLP_data3$L1);
@@ -262,7 +263,7 @@ plot(BLP_data_pilot3$L1Score~BLP_data_pilot3$ID.partecipante,ylab="Language Scor
 points(BLP_data_pilot3$L2Score~BLP_data_pilot3$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
 points(BLP_data_pilot3$L3Score~BLP_data_pilot3$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
 points(BLP_data_pilot3$L4Score~BLP_data_pilot3$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
-legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
+legend("topright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
        cex=0.75,y.intersp=0.5);
 
 # familiarity
