@@ -23,6 +23,16 @@ BLP_data_pilot2.columns = ['Timestamp', 'Age', 'Sex', 'City', 'Country', 'MaxEdu
                     'SentoStessoL1', 'SentoStessoL2', 'SentoStessoL3', 'SentoStessoL4', 'CulturaL1', 'CulturaL2', 'CulturaL3', 'CulturaL4', 'LivelloL1', 'LivelloL2', 'LivelloL3', 'LivelloL4', 'MadrelinguaL1', 'MadrelinguaL2', 'MadrelinguaL3', 'MadrelinguaL4',
                     'AttentionCheck']
 
+os.chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Pilot3_data")
+import pandas as pd
+BLP_data_pilot3 = pd.read_csv("BLP_sbjs16-22.csv", index_col=1)
+BLP_data_pilot3.columns = ['Timestamp', 'Age', 'Sex', 'City', 'Country', 'MaxEdu', 'L1', 'L2', 'L3', 'L4', 'otherLs', 
+                    'AoAL1', 'AoAL2', 'AoAL3', 'AoAL4', 'AoAgioL1', 'AoAgioL2', 'AoAgioL3', 'AoAgioL4', 'AnniInstiL1', 'AnniInstiL2', 'AnniInstiL3', 'AnniInstiL4', 'AnniPaeseL1', 'AnniPaeseL2', 'AnniPaeseL3', 'AnniPaeseL4', 'AnniFamigliaL1', 'AnniFamigliaL2', 'AnniFamigliaL3', 'AnniFamigliaL4', 'AnniLavoroL1', 'AnniLavoroL2', 'AnniLavoroL3', 'AnniLavoroL4', 
+                    'PercentAmiciL1', 'PercentAmiciL2', 'PercentAmiciL3', 'PercentAmiciL4', 'PercentFamigliaL1', 'PercentFamigliaL2', 'PercentFamigliaL3', 'PercentFamigliaL4', 'PercentLavoroL1', 'PercentLavoroL2', 'PercentLavoroL3', 'PercentLavoroL4', 'PercentStessoL1', 'PercentStessoL2', 'PercentStessoL3', 'PercentStessoL4', 'PercentCalcoliL1', 'PercentCalcoliL2', 'PercentCalcoliL3', 'PercentCalcoliL4',
+                    'ParlaL1', 'ParlaL2', 'ParlaL3', 'ParlaL4', 'CapisceL1', 'CapisceL2', 'CapisceL3', 'CapisceL4', 'LeggeL1', 'LeggeL2', 'LeggeL3', 'LeggeL4', 'ScriveL1', 'ScriveL2', 'ScriveL3', 'ScriveL4',
+                    'SentoStessoL1', 'SentoStessoL2', 'SentoStessoL3', 'SentoStessoL4', 'CulturaL1', 'CulturaL2', 'CulturaL3', 'CulturaL4', 'LivelloL1', 'LivelloL2', 'LivelloL3', 'LivelloL4', 'MadrelinguaL1', 'MadrelinguaL2', 'MadrelinguaL3', 'MadrelinguaL4',
+                    'AttentionCheck']
+
 def BLP_preprocessing(BLP_file):
     AoA12_mapping = {"Non so questa lingua": 0, "20+": 0, "19": 1, "18": 2, "17": 3, "16": 4, "15": 5, "14": 6, "13": 7, "12": 8, "11": 9, "10": 10, "9": 11, "8": 12, "7": 13, "6": 14, "5": 15, "4": 16, "3": 17, "2": 18, "1": 19, "Dalla nascita": 20, "Da quando ne ho ricordo": 20, "Ancora no": 0}
     BLP_data2 = BLP_file.replace({"AoAL1": AoA12_mapping, "AoAL2": AoA12_mapping, "AoAL3": AoA12_mapping, "AoAL4": AoA12_mapping})
@@ -140,3 +150,5 @@ BLP_data_pilot1 = BLP_preprocessing(BLP_data_pilot1)
 BLP_data_pilot1.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Pilot1_data\\BLP_preprocessed_pilot1.csv', index=True, header=True)
 BLP_data_pilot2 = BLP_preprocessing(BLP_data_pilot2)
 BLP_data_pilot2.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Pilot2_data\\BLP_preprocessed_pilot2.csv', index=True, header=True)
+BLP_data_pilot3 = BLP_preprocessing(BLP_data_pilot3)
+BLP_data_pilot3.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Pilot3_data\\BLP_preprocessed_pilot3.csv', index=True, header=True)
