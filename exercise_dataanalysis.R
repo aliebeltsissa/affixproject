@@ -270,7 +270,7 @@ legend("topright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD
 familiarity_data_pilot3 <- read.table("preprocessed_familiarity_pilot3.tsv",header=T,sep=",");
 dim(familiarity_data_pilot3);
 head(familiarity_data_pilot3);
-summary(familiarity_data_pilot3);
+summary(familiarity_data_pilot3); # med & mean at 50: maybe worried about timeout? Change instructions?
 boxplot(familiarity_data_pilot3$familiarity_score, ylab = "Familiarity score");
 abline(h=50, lty=5);
 summary(familiarity_data_pilot3$familiarity_score)
