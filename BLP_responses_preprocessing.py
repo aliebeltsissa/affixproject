@@ -29,9 +29,8 @@ BLP_data_pilot3 = pd.read_csv("BLP_sbjs16-22.csv", index_col=1)
 BLP_data_pilot3.columns = ['Timestamp', 'Age', 'Sex', 'City', 'Country', 'MaxEdu', 'L1', 'L2', 'L3', 'L4', 'otherLs', 
                     'AoAL1', 'AoAL2', 'AoAL3', 'AoAL4', 'AoAgioL1', 'AoAgioL2', 'AoAgioL3', 'AoAgioL4', 'AnniInstiL1', 'AnniInstiL2', 'AnniInstiL3', 'AnniInstiL4', 'AnniPaeseL1', 'AnniPaeseL2', 'AnniPaeseL3', 'AnniPaeseL4', 'AnniFamigliaL1', 'AnniFamigliaL2', 'AnniFamigliaL3', 'AnniFamigliaL4', 'AnniLavoroL1', 'AnniLavoroL2', 'AnniLavoroL3', 'AnniLavoroL4', 
                     'PercentAmiciL1', 'PercentAmiciL2', 'PercentAmiciL3', 'PercentAmiciL4', 'PercentFamigliaL1', 'PercentFamigliaL2', 'PercentFamigliaL3', 'PercentFamigliaL4', 'PercentLavoroL1', 'PercentLavoroL2', 'PercentLavoroL3', 'PercentLavoroL4', 'PercentStessoL1', 'PercentStessoL2', 'PercentStessoL3', 'PercentStessoL4', 'PercentCalcoliL1', 'PercentCalcoliL2', 'PercentCalcoliL3', 'PercentCalcoliL4',
-                    'ParlaL1', 'ParlaL2', 'ParlaL3', 'ParlaL4', 'CapisceL1', 'CapisceL2', 'CapisceL3', 'CapisceL4', 'LeggeL1', 'LeggeL2', 'LeggeL3', 'LeggeL4', 'ScriveL1', 'ScriveL2', 'ScriveL3', 'ScriveL4',
-                    'SentoStessoL1', 'SentoStessoL2', 'SentoStessoL3', 'SentoStessoL4', 'CulturaL1', 'CulturaL2', 'CulturaL3', 'CulturaL4', 'LivelloL1', 'LivelloL2', 'LivelloL3', 'LivelloL4', 'MadrelinguaL1', 'MadrelinguaL2', 'MadrelinguaL3', 'MadrelinguaL4',
-                    'AttentionCheck']
+                    'ParlaL1', 'ParlaL2', 'ParlaL3', 'ParlaL4', 'CapisceL1', 'CapisceL2', 'CapisceL3', 'CapisceL4', 'LeggeL1', 'LeggeL2', 'LeggeL3', 'AttentionCheck', 'LeggeL4', 'ScriveL1', 'ScriveL2', 'ScriveL3', 'ScriveL4',
+                    'SentoStessoL1', 'SentoStessoL2', 'SentoStessoL3', 'SentoStessoL4', 'CulturaL1', 'CulturaL2', 'CulturaL3', 'CulturaL4', 'LivelloL1', 'LivelloL2', 'LivelloL3', 'LivelloL4', 'MadrelinguaL1', 'MadrelinguaL2', 'MadrelinguaL3', 'MadrelinguaL4']
 
 def BLP_preprocessing(BLP_file):
     AoA12_mapping = {"Non so questa lingua": 0, "20+": 0, "19": 1, "18": 2, "17": 3, "16": 4, "15": 5, "14": 6, "13": 7, "12": 8, "11": 9, "10": 10, "9": 11, "8": 12, "7": 13, "6": 14, "5": 15, "4": 16, "3": 17, "2": 18, "1": 19, "Dalla nascita": 20, "Da quando ne ho ricordo": 20, "Ancora no": 0}
@@ -106,8 +105,8 @@ def BLP_preprocessing(BLP_file):
         all_attitude_scoreL3.append(attitude_scoreL3)
         all_attitude_scoreL4.append(attitude_scoreL4)
         
-    # this code doesn't work
-    attention_mapping = {"0": False, "1": False, "2": True, "3": False, "4": False, "5": False, "6": False}
+    # this code doesn't work well: inversed binary coding for pilot 3
+    attention_mapping = {0: "false", 1: "false", 2: "true", 3: "false", 4: "false", 5: "false", 6: "false"}
     BLP_data3 = BLP_data2.replace({"AttentionCheck": attention_mapping})
     
     BLP_data3["HistoryL1Score"] = all_history_scoreL1
