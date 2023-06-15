@@ -401,6 +401,13 @@
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
     var rand_training4 = training_randomisation(training_list);
+    // to be run for 8 training reps:
+    /*
+    var rand_training5 = training_randomisation(training_list);
+    var rand_training6 = training_randomisation(training_list);
+    var rand_training7 = training_randomisation(training_list);
+    var rand_training8 = training_randomisation(training_list);
+    */
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
@@ -563,6 +570,130 @@
       timeline_variables: training_stimuli4,
     };
     timeline.push(training_procedure4);
+
+    // for 8 training reps:
+    /*
+    var inter_training4 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `<p>Ottimo, hai visto il quarto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+          choices: ' '
+        };
+    timeline.push(inter_training1);
+
+    var training_stimuli5 = [];
+    var item = ' '
+    for (let i = 0; i < rand_training5.length; i++) {
+      var item = rand_training5[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict5 = {stimulus: java, correct_response: ''};
+      training_stimuli5.push(training_stimuli_dict1)
+    };
+    
+    var training_trial5 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
+    };
+
+    var training_procedure5 = {
+      timeline: [training_trial5],
+      timeline_variables: training_stimuli5,
+    };
+    timeline.push(training_procedure5);
+
+    var inter_training5 = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `<p>Ottimo, hai visto il quinto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+          choices: ' '
+        };
+    timeline.push(inter_training5);
+    
+    var training_stimuli6 = [];
+    for (let i = 0; i < rand_training6.length; i++) {
+      var item = rand_training6[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict6 = {stimulus: java, correct_response: ''};
+      training_stimuli2.push(training_stimuli_dict6)
+    };
+    
+    var training_trial6 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
+    };
+
+    var training_procedure6 = {
+      timeline: [training_trial6],
+      timeline_variables: training_stimuli6,
+    };
+    timeline.push(training_procedure6);
+
+    var inter_training6 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Ottimo, hai visto il sesto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training6);
+
+    var training_stimuli7 = [];
+    for (let i = 0; i < rand_training7.length; i++) {
+      var item = rand_training7[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict7 = {stimulus: java, correct_response: ''};
+      training_stimuli7.push(training_stimuli_dict7)
+    };
+    
+    var training_trial7 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
+    };
+
+    var training_procedure7 = {
+      timeline: [training_trial7],
+      timeline_variables: training_stimuli7,
+    };
+    timeline.push(training_procedure7);
+
+    var inter_training7 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Ottimo, hai visto il settimo blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training7);
+
+    var training_stimuli8 = [];
+    for (let i = 0; i < rand_training8.length; i++) {
+      var item = rand_training8[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict8 = {stimulus: java, correct_response: ''};
+      training_stimuli8.push(training_stimuli_dict8)
+    };
+    
+    var training_trial8 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 800,
+      trial_duration: 1000,
+      response_ends_trial: false
+    };
+
+    var training_procedure8 = {
+      timeline: [training_trial8],
+      timeline_variables: training_stimuli8,
+    };
+    timeline.push(training_procedure8);
+    */
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
