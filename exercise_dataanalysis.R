@@ -131,7 +131,12 @@ lines(density(all_data$RT[all_data$sbjID==5]),col="indianred4");
 lines(density(all_data$RT[all_data$sbjID==6]),col="lightslateblue");
 lines(density(all_data$RT[all_data$sbjID==7]),col="navy");
 legend("topright",title="Participant:",c("1","2","3","4","5","6","7"),fill=c("cadetblue","coral","darkgoldenrod","darkgreen","indianred4","lightslateblue","navy"),bty = "n",
-       cex=0.75,y.intersp=0.5)
+       cex=0.75,y.intersp=0.5);
+
+# d primes
+dprimes <- dPrime(all_data$sbjID[all_data$sbjID<8], all_data$expected[all_data$sbjID>8], all_data$observed[all_data$sbjID>8]);
+dim(dprimes);
+summary(dprimes);
 
 # PILOT 2
 # Pilot 2 accuracy boxplot
@@ -204,6 +209,11 @@ boxplot(familiarity_data_pilot2$familiarity_score, ylab = "Familiarity score");
 abline(h=50, lty=5);
 summary(familiarity_data_pilot2$familiarity_score)
 
+# d primes
+dprimes <- dPrime(all_data$sbjID[all_data$sbjID>7 & all_data$sbjID<16], all_data$expected[all_data$sbjID>7 & all_data$sbjID<16], all_data$observed[all_data$sbjID>7 & all_data$sbjID<16]);
+dim(dprimes);
+summary(dprimes);
+
 # PILOT 3
 # Pilot 3 accuracy boxplot
 mean_data3 <- data.frame(mean_scores3 = c(50,57.5,40,50,52.5,50,57.5));
@@ -229,7 +239,7 @@ setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Pilot3_data");
 BLP_data3 <- read.table("BLP_preprocessed_pilot3.csv",header=T,sep=",");
 dim(BLP_data3);
 head(BLP_data3);
-summary(BLP_data3); # for some reason AttentionCheck is  0000602? Check code. Last participant did fail check
+summary(BLP_data3);
 BLP_data3$Sex <- as.factor(BLP_data3$Sex);
 BLP_data3$MaxEdu <- as.factor(BLP_data3$MaxEdu);
 BLP_data3$L1 <- as.factor(BLP_data3$L1);
@@ -274,3 +284,8 @@ summary(familiarity_data_pilot3); # med & mean at 50: maybe worried about timeou
 boxplot(familiarity_data_pilot3$familiarity_score, ylab = "Familiarity score");
 abline(h=50, lty=5);
 summary(familiarity_data_pilot3$familiarity_score)
+
+# d primes
+dprimes <- dPrime(all_data$sbjID[all_data$sbjID>15], all_data$expected[all_data$sbjID>15], all_data$observed[all_data$sbjID>15]);
+dim(dprimes);
+summary(dprimes);
