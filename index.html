@@ -421,6 +421,70 @@
     };
     timeline.push(bio_info);
 
+    var options = [];
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var tag = L1_tag;
+          var name = nameL1;
+          var color = "royalblue"
+        };
+        if (l == 1) {
+          var tag = L2_tag;
+          var name = nameL2;
+          var color = "firebrick"
+        };
+        if (l == 2) {
+          var tag = L3_tag;
+          var name = nameL3;
+          var color = "green"
+        };
+        if (l == 3) {
+          var tag = L4_tag;
+          var name = nameL4;
+          var color = "goldenrod"
+        };
+        if (question == 'AoA') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">Dalla nascita</label>`;};
+        if (question == 'AoAgio') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Da quando ne ho ricordo</label><input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Non ancora</label>`};
+        if (question == 'anniInstr') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniPaese') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniFamiglia') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniLavoro') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
+          var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font>
+          `+ extras +`
+          <input type="radio" id="`+ name +`_1" name="`+ name +`_1" value="1" required/><label for="`+ name +`_1">1</label>
+          <input type="radio" id="`+ name +`_2" name="`+ name +`_2" value="2" required/><label for="`+ name +`_2">2</label>
+          <input type="radio" id="`+ name +`_3" name="`+ name +`_3" value="3" required/><label for="`+ name +`_3">3</label>
+          <input type="radio" id="`+ name +`_4" name="`+ name +`_4" value="4" required/><label for="`+ name +`_4">4</label>
+          <input type="radio" id="`+ name +`_5" name="`+ name +`_5" value="5" required/><label for="`+ name +`_5">5</label>
+          <input type="radio" id="`+ name +`_6" name="`+ name +`_6" value="6" required/><label for="`+ name +`_6">6</label>
+          <input type="radio" id="`+ name +`_7" name="`+ name +`_7" value="7" required/><label for="`+ name +`_7">7</label>
+          <input type="radio" id="`+ name +`_8" name="`+ name +`_8" value="8" required/><label for="`+ name +`_8">8</label>
+          <input type="radio" id="`+ name +`_9" name="`+ name +`_9" value="9" required/><label for="`+ name +`_9">9</label>
+          <input type="radio" id="`+ name +`_10" name="`+ name +`_10" value="10" required/><label for="`+ name +`_10">10</label>
+          <input type="radio" id="`+ name +`_11" name="`+ name +`_11" value="11"><label for="`+ name +`_11">11</label>
+          <input type="radio" id="`+ name +`_12" name="`+ name +`_12" value="12" required/><label for="`+ name +`_12">12</label>
+          <input type="radio" id="`+ name +`_13" name="`+ name +`_13" value="13" required/><label for="`+ name +`_13">13</label>
+          <input type="radio" id="`+ name +`_14" name="`+ name +`_14" value="14" required/><label for="`+ name +`_14">14</label>
+          <input type="radio" id="`+ name +`_15" name="`+ name +`_15" value="15" required/><label for="`+ name +`_15">15</label>
+          <input type="radio" id="`+ name +`_16" name="`+ name +`_16" value="16" required/><label for="`+ name +`_16">16</label>
+          <input type="radio" id="`+ name +`_17" name="`+ name +`_17" value="17" required/><label for="`+ name +`_17">17</label>
+          <input type="radio" id="`+ name +`_18" name="`+ name +`_18" value="18" required/><label for="`+ name +`_18">18</label>
+          <input type="radio" id="`+ name +`_19" name="`+ name +`_19" value="19" required/><label for="`+ name +`_19">19</label>
+          <input type="radio" id="`+ name +`_20+" name="`+ name +`_20" value="20+" required/><label for="`+ name +`_20+">20+</label></p>`;
+          };
+        options.push(option)
+      };
+      console.log(options);
+
     function anni (question) {
       var options = [];
       var nameL1 = String(question + 'L1');
@@ -505,7 +569,6 @@
       }
     };
     timeline.push(history_info);
-    console.log(big_html);
 
     function percent (question) {
       var options = []
