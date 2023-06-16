@@ -427,10 +427,10 @@
       var nameL2 = String(question + 'L2');
       var nameL3 = String(question + 'L3');
       var nameL4 = String(question + 'L4');
-      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
-      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
-      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
-      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      var L1_tag = 'L1';
+      var L2_tag = 'L2';
+      var L3_tag = 'L3';
+      var L4_tag = 'L4';
       for (let l=0; l < 4; l++) {
         if (l == 0) {
           var tag = L1_tag;
