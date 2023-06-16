@@ -17,5 +17,5 @@ label:hover {
 }
 
 input[type="radio"]:checked + label {
-  background-color: #70a3bd;
+  background-color: #89cff0;
 }
