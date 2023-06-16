@@ -571,9 +571,9 @@
         var big_html = `<p style="color: black"><legend>1. A quanti anni iniziò ad imparare le seguenti lingue?</legend></p>` + AoA + `</p><p style="color: black"><legend>2. A quanti anni iniziò a sentirsi a proprio agio usando le seguenti lingue?</legend></p>` + AoAgio + `</p><p style="color: black"><legend>3. Per quanti anni ha ricevuto un’ istruzione (grammatica, storia, matematica, etc..) nelle seguenti lingue (a partire dalla scuola primaria fino all’università)?</legend></p>` + anniInstr + `</p><p style="color: black"><legend>4. Quanti anni ha passato in un Paese/regione in cui si parlano le seguenti lingue?</legend></p>` + anniPaese + `</p><p style="color: black"><legend>5. Quanti anni ha trascorso in famiglia parlando le seguenti lingue?</legend></p>` + anniFamiglia + `</p><p style="color: black"><legend>6. Quanti anni ha trascorso in un ambiente di lavoro in cui si parlano le seguenti lingue?</legend></p>` + anniLavoro;
         return big_html
       },
-      data: {
-        display: html
-      },
+      on_finish: function(data) {
+        data.response_html = document.getElementById(name).innerHTML;
+      }
     };
     timeline.push(history_info);
 
