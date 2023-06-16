@@ -466,7 +466,7 @@
       training_stimuli1.push(training_stimuli_dict1)
     };
     
-    var training_trial1 = {
+    var training_trial = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: jsPsych.timelineVariable('stimulus'),
       choices: 'NO_KEYS',
@@ -476,7 +476,7 @@
     };
 
     var training_procedure1 = {
-      timeline: [training_trial1],
+      timeline: [training_trial],
       timeline_variables: training_stimuli1,
     };
     timeline.push(training_procedure1);
@@ -488,6 +488,7 @@
         };
     timeline.push(inter_training1);
     
+    // training round 2
     var training_stimuli2 = [];
     for (let i = 0; i < rand_training2.length; i++) {
       var item = rand_training2[i];
@@ -495,18 +496,9 @@
       var training_stimuli_dict2 = {stimulus: java, correct_response: ''};
       training_stimuli2.push(training_stimuli_dict2)
     };
-    
-    var training_trial2 = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      choices: 'NO_KEYS',
-      stimulus_duration: 800,
-      trial_duration: 1000,
-      response_ends_trial: false
-    };
 
     var training_procedure2 = {
-      timeline: [training_trial2],
+      timeline: [training_trial],
       timeline_variables: training_stimuli2,
     };
     timeline.push(training_procedure2);
@@ -518,6 +510,7 @@
     };
     timeline.push(inter_training2);
 
+    // training round 3
     var training_stimuli3 = [];
     for (let i = 0; i < rand_training3.length; i++) {
       var item = rand_training3[i];
@@ -525,18 +518,9 @@
       var training_stimuli_dict3 = {stimulus: java, correct_response: ''};
       training_stimuli3.push(training_stimuli_dict3)
     };
-    
-    var training_trial3 = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      choices: 'NO_KEYS',
-      stimulus_duration: 800,
-      trial_duration: 1000,
-      response_ends_trial: false
-    };
 
     var training_procedure3 = {
-      timeline: [training_trial3],
+      timeline: [training_trial],
       timeline_variables: training_stimuli3,
     };
     timeline.push(training_procedure3);
@@ -548,6 +532,7 @@
     };
     timeline.push(inter_training3);
 
+    // training round 4
     var training_stimuli4 = [];
     for (let i = 0; i < rand_training4.length; i++) {
       var item = rand_training4[i];
@@ -555,18 +540,9 @@
       var training_stimuli_dict4 = {stimulus: java, correct_response: ''};
       training_stimuli4.push(training_stimuli_dict4)
     };
-    
-    var training_trial4 = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: jsPsych.timelineVariable('stimulus'),
-      choices: 'NO_KEYS',
-      stimulus_duration: 800,
-      trial_duration: 1000,
-      response_ends_trial: false
-    };
 
     var training_procedure4 = {
-      timeline: [training_trial4],
+      timeline: [training_trial],
       timeline_variables: training_stimuli4,
     };
     timeline.push(training_procedure4);
@@ -578,8 +554,9 @@
           stimulus: `<p>Ottimo, hai visto il quarto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
           choices: ' '
         };
-    timeline.push(inter_training1);
-
+    timeline.push(inter_training4);
+    
+    // training round 5
     var training_stimuli5 = [];
     var item = ' '
     for (let i = 0; i < rand_training5.length; i++) {
@@ -611,12 +588,13 @@
         };
     timeline.push(inter_training5);
     
+    // training round 6
     var training_stimuli6 = [];
     for (let i = 0; i < rand_training6.length; i++) {
       var item = rand_training6[i];
       var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
       var training_stimuli_dict6 = {stimulus: java, correct_response: ''};
-      training_stimuli2.push(training_stimuli_dict6)
+      training_stimuli6.push(training_stimuli_dict6)
     };
     
     var training_trial6 = {
@@ -641,6 +619,7 @@
     };
     timeline.push(inter_training6);
 
+    // training round 7
     var training_stimuli7 = [];
     for (let i = 0; i < rand_training7.length; i++) {
       var item = rand_training7[i];
@@ -671,6 +650,7 @@
     };
     timeline.push(inter_training7);
 
+    // training round 8
     var training_stimuli8 = [];
     for (let i = 0; i < rand_training8.length; i++) {
       var item = rand_training8[i];
