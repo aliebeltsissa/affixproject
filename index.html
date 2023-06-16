@@ -452,14 +452,16 @@
           var name = nameL4;
           var color = "goldenrod"
         };
-        if (question == 'AoA') {var extras = '<input type="radio" id="AoA_0" name="'+ name +'" value="0"><label for="AoA_0">Dalla nascita</label>';};
-        if (question == 'AoAgio') {var extras = '<input type="radio" id="AoAgio_0" name="'+ name +'" value="0"><label for="AoAgio_0">Da quando ne ho ricordo</label><input type="radio" id="notyet" name="'+ name +'" value="notyet"><label for="notyet">Non ancora</label>'};
-        if (question == 'anniInstr') {var extras = '<input type="radio" id="anniInstr_0" name="'+ name +'" value="0"><label for="anniInstr_0">0</label>'};
-        if (question == 'anniPaese') {var extras = '<input type="radio" id="anniPaese_0" name="'+ name +'" value="0"><label for="anniPaese_0">0</label>'};
-        if (question == 'anniFamiglia') {var extras = '<input type="radio" id="anniFamiglia_0" name="'+ name +'" value="0"><label for="anniFamiglia_0">0</label>'};
-        if (question == 'anniLavoro') {var extras = '<input type="radio" id="anniLavoro_0" name="'+ name +'" value="0"><label for="anniLavoro_0">0</label>'};
+        console.log(name);
+        if (question == 'AoA') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Dalla nascita</label>`;};
+        if (question == 'AoAgio') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Da quando ne ho ricordo</label><input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Non ancora</label>`};
+        if (question == 'anniInstr') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniPaese') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniFamiglia') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniLavoro') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font>
+          `+ extras +`
           <input type="radio" id="`+ name +`_1" name="`+ name +`_1" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`_2" value="2" required/><label for="`+ name +`_2">2</label>
           <input type="radio" id="`+ name +`_3" name="`+ name +`_3" value="3" required/><label for="`+ name +`_3">3</label>
