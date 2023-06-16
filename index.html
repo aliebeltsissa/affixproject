@@ -459,7 +459,8 @@
         if (question == 'anniFamiglia') {var extras = '<input type="radio" id="anniFamiglia_0" name="'+ name +'" value="0"><label for="anniFamiglia_0">0</label>'};
         if (question == 'anniLavoro') {var extras = '<input type="radio" id="anniLavoro_0" name="'+ name +'" value="0"><label for="anniLavoro_0">0</label>'};
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font><input name="`+ name +`" type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
+          var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font>
+          <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
           <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
           <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
@@ -535,17 +536,18 @@
           var color = "goldenrod"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font><input name="`+ name +`" type="radio" id="`+ name +`_N/A" value="0" required/><label for="`+ name +`_0">0%</label>
-          <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10%</label>
-          <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/><label for="`+ name +`_20">20%</label>
-          <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/><label for="`+ name +`_30">30%</label>
-          <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/><label for="`+ name +`_40">40%</label>
-          <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/><label for="`+ name +`_50">50%</label>
-          <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/><label for="`+ name +`_60">60%</label>
-          <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/><label for="`+ name +`_70">70%</label>
-          <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/><label for="`+ name +`_80">80%</label>
-          <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/><label for="`+ name +`_90">90%</label>
-          <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/><label for="`+ name +`_100">100%</label></p>`;
+          var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font>
+          <input type="radio" id="`+ name +`_0" name ="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0%</label>
+          <input type="radio" id="`+ name +`_10" name="`+ name +`_10" value="10" required/><label for="`+ name +`_10">10%</label>
+          <input type="radio" id="`+ name +`_20" name="`+ name +`_20" value="20" required/><label for="`+ name +`_20">20%</label>
+          <input type="radio" id="`+ name +`_30" name="`+ name +`_30" value="30" required/><label for="`+ name +`_30">30%</label>
+          <input type="radio" id="`+ name +`_40" name="`+ name +`_40" value="40" required/><label for="`+ name +`_40">40%</label>
+          <input type="radio" id="`+ name +`_50" name="`+ name +`_50" value="50" required/><label for="`+ name +`_50">50%</label>
+          <input type="radio" id="`+ name +`_60" name="`+ name +`_60" value="60" required/><label for="`+ name +`_60">60%</label>
+          <input type="radio" id="`+ name +`_70" name="`+ name +`_70" value="70" required/><label for="`+ name +`_70">70%</label>
+          <input type="radio" id="`+ name +`_80" name="`+ name +`_80" value="80" required/><label for="`+ name +`_80">80%</label>
+          <input type="radio" id="`+ name +`_90" name="`+ name +`_90" value="90" required/><label for="`+ name +`_90">90%</label>
+          <input type="radio" id="`+ name +`_100" name="`+ name +`_100" value="100" required/><label for="`+ name +`_100">100%</label></p>`;
         };
         options.push(option)
       };
