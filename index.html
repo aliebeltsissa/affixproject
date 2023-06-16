@@ -453,18 +453,27 @@
           var color = "goldenrod"
         };
         if (question == 'AoA') {
-        var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">Dalla nascita</label>'
+        var extras = '<input type="radio" id="AoA_0" name="'+ name +'" value="0"><label for="AoA_0">Dalla nascita</label>';
         };
         if (question == 'AoAgio') {
-          var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">Da quando ne ho ricordo</label><input type="radio" id="notyet" name="'+ name +'" value="notyet"><label for="notyet">Non ancora</label>'
+          var extras = '<input type="radio" id="AoAgio_0" name="'+ name +'" value="0"><label for="AoAgio_0">Da quando ne ho ricordo</label><input type="radio" id="notyet" name="'+ name +'" value="notyet"><label for="notyet">Non ancora</label>'
         };
-        if (question == 'anniInstr' || question == 'anniPaese' || question == 'anniFamiglia' || question == 'anniLavoro') {
-          var extras = '<input type="radio" id="0" name="'+ name +'" value="0"><label for="0">0</label>'
+        if (question == 'anniInstr') {
+          var extras = '<input type="radio" id="anniInstr_0" name="'+ name +'" value="0"><label for="anniInstr_0">0</label>'
+        };
+        if (question == 'anniPaese') {
+          var extras = '<input type="radio" id="anniPaese_0" name="'+ name +'" value="0"><label for="anniPaese_0">0</label>'
+        };
+        if (question == 'anniFamiglia') {
+          var extras = '<input type="radio" id="anniFamiglia_0" name="'+ name +'" value="0"><label for="anniFamiglia_0">0</label>'
+        };
+        if (question == 'anniLavoro') {
+          var extras = '<input type="radio" id="anniLavoro_0" name="'+ name +'" value="0"><label for="anniLavoro_0">0</label>'
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {
           var option = ''
         } else {
-          var option = '<strong><font color="'+ color +'">'+tag+':</strong></font><input name="'+ name +'" type="radio" id="N/A" name="'+ name +'" value="1" required/><label for="1">1</label><input type="radio" id="2" name="'+ name +'" value="2" required/><label for="2">2</label><input type="radio" id="3" name="'+ name +'" value="3" required/><label for="3">3</label><input type="radio" id="4" name="'+ name +'" value="4" required/><label for="4">4</label><input type="radio" id="5" name="'+ name +'" value="5" required/><label for="5">5</label><input type="radio" id="6" name="'+ name +'" value="6" required/><label for="6">6</label><input type="radio" id="7" name="'+ name +'" value="7" required/><label for="7">7</label><input type="radio" id="8" name="'+ name +'" value="8" required/><label for="8">8</label><input type="radio" id="9" name="'+ name +'" value="9" required/><label for="9">9</label><input type="radio" id="10" name="'+ name +'" value="10" required/><label for="10">10</label><input type="radio" id="11" name="'+ name +'" value="11"><label for="11">11</label><input type="radio" id="12" name="'+ name +'" value="12" required/><label for="12">12</label><input type="radio" id="13" name="'+ name +'" value="13" required/><label for="13">13</label><input type="radio" id="14" name="'+ name +'" value="14" required/><label for="14">14</label><input type="radio" id="15" name="'+ name +'" value="15" required/><label for="15">15</label><input type="radio" id="16" name="'+ name +'" value="16" required/><label for="16">16</label><input type="radio" id="17" name="'+ name +'" value="17" required/><label for="17">17</label><input type="radio" id="18" name="'+ name +'" value="18" required/><label for="18">18</label><input type="radio" id="19" name="'+ name +'" value="19" required/><label for="19">19</label><input type="radio" id="20+" name="'+ name +'" value="20+" required/><label for="20+">20+</label></p>';
+          var option = '<strong><font color="'+ color +'">'+tag+':</strong></font><input name="'+ name +'" type="radio" id="'question'_1" name="'+ name +'" value="1" required/><label for="'question'_1">1</label><input type="radio" id="'question'_2" name="'+ name +'" value="2" required/><label for="'question'_2">2</label><input type="radio" id="'question'_3" name="'+ name +'" value="3" required/><label for="'question'_3">3</label><input type="radio" id="'question'_4" name="'+ name +'" value="4" required/><label for="'question'_4">4</label><input type="radio" id="'question'_5" name="'+ name +'" value="5" required/><label for="'question'_5">5</label><input type="radio" id="'question'_6" name="'+ name +'" value="6" required/><label for="'question'_6">6</label><input type="radio" id="'question'_7" name="'+ name +'" value="7" required/><label for="'question'_7">7</label><input type="radio" id="'question'_8" name="'+ name +'" value="8" required/><label for="'question'_8">8</label><input type="radio" id="'question'_9" name="'+ name +'" value="9" required/><label for="'question'_9">9</label><input type="radio" id="'question'_10" name="'+ name +'" value="10" required/><label for="'question'_10">10</label><input type="radio" id="'question'_11" name="'+ name +'" value="11"><label for="'question'_11">11</label><input type="radio" id="'question'_12" name="'+ name +'" value="12" required/><label for="'question'_12">12</label><input type="radio" id="'question'_13" name="'+ name +'" value="13" required/><label for="'question'_13">13</label><input type="radio" id="'question'_14" name="'+ name +'" value="14" required/><label for="'question'_14">14</label><input type="radio" id="'question'_15" name="'+ name +'" value="15" required/><label for="'question'_15">15</label><input type="radio" id="'question'_16" name="'+ name +'" value="16" required/><label for="'question'_16">16</label><input type="radio" id="'question'_17" name="'+ name +'" value="17" required/><label for="'question'_17">17</label><input type="radio" id="'question'_18" name="'+ name +'" value="18" required/><label for="'question'_18">18</label><input type="radio" id="'question'_19" name="'+ name +'" value="19" required/><label for="'question'_19">19</label><input type="radio" id="'question'_20+" name="'+ name +'" value="20+" required/><label for="'question'_20+">20+</label></p>';
           };
         options.push(option)
       };
