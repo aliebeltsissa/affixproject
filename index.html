@@ -453,10 +453,10 @@
           var color = "goldenrod"
         };
         if (question == 'AoA') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">Dalla nascita</label>`;};
-        if (question == 'AoAgio') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Da quando ne ho ricordo</label><input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Non ancora</label>`};
-        if (question == 'anniInstr') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (question == 'anniPaese') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (question == 'anniFamiglia') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'AoAgio') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">Da quando ne ho ricordo</label><input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Non ancora</label>`};
+        if (question == 'anniInstr') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniPaese') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'anniFamiglia') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`_0" value="0"><label for="`+ name +`_0">0</label>`};
         if (question == 'anniLavoro') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`:</strong></font>
@@ -488,11 +488,6 @@
       var options = options.replace(/,/g,'');
       return options
     };
-
-    var AoA = anni('AoA');
-    var AoAgio = anni('AoAgio');
-    console.log(AoA);
-    console.log(AoAgio);
     
     var history_info = {
       type: jsPsychSurveyHtmlForm,
