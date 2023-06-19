@@ -1,5 +1,5 @@
 input[type="radio"] {
-  opacity: 0;
+  display: none;
 }
 
 label {
@@ -21,5 +21,5 @@ input[type="radio"]:checked + label {
 }
 
 input[type="radio"]:invalid + label {
-  background-color: red;
+  background-color: #ac1820;
 }
