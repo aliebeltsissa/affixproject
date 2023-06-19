@@ -1,5 +1,5 @@
 input[type="radio"] {
-  visibility: hidden;
+  opacity: 0;
 }
 
 label {
