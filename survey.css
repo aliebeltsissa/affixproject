@@ -20,6 +20,6 @@ input[type="radio"]:checked + label {
   background-color: #89cff0;
 }
 
-label.required:not(.checked) {
-  background-color: #ac1820;
+input[type="radio"]:required:invalid + label {
+  color: red;
 }
