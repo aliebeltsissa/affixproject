@@ -20,6 +20,6 @@ input[type="radio"]:checked + label {
   background-color: #89cff0;
 }
 
-input[type="radio"]:not(:checked) + label {
+input[type="radio"]:invalid + label {
   background-color: red;
 }
