@@ -19,3 +19,7 @@ label:hover {
 input[type="radio"]:checked + label {
   background-color: #89cff0;
 }
+
+input[type="radio"]:invalid + label {
+  border-color: #ac1820;
+}
