@@ -2,19 +2,20 @@
 <html>
   <head>
     <title>Alien Language Experiment</title>
+    <!-- jsPsych & Pavlovia -->
     <script src="lib/vendors/jspsych-7.1.2/jspsych.js"></script>
     <script type="text/javascript" src="lib/jspsych-7-pavlovia-2022.1.1.js"></script>
-    
+    <!-- preload & setup -->
     <script src="lib/vendors/jspsych-7.1.2/plugin-preload.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-fullscreen.js"></script>
-
+    <!-- response plugins-->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-keyboard-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-image-keyboard-response.js"></script>
-    
+    <!-- survey plugins -->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-button-response.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.1"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-survey-multi-select.js"></script>
-
+    <!-- formatting & styling -->
     <script type="text/javascript" src="lib/vendors/jquery-2.2.0.min.js"></script>
     <link rel="stylesheet" href="lib/vendors/jspsych-7.1.2/jspsych.css">
     <link rel="stylesheet" href="survey.css">
@@ -28,26 +29,35 @@
   </style>
   <body></body>
   <script>
+    /* ========== INITIALISATION ========== */
     var jsPsych = initJsPsych({
       on_finish: function() {
-        jsPsych.data.displayData(); /* when all trials finished, display data */
-      }
+        jsPsych.data.displayData(); // when all trials finished, display data -- can probably remove this for actually running
+      };
+      function() {
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX"
+      } // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
     });
     
-    var timeline = []; 
+    // capture info from Prolific
+    var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+    var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+    var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
+    jsPsych.data.addProperties({
+      subject_id: subject_id,
+      study_id: study_id,
+      session_id: session_id
+    });
+
+    // open connection with Pavlovia
     var pavlovia_init = {
       type: jsPsychPavlovia,
       command: "init"
     };
     timeline.push(pavlovia_init);
-
-    function changeTextColor(color) {
-      var body = document.getElementsByTagName("body")[0];
-      body.style.color = color;
-    };
-
-    changeTextColor("white");
+    
+    var timeline = [];
 
     /* ========== WORD_GENERATION SCRIPT ========== */
     function import_morphemes() {
@@ -331,9 +341,6 @@
     console.log('Training list: ' + training_list);
     console.log(testing);
 
-    /* JSPSYCH EXPERIMENT SCRIPT */ 
-    document.body.style.backgroundColor = "#808080";
-
     function training_randomisation(training_list) {
       var listlength = training_list.length;
       var rand_lst = ['efjnpqsz'];
@@ -417,6 +424,16 @@
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
     /* ========== JSPSYCH SCRIPT ========== */
+    document.body.style.backgroundColor = "#808080";
+
+    // change text colour to white
+    function changeTextColor(color) {
+      var body = document.getElementsByTagName("body")[0];
+      body.style.color = color;
+    };
+
+    changeTextColor("white");
+
     /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
