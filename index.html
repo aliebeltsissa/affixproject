@@ -48,14 +48,14 @@
       session_id: session_id
     });
 
+    var timeline = [];
+
     // open connection with Pavlovia
     var pavlovia_init = {
       type: jsPsychPavlovia,
       command: "init"
     };
     timeline.push(pavlovia_init);
-    
-    var timeline = [];
 
     /* ========== WORD_GENERATION SCRIPT ========== */
     function import_morphemes() {
