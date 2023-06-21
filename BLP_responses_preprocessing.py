@@ -105,7 +105,6 @@ def BLP_preprocessing(BLP_file):
         all_attitude_scoreL3.append(attitude_scoreL3)
         all_attitude_scoreL4.append(attitude_scoreL4)
         
-    # this code doesn't work well: inversed binary coding for pilot 3
     attention_mapping = {0: "false", 1: "false", 2: "true", 3: "false", 4: "false", 5: "false", 6: "false"}
     BLP_data3 = BLP_data2.replace({"AttentionCheck": attention_mapping})
     
