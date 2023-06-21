@@ -33,10 +33,8 @@
     var jsPsych = initJsPsych({
       on_finish: function() {
         jsPsych.data.displayData(); // when all trials finished, display data -- can probably remove this for actually running
-      };
-      function() {
-        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX"
-      } // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
+      }
     });
     
     // capture info from Prolific
