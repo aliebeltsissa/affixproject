@@ -1,3 +1,4 @@
+### IMPORTING ###
 from os import listdir, chdir
 from os.path import isfile
 chdir("C:\\Users\\annal\\Downloads\\practice") # set working directory to responses folder
@@ -17,7 +18,8 @@ for f in allfiles:
         value2 = {column_names[x]: value[x] for x in range(12)}
         temp[x] = value2
     all_data.append(temp)
-    
+   
+### BLP PRE-PROCESSING ###
 import json
 BLP_data = []
 for x in range(len(all_data)): # extract BLP responses
@@ -63,16 +65,17 @@ def BLP_preprocessing(BLP_file):
     BLP_data2 = BLP_data3.replace({"PercCalcoliL1": percent_mapping, "PercCalcoliL2": percent_mapping, "PercCalcoliL3": percent_mapping, "PercCalcoliL4": percent_mapping})
     
     # summing up scores per section per language
+    # HISTORY
     all_history_scoreL1 = []
     all_history_scoreL2 = []
     all_history_scoreL3 = []
     all_history_scoreL4 = []
-    BLP_data2 = BLP_data2.astype({"AoAL1":"int","AoAgioL1":"int","anniInstrL1":"int","anniPaeseL1":"int","anniFamigliaL1":"int","anniLavoroL1":"int"})
+    BLP_data2 = BLP_data2.astype({"AoAL1":"int","AoAgioL1":"int","anniInstrL1":"int","anniPaeseL1":"int","anniFamigliaL1":"int","anniLavoroL1":"int"}) # transform scores into integers
     history_scoreL1 = (BLP_data2["AoAL1"][0] + BLP_data2["AoAgioL1"][0] + BLP_data2["anniInstrL1"][0] + BLP_data2["anniPaeseL1"][0] + BLP_data2["anniFamigliaL1"][0] + BLP_data2["anniLavoroL1"][0])*0.454
     try:
         BLP_data2 = BLP_data2.astype({"AoAL2":"int","AoAgioL2":"int","anniInstrL2":"int","anniPaeseL2":"int","anniFamigliaL2":"int","anniLavoroL2":"int"})
         history_scoreL2 = (BLP_data2["AoAL2"][0] + BLP_data2["AoAgioL2"][0] + BLP_data2["anniInstrL2"][0] + BLP_data2["anniPaeseL2"][0] + BLP_data2["anniFamigliaL2"][0] + BLP_data2["anniLavoroL2"][0])*0.454
-    except KeyError:
+    except KeyError: # if participant doesn't have L2 (so L2 questions weren't displayed - so have no data)
         history_scoreL2 = 0            
     try:
         BLP_data2 = BLP_data2.astype({"AoAL3":"int","AoAgioL3":"int","anniInstrL3":"int","anniPaeseL3":"int","anniFamigliaL3":"int","anniLavoroL3":"int"})
@@ -89,6 +92,7 @@ def BLP_preprocessing(BLP_file):
     all_history_scoreL3.append(history_scoreL3)
     all_history_scoreL4.append(history_scoreL4)
         
+    # USE
     all_use_scoreL1 = []
     all_use_scoreL2 = []
     all_use_scoreL3 = []
@@ -111,6 +115,7 @@ def BLP_preprocessing(BLP_file):
     all_use_scoreL3.append(use_scoreL3)
     all_use_scoreL4.append(use_scoreL4)
         
+    # PROFICIENCY
     all_proficiency_scoreL1 = []
     all_proficiency_scoreL2 = []
     all_proficiency_scoreL3 = []
@@ -137,6 +142,7 @@ def BLP_preprocessing(BLP_file):
     all_proficiency_scoreL3.append(proficiency_scoreL3)
     all_proficiency_scoreL4.append(proficiency_scoreL4)
         
+    # ATTITUDE
     all_attitude_scoreL1 = []
     all_attitude_scoreL2 = []
     all_attitude_scoreL3 = []
@@ -163,12 +169,14 @@ def BLP_preprocessing(BLP_file):
     all_attitude_scoreL3.append(attitude_scoreL3)
     all_attitude_scoreL4.append(attitude_scoreL4)
         
+    # attention check
     attention_mapping = {"0": "false", "1": "false", "2": "true", "3": "false", "4": "false", "5": "false", "6": "false"}
     BLP_data3 = BLP_data2.replace({"AttentionL1": attention_mapping})
     BLP_data2 = BLP_data3.replace({"AttentionL2": attention_mapping})
     BLP_data3 = BLP_data2.replace({"AttentionL3": attention_mapping})
     BLP_data2 = BLP_data3.replace({"AttentionL4": attention_mapping})
     
+    # add column to dataframe with scores per section per language
     BLP_data2["HistoryL1Score"] = all_history_scoreL1
     BLP_data2["HistoryL2Score"] = all_history_scoreL2
     BLP_data2["HistoryL3Score"] = all_history_scoreL3
@@ -185,7 +193,8 @@ def BLP_preprocessing(BLP_file):
     BLP_data2["AttitudeL2Score"] = all_attitude_scoreL2
     BLP_data2["AttitudeL3Score"] = all_attitude_scoreL3
     BLP_data2["AttitudeL4Score"] = all_attitude_scoreL4
-    
+        
+    # sum up section scores for each language
     all_L1_scores = []
     all_L2_scores = []
     all_L3_scores = []
@@ -199,17 +208,19 @@ def BLP_preprocessing(BLP_file):
     all_L3_scores.append(L3_score)
     all_L4_scores.append(L4_score)
         
+    # add column to dataframe for language scores
     BLP_data2["L1Score"] = all_L1_scores
     BLP_data2["L2Score"] = all_L2_scores
     BLP_data2["L3Score"] = all_L3_scores
     BLP_data2["L4Score"] = all_L4_scores
     return BLP_data2
 
-all_BLP_data = pd.DataFrame()
-for x in range(len(BLP_data)):
+all_BLP_data = pd.DataFrame() # empty dataframe
+for x in range(len(BLP_data)): # for each participant datafile
     participant = BLP_data[x]
-    sbj_ID = participant[0]['ID']
+    sbj_ID = participant[0]['ID'] # extract subject ID
     
+    # transform sections into dataframes:
     bioinfo = pd.DataFrame.from_dict(participant[1], orient='index')
     bioinfo = bioinfo.transpose()
     bioinfo.rename(columns = {'Età': 'Age', 'Sesso': 'Sex', 'Formazione': 'Education'})
@@ -227,9 +238,13 @@ for x in range(len(BLP_data)):
     attitude = pd.DataFrame.from_dict(participant[5], orient='index')
     attitude = attitude.transpose()
     
+    # combine section dataframes into a BLP dataframe
     participant_BLP_data = pd.concat([bioinfo, history, use, proficiency, attitude], axis =1)
     col2 = participant_BLP_data.pop('sbj_ID')
     participant_BLP_data.insert(0, 'sbj_ID', col2)
 
+    # run code to score responses
     participant_BLP_data_scored = BLP_preprocessing(participant_BLP_data)
+    
+    # add participant scores to big BLP dataframe
     all_BLP_data = pd.concat([all_BLP_data,participant_BLP_data_scored],axis = 0)
