@@ -31,10 +31,7 @@
   <script>
     /* ========== INITIALISATION ========== */
     var jsPsych = initJsPsych({
-      on_finish: function() {
-        jsPsych.data.displayData(); // when all trials finished, display data -- can probably remove this for actually running
-        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
-      }
+      on_finish: window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
     });
     
     // capture info from Prolific
@@ -421,6 +418,7 @@
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
+
     /* ========== JSPSYCH SCRIPT ========== */
     document.body.style.backgroundColor = "#808080";
 
@@ -444,8 +442,8 @@
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 15px;">Prima di cominciare, le chiediamo di leggere il modulo di consenso informato e confermare la sua volontà di partecipare all'esperimento.</p>
-      <p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborano le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie. Una ricompensa di £4 (£8 per ora) Le verrà consegnata al termine della sessione di testing.</p>
-      <p style="font-size: 15px;"> Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali”.</p>
+      <p style="font-size: 15px;"> La preghiamo di ricordare che questo è un progetto di ricerca e che la sua partecipazione è completamente volontaria. Lei si potra' ritirare in qualunque momento, senza necessariamente dover dare alcuna spiegazione. Lo studio al quale Le si chiede di partecipare ha lo scopo di esaminare come i lettori elaborano le parole scritte. La somministrazione delle prove è individuale. Lei sarà impegnato in una sessione di lavoro della durata media di 10 minuti, e un questionario di 10 minuti. L’ordine delle prove ed il loro svolgimento sono stabiliti in modo tale da evitare un eventuale affaticamento. Tutte le prove saranno precedute da un breve addestramento in modo tale che abbia la possibilità di familiarizzare con il compito. Sono previste alcune pause nel corso dello svolgimento dell’esperimento. Una ricompensa di £4 (£8 per ora) Le verrà consegnata al termine della sessione di testing. Nonostante il testing preveda delle prove cognitive, il presente esperimento non costituisce una prova clinica che permetta la diagnosi di eventuali patologie.</p>
+      <p style="font-size: 15px;">Tutti i dati raccolti grazie alla partecipazione Sua e di altre persone volontarie saranno custoditi in server sicuri e protetti da password, e non sarà consentito ad alcuna persona non autorizzata di accedervi. Le Sue informazioni personali saranno conservate separatamente dai risultati della presente ricerca, cui saranno associati soltanto attraverso un ID arbitrario. Grazie a questo processo di anonimizzazione dei dati, a nessun ricercatore sarà possibile analizzare i risultati sapendo da quale specifico partecipante essi provengono. Inoltre, questa procedura renderà impossibile la Sua identificazione anche nel momento in cui i risultati della ricerca fossero pubblicati su riviste scientifiche, o presentati a congressi o in qualsiasi altro pubblico consesso. Più in generale, i dati raccolti saranno trattati in accordo con le leggi sulla privacy e in conformità al Decreto Legislativo 30 giugno 2003 n. 196 “Codice in materia di protezione dei dati personali” e al Regolamento Europeo 2016/679 (General Data Protection Regulation - GDPR).</p>
       <p style="font-size: 15px;"> Prima di esprimere il suo consenso alla partecipazione, Le ricordiamo ancora che in caso Lei abbia bisogno di delucidazioni su qualunque aspetto della procedura sperimentale, il ricercatore è a Sua completa disposizione (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>).</p>
       <p style="font-size: 15px;">Se vuole scaricare il modulo di consenso informato, clicca qui: <a href="BASL_modulo_consenso.pdf" download>modulo di consenso</a>.</p>
       <p style="font-size: 15px;"> Le chiediamo di premere la barra per continuare al consenso.</p>`,
@@ -456,7 +454,12 @@
     var consent = {
       type: jsPsychSurveyHtmlForm,
       preamble: '<p style="text-align:left;">Premere gli opzioni per esprimere il proprio consenso a partecipare allo studio. Dichiaro: </p>',
-      html: `<p style="text-align:left;"><input name="consent1" type="radio" id="YES1" value="YES1" required/><label for="YES1">di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;</label></p><p style="text-align:left;"><input name="consent2" type="radio" id="YES2" value="YES2" required/><label for="YES2">di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;</label></p><p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES3" required/><label for="YES3">di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;</label></p><p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES4" required/><label for="YES4">di essere a conoscenza dei disagi eventualmente causati dall’esperimento;</label></p><p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES5" required/><label for="YES5">di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;</label></p><p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES6" required/><label for="YES6">di essere consapevole di potersi ritirare in qualsiasi fase dello studio.</label></p>`
+      html: `<p style="text-align:left;"><input name="consent1" type="radio" id="YES1" value="YES" required/><label for="YES1">di aver letto attentamente le spiegazioni relative a questo studio e all’intera procedura sperimentale;</label></p>
+      <p style="text-align:left;"><input name="consent2" type="radio" id="YES2" value="YES" required/><label for="YES2">di essere stato informata/o riguardo alle finalità e agli obiettivi della ricerca in questione;</label></p>
+      <p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">di aver avuto la possibilità di porre domande a proposito di qualsiasi aspetto della procedura sperimentale e di aver ottenuto risposte soddisfacenti;</label></p>
+      <p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4">di essere a conoscenza dei disagi eventualmente causati dall’esperimento;</label></p>
+      <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">di aver ricevuto soddisfacenti assicurazioni sulla riservatezza delle informazioni ottenute dall’esame della propria persona;</label></p>
+      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">di essere consapevole di potersi ritirare in qualsiasi fase dello studio.</label></p>`
     };
     timeline.push(consent);
 
@@ -470,14 +473,18 @@
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Benvenuta/o, e grazie mille del tuo tempo! </p><p>In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-) </p><p>Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p>Premi la barra per continuare.</p>`,
+      stimulus: `<p>Benvenuta/o, e grazie mille del tuo tempo!</p>
+      <p>In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-) </p>
+      <p>Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p>Premi la barra per continuare.</p>`,
       choices: ' '
     };
     timeline.push(welcome);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "<p>Ecco un esempio delle parole che vedrai:</p><img src='esempio.png' height='400px'><p>Quando sei pronti per iniziare, premi la barra.</p></div>",
+      stimulus: `<p>Ecco un esempio delle parole che vedrai:</p>
+      <img src='esempio.png' height='400px'>
+      <p>Quando sei pronti per iniziare, premi la barra.</p></div>`,
       choices: ' '
     };
     timeline.push(example);
@@ -509,7 +516,8 @@
 
     var inter_training1 = {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: `<p>Ottimo, hai visto il primo blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+          stimulus: `<p>Ottimo, hai visto il primo blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+          <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
           choices: ' '
         };
     timeline.push(inter_training1);
@@ -531,7 +539,8 @@
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Ottimo, hai visto il secondo blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      stimulus: `<p>Ottimo, hai visto il secondo blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+      <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: ' '
     };
     timeline.push(inter_training2);
@@ -553,7 +562,8 @@
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Ottimo, hai visto il terzo blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      stimulus: `<p>Ottimo, hai visto il terzo blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+      <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training3);
@@ -577,7 +587,8 @@
     /*
     var inter_training4 = {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: `<p>Ottimo, hai visto il quarto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+          stimulus: `<p>Ottimo, hai visto il quarto blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+          <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
           choices: ' '
         };
     timeline.push(inter_training4);
@@ -609,7 +620,8 @@
 
     var inter_training5 = {
           type: jsPsychHtmlKeyboardResponse,
-          stimulus: `<p>Ottimo, hai visto il quinto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+          stimulus: `<p>Ottimo, hai visto il quinto blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+          <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
           choices: ' '
         };
     timeline.push(inter_training5);
@@ -640,7 +652,8 @@
 
     var inter_training6 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Ottimo, hai visto il sesto blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      stimulus: `<p>Ottimo, hai visto il sesto blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+      <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: ' '
     };
     timeline.push(inter_training6);
@@ -671,7 +684,8 @@
 
     var inter_training7 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Ottimo, hai visto il settimo blocco di parole. Ora puoi prenderti una piccola pausa.</p><p>Premi la barra quando sei pronta/o per riprendere.</p>`,
+      stimulus: `<p>Ottimo, hai visto il settimo blocco di parole. Ora puoi prenderti una piccola pausa.</p>
+      <p>Premi la barra quando sei pronta/o per riprendere.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training7);
@@ -703,7 +717,8 @@
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio.</p><p>Premi la barra quando sei pronta/o per continuare.</p>`,
+      stimulus: `<p>Ottimo! Hai visto tutte le parole che abbiamo ricevuto dallo spazio.</p>
+      <p>Premi la barra quando sei pronta/o per continuare.</p>`,
       choices: ' '
     };
     timeline.push(post_training);
@@ -711,7 +726,9 @@
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento.</p><p>Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.</p><p>Premi <strong>k</strong> quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e <strong>d</strong> quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.</p><p>Premi la barra quando sei pronta/o per iniziare.</p>`,
+      stimulus: `<p>In questa seconda parte, vedrai delle nuove parole che abbiamo ricevuto dallo stesso gruppo di alieni, e altre che invece provengono da un'altra comunicazione, con un altro gruppo di alieni. Purtroppo le due comunicazioni non arrivano a noi separatamente, per cui le parole sono mescolate tra loro. Il tuo compito sarà quello di individuare le parole che provengono dal gruppo che hai studiato nella prima parte dell'esperimento.</p>
+      <p>Questo compito non è per nulla facile; le due comunicazioni infatti usano gli stessi caratteri. Il tuo meeting con i leader mondiali inizia tra poco, per cui non avrai molto tempo per prendere la tua decisione; dovrai essere veloce. Cerca di fare del tuo meglio usando la tua intuizione; non hai tempo di stare a pensare a lungo su ogni singola parola.</p>
+      <p>Premi <strong>k</strong> quando pensi che la parola che stai vedendo sia degli stessi alieni che hai studiato prima, e <strong>d</strong> quando invece pensi che la parola che stai vedendo venga dall'altra comunicazione, con il nuovo gruppo di alieni.</p><p>Premi la barra quando sei pronta/o per iniziare.</p>`,
       choices: ' '
     };
     timeline.push(pre_testing);
@@ -752,7 +769,8 @@
 
     var if_trial = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<p style="font-size: 30px; color: red">Attenzione! Sei stato troppo lento con questa parola.</p><p style="font-size: 30px; color: red">Cerca di essere più veloce.</p><p></p><p>Premi la barra per continuare.</p>',
+        stimulus: `<p style="font-size: 30px; color: red">Attenzione! Sei stato troppo lento con questa parola.</p>
+        <p style="font-size: 30px; color: red">Cerca di essere più veloce.</p><p></p><p>Premi la barra per continuare.</p>`,
         choices: ' '
     };
 
@@ -785,7 +803,9 @@
     /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!</p><p>Premi <strong>d</strong> se pensi che la combinazione di lettere sulla <strong>sinistra</strong> sia quella che era presente nella comunicazione degli alieni, oppure <strong>k</strong> se invece pensi che sia quella sulla <strong>destra</strong>.</p><p>Premi la barra quando sei pronta/o per cominciare.</p>`,
+      stimulus: `<p>Sei arrivata/o al meeting giusto in tempo, ottimo! I leader mondiali vorrebbero mandare un messaggio di risposta agli alieni, e hanno bisogno che tu li aiuti a riconoscere le combinazioni di lettere che hai visto nel loro linguaggio. Avrai da scegliere tra due alternative: una di esse viene dalle parole che hai visto, mentre l'altra no. E' importante che si riesca a essere amichevoli con questi alieni, per cui cerca di fare la scelta giusta!</p>
+      <p>Premi <strong>d</strong> se pensi che la combinazione di lettere sulla <strong>sinistra</strong> sia quella che era presente nella comunicazione degli alieni, oppure <strong>k</strong> se invece pensi che sia quella sulla <strong>destra</strong>.</p>
+      <p>Premi la barra quando sei pronta/o per cominciare.</p>`,
       choices: ' '
     };
     timeline.push(pre_familiarity);
@@ -835,7 +855,9 @@
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Grazie per il tuo aiuto! Per finire, avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p><p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p><p>Premi la barra per iniziare.</p>`,
+      stimulus: `<p>Grazie per il tuo aiuto! Per finire, avremmo bisogno del suo aiuto per rispondere alle seguenti domande relative alla sua storia linguistica, uso, attività e competenze linguistiche.</p>
+      <p> Il questionario contiene 19 domande e le portarà via solo 10 minuti. Dato che questo non è un test, non ci sono risposte giuste o sbagliate. Risponda, per favore, ad ogni domanda e lo faccia con sincerità: solo così potrà garantire il buon esito di questo esperimento.</p>
+      <p>Premi la barra per iniziare.</p>`,
       choices: ' '
     };
     timeline.push(pre_BLP);
@@ -843,8 +865,15 @@
     /* BLP */
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">INFORMAZIONI BIOGRAFICHE</b></p>',
-      html: '<legend>Età</legend><div><input name="Età" type="text" required/></p><p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label></p><legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria" required><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p><p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>. Se non sa una seconda lingua, scriva "n/a" per favore.</legend><input name="L2" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>. Se non sa una terza lingua, scriva "n/a" per favore</legend><input name="L3" type="text" required/></p><p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>. Se non sa una quarta lingua, scriva "n/a" per favore</legend><input name="L4" type="text" required/></p><p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>',
+      preamble: `<p style="font-size: 25px; color: black">INFORMAZIONI BIOGRAFICHE</b></p>`,
+      html: `<legend>Età</legend><div><input name="Età" type="text" required/></p>
+      <p><legend>Sesso</legend><input name="Sesso" type="radio" id="Donna" name="Sesso" value="Donna" required/><label for="Donna">Donna</label><input type="radio" id="Uomo" name="Sesso" value="Uomo"><label for="Uomo">Uomo</label><input type="radio" id="Altro" name="Sesso" value="Altro"><label for="Altro">Altro/preferirei non dire</label></p>
+      <legend>Livello massimo di formazione</legend><div><input type="radio" id="Primaria" name="Formazione" value="Primaria" required><label for="Primaria">Primaria (6-11 anni)</label></div><div><input type="radio" id="Secondaria1" name="Formazione" value="Secondaria1"><label for="Secondaria1">Secondaria di primo grado (11-13 anni)</label></div><div><input type="radio" id="Secondaria2" name="Formazione" value="Secondaria2"><label for="Secondaria2">Secondaria di secondo grado (14-18 anni)</label></div><div><input type="radio" id="Uni" name="Formazione" value="Uni"><label for="Uni">Università (triennale - magistrale)</label></div><div><input type="radio" id="Uni2" name="Formazione" value="Uni2"><label for="Uni2">Alcuni corsi universitari</label></div><div><input type="radio" id="Master" name="Formazione" value="Master"><label for="Master">Master (primo livello - secondo livello)</label></div><div><input type="radio" id="Dott" name="Formazione" value="Dott"><label for="Dott">Dottorato</label></div></p>
+      <p><legend>Quale lingua considera come la sua <strong>LINGUA PRINCIPALE</strong>? (La lingua con la quale si sente più a suo agio). Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L1"</strong>.</legend><input name="L1" type="text" required/></p>
+      <p><legend>Quale lingua considera come la sua <strong>SECONDA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L2"</strong>. Se non sa una seconda lingua, scriva "n/a" per favore.</legend><input name="L2" type="text" required/></p>
+      <p><legend>Quale lingua considera come la sua <strong>TERZA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L3"</strong>. Se non sa una terza lingua, scriva "n/a" per favore</legend><input name="L3" type="text" required/></p>
+      <p><legend>Quale lingua considera come la sua <strong>QUARTA LINGUA</strong>? Nelle prossime domande faremo riferimento a questa lingua come la sua <strong>"L4"</strong>. Se non sa una quarta lingua, scriva "n/a" per favore</legend><input name="L4" type="text" required/></p>
+      <p><legend>Parla altre lingue?</legend><input name="otherLs" type="text" required/></p>`,
       button_label: "Continuare",
       data: {name: 'bio_info'}
     };
@@ -901,7 +930,7 @@
           <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/><label for="`+ name +`_8">8</label>
           <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/><label for="`+ name +`_9">9</label>
           <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10</label>
-          <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11"><label for="`+ name +`_11">11</label>
+          <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/><label for="`+ name +`_11">11</label>
           <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/><label for="`+ name +`_12">12</label>
           <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/><label for="`+ name +`_13">13</label>
           <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/><label for="`+ name +`_14">14</label>
@@ -997,7 +1026,11 @@
         var PercLavoro = percent('PercLavoro');
         var PercStesso = percent('PercStesso');
         var PercCalcoli = percent('PercCalcoli');
-        var big_html = `<p style="color: black"><legend>7. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con i suoi amici?</legend></p>` + PercAmici + `</p><p style="color: black"><legend>8. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con la sua famiglia?</legend></p>` + PercFamiglia + `</p><p style="color: black"><legend>9. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue a scuola/al lavoro?</legend></p>` + PercLavoro + `</p><p style="color: black"><legend>10. Quando parla con se stesso, con quale frequenza parla a se stesso nelle seguenti lingue?</legend></p>` + PercStesso + `</p><p style="color: black"><legend>11. Quando fa calcoli contando, con quale frequenza conta nelle seguenti lingue?</legend></p>` + PercCalcoli;
+        var big_html = `<p style="color: black"><legend>7. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con i suoi amici?</legend></p>` + PercAmici + `</p>
+        <p style="color: black"><legend>8. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue con la sua famiglia?</legend></p>` + PercFamiglia + `</p>
+        <p style="color: black"><legend>9. In una settimana normale, in che percentuale (di tempo) fa uso delle seguenti lingue a scuola/al lavoro?</legend></p>` + PercLavoro + `</p>
+        <p style="color: black"><legend>10. Quando parla con se stesso, con quale frequenza parla a se stesso nelle seguenti lingue?</legend></p>` + PercStesso + `</p>
+        <p style="color: black"><legend>11. Quando fa calcoli contando, con quale frequenza conta nelle seguenti lingue?</legend></p>` + PercCalcoli;
         return big_html
       }
     };
@@ -1043,7 +1076,7 @@
           <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
           <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
           <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (molto bene)</label></p>`;
-        }
+        };
         options.push(option)
       };
       var options = options.toString();
@@ -1053,14 +1086,19 @@
 
     var proficiency_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">COMPETENZA</p><p style="color: black">In questa sezione, le chiediamo di rispondere relativamente alla competenza linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      preamble: `<p style="font-size: 25px; color: black">COMPETENZA</p>
+      <p style="color: black">In questa sezione, le chiediamo di rispondere relativamente alla competenza linguistica. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>`,
       html: function() {
         var ProfParla = proficiency('ProfParla');
         var ProfCapisce = proficiency('ProfCapisce');
         var ProfLegge = proficiency('ProfLegge');
         var Attention = proficiency('Attention');
         var ProfScrive = proficiency('ProfScrive');
-        var big_html = `<p style="color: black"><legend>12. Come parla le seguenti lingue?</legend></p>` + ProfParla + `<p style="color: black"><legend>13. Come capisce le seguenti lingue?</legend></p>` + ProfCapisce + `<p style="color: black"><legend>14. Come legge nelle seguenti lingue?</legend></p>` + ProfLegge + `<p style="color: black"><legend>Se legge questa frase, la prega di rispondere "2" per tutte le lingue.</legend></p>` + Attention + `<p style="color: black"><legend>15. Come scrive nelle seguenti lingue?</legend></p>` + ProfScrive;
+        var big_html = `<p style="color: black"><legend>12. Come parla le seguenti lingue?</legend></p>` + ProfParla + `
+        <p style="color: black"><legend>13. Come capisce le seguenti lingue?</legend></p>` + ProfCapisce + `
+        <p style="color: black"><legend>14. Come legge nelle seguenti lingue?</legend></p>` + ProfLegge + `
+        <p style="color: black"><legend>Se legge questa frase, la prega di rispondere "2" per tutte le lingue.</legend></p>` + Attention + `
+        <p style="color: black"><legend>15. Come scrive nelle seguenti lingue?</legend></p>` + ProfScrive;
         return big_html
       }
     };
@@ -1104,9 +1142,9 @@
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
           <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
           <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
-          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5"><label for="`+ name +`_5" required/>5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6"><label for="`+ name +`_6" required/>6 (sono d'accordo)</label></p>`;
-        }
+          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
+          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (sono d'accordo)</label></p>`;
+        };
         options.push(option)
       };
       var options = options.toString();
@@ -1116,13 +1154,17 @@
 
     var attitudes_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">ATTEGGIAMENTO LINGUISTICO</p><p style="color: black">In questa sezione, le chiediamo di fornirci risposte alle seguenti affermazioni relative ad atteggiamenti linguistici. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>',
+      preamble: `<p style="font-size: 25px; color: black">ATTEGGIAMENTO LINGUISTICO</p>
+      <p style="color: black">In questa sezione, le chiediamo di fornirci risposte alle seguenti affermazioni relative ad atteggiamenti linguistici. Si prega di rispondere a ciascuna domanda facendo clic sul pulsante appropriato.</p>`,
       html: function() {
         var AttMiStesso = attitudes('AttMiStesso');
         var AttCultura = attitudes('AttCultura');
         var AttLivNativo = attitudes('AttLivNativo');
         var AttMadrelingua = attitudes('AttMadrelingua');
-        var big_html = `<p style="color: black"><legend>16. Mi sento “me stesso” quando parlo le seguenti lingue.</legend></p>` + AttMiStesso + `<p style="color: black"><legend>17. Mi identifico con una cultura che parla le seguenti lingue.</legend></p>` + AttCultura + `<p style="color: black"><legend>18. Per me è importante raggiungere un livello nativo e usare ad un livello nativo le seguenti lingue.</legend></p>` + AttLivNativo + `<p style="color: black"><legend>19. Voglio che gli altri pensino che io sia un madrelingua delle seguenti lingue.</legend></p>` + AttMadrelingua;
+        var big_html = `<p style="color: black"><legend>16. Mi sento “me stesso” quando parlo le seguenti lingue.</legend></p>` + AttMiStesso + `
+        <p style="color: black"><legend>17. Mi identifico con una cultura che parla le seguenti lingue.</legend></p>` + AttCultura + `
+        <p style="color: black"><legend>18. Per me è importante raggiungere un livello nativo e usare ad un livello nativo le seguenti lingue.</legend></p>` + AttLivNativo + `
+        <p style="color: black"><legend>19. Voglio che gli altri pensino che io sia un madrelingua delle seguenti lingue.</legend></p>` + AttMadrelingua;
         return big_html
       }
     };
@@ -1130,7 +1172,8 @@
 
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Grazie per la tua partecipazione! Premi un tasto qualsiasi per finire.</p>`
+      stimulus: `<p><u>Motivo dello studio:</u> Questo esperimento stava testando se le persone con più esperienza con lingue multiple fossero maggiormente in grado di elaborare inconsciamente le statistiche di nuove parole. Le parole aliene che hai visto all'inizio appartenevano a due lingue diverse e queste differenze erano presenti nel modo in cui le parti delle parole si relazionano tra loro. Grazie per la tua partecipazione!</p>
+      <p>Premi un tasto qualsiasi per finire.</p>`
     };
     timeline.push(goodbye);
 

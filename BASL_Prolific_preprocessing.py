@@ -224,7 +224,7 @@ for x in range(len(BLP_data)): # for each participant datafile
     bioinfo = pd.DataFrame.from_dict(participant[1], orient='index')
     bioinfo = bioinfo.transpose()
     bioinfo.rename(columns = {'Età': 'Age', 'Sesso': 'Sex', 'Formazione': 'Education'})
-    bioinfo['sbj_ID'] = sbj_ID
+    bioinfo['sbj_ID'] = sbj_ID # add sbj ID column
     
     history = pd.DataFrame.from_dict(participant[2], orient='index')
     history = history.transpose()
@@ -240,11 +240,14 @@ for x in range(len(BLP_data)): # for each participant datafile
     
     # combine section dataframes into a BLP dataframe
     participant_BLP_data = pd.concat([bioinfo, history, use, proficiency, attitude], axis =1)
-    col2 = participant_BLP_data.pop('sbj_ID')
+    col2 = participant_BLP_data.pop('sbj_ID') # move sbj_ID column to beginning
     participant_BLP_data.insert(0, 'sbj_ID', col2)
 
     # run code to score responses
     participant_BLP_data_scored = BLP_preprocessing(participant_BLP_data)
+    
+    # display completion message
+    print(f'Finished pre-processing participant {sbj_ID} responses')
     
     # add participant scores to big BLP dataframe
     all_BLP_data = pd.concat([all_BLP_data,participant_BLP_data_scored],axis = 0)
