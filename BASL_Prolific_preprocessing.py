@@ -6,7 +6,7 @@ allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
 all_data = []
-column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'correct', 'name']
+column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'correct', 'target', 'confound', 'name']
 for f in allfiles:
     df = pd.read_csv(f, index_col=1) # separate into each line
     temp = df.to_dict("split")
@@ -276,36 +276,94 @@ def testing_scoring(testing_data):
     Parameters
     ----------
     testing_data : LIST
-        List of raw participant responses.
+        List of raw participant testing responses.
 
     Returns
     -------
-    testing_data_scored : LIST
-        List of scored participant responses.
+    all_testing_data_scored : DataFrame
+        List of scored participant testing responses.
     '''
+    participant_testing_data_scored = pd.DataFrame()
+    all_testing_data_scored = pd.DataFrame()
+    for x in range(len(testing_data)):
+        participant_testing_data = testing_data[x]
+        ID_line = json.loads(participant_testing_data[0]['response'])
+        sbj_ID = ID_line['ID']
+        for y in range(1,41):
+            trial = participant_testing_data[y]
+            trialn = y
+            if trial['correct_response'] == 'k':
+                expected = 0
+            if trial['correct_response'] == 'd':
+                expected = 1
+            if trial['response'] == 'k':
+                observed = 0
+            if trial['response'] == 'd':
+                observed = 1
+            trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+            trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
+            participant_testing_data_scored = pd.DataFrame(trial_dict)
+            all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+    return all_testing_data_scored
 
-participant_testing_data_scored = pd.DataFrame()
-all_testing_data_scored = pd.DataFrame()
-for x in range(len(testing_data)):
-    participant_testing_data = testing_data[x]
-    ID_line = json.loads(participant_testing_data[0]['response'])
-    sbj_ID = ID_line['ID']
-    for y in range(1,41):
-        trial = participant_testing_data[y]
-        trialn = y
-        if trial['correct_response'] == 'k':
-            expected = 0
-        if trial['correct_response'] == 'd':
-            expected = 1
-        if trial['response'] == 'k':
-            observed = 0
-        if trial['response'] == 'd':
-            observed = 1
-        trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
-        trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
-        participant_testing_data_scored = pd.DataFrame(trial_dict)
-        all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+all_testing_data_scored = testing_scoring(testing_data)
 if all_testing_data_scored.shape[0] == (40*len(testing_data)):
     print('Finished pre-processing testing responses')
 
 ### FAMILIARITY PRE-PROCESSING ###
+familiarity_data = []
+for x in range(len(all_data)): # extract testing responses
+    participant_data = all_data[x]
+    participant_familiarity_data = []
+    for y in participant_data.keys():
+        line = participant_data[y]
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity':
+            response_line = json.loads(line['response']) # convert from string to dict
+        if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
+            participant_familiarity_data.append(line)
+        if line['task'] == 'familiarity':
+            participant_familiarity_data.append(line)
+    if len(participant_familiarity_data) != 31:
+        print("Warning: participant_testing_data doesn't have 31 items!")
+    familiarity_data.append(participant_familiarity_data)
+    
+def familiarity_scoring(familiarity_data):
+    '''
+    Scores familiarity data.
+
+    Parameters
+    ----------
+    familiarity_data : LIST
+        List of raw participant familiarity responses.
+
+    Returns
+    -------
+    all_familiarity_data_scored : DataFrame
+        List of scored participant familiarity responses.
+    '''
+    participant_familiarity_data_scored = pd.DataFrame()
+    all_familiarity_data_scored = pd.DataFrame()
+    for x in range(len(familiarity_data)):
+        participant_familiarity_data = familiarity_data[x]
+        ID_line = json.loads(participant_familiarity_data[0]['response'])
+        sbj_ID = ID_line['ID']
+        for y in range(1,31):
+            trial = participant_familiarity_data[y]
+            trialn = y
+            if trial['correct_response'] == 'k':
+                expected = 0
+            if trial['correct_response'] == 'd':
+                expected = 1
+            if trial['response'] == 'k':
+                observed = 0
+            if trial['response'] == 'd':
+                observed = 1
+            trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'target':trial['target'], 'confound':trial['confound'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+            trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
+            participant_familiarity_data_scored = pd.DataFrame(trial_dict)
+            all_familiarity_data_scored = pd.concat([all_familiarity_data_scored, participant_familiarity_data_scored],axis = 0)
+    return all_familiarity_data_scored
+
+all_familiarity_data_scored = familiarity_scoring(familiarity_data)
+if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
+    print('Finished pre-processing familiarity responses')
