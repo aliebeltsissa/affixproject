@@ -759,7 +759,7 @@
       choices: ['d', 'k'],
       data: {
         item: jsPsych.timelineVariable('stimulus'),
-        task: 'response',
+        task: 'testing',
         correct_response: jsPsych.timelineVariable('correct_response')
       },
       on_finish: function(data){
@@ -839,7 +839,7 @@
       stimulus: jsPsych.timelineVariable('java'),
       choices: ['d', 'k'],
       data: {
-        task: 'response',
+        task: 'familiarity',
         correct_response: jsPsych.timelineVariable('correct_response')
       },
       on_finish: function(data){
