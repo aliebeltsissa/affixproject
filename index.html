@@ -31,7 +31,7 @@
   <script>
     /* ========== INITIALISATION ========== */
     var jsPsych = initJsPsych({
-      on_finish: window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
+      //on_finish: window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
     });
     
     // capture info from Prolific
@@ -838,7 +838,8 @@
         var confound = familiarity_pairs_sides[i][0]
       }
       var familiarity_pairs_dict = {target: target, confound: confound, correct_response: familiarity_pairs_sides[i][2], java: java2};
-      familiarity_stimuli.push(familiarity_pairs_dict)
+      familiarity_stimuli.push(familiarity_pairs_dict);
+      console.log(familiarity_stimuli)
     };
 
     var familiarity_trial = {
