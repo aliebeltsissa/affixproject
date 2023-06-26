@@ -15,7 +15,7 @@ for f in allfiles:
     for x in range(temp_length): # replace response by column: reponse dictionary
         values = [i for i in temp.values()]
         value = values[x]
-        value2 = {column_names[x]: value[x] for x in range(12)}
+        value2 = {column_names[x]: value[x] for x in range(len(column_names))}
         temp[x] = value2
     all_data.append(temp)
    
@@ -28,7 +28,7 @@ for x in range(len(all_data)): # extract BLP responses
     for y in participant_data.keys():
         line = participant_data[y]
         if line['trial_type'] == 'survey-html-form':
-            response_line = json.loads(line['response'])
+            response_line = json.loads(line['response']) # convert from string to dict
             if  'consent1' not in response_line.keys() and 'testing_strategy' not in response_line.keys():
                 participant_BLP_data.append(response_line)
     BLP_data.append(participant_BLP_data)
@@ -40,7 +40,7 @@ def BLP_preprocessing(BLP_file):
     Parameters
     ----------
     BLP_file : DataFrame
-        DESCRIPTION.
+        Raw DataFrame of BLP data.
 
     Returns
     -------
@@ -223,7 +223,7 @@ for x in range(len(BLP_data)): # for each participant datafile
     # transform sections into dataframes:
     bioinfo = pd.DataFrame.from_dict(participant[1], orient='index')
     bioinfo = bioinfo.transpose()
-    bioinfo.rename(columns = {'Età': 'Age', 'Sesso': 'Sex', 'Formazione': 'Education'})
+    bioinfo.rename(columns = {'Età':'Age', 'Sesso':'Sex', 'Formazione':'Education'},inplace=True)
     bioinfo['sbj_ID'] = sbj_ID # add sbj ID column
     
     history = pd.DataFrame.from_dict(participant[2], orient='index')
@@ -250,4 +250,62 @@ for x in range(len(BLP_data)): # for each participant datafile
     print(f'Finished pre-processing participant {sbj_ID} responses')
     
     # add participant scores to big BLP dataframe
-    all_BLP_data = pd.concat([all_BLP_data,participant_BLP_data_scored],axis = 0)
+    all_BLP_data = pd.concat([all_BLP_data, participant_BLP_data_scored],axis = 0)
+    
+### TESTING PRE-PROCESSING ###
+testing_data = []
+for x in range(len(all_data)): # extract testing responses
+    participant_data = all_data[x]
+    participant_testing_data = []
+    for y in participant_data.keys():
+        line = participant_data[y]
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity':
+            response_line = json.loads(line['response']) # convert from string to dict
+        if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
+            participant_testing_data.append(line)
+        if line['task'] == 'testing':
+            participant_testing_data.append(line)
+    if len(participant_testing_data) != 41:
+        print("Warning: participant_testing_data doesn't have 41 items!")
+    testing_data.append(participant_testing_data)
+    
+def testing_scoring(testing_data):
+    '''
+    Scores testing data.
+
+    Parameters
+    ----------
+    testing_data : LIST
+        List of raw participant responses.
+
+    Returns
+    -------
+    testing_data_scored : LIST
+        List of scored participant responses.
+    '''
+
+participant_testing_data_scored = pd.DataFrame()
+all_testing_data_scored = pd.DataFrame()
+for x in range(len(testing_data)):
+    participant_testing_data = testing_data[x]
+    ID_line = json.loads(participant_testing_data[0]['response'])
+    sbj_ID = ID_line['ID']
+    for y in range(1,41):
+        trial = participant_testing_data[y]
+        trialn = y
+        if trial['correct_response'] == 'k':
+            expected = 0
+        if trial['correct_response'] == 'd':
+            expected = 1
+        if trial['response'] == 'k':
+            observed = 0
+        if trial['response'] == 'd':
+            observed = 1
+        trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+        trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
+        participant_testing_data_scored = pd.DataFrame(trial_dict)
+        all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+if all_testing_data_scored.shape[0] == (40*len(testing_data)):
+    print('Finished pre-processing testing responses')
+
+### FAMILIARITY PRE-PROCESSING ###
