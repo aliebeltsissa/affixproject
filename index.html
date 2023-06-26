@@ -31,7 +31,9 @@
   <script>
     /* ========== INITIALISATION ========== */
     var jsPsych = initJsPsych({
-      //on_finish: window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
+      on_finish: function() {
+        window.location = "https://app.prolific.co/submissions/complete?cc=XXXXXXX" // redirect Prolific participants to completed submission page -- CHANGE THIS LINK
+      }
     });
     
     // capture info from Prolific
@@ -831,12 +833,12 @@
         var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>d</strong> per questa combinazione di lettere&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Premi <strong>k</strong> per questa combinazione di lettere</p>'
       };
       if (familiarity_pairs_sides[i][2] == 'd') {
-        var target2 = familiarity_pairs_sides[i][0]
+        var target2 = familiarity_pairs_sides[i][0];
         var confound2 = familiarity_pairs_sides[i][1]
       } else if (familiarity_pairs_sides[i][2] == 'k') {
-        var target2 = familiarity_pairs_sides[i][1]
+        var target2 = familiarity_pairs_sides[i][1];
         var confound2 = familiarity_pairs_sides[i][0]
-      }
+      };
       var familiarity_pairs_dict = {'target': target2, 'confound': confound2, 'correct_response': familiarity_pairs_sides[i][2], 'java': java2};
       familiarity_stimuli.push(familiarity_pairs_dict);
     };
@@ -927,7 +929,7 @@
         if (question == 'anniPaese') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
         if (question == 'anniFamiglia') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
         if (question == 'anniLavoro') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
           `+ extras +`
           <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
@@ -1006,7 +1008,7 @@
           var name = nameL4;
           var color = "#da9d37"
         };
-        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
           <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/><label for="`+ name +`_0">0%</label>
           <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10%</label>
@@ -1078,7 +1080,7 @@
           var name = nameL4;
           var color = "#da9d37"
         };
-        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (non molto bene)</label>
           <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
@@ -1146,7 +1148,7 @@
           var name = nameL4;
           var color = "#da9d37"
         };
-        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A') {var option = ''} else {
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (non sono d'accordo)</label>
           <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
