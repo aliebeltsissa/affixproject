@@ -225,6 +225,7 @@ for x in range(len(BLP_data)): # for each participant datafile
     bioinfo = bioinfo.transpose()
     bioinfo.rename(columns = {'Età':'Age', 'Sesso':'Sex', 'Formazione':'Education'},inplace=True)
     bioinfo['sbj_ID'] = sbj_ID # add sbj ID column
+    bioinfo['task'] = 'BLP'
     
     history = pd.DataFrame.from_dict(participant[2], orient='index')
     history = history.transpose()
@@ -300,7 +301,7 @@ def testing_scoring(testing_data):
                 observed = 0
             if trial['response'] == 'd':
                 observed = 1
-            trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing','trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_testing_data_scored = pd.DataFrame(trial_dict)
             all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
@@ -358,7 +359,7 @@ def familiarity_scoring(familiarity_data):
                 observed = 0
             if trial['response'] == 'd':
                 observed = 1
-            trial_dict = {'sbj_ID':sbj_ID, 'trialn':trialn, 'target':trial['target'], 'confound':trial['confound'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+            trial_dict = {'sbj_ID':sbj_ID, 'task':'familiarity', 'trialn':trialn, 'target':trial['target'], 'confound':trial['confound'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_familiarity_data_scored = pd.DataFrame(trial_dict)
             all_familiarity_data_scored = pd.concat([all_familiarity_data_scored, participant_familiarity_data_scored],axis = 0)
@@ -367,3 +368,13 @@ def familiarity_scoring(familiarity_data):
 all_familiarity_data_scored = familiarity_scoring(familiarity_data)
 if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
     print('Finished pre-processing familiarity responses')
+
+### GROUPING ALL DATA ###
+all_exp_data = pd.concat([all_familiarity_data_scored, all_testing_data_scored])
+full_exp_data = pd.concat([all_exp_data, all_BLP_data])
+full_exp_data = full_exp_data.sort_values(by=['sbj_ID','task'])
+if len(full_exp_data) == (len(all_familiarity_data_scored) + len(all_testing_data_scored) + len(all_BLP_data)):
+    print('Finished collating task responses')
+
+### EXPORTING ###
+full_exp_data.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Prolific_preprocessed.csv', index=True, header=True)
