@@ -28,7 +28,7 @@ The word_generation.py script is for generating the training and testing word li
 `cycle_through` function: Similarly to the `morpheme_generations`, this function assembles a stem and an affix from a language, and sorts the words into the training and congruent testing sets (this is the **wordcycle** function). Next, the `cross_language_testing` function takes a stem and affix from different languages and assembles these to form the incongruent testing word set.
 
 <h3> PsychoPy experiment </h3>
-The PsychoPy - experiment.py script runs the experiment through the PsychoPy module. It requires Python 3.8 to run correctly. It brings the participant through the phases of the experiment: training, testing, and the familiarity test. The Bilingual Language Profile questionnaire is hosted through [Google Forms](https://forms.gle/g3AmuDJuMDPRTSUQ9). 
+The PsychoPy - experiment.py script runs the experiment through the PsychoPy module. It requires Python 3.8 to run correctly. It brings the participant through the phases of the experiment: training, testing, and the familiarity test. The Bilingual Language Profile questionnaire is hosted through <a href="https://forms.gle/g3AmuDJuMDPRTSUQ9">Google Forms</a>. 
 
 <h2> Online running - jsPsych </h2>
 <h3> The main script </h3>
