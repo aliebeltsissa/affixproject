@@ -1149,7 +1149,7 @@
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p><u>Motivo dello studio:</u> Questo esperimento intendeva testare se persone con maggire esperienza in più lingue  fossero più capaci di processare inconsciamente la statistica di nuove parole. Le parole aliene che hai visto all'inizio appartenevano a due diverse lingue, e tale diversità si esplicava in come diverse parti delle parole erano relate una all'altra. Grazie per la tua partecipazione!</p>
-      <p>Premi un tasto qualsiasi per finire.</p>`
+      <p>Premi un tasto qualsiasi per finire, e attendi il messaggio di conferma del caricamento dei dati prima di chiudere la scheda.</p>`
     };
     timeline.push(goodbye);
 
@@ -1162,7 +1162,10 @@
 
     var pavlovia_finish = {
       type: jsPsychPavlovia,
-      command: "finish"
+      command: "finish",
+      completedCallback: function() {
+        alert('Dati caricati con successo!');
+      }
     };
     timeline.push(pavlovia_finish);
 
