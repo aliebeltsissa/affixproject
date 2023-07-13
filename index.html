@@ -411,12 +411,11 @@
     var rand_training3 = training_randomisation(training_list);
     var rand_training4 = training_randomisation(training_list);
     // to be run for 8 training reps:
-    /*
     var rand_training5 = training_randomisation(training_list);
     var rand_training6 = training_randomisation(training_list);
     var rand_training7 = training_randomisation(training_list);
     var rand_training8 = training_randomisation(training_list);
-    */
+
     var rand_testing = testing_randomisation(testing);
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
@@ -586,7 +585,6 @@
     timeline.push(training_procedure4);
 
     // for 8 training reps:
-    /*
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Ottimo, hai visto il quarto blocco di parole. Ora puoi prenderti una piccola pausa.</p>
@@ -679,7 +677,6 @@
       timeline_variables: training_stimuli8,
     };
     timeline.push(training_procedure8);
-    */
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
