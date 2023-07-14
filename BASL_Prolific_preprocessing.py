@@ -1,7 +1,7 @@
 ### IMPORTING ###
 from os import listdir, chdir
 from os.path import isfile
-chdir("C:\\Users\\annal\\Downloads\\practice") # set working directory to responses folder
+chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\data") # set working directory to responses folder
 allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
@@ -248,7 +248,7 @@ for x in range(len(BLP_data)): # for each participant datafile
     participant_BLP_data_scored = BLP_preprocessing(participant_BLP_data)
     
     # display completion message
-    print(f'Finished pre-processing participant {sbj_ID} responses')
+    print(f'Finished pre-processing participant {sbj_ID} BLP responses ({x+1}/{len(BLP_data)})')
     
     # add participant scores to big BLP dataframe
     all_BLP_data = pd.concat([all_BLP_data, participant_BLP_data_scored],axis = 0)
@@ -260,7 +260,7 @@ for x in range(len(all_data)): # extract testing responses
     participant_testing_data = []
     for y in participant_data.keys():
         line = participant_data[y]
-        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity':
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
             response_line = json.loads(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_testing_data.append(line)
@@ -318,7 +318,7 @@ for x in range(len(all_data)): # extract testing responses
     participant_familiarity_data = []
     for y in participant_data.keys():
         line = participant_data[y]
-        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity':
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
             response_line = json.loads(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_familiarity_data.append(line)
