@@ -291,6 +291,7 @@ dim(dprimes);
 summary(dprimes);
 
 # PILOT 4
+setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject")
 data_pilot4 <- read.csv("Prolific_preprocessed.csv",header=T,sep=",");
 data_pilot4 = subset(data_pilot4, select = -c(X)) # remove redundant column added by Pavlovia
 dim(data_pilot4);
@@ -318,7 +319,7 @@ data_pilot4$task <- as.factor(data_pilot4$task);
 data_pilot4$target <- as.factor(data_pilot4$target);
 data_pilot4$confound <- as.factor(data_pilot4$confound);
 data_pilot4$item <- as.factor(data_pilot4$item);
-data_pilot4$correct <- as.factor(data_pilot4$correct);
+data_pilot4$correct <- as.logical(data_pilot4$correct);
 data_pilot4$Sex <- as.factor(data_pilot4$Sex);
 data_pilot4$Education <- as.factor(data_pilot4$Education);
 data_pilot4$L1 <- as.factor(data_pilot4$L1);
@@ -334,4 +335,152 @@ summary(data_pilot4);
 
 # split into different pilot 4 versions: 4.1 is with 4 training reps, 4.1 is with 8
 data_pilot4.1 <- subset(data_pilot4, sbj_ID=='5fb7b8880045d6396a86c803'|sbj_ID=='5f4cc4ea00dba58ecd5a98a4'|sbj_ID=='615c43b800752a4f3d0fd1f0'|sbj_ID=='6175a0a52e748285b3476b27'|sbj_ID=='60b55a6d44e17d6f0b810cdd'|sbj_ID=='60d87fdab51e54fe4863f97f'|sbj_ID=='60ba2011cd8052508d401296'|sbj_ID=='5ee7b7c9eef92207297a0ad4'|sbj_ID=='614060a52d7c64c27ef9887c'|sbj_ID=='5d97c38dce449e001244dc15'|sbj_ID=='5ed54d02957bee0c0de36cac'|sbj_ID=='61158a5c1d8390415ff117a8'|sbj_ID=='5e823b35726b2a9508db127c'|sbj_ID=='5caca6b4a9acb200011a6547'|sbj_ID=='5cf14e1eb4397d0001f94e20'|sbj_ID=='5cb4adc019ee7300189e8547'|sbj_ID=='5f3161410f87706425490ae1'|sbj_ID=='5e8783b0fde5153fbd9dca43'|sbj_ID=='60c9c6e1728092717b93abde'|sbj_ID=='5feb64b3341f42bb63200e36');
-data_pilot4.2 <- subset(data_pilot4, sbj_ID=='60f1846c851ee5a978a0e015'|sbj_ID=='60fd703ecd62eb39eb07c328'|sbj_ID=='60ddf71e95896d2595f0e1a5'|sbj_ID=='605c9355001a5eb6d51e657d'|sbj_ID=='5f11ccbc1a1a2c08b4a99efb'|sbj_ID=='5fb3f38909fc360164f7c98d'|sbj_ID=='60a45e33f404ba8cb7a19cfe'|sbj_ID=='608abc6251feb3ddc3b2e01d'|sbj_ID=='608edc13472b2dbc27b369fa'|sbj_ID=='612d5712d75b6c46b4cefc63'|sbj_ID=='5e82e99b37d333a1474dda93'|sbj_ID=='613d091096ca434d703f77c5'|sbj_ID=='609568823ff056b77e565445'|sbj_ID=='5e80c7d61a07dd7b0d8f0111'|sbj_ID=='59aaf4b1321f870001d16f6c'|sbj_ID=='6048158f62550615002408af'|sbj_ID=='6161f43ddd46e845e7b3fab8'|sbj_ID=='5ec806f532fe7d2afa2e315b'|sbj_ID=='5e99d95e0f50aa04266ad4ad'|sbj_ID=='5c5e04ca6539fe00016e1afa')
+data_pilot4.2 <- subset(data_pilot4, sbj_ID=='60f1846c851ee5a978a0e015'|sbj_ID=='60fd703ecd62eb39eb07c328'|sbj_ID=='60ddf71e95896d2595f0e1a5'|sbj_ID=='605c9355001a5eb6d51e657d'|sbj_ID=='5f11ccbc1a1a2c08b4a99efb'|sbj_ID=='5fb3f38909fc360164f7c98d'|sbj_ID=='60a45e33f404ba8cb7a19cfe'|sbj_ID=='608abc6251feb3ddc3b2e01d'|sbj_ID=='608edc13472b2dbc27b369fa'|sbj_ID=='612d5712d75b6c46b4cefc63'|sbj_ID=='5e82e99b37d333a1474dda93'|sbj_ID=='613d091096ca434d703f77c5'|sbj_ID=='609568823ff056b77e565445'|sbj_ID=='5e80c7d61a07dd7b0d8f0111'|sbj_ID=='59aaf4b1321f870001d16f6c'|sbj_ID=='6048158f62550615002408af'|sbj_ID=='6161f43ddd46e845e7b3fab8'|sbj_ID=='5ec806f532fe7d2afa2e315b'|sbj_ID=='5e99d95e0f50aa04266ad4ad'|sbj_ID=='5c5e04ca6539fe00016e1afa');
+
+# PILOT 4.1
+dim(data_pilot4.1);
+head(data_pilot4.1);
+summary(data_pilot4.1);
+
+# testing
+data_pilot4.1_testing <- subset(data_pilot4.1, task=='testing',select=c(sbj_ID,task,trialn,expected,observed,correct,rt,item));
+
+data_pilot4.1_testing_means <- aggregate(data_pilot4.1_testing$correct, list(data_pilot4.1_testing$sbj_ID), FUN=sum);
+data_pilot4.1_testing_means$x<-(data_pilot4.1_testing_means$x)*10/4;
+boxplot(data_pilot4.1_testing_means$x, ylab = "Accuracy score (in %)");
+abline(h=50, lty=5);
+
+# testing RTs
+library(paletteer);
+cols <- paletteer_d("ggthemes::Classic_20");
+IDs <- list(data_pilot4.1_testing$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[1]]),xlim=c(0,2200),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
+for (x in 2:20) {
+  lines(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[x]]),col=cols[x])
+};
+legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+# testing strategy
+
+  
+# familiarity
+data_pilot4.1_familiarity <- subset(data_pilot4.1, task=='familiarity',select=c(sbj_ID,task,trialn,target,confound,expected,observed,correct,rt));
+data_pilot4.1_familiarity_means <- aggregate(data_pilot4.1_familiarity$correct, list(data_pilot4.1_familiarity$sbj_ID), FUN=sum);
+data_pilot4.1_familiarity_means$x<-(data_pilot4.1_familiarity_means$x)*10/3;
+boxplot(data_pilot4.1_familiarity_means$x, ylab = "Familiarity score (in %)");
+abline(h=50, lty=5);
+
+# familiarity RTs
+IDs <- list(data_pilot4.1_familiarity$sbj_ID);
+IDs <- sapply(IDs, unique);
+summary(data_pilot4.1_familiarity$rt[data_pilot4.1_familiarity$sbj_ID==IDs[15]]) # this participant has super fast RTs
+plot(density(data_pilot4.1_familiarity$rt[data_pilot4.1_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.005),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
+for (x in 2:20) {
+  lines(density(data_pilot4.1_familiarity$rt[data_pilot4.1_familiarity$sbj_ID==IDs[x]]),col=cols[x])
+};
+legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+# BLP
+data_pilot4.1_BLP <- subset(data_pilot4.1, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
+
+# remove datapoints if participant doesn't know additional languages
+data_pilot4.1_BLP$langfilter1 <- TRUE;
+data_pilot4.1_BLP$langfilter2 <- TRUE;
+data_pilot4.1_BLP$langfilter3 <- TRUE;
+data_pilot4.1_BLP$langfilter4 <- TRUE;
+data_pilot4.1_BLP$langfilter2[data_pilot4.1_BLP$L2Score==0] <- FALSE;
+data_pilot4.1_BLP$langfilter3[data_pilot4.1_BLP$L3Score==0] <- FALSE;
+data_pilot4.1_BLP$langfilter4[data_pilot4.1_BLP$L4Score==0] <- FALSE;
+data_pilot4.1_BLP$L2Score[data_pilot4.1_BLP$langfilter2==FALSE] <- NA;
+data_pilot4.1_BLP$L3Score[data_pilot4.1_BLP$langfilter3==FALSE] <- NA;
+data_pilot4.1_BLP$L4Score[data_pilot4.1_BLP$langfilter4==FALSE] <- NA;
+ok2 <- ! is.na(data_pilot4.1_BLP$L2Score);
+ok3 <- ! is.na(data_pilot4.1_BLP$L3Score);
+ok4 <- ! is.na(data_pilot4.1_BLP$L4Score);
+
+# plot language scores per participant
+data_pilot4.1_BLP$temp_sbjID <- c(1:20) # necessary: R doesn't like format of Prolific IDs
+plot(data_pilot4.1_BLP$L1Score~data_pilot4.1_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col=cols[1],xaxt="n",yaxs="i");
+axis(1, at = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20));
+points(data_pilot4.1_BLP$L2Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[2]);
+points(data_pilot4.1_BLP$L3Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[3]);
+points(data_pilot4.1_BLP$L4Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
+legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+# PILOT 4.2
+dim(data_pilot4.2);
+head(data_pilot4.2);
+summary(data_pilot4.2);
+
+# testing
+data_pilot4.2_testing <- subset(data_pilot4.2, task=='testing',select=c(sbj_ID,task,trialn,expected,observed,correct,rt,item));
+data_pilot4.2_testing_means <- aggregate(data_pilot4.2_testing$correct, list(data_pilot4.2_testing$sbj_ID), FUN=sum);
+data_pilot4.2_testing_means$x<-(data_pilot4.2_testing_means$x)*10/4;
+boxplot(data_pilot4.2_testing_means$x, ylab = "Accuracy score (in %)");
+abline(h=50, lty=5);
+
+# testing RTs
+IDs <- list(data_pilot4.2_testing$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[1]]),xlim=c(0,2200),ylim=c(0,0.0035),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
+for (x in 2:20) {
+  lines(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[x]]),col=cols[x])
+};
+legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+# familiarity
+data_pilot4.2_familiarity <- subset(data_pilot4.2, task=='familiarity',select=c(sbj_ID,task,trialn,target,confound,expected,observed,correct,rt));
+data_pilot4.2_familiarity_means <- aggregate(data_pilot4.2_familiarity$correct, list(data_pilot4.2_familiarity$sbj_ID), FUN=sum);
+data_pilot4.2_familiarity_means$x<-(data_pilot4.2_familiarity_means$x)*10/3;
+boxplot(data_pilot4.2_familiarity_means$x, ylab = "Familiarity score (in %)");
+abline(h=50, lty=5);
+
+# familiarity RTs
+IDs <- list(data_pilot4.2_familiarity$sbj_ID);
+IDs <- sapply(IDs, unique);
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[1]]) # this participant has super fast RTs
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[10]]) # this participant has super fast RTs
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[12]]) # this participant has super fast RTs
+plot(density(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
+for (x in 2:20) {
+  lines(density(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[x]]),col=cols[x])
+};
+legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
+       cex=0.75,y.intersp=0.5);
+
+# BLP
+data_pilot4.2_BLP <- subset(data_pilot4.2, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
+
+# remove datapoints if participant doesn't know additional languages
+data_pilot4.2_BLP$langfilter1 <- TRUE;
+data_pilot4.2_BLP$langfilter2 <- TRUE;
+data_pilot4.2_BLP$langfilter3 <- TRUE;
+data_pilot4.2_BLP$langfilter4 <- TRUE;
+data_pilot4.2_BLP$langfilter2[data_pilot4.2_BLP$L2Score==0] <- FALSE;
+data_pilot4.2_BLP$langfilter3[data_pilot4.2_BLP$L3Score==0] <- FALSE;
+data_pilot4.2_BLP$langfilter4[data_pilot4.2_BLP$L4Score==0] <- FALSE;
+data_pilot4.2_BLP$L2Score[data_pilot4.2_BLP$langfilter2==FALSE] <- NA;
+data_pilot4.2_BLP$L3Score[data_pilot4.2_BLP$langfilter3==FALSE] <- NA;
+data_pilot4.2_BLP$L4Score[data_pilot4.2_BLP$langfilter4==FALSE] <- NA;
+ok2 <- ! is.na(data_pilot4.2_BLP$L2Score);
+ok3 <- ! is.na(data_pilot4.2_BLP$L3Score);
+ok4 <- ! is.na(data_pilot4.2_BLP$L4Score);
+
+# plot language scores per participant
+data_pilot4.2_BLP$temp_sbjID <- c(1:20) # necessary: R doesn't like format of Prolific IDs
+plot(data_pilot4.2_BLP$L1Score~data_pilot4.2_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col=cols[1],xaxt="n",yaxs="i");
+axis(1, at = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20));
+points(data_pilot4.2_BLP$L2Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[2]);
+points(data_pilot4.2_BLP$L3Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[3]);
+points(data_pilot4.2_BLP$L4Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
+legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
+       cex=0.75,y.intersp=0.5)
