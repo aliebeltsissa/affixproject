@@ -48,7 +48,7 @@ def BLP_preprocessing(BLP_file):
         Sorted & scored DataFrame with a line per participant.
     '''
     # replacing individual responses with their equivalent score
-    AoA12_mapping = {"20+": 0, "19": 1, "18": 2, "17": 3, "16": 4, "15": 5, "14": 6, "13": 7, "12": 8, "11": 9, "10": 10, "9": 11, "8": 12, "7": 13, "6": 14, "5": 15, "4": 16, "3": 17, "2": 18, "1": 19, "0": 0, "Dalla nascita": 20, "Da quando ne ho ricordo": 20, "notyet": 0}
+    AoA12_mapping = {"20+": 0, "19": 1, "18": 2, "17": 3, "16": 4, "15": 5, "14": 6, "13": 7, "12": 8, "11": 9, "10": 10, "9": 11, "8": 12, "7": 13, "6": 14, "5": 15, "4": 16, "3": 17, "2": 18, "1": 19, "0": 20, "Dalla nascita": 20, "Da quando ne ho ricordo": 20, "notyet": 0}
     BLP_data2 = BLP_file.replace({"AoAL1": AoA12_mapping, "AoAL2": AoA12_mapping, "AoAL3": AoA12_mapping, "AoAL4": AoA12_mapping})
     BLP_data3 = BLP_data2.replace({"AoAgioL1": AoA12_mapping, "AoAgioL2": AoA12_mapping, "AoAgioL3": AoA12_mapping, "AoAgioL4": AoA12_mapping})
     AoA_mapping = {"20+": 20, "19": 19, "18": 18, "17": 17, "16": 16, "15": 15, "14": 14, "13": 13, "12": 12, "11": 11, "10": 10, "9": 9, "8": 8, "7": 7, "6": 6, "5": 5, "4": 4, "3": 3, "2": 2, "1": 1, "0": 0}
@@ -264,6 +264,8 @@ for x in range(len(all_data)): # extract testing responses
             response_line = json.loads(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_testing_data.append(line)
+            if line['trial_type'] == 'survey-html-form' and 'testing_strategy' in response_line.keys():
+                participant_testing_data.append(line)
         if line['task'] == 'testing':
             participant_testing_data.append(line)
     if len(participant_testing_data) != 41:
