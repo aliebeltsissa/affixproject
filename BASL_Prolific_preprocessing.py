@@ -264,12 +264,12 @@ for x in range(len(all_data)): # extract testing responses
             response_line = json.loads(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_testing_data.append(line)
-            if line['trial_type'] == 'survey-html-form' and 'testing_strategy' in response_line.keys():
-                participant_testing_data.append(line)
+        if line['trial_type'] == 'survey-html-form' and 'testing_strategy' in response_line.keys():
+            participant_testing_data.append(line)
         if line['task'] == 'testing':
             participant_testing_data.append(line)
-    if len(participant_testing_data) != 41:
-        print("Warning: participant_testing_data doesn't have 41 items!")
+    if len(participant_testing_data) != 42:
+        print("Warning: participant_testing_data doesn't have 42 items!")
     testing_data.append(participant_testing_data)
     
 def testing_scoring(testing_data):
@@ -292,6 +292,11 @@ def testing_scoring(testing_data):
         participant_testing_data = testing_data[x]
         ID_line = json.loads(participant_testing_data[0]['response'])
         sbj_ID = ID_line['ID']
+        strat_line = json.loads(participant_testing_data[-1]['response'])
+        strat = strat_line['testing_strategy']
+        strat_dict = {'sbj_ID':sbj_ID, 'task':'testing','testing_strategy':strat}
+        strat_dict = {k:[v] for k,v in strat_dict.items()} # avoiding index error
+        strat_df = pd.DataFrame(strat_dict)
         for y in range(1,41):
             trial = participant_testing_data[y]
             trialn = y
@@ -307,10 +312,11 @@ def testing_scoring(testing_data):
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_testing_data_scored = pd.DataFrame(trial_dict)
             all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+        all_testing_data_scored = pd.concat([all_testing_data_scored, strat_df],axis = 0)
     return all_testing_data_scored
 
 all_testing_data_scored = testing_scoring(testing_data)
-if all_testing_data_scored.shape[0] == (40*len(testing_data)):
+if all_testing_data_scored.shape[0] == (41*len(testing_data)):
     print('Finished pre-processing testing responses')
 
 ### FAMILIARITY PRE-PROCESSING ###
