@@ -1,29 +1,6 @@
 getwd()
 setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject/Participant_Responses");
 
-# import participant files
-all_data = data.frame()
-all_data2 = data.frame()
-for (x in 22:1) { # for 22 participants
-  name <- sprintf("./Participant_%s/sbj%s_responses.tsv", x, x)
-  temp <- read.table(name,header=T,sep=",");
-  all_data <- rbind(temp,all_data2)
-  all_data2 <- data.frame(all_data)
-}
-
-# initial data frame structure look
-dim(all_data);
-head(all_data);
-summary(all_data);
-all_data$response <- as.factor(all_data$response);
-all_data$condition <- as.factor(all_data$condition);
-
-# creation of expected & observed columns
-all_data$expected <- 0
-all_data$expected[all_data$condition == 1] <- 1
-all_data$observed <- 0
-all_data$observed[all_data$response == "no"] <- 1
-
 # d' function
 dPrime <- function(sbj, expectedResp, observedResp)
 {
@@ -55,6 +32,34 @@ dPrime <- function(sbj, expectedResp, observedResp)
   print(data.frame(sbj=subjects, dprime=dprimes, log_beta=log_beta, c=c));
 };
 
+###########
+# PILOT 1 #
+###########
+
+# import participant files
+all_data = data.frame()
+all_data2 = data.frame()
+for (x in 22:1) { # for 22 participants
+  name <- sprintf("./Participant_%s/sbj%s_responses.tsv", x, x)
+  temp <- read.table(name,header=T,sep=",");
+  all_data <- rbind(temp,all_data2)
+  all_data2 <- data.frame(all_data)
+}
+
+# initial data frame structure look
+dim(all_data);
+head(all_data);
+summary(all_data);
+all_data$response <- as.factor(all_data$response);
+all_data$condition <- as.factor(all_data$condition);
+
+# creation of expected & observed columns
+all_data$expected <- 0
+all_data$expected[all_data$condition == 1] <- 1
+all_data$observed <- 0
+all_data$observed[all_data$response == "no"] <- 1
+
+# d'
 dprimes <- dPrime(all_data$sbjID, all_data$expected, all_data$observed);
 dim(dprimes);
 summary(dprimes);
@@ -138,7 +143,10 @@ dprimes <- dPrime(all_data$sbjID[all_data$sbjID<8], all_data$expected[all_data$s
 dim(dprimes);
 summary(dprimes);
 
-# PILOT 2
+###########
+# PILOT 2 #
+###########
+
 # Pilot 2 accuracy boxplot
 mean_data2 <- data.frame(mean_scores2 = c(35,52.5,52.5,65,52.5,47.5,35,57.5));
 summary(mean_data2$mean_scores2);
@@ -214,7 +222,10 @@ dprimes <- dPrime(all_data$sbjID[all_data$sbjID>7 & all_data$sbjID<16], all_data
 dim(dprimes);
 summary(dprimes);
 
-# PILOT 3
+###########
+# PILOT 3 #
+###########
+
 # Pilot 3 accuracy boxplot
 mean_data3 <- data.frame(mean_scores3 = c(50,57.5,40,50,52.5,50,57.5));
 summary(mean_data3$mean_scores3);
@@ -290,7 +301,9 @@ dprimes <- dPrime(all_data$sbjID[all_data$sbjID>15], all_data$expected[all_data$
 dim(dprimes);
 summary(dprimes);
 
-# PILOT 4
+###########
+# PILOT 4 #
+###########
 setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject")
 data_pilot4 <- read.csv("Prolific_preprocessed.csv",header=T,sep=",");
 data_pilot4 = subset(data_pilot4, select = -c(X)) # remove redundant column added by Pavlovia
@@ -353,8 +366,8 @@ summary(data_pilot4.1);
 data_pilot4.1_testing <- subset(data_pilot4.1, task=='testing',select=c(sbj_ID,task,trialn,expected,observed,correct,rt,item,testing_strategy));
 
 # testing boxplot
-data_pilot4.1_testing_means <- aggregate(data_pilot4.1_testing$correct, list(data_pilot4.1_testing$sbj_ID), FUN=sum);
-data_pilot4.1_testing_means$x<-(data_pilot4.1_testing_means$x)*10/4;
+data_pilot4.1_testing_means <- aggregate(data_pilot4.1_testing$correct, list(data_pilot4.1_testing$sbj_ID), FUN=sum); # this doesn't work
+data_pilot4.1_testing_means$x <- (data_pilot4.1_testing_means$x)*10/4;
 boxplot(data_pilot4.1_testing_means$x, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
 
@@ -374,6 +387,9 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+
+# testing accuracy*RTs
+
 
 # testing strategy
 pilot4.1_strats <- list(data_pilot4.1_testing$testing_strategy);
@@ -397,6 +413,9 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+
+# familiarity accuracy*RTs
+
 
 # BLP
 data_pilot4.1_BLP <- subset(data_pilot4.1, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -425,6 +444,46 @@ points(data_pilot4.1_BLP$L3Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,
 points(data_pilot4.1_BLP$L4Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
        cex=0.75,y.intersp=0.5);
+
+# multilingual balance: variance
+library(toolbox);
+scores_list <- combineCols(data_pilot4.1_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
+vars <- list();
+for (i in 1:20) { # calculate variance for each participant
+  temp <- unlist(scores_list[i]);
+  var <- var(temp,na.rm=TRUE);
+  vars <- append(vars, var)
+};
+data_pilot4.1_BLP$lang_var <- vars;
+as.numeric(data_pilot4.1_BLP$lang_var);
+plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,13000),yaxs="i");
+
+# multilingual balance: entropy
+entropies <- list();
+test <- c(1,2,3,4)
+Entropy(test)
+library(DescTools);
+for (i in 1:20) { # calculate entropy for each participant
+  temp <- unlist(scores_list[i]);
+  entropy <- Entropy(table(temp,useNA = "no"))
+  entropies <- append(entropies, entropy)
+};
+data_pilot4.1_BLP$lang_ent <- entropies;
+as.numeric(data_pilot4.1_BLP$lang_ent);
+
+# corr of variance & entropy
+cor(unlist(data_pilot4.1_BLP$lang_var),unlist(data_pilot4.1_BLP$lang_ent),method="pearson"); # r = -0.44 so moderately negatively correlated
+
+# multilingual experience: summing all language scores
+data_pilot4.1_BLP["L2Score"][is.na(data_pilot4.1_BLP["L2Score"])] <- 0;
+data_pilot4.1_BLP["L3Score"][is.na(data_pilot4.1_BLP["L3Score"])] <- 0;
+data_pilot4.1_BLP["L4Score"][is.na(data_pilot4.1_BLP["L4Score"])] <- 0;
+data_pilot4.1_BLP$multi_exp <- data_pilot4.1_BLP$L1Score + data_pilot4.1_BLP$L2Score + data_pilot4.1_BLP$L3Score + data_pilot4.1_BLP$L4Score;
+plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),yaxs="i");
+
+# L1 - L2 score
+data_pilot4.1_BLP$L1_L2_diff <- data_pilot4.1_BLP$L1Score - data_pilot4.1_BLP$L2Score;
+plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i");
 
 # PILOT 4.2
 dim(data_pilot4.2);
@@ -455,6 +514,9 @@ for (x in 2:20) {
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
 
+# testing accuracy*RTs
+
+
 # testing strategy
 pilot4.2_strats <- list(data_pilot4.2_testing$testing_strategy);
 pilot4.2_strats <- sapply(pilot4.2_strats, unique);
@@ -479,6 +541,9 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+
+# familiarity accuracy*RTs
+
 
 # BLP
 data_pilot4.2_BLP <- subset(data_pilot4.2, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -507,3 +572,25 @@ points(data_pilot4.2_BLP$L3Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,
 points(data_pilot4.2_BLP$L4Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
        cex=0.75,y.intersp=0.5)
+
+# multilingual balance: variance
+scores_list <- combineCols(data_pilot4.2_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
+vars <- list();
+for (i in 1:20) { # calculate variance for each participant
+  temp <- unlist(scores_list[i]);
+  var <- var(temp,na.rm=TRUE);
+  vars <- append(vars, var)
+};
+data_pilot4.2_BLP$lang_var <- vars;
+plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,13000),yaxs="i");
+
+# multilingual experience: summing all language scores
+data_pilot4.2_BLP["L2Score"][is.na(data_pilot4.2_BLP["L2Score"])] <- 0;
+data_pilot4.2_BLP["L3Score"][is.na(data_pilot4.2_BLP["L3Score"])] <- 0;
+data_pilot4.2_BLP["L4Score"][is.na(data_pilot4.2_BLP["L4Score"])] <- 0;
+data_pilot4.2_BLP$multi_exp <- data_pilot4.2_BLP$L1Score + data_pilot4.2_BLP$L2Score + data_pilot4.2_BLP$L3Score + data_pilot4.2_BLP$L4Score;
+plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),yaxs="i");
+
+# L1 - L2 score
+data_pilot4.2_BLP$L1_L2_diff <- data_pilot4.2_BLP$L1Score - data_pilot4.2_BLP$L2Score;
+plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i")
