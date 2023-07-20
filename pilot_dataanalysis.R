@@ -366,7 +366,7 @@ summary(data_pilot4.1);
 data_pilot4.1_testing <- subset(data_pilot4.1, task=='testing',select=c(sbj_ID,task,trialn,expected,observed,correct,rt,item,testing_strategy));
 
 # testing boxplot
-data_pilot4.1_testing_means <- aggregate(data_pilot4.1_testing$correct, list(data_pilot4.1_testing$sbj_ID), FUN=sum); # this doesn't work
+data_pilot4.1_testing_means <- aggregate(data_pilot4.1_testing$correct, list(data_pilot4.1_testing$sbj_ID), FUN=sum, na.rm=TRUE);
 data_pilot4.1_testing_means$x <- (data_pilot4.1_testing_means$x)*10/4;
 boxplot(data_pilot4.1_testing_means$x, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
@@ -387,9 +387,11 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+data_pilot4.1_testing_rt_means <- aggregate(data_pilot4.1_testing$rt, list(data_pilot4.1_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # testing accuracy*RTs
-
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_testing_rt_means$x); # 0.16
+plot(data_pilot4.1_testing_rt_means$x, data_pilot4.1_testing_means$x, pch=19);
 
 # testing strategy
 pilot4.1_strats <- list(data_pilot4.1_testing$testing_strategy);
@@ -413,9 +415,11 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+data_pilot4.1_familiarity_rt_means <- aggregate(data_pilot4.1_familiarity$rt, list(data_pilot4.1_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # familiarity accuracy*RTs
-
+cor(data_pilot4.1_familiarity_means$x, data_pilot4.1_familiarity_rt_means$x); # 0.29
+plot(data_pilot4.1_familiarity_rt_means$x, data_pilot4.1_familiarity_means$x, pch=19);
 
 # BLP
 data_pilot4.1_BLP <- subset(data_pilot4.1, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -455,13 +459,11 @@ for (i in 1:20) { # calculate variance for each participant
   vars <- append(vars, var)
 };
 data_pilot4.1_BLP$lang_var <- vars;
-as.numeric(data_pilot4.1_BLP$lang_var);
+data_pilot4.1_BLP$lang_var <- as.numeric(data_pilot4.1_BLP$lang_var);
 plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,13000),yaxs="i");
 
 # multilingual balance: entropy
 entropies <- list();
-test <- c(1,2,3,4)
-Entropy(test)
 library(DescTools);
 for (i in 1:20) { # calculate entropy for each participant
   temp <- unlist(scores_list[i]);
@@ -469,7 +471,7 @@ for (i in 1:20) { # calculate entropy for each participant
   entropies <- append(entropies, entropy)
 };
 data_pilot4.1_BLP$lang_ent <- entropies;
-as.numeric(data_pilot4.1_BLP$lang_ent);
+data_pilot4.1_BLP$lang_ent <- as.numeric(data_pilot4.1_BLP$lang_ent);
 
 # corr of variance & entropy
 cor(unlist(data_pilot4.1_BLP$lang_var),unlist(data_pilot4.1_BLP$lang_ent),method="pearson"); # r = -0.44 so moderately negatively correlated
@@ -485,6 +487,18 @@ plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$multi_exp,pch=19,xlab="Subje
 data_pilot4.1_BLP$L1_L2_diff <- data_pilot4.1_BLP$L1Score - data_pilot4.1_BLP$L2Score;
 plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i");
 
+# corr of variance & accuracy
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_var) # -0.01
+
+# corr of entropy & accuracy
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_ent) # 0.29
+
+# corr of multilingual experience & accuracy
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$multi_exp) # 0.05
+
+# corr of L1-L2 score & accuracy
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$L1_L2_diff) # -0.15
+
 # PILOT 4.2
 dim(data_pilot4.2);
 head(data_pilot4.2);
@@ -494,7 +508,7 @@ summary(data_pilot4.2);
 data_pilot4.2_testing <- subset(data_pilot4.2, task=='testing',select=c(sbj_ID,task,trialn,expected,observed,correct,rt,item,testing_strategy));
 
 # testing boxplot
-data_pilot4.2_testing_means <- aggregate(data_pilot4.2_testing$correct, list(data_pilot4.2_testing$sbj_ID), FUN=sum);
+data_pilot4.2_testing_means <- aggregate(data_pilot4.2_testing$correct, list(data_pilot4.2_testing$sbj_ID), FUN=sum, na.rm=TRUE);
 data_pilot4.2_testing_means$x<-(data_pilot4.2_testing_means$x)*10/4;
 boxplot(data_pilot4.2_testing_means$x, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
@@ -513,9 +527,11 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+data_pilot4.2_testing_rt_means <- aggregate(data_pilot4.2_testing$rt, list(data_pilot4.2_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # testing accuracy*RTs
-
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_testing_rt_means$x); # 0.04
+plot(data_pilot4.2_testing_rt_means$x, data_pilot4.2_testing_means$x, pch=19);
 
 # testing strategy
 pilot4.2_strats <- list(data_pilot4.2_testing$testing_strategy);
@@ -541,9 +557,11 @@ for (x in 2:20) {
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
        cex=0.75,y.intersp=0.5);
+data_pilot4.2_familiarity_rt_means <- aggregate(data_pilot4.2_familiarity$rt, list(data_pilot4.2_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # familiarity accuracy*RTs
-
+cor(data_pilot4.2_familiarity_means$x, data_pilot4.2_familiarity_rt_means$x); # 0.21
+plot(data_pilot4.2_familiarity_rt_means$x, data_pilot4.2_familiarity_means$x, pch=19);
 
 # BLP
 data_pilot4.2_BLP <- subset(data_pilot4.2, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -583,14 +601,41 @@ for (i in 1:20) { # calculate variance for each participant
 };
 data_pilot4.2_BLP$lang_var <- vars;
 plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,13000),yaxs="i");
+data_pilot4.2_BLP$lang_var <- as.numeric(data_pilot4.2_BLP$lang_var);
+
+# multilingual balance: entropy
+entropies <- list();
+library(DescTools);
+for (i in 1:20) { # calculate entropy for each participant
+  temp <- unlist(scores_list[i]);
+  entropy <- Entropy(table(temp,useNA = "no"))
+  entropies <- append(entropies, entropy)
+};
+data_pilot4.2_BLP$lang_ent <- entropies;
+data_pilot4.2_BLP$lang_ent <- as.numeric(data_pilot4.2_BLP$lang_ent);
+
+# corr of variance & entropy
+cor(unlist(data_pilot4.2_BLP$lang_var),unlist(data_pilot4.2_BLP$lang_ent),method="pearson"); # r = -0.85 so strongly negatively correlated
 
 # multilingual experience: summing all language scores
 data_pilot4.2_BLP["L2Score"][is.na(data_pilot4.2_BLP["L2Score"])] <- 0;
 data_pilot4.2_BLP["L3Score"][is.na(data_pilot4.2_BLP["L3Score"])] <- 0;
 data_pilot4.2_BLP["L4Score"][is.na(data_pilot4.2_BLP["L4Score"])] <- 0;
 data_pilot4.2_BLP$multi_exp <- data_pilot4.2_BLP$L1Score + data_pilot4.2_BLP$L2Score + data_pilot4.2_BLP$L3Score + data_pilot4.2_BLP$L4Score;
-plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),yaxs="i");
+plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),yaxs="i");
 
 # L1 - L2 score
 data_pilot4.2_BLP$L1_L2_diff <- data_pilot4.2_BLP$L1Score - data_pilot4.2_BLP$L2Score;
 plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i")
+
+# corr of variance & accuracy
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_var) # -0.35
+
+# corr of entropy & accuracy
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_ent) # 0.32
+
+# corr of multilingual experience & accuracy
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$multi_exp) # 0.44
+
+# corr of L1-L2 score & accuracy
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$L1_L2_diff) # -0.25
