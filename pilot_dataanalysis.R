@@ -233,16 +233,16 @@ boxplot(mean_data3$mean_scores3, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
 
 # Pilot 3 RTs
-plot(density(all_data$RT[all_data$sbjID==16]),xlim=c(0,2200),ylim=c(0,0.003),xlab="RTs (ms)",main="",xaxt = "n",col="#E69F00",yaxs="i");
+plot(density(all_data$RT[all_data$sbjID==16]),xlim=c(0,2200),ylim=c(0,0.003),xlab="RTs (ms)",cex.lab=1.5,main="",xaxt = "n",col="#1F77B4FF",yaxs="i",lwd=2);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
-lines(density(all_data$RT[all_data$sbjID==17]),col="#56B4E9");
-lines(density(all_data$RT[all_data$sbjID==18]),col="#009E73");
-lines(density(all_data$RT[all_data$sbjID==19]),col="#F0E442");
-lines(density(all_data$RT[all_data$sbjID==20]),col="#0072B2");
-lines(density(all_data$RT[all_data$sbjID==21]),col="#D55E00");
-lines(density(all_data$RT[all_data$sbjID==22]),col="#CC79A7");
-legend("topright",title="Participant:",c("16","17","18","19","20","21","22"),fill=c("#E69F00","#56B4E9","#009E73","#F0E442","#0072B2","#D55E00","#CC79A7"),bty = "n",
-       cex=0.75,y.intersp=0.5)
+lines(density(all_data$RT[all_data$sbjID==17]),col="#AEC7E8FF",lwd=2);
+lines(density(all_data$RT[all_data$sbjID==18]),col="#FF7F0EFF",lwd=2);
+lines(density(all_data$RT[all_data$sbjID==19]),col="#FFBB78FF",lwd=2);
+lines(density(all_data$RT[all_data$sbjID==20]),col="#2CA02CFF",lwd=2);
+lines(density(all_data$RT[all_data$sbjID==21]),col="#98DF8AFF",lwd=2);
+lines(density(all_data$RT[all_data$sbjID==22]),col="#D62728FF",lwd=2);
+legend("topright",title="Participant:",c("16","17","18","19","20","21","22"),fill=c("#1F77B4FF","#AEC7E8FF","#FF7F0EFF","#FFBB78FF","#2CA02CFF","#98DF8AFF","#D62728FF"),bty = "n",
+       cex=1,y.intersp=0.5)
 # still get some RTs way above 2s: this is because the trials with a response of over 2s are still recorded
 
 # Pilot 3 BLP scores
@@ -280,12 +280,13 @@ ok3 <- ! is.na(BLP_data_pilot3$L3Score);
 ok4 <- ! is.na(BLP_data_pilot3$L4Score);
 
 # plot language scores per participant
-plot(BLP_data_pilot3$L1Score~BLP_data_pilot3$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col="#F1BB7B",yaxs="i");
-points(BLP_data_pilot3$L2Score~BLP_data_pilot3$ID.partecipante,subset=ok2,pch=19,cex=2,col="#FD6467");
-points(BLP_data_pilot3$L3Score~BLP_data_pilot3$ID.partecipante,subset=ok3,pch=19,cex=2,col="#5B1A18");
-points(BLP_data_pilot3$L4Score~BLP_data_pilot3$ID.partecipante,subset=ok4,pch=19,cex=2,col="#D67236");
-legend("topright",title="Language:",c("L1","L2","L3","L4"),fill=c("#F1BB7B","#FD6467","#5B1A18","#D67236"),bty = "n",
+plot(BLP_data_pilot3$L1Score~BLP_data_pilot3$ID.partecipante,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,cex.labels=1.5,col="#1F77B4FF",yaxs="i");
+points(BLP_data_pilot3$L2Score~BLP_data_pilot3$ID.partecipante,subset=ok2,pch=19,cex=2,col="#AEC7E8FF");
+points(BLP_data_pilot3$L3Score~BLP_data_pilot3$ID.partecipante,subset=ok3,pch=19,cex=2,col="#FF7F0EFF");
+points(BLP_data_pilot3$L4Score~BLP_data_pilot3$ID.partecipante,subset=ok4,pch=19,cex=2,col="#FFBB78FF");
+legend("right",title="Language:",c("L1","L2","L3","L4"),fill=c("#1F77B4FF","#AEC7E8FF","#FF7F0EFF","#FFBB78FF"),bty = "n",
        cex=0.75,y.intersp=0.5);
+abline(h=218, lty=5);
 
 # familiarity
 familiarity_data_pilot3 <- read.table("preprocessed_familiarity_pilot3.tsv",header=T,sep=",");
@@ -380,17 +381,17 @@ library(paletteer);
 cols <- paletteer_d("ggthemes::Classic_20");
 IDs <- list(data_pilot4.1_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[1]]),xlim=c(0,2200),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+plot(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i",lwd=2,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 for (x in 2:20) {
-  lines(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[x]]),col=cols[x])
+  lines(density(data_pilot4.1_testing$rt[data_pilot4.1_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols[x],lwd=2)
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
-       cex=0.75,y.intersp=0.5);
+       cex=0.85,y.intersp=0.5);
 data_pilot4.1_testing_rt_means <- aggregate(data_pilot4.1_testing$rt, list(data_pilot4.1_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # testing accuracy*RTs
-cor(data_pilot4.1_testing_means$x, data_pilot4.1_testing_rt_means$x); # 0.16
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_testing_rt_means$x); # r = 0.16
 plot(data_pilot4.1_testing_rt_means$x, data_pilot4.1_testing_means$x, pch=19);
 
 # testing strategy
@@ -418,8 +419,9 @@ legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
 data_pilot4.1_familiarity_rt_means <- aggregate(data_pilot4.1_familiarity$rt, list(data_pilot4.1_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # familiarity accuracy*RTs
-cor(data_pilot4.1_familiarity_means$x, data_pilot4.1_familiarity_rt_means$x); # 0.29
-plot(data_pilot4.1_familiarity_rt_means$x, data_pilot4.1_familiarity_means$x, pch=19);
+cor(data_pilot4.1_familiarity_means$x, data_pilot4.1_familiarity_rt_means$x); # r = 0.29
+plot(data_pilot4.1_familiarity_rt_means$x, data_pilot4.1_familiarity_means$x, xlab="Mean participant RT (in ms)", ylab="Mean participant familiarity score (in %)", pch=19, cex=2, cex.lab=1.45);
+text(3000,45,"Pearson's r = 0.29",cex=1.5);
 
 # BLP
 data_pilot4.1_BLP <- subset(data_pilot4.1, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -440,18 +442,20 @@ ok3 <- ! is.na(data_pilot4.1_BLP$L3Score);
 ok4 <- ! is.na(data_pilot4.1_BLP$L4Score);
 
 # plot language scores per participant
-data_pilot4.1_BLP$temp_sbjID <- c(1:20) # necessary: R doesn't like format of Prolific IDs
-plot(data_pilot4.1_BLP$L1Score~data_pilot4.1_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col=cols[1],xaxt="n",yaxs="i");
+data_pilot4.1_BLP$temp_sbjID <- c(1:20); # necessary: R doesn't like format of Prolific IDs
+plot(data_pilot4.1_BLP$L1Score~data_pilot4.1_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,cex.lab=1.5,col=cols[1],xaxt="n",yaxs="i");
 axis(1, at = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20));
 points(data_pilot4.1_BLP$L2Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[2]);
 points(data_pilot4.1_BLP$L3Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[3]);
 points(data_pilot4.1_BLP$L4Score~data_pilot4.1_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
-       cex=0.75,y.intersp=0.5);
+       cex=1,y.intersp=0.5);
+abline(h=218, lty=5);
 
-# multilingual balance: variance
 library(toolbox);
 scores_list <- combineCols(data_pilot4.1_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
+
+# multilingual balance: variance
 vars <- list();
 for (i in 1:20) { # calculate variance for each participant
   temp <- unlist(scores_list[i]);
@@ -467,7 +471,7 @@ entropies <- list();
 library(DescTools);
 for (i in 1:20) { # calculate entropy for each participant
   temp <- unlist(scores_list[i]);
-  entropy <- Entropy(table(temp,useNA = "no"))
+  entropy <- Entropy(table(temp,useNA = "no"));
   entropies <- append(entropies, entropy)
 };
 data_pilot4.1_BLP$lang_ent <- entropies;
@@ -488,16 +492,18 @@ data_pilot4.1_BLP$L1_L2_diff <- data_pilot4.1_BLP$L1Score - data_pilot4.1_BLP$L2
 plot(data_pilot4.1_BLP$temp_sbjID,data_pilot4.1_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i");
 
 # corr of variance & accuracy
-cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_var) # -0.01
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_var); # r = -0.01 with 0s, r = -0.32 with NAs
+plot(data_pilot4.1_BLP$lang_var, data_pilot4.1_testing_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
 
 # corr of entropy & accuracy
-cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_ent) # 0.29
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$lang_ent); # r = 0.29 with 0s, r = 0.13 with NAs
+plot(data_pilot4.1_BLP$lang_ent, data_pilot4.1_testing_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", pch=19);
 
 # corr of multilingual experience & accuracy
-cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$multi_exp) # 0.05
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$multi_exp); # r = 0.05
 
 # corr of L1-L2 score & accuracy
-cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$L1_L2_diff) # -0.15
+cor(data_pilot4.1_testing_means$x, data_pilot4.1_BLP$L1_L2_diff); # r = -0.15
 
 # PILOT 4.2
 dim(data_pilot4.2);
@@ -520,17 +526,17 @@ summary(dprimes);
 # testing RTs
 IDs <- list(data_pilot4.2_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[1]]),xlim=c(0,2200),ylim=c(0,0.0035),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
+plot(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.0035),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i",lwd=2,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 for (x in 2:20) {
-  lines(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[x]]),col=cols[x])
+  lines(density(data_pilot4.2_testing$rt[data_pilot4.2_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols[x],lwd=2)
 };
 legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
-       cex=0.75,y.intersp=0.5);
+       cex=0.85,y.intersp=0.5);
 data_pilot4.2_testing_rt_means <- aggregate(data_pilot4.2_testing$rt, list(data_pilot4.2_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # testing accuracy*RTs
-cor(data_pilot4.2_testing_means$x, data_pilot4.2_testing_rt_means$x); # 0.04
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_testing_rt_means$x); # r = 0.04
 plot(data_pilot4.2_testing_rt_means$x, data_pilot4.2_testing_means$x, pch=19);
 
 # testing strategy
@@ -547,9 +553,9 @@ abline(h=50, lty=5);
 # familiarity RTs
 IDs <- list(data_pilot4.2_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
-summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[1]]) # this participant has super fast RTs
-summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[10]]) # this participant has super fast RTs
-summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[12]]) # this participant has super fast RTs
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[1]]); # this participant has super fast RTs
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[10]]); # this participant has super fast RTs
+summary(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[12]]); # this participant has super fast RTs
 plot(density(data_pilot4.2_familiarity$rt[data_pilot4.2_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.005),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
 for (x in 2:20) {
@@ -560,8 +566,8 @@ legend("topright",title="Participant:",legend=c(1:20),fill=cols,bty = "n",
 data_pilot4.2_familiarity_rt_means <- aggregate(data_pilot4.2_familiarity$rt, list(data_pilot4.2_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 
 # familiarity accuracy*RTs
-cor(data_pilot4.2_familiarity_means$x, data_pilot4.2_familiarity_rt_means$x); # 0.21
-plot(data_pilot4.2_familiarity_rt_means$x, data_pilot4.2_familiarity_means$x, pch=19);
+cor(data_pilot4.2_familiarity_means$x, data_pilot4.2_familiarity_rt_means$x); # r = 0.21
+plot(data_pilot4.2_familiarity_rt_means$x, data_pilot4.2_familiarity_means$x, xlab="Mean familiarity task RTs (in ms)", ylab="Mean familiarity score (in %)", pch=19);
 
 # BLP
 data_pilot4.2_BLP <- subset(data_pilot4.2, task=='BLP',select=-c(trialn,target,confound,expected,observed,correct,rt,item));
@@ -583,16 +589,18 @@ ok4 <- ! is.na(data_pilot4.2_BLP$L4Score);
 
 # plot language scores per participant
 data_pilot4.2_BLP$temp_sbjID <- c(1:20) # necessary: R doesn't like format of Prolific IDs
-plot(data_pilot4.2_BLP$L1Score~data_pilot4.2_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,col=cols[1],xaxt="n",yaxs="i");
+plot(data_pilot4.2_BLP$L1Score~data_pilot4.2_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,cex.lab=1.5,col=cols[1],xaxt="n",yaxs="i");
 axis(1, at = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20));
 points(data_pilot4.2_BLP$L2Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[2]);
 points(data_pilot4.2_BLP$L3Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[3]);
 points(data_pilot4.2_BLP$L4Score~data_pilot4.2_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
-       cex=0.75,y.intersp=0.5)
+       cex=1,y.intersp=0.5);
+abline(h=218,lty=5)
+
+scores_list <- combineCols(data_pilot4.2_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
 
 # multilingual balance: variance
-scores_list <- combineCols(data_pilot4.2_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
 vars <- list();
 for (i in 1:20) { # calculate variance for each participant
   temp <- unlist(scores_list[i]);
@@ -608,7 +616,7 @@ entropies <- list();
 library(DescTools);
 for (i in 1:20) { # calculate entropy for each participant
   temp <- unlist(scores_list[i]);
-  entropy <- Entropy(table(temp,useNA = "no"))
+  entropy <- Entropy(table(temp,useNA = "no"));
   entropies <- append(entropies, entropy)
 };
 data_pilot4.2_BLP$lang_ent <- entropies;
@@ -626,16 +634,20 @@ plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$multi_exp,pch=19,xlab="Subje
 
 # L1 - L2 score
 data_pilot4.2_BLP$L1_L2_diff <- data_pilot4.2_BLP$L1Score - data_pilot4.2_BLP$L2Score;
-plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i")
+plot(data_pilot4.2_BLP$temp_sbjID,data_pilot4.2_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",ylim=c(0,218),yaxs="i");
 
 # corr of variance & accuracy
-cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_var) # -0.35
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_var); # r = -0.35
+plot(data_pilot4.2_BLP$lang_var, data_pilot4.2_testing_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
 
 # corr of entropy & accuracy
-cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_ent) # 0.32
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$lang_ent); # r = 0.32 with 0s, r = 0.37 with NAs
+plot(data_pilot4.2_BLP$lang_ent, data_pilot4.2_testing_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", pch=19);
 
 # corr of multilingual experience & accuracy
-cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$multi_exp) # 0.44
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$multi_exp); # r = 0.44
+plot(data_pilot4.2_BLP$multi_exp, data_pilot4.2_testing_means$x, xlab="Amount of multilingual experience", ylab="Testing accuracy (in %)", pch=19);
 
 # corr of L1-L2 score & accuracy
-cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$L1_L2_diff) # -0.25
+cor(data_pilot4.2_testing_means$x, data_pilot4.2_BLP$L1_L2_diff) # r = -0.25
+plot(data_pilot4.2_BLP$L1_L2_diff, data_pilot4.2_testing_means$x, xlab="Difference between L1 and L2 score", ylab="Testing accuracy (in %)", pch=19)
