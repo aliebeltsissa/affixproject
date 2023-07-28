@@ -11,6 +11,7 @@
     <!-- response plugins-->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-keyboard-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-image-keyboard-response.js"></script>
+    <script src="lib/vendors/jspsych-7.1.2/plugin-instructions.js"></script>
     <!-- survey plugins -->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-button-response.js"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.1"></script>
@@ -280,7 +281,7 @@
       for (let i = 0; i < 30; i++) {
         familiarity_pairs.push([all_morphemes[i], all_confounds[i]])
       };
-      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, familiarity_pairs]
+      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, familiarity_pairs, all_morphemes, all_confounds]
     };
 
     var values4 = import_morphemes();
@@ -312,6 +313,8 @@
     var incongruenttesting_list2 = values5[20];
     var incongruenttesting_dict = values5[21];
     var familiarity_pairs = values5[22];
+    var all_morphemes = values5[23];
+    var all_confounds = values5[24];
     var incongruenttesting_list = [];
     for (word of incongruenttesting_list2) {
       var word = word.toString();
@@ -472,15 +475,7 @@
     };
     timeline.push(enter_fullscreen);
 
-    var welcome = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Benvenuta/o, e grazie mille del tuo tempo!</p>
-      <p>In questo esperimento sarai un esperto/un'esperta di linguaggio cui è stato chiesto di dare un'occhiata ad alcuni messaggi che la Terra ha ricevuto dallo spazio. Il tuo compito, in questa prima parte dell'esperimento, sarà di fare molta attenzione alle parole che ti verranno mostrate; più tardi, i leader del mondo ti chiederanno qualche informazione su quello che hai visto. Le parole si susseguiranno abbastanza velocemente; sembra che questi alieni abbiano una certa fretta :-) </p>
-      <p>Per favore, chiama lo sperimentatore se ha qualche domanda.</p><p>Premi la barra per continuare.</p>`,
-      choices: ' '
-    };
-    timeline.push(welcome);
-
+    /*
     var example = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Ecco un esempio delle parole che vedrai:</p>
@@ -489,8 +484,38 @@
       choices: ' '
     };
     timeline.push(example);
+    */
+
+    /* MORPHEME TRAINING */
+    var pre_morpheme_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to study these word parts, which will help you understand the messages we've received!</p>
+      <p>Please press the spacebar when you're ready.</p>`
+    }
+
+    var all_morphemes_BACS = [];
+    for (let i = 0; i < all_morphemes.length; i++) {
+      var item = all_morphemes[i];
+      var BACS_item = `<p style="font-size: 120px; font-family: BACS">`+item+`</p>`;
+      all_morphemes_BACS.push(BACS_item)
+    };
+
+    var morpheme_presentation ={
+      type: jsPsychInstructions,
+      pages: all_morphemes_BACS,
+      show_clickable_nav: true,
+      show_page_number: true,
+      page_label: 'Word part'
+    };
+    timeline.push(morpheme_presentation);
 
     /* TRAINING */
+    var pre_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly; it seems that the aliens were in a hurry :-)</p>
+      <p>Please presss the spacebar when you're ready to begin.<p>`
+    }
+
     var training_stimuli1 = [];
     var item = ' '
     for (let i = 0; i < rand_training1.length; i++) {
