@@ -81,7 +81,7 @@
           var training_dict = {};
           var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
           var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
-          reps++; /* increase by 1 */ 
+          reps++;
           console.log('Finished rep ' + reps + ' of generating word list.')
           for (let i = 0; i < stem_subset.length; i++) {
             var j = 0;
@@ -90,7 +90,7 @@
               var last = stem.slice(-1); //
               var affix = affix_subset[j];
               if (stem != affix && last != affix[0]) {
-                words_list.push([stem + affix]); /* append */ 
+                words_list.push([stem + affix]); 
                 var parts = [stem, affix];
                 var word = stem + affix;
                 var dictkeys = Object.keys(words_dict);
@@ -281,7 +281,7 @@
       for (let i = 0; i < 30; i++) {
         familiarity_pairs.push([all_morphemes[i], all_confounds[i]])
       };
-      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, familiarity_pairs, all_morphemes, all_confounds]
+      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, familiarity_pairs, all_morphemes, all_confounds, exp_threes, exp_fours, exp_fives, big_threes, big_fours, big_fives]
     };
 
     var values4 = import_morphemes();
@@ -315,6 +315,12 @@
     var familiarity_pairs = values5[22];
     var all_morphemes = values5[23];
     var all_confounds = values5[24];
+    var exp_threes = values5[25];
+    var exp_fours = values5[26];
+    var exp_fives = values5[27];
+    var big_threes = values5[28];
+    var big_fours = values5[29];
+    var big_fives = values5[30];
     var incongruenttesting_list = [];
     for (word of incongruenttesting_list2) {
       var word = word.toString();
@@ -408,18 +414,56 @@
     return array;
     };
 
-    var trainingn = 4;
+    // generating MorCode novel words
+    var training_lengths = [];
+    var training_parts = Object.values(training_dict)
+    for (let i = 0; i < training_parts.length; i++) { // extract morpheme lengths from experimental stimuli dict
+      var parts = training_parts[i];
+      if (parts[0].length == 3) {length_1 = 3};
+      if (parts[0].length == 4) {length_1 = 4};
+      if (parts[0].length == 5) {length_1 = 5};
+      if (parts[1].length == 3) {length_2 = 3};
+      if (parts[1].length == 4) {length_2 = 4};
+      if (parts[1].length == 5) {length_2 = 5};
+      training_lengths.push([length_1, length_2])
+    };
+    console.log(training_lengths);
+
+    // pulling new morphemes from big morpheme lists
+    var morcode_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, parseInt(exp_threes.length));
+    var morcode_fours = jsPsych.randomization.sampleWithoutReplacement(big_fours, parseInt(exp_fours.length));
+    var morcode_fives = jsPsych.randomization.sampleWithoutReplacement(big_fives, parseInt(exp_fives.length));
+    var all_morcode = morcode_threes.concat(morcode_fours, morcode_fives);
+
+    // assembling new morphemes in same length combinations as training items
+    var morcode_words_list = [];
+    var morcode_words_dict = {};
+    for (let i = 0; i < training_list.length; i++) {
+      var lengths = training_lengths[i];
+      if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+      if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+      if (lengths[0] == 5) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+      if (lengths[1] == 3) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+      if (lengths[1] == 4) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+      if (lengths[1] == 5) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+      var morcode = morcode_stem + morcode_affix;
+      morcode_words_list.push(morcode);
+      morcode_words_dict[morcode] = [morcode_stem, morcode_affix]
+    };
+    // so morcode_words_list is all the stim to be used in the novelXnovel morcode testing condition
+
+    var trainingn = 8;
     var rand_training1 = training_randomisation(training_list);
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
     var rand_training4 = training_randomisation(training_list);
-    // to be run for 8 training reps:
     var rand_training5 = training_randomisation(training_list);
     var rand_training6 = training_randomisation(training_list);
     var rand_training7 = training_randomisation(training_list);
     var rand_training8 = training_randomisation(training_list);
 
     var rand_testing = testing_randomisation(testing);
+    
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
 
@@ -500,14 +544,14 @@
       all_morphemes_BACS.push(BACS_item)
     };
 
-    var morpheme_presentation ={
+    var morpheme_training = {
       type: jsPsychInstructions,
       pages: all_morphemes_BACS,
       show_clickable_nav: true,
       show_page_number: true,
       page_label: 'Word part'
     };
-    timeline.push(morpheme_presentation);
+    timeline.push(morpheme_training);
 
     /* TRAINING */
     var pre_training = {
