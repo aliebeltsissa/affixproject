@@ -1,0 +1,1601 @@
+,sbj_ID,task,trialn,item,expected,observed,correct,rt,strategy
+0,59aaf4b1321f870001d16f6c,testing,1,LQurcDR,1,0,False,3578.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,2,LAclAQGb,0,0,True,1241.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,3,PEkhAJUNa,1,0,False,1342.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,4,COTKQGb,1,0,False,835.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,5,bmbNYDE,1,0,False,1218.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,6,COTKOtM,0,1,False,646.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,7,PEkhAcDR,0,1,False,734.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,8,MkmEdOtM,0,0,True,580.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,9,MhKdYDE,0,1,False,341.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,10,LOLkUOdOP,1,0,False,354.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,11,tKDmhkJdr,1,1,True,264.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,12,CtmbZAUu,1,0,False,253.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,13,vQdOcDR,1,0,False,412.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,14,bmbNkJdr,0,0,True,572.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,15,LQurJUNa,0,0,True,532.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,16,bGuOkJdr,0,0,True,1220.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,17,ZcGdNQGb,0,1,False,1806.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,18,LOLkUcrdY,0,0,True,334.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,19,vQdOJUNa,0,0,True,288.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,20,ZYcQUZAUu,0,0,True,431.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,21,AdDbYcM,0,1,False,305.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,22,bGuOYDE,1,1,True,1017.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,23,ZYcQUYcM,1,1,True,1039.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,24,vYLUOdOP,1,1,True,856.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,25,AdDbZAUu,1,0,False,473.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,26,kPOtOdOP,0,0,True,1081.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,27,JdOAYZAUu,0,0,True,1685.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,28,CtmbYcM,0,0,True,755.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,29,htmhCcDR,0,0,True,553.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,30,LAclAOtM,1,0,False,390.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,31,tKDmhYDE,0,0,True,452.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,32,vYLUcrdY,0,1,False,466.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,33,htmhCJUNa,1,0,False,231.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,34,EYtYRcrdY,1,0,False,795.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,35,JdOAYYcM,1,1,True,2190.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,36,EYtYROdOP,0,1,False,711.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,37,ZcGdNOtM,1,0,False,720.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,38,kPOtcrdY,1,0,False,1079.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,39,MkmEdQGb,1,1,True,689.0,ho cercato di memorizzare le posizioni dei caratteri
+0,59aaf4b1321f870001d16f6c,testing,40,MhKdkJdr,1,0,False,1042.0,ho cercato di memorizzare le posizioni dei caratteri
+0,5c5e04ca6539fe00016e1afa,testing,1,TDKhTAm,0,1,False,3474.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,2,rdLJaKlkD,1,0,False,523.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,3,bmbNGUa,0,1,False,669.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,4,dGLAlYaum,0,0,True,502.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,5,kRCkOcMRl,0,1,False,790.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,6,RhPmKlkD,0,1,False,527.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,7,JZOAkcMRl,1,1,True,660.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,8,aYQmkPM,1,0,False,624.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,9,rkYLAOUl,0,0,True,631.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,10,kZUbTAm,1,1,True,529.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,11,dGLAlRCdc,1,1,True,669.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,12,OcYMYaum,1,1,True,581.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,13,rvOvURCdc,1,0,False,560.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,14,TDKhrNlZ,1,0,False,546.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,15,kRCkOAOUl,1,1,True,541.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,16,hlbtbrULv,1,1,True,627.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,17,rbYbukPM,1,0,False,814.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,18,hmKPMrULv,1,1,True,794.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,19,lCbcmcMRl,0,1,False,596.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,20,rvOvUYaum,0,0,True,733.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,21,aYQmrULv,0,0,True,722.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,22,kbmZOrNlZ,0,0,True,694.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,23,rdLJaGUa,0,1,False,864.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,24,kbmZOTAm,1,1,True,749.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,25,hlbtbkPM,0,0,True,504.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,26,rkYLcMRl,1,0,False,716.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,27,kKEdMRCdc,0,1,False,393.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,28,MTdYTAm,0,1,False,548.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,29,kZUbrNlZ,0,1,False,564.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,30,RhPmGUa,1,0,False,631.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,31,rbYburULv,0,1,False,400.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,32,OcYMRCdc,0,1,False,571.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,33,hmKPMkPM,0,0,True,659.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,34,AMkCKlkD,0,0,True,640.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,35,lCbcmAOUl,1,1,True,660.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,36,AMkCGUa,1,0,False,621.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,37,bmbNKlkD,1,0,False,539.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,38,kKEdMYaum,1,0,False,439.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,39,MTdYrNlZ,1,1,True,373.0,"intuito, non ho tempo di pensare"
+0,5c5e04ca6539fe00016e1afa,testing,40,JZOAkAOUl,0,0,True,426.0,"intuito, non ho tempo di pensare"
+0,5caca6b4a9acb200011a6547,testing,1,OmtlDNYZu,1,1,True,1108.0,memoria
+0,5caca6b4a9acb200011a6547,testing,2,AmQOYkam,0,1,False,1280.0,memoria
+0,5caca6b4a9acb200011a6547,testing,3,cAZuPMYm,1,0,False,666.0,memoria
+0,5caca6b4a9acb200011a6547,testing,4,PcBTkam,1,1,True,1507.0,memoria
+0,5caca6b4a9acb200011a6547,testing,5,lGZvPMYm,1,0,False,769.0,memoria
+0,5caca6b4a9acb200011a6547,testing,6,QcladCmYA,1,0,False,1086.0,memoria
+0,5caca6b4a9acb200011a6547,testing,7,OkGYOYK,1,0,False,741.0,memoria
+0,5caca6b4a9acb200011a6547,testing,8,kMbTRkam,1,1,True,943.0,memoria
+0,5caca6b4a9acb200011a6547,testing,9,YcdOOYK,1,0,False,1311.0,memoria
+0,5caca6b4a9acb200011a6547,testing,10,kMbTRhBK,0,1,False,857.0,memoria
+0,5caca6b4a9acb200011a6547,testing,11,bNdmGZAUu,0,1,False,1366.0,memoria
+0,5caca6b4a9acb200011a6547,testing,12,AmQOYhBK,1,0,False,1472.0,memoria
+0,5caca6b4a9acb200011a6547,testing,13,CchtdkmU,1,0,False,1112.0,memoria
+0,5caca6b4a9acb200011a6547,testing,14,bNdmGCmYA,1,0,False,880.0,memoria
+0,5caca6b4a9acb200011a6547,testing,15,aYQmkam,0,0,True,760.0,memoria
+0,5caca6b4a9acb200011a6547,testing,16,lGZvNYZu,0,1,False,771.0,memoria
+0,5caca6b4a9acb200011a6547,testing,17,UrOQMKmY,1,1,True,1031.0,memoria
+0,5caca6b4a9acb200011a6547,testing,18,TEBKNYZu,1,1,True,1036.0,memoria
+0,5caca6b4a9acb200011a6547,testing,19,MhKdCmYA,0,0,True,947.0,memoria
+0,5caca6b4a9acb200011a6547,testing,20,cAZuNYZu,0,0,True,734.0,memoria
+0,5caca6b4a9acb200011a6547,testing,21,UvOGMKmY,1,1,True,837.0,memoria
+0,5caca6b4a9acb200011a6547,testing,22,PcBThBK,0,0,True,768.0,memoria
+0,5caca6b4a9acb200011a6547,testing,23,YcdOlGc,0,1,False,975.0,memoria
+0,5caca6b4a9acb200011a6547,testing,24,MhKdZAUu,1,0,False,1105.0,memoria
+0,5caca6b4a9acb200011a6547,testing,25,aYQmhBK,1,0,False,1518.0,memoria
+0,5caca6b4a9acb200011a6547,testing,26,EYtYRkmU,1,1,True,2682.0,memoria
+0,5caca6b4a9acb200011a6547,testing,27,TEBKPMYm,0,1,False,899.0,memoria
+0,5caca6b4a9acb200011a6547,testing,28,tmAKCmYA,0,1,False,721.0,memoria
+0,5caca6b4a9acb200011a6547,testing,29,OkGYlGc,0,0,True,753.0,memoria
+0,5caca6b4a9acb200011a6547,testing,30,EYtYRMKmY,0,1,False,822.0,memoria
+0,5caca6b4a9acb200011a6547,testing,31,lbBDElGc,1,0,False,696.0,memoria
+0,5caca6b4a9acb200011a6547,testing,32,tmAKZAUu,1,1,True,856.0,memoria
+0,5caca6b4a9acb200011a6547,testing,33,lbBDEOYK,0,0,True,706.0,memoria
+0,5caca6b4a9acb200011a6547,testing,34,CchtdMKmY,0,0,True,710.0,memoria
+0,5caca6b4a9acb200011a6547,testing,35,QcladZAUu,0,0,True,755.0,memoria
+0,5caca6b4a9acb200011a6547,testing,36,ctktlGc,1,0,False,660.0,memoria
+0,5caca6b4a9acb200011a6547,testing,37,UrOQkmU,0,1,False,611.0,memoria
+0,5caca6b4a9acb200011a6547,testing,38,OmtlDPMYm,0,0,True,898.0,memoria
+0,5caca6b4a9acb200011a6547,testing,39,UvOGkmU,0,1,False,748.0,memoria
+0,5caca6b4a9acb200011a6547,testing,40,ctktOYK,0,0,True,612.0,memoria
+0,5cb4adc019ee7300189e8547,testing,1,lYruakGua,0,0,True,2344.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,2,lBlEkmU,1,0,False,966.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,3,kRCkOdEPD,0,0,True,903.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,4,dvNvARDM,1,1,True,854.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,5,LcNUJTRkY,1,1,True,788.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,6,OcYMbRC,0,1,False,948.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,7,LcNUJkbu,0,0,True,670.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,8,bmbNTRkY,1,0,False,760.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,9,mBmlAkmU,1,1,True,746.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,10,bmbNkbu,0,0,True,823.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,11,KElBrab,1,0,False,657.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,12,ZvalvRDM,1,0,False,686.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,13,dvNvAkmU,0,1,False,450.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,14,OcYMrab,1,0,False,771.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,15,kcdOtdEPD,0,0,True,598.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,16,COtBDKEdl,0,0,True,747.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,17,kPkRATRkY,0,0,True,774.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,18,COtBDkGua,1,1,True,744.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,19,kPkRAkbu,1,1,True,620.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,20,JrGvbRC,1,1,True,543.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,21,ukYZKEdl,1,1,True,502.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,22,DhCPkbu,1,0,False,824.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,23,ZvalvkmU,0,0,True,538.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,24,JdGmQONk,0,0,True,329.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,25,lGZvdEPD,1,0,False,699.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,26,kCRmkGua,1,1,True,697.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,27,kRCkOQONk,1,1,True,528.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,28,lBlERDM,0,0,True,719.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,29,YcdObRC,1,0,False,859.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,30,kCRmKEdl,0,0,True,863.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,31,mBmlARDM,0,1,False,796.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,32,ukYZkGua,0,1,False,731.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,33,JdGmdEPD,1,0,False,891.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,34,lGZvQONk,0,0,True,671.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,35,YcdOrab,0,0,True,509.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,36,lYruaKEdl,1,0,False,770.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,37,DhCPTRkY,0,0,True,861.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,38,KElBbRC,0,0,True,808.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,39,JrGvrab,0,0,True,491.0,ho cercato di ricordare le parole già viste
+0,5cb4adc019ee7300189e8547,testing,40,kcdOtQONk,1,0,False,394.0,ho cercato di ricordare le parole già viste
+0,5cf14e1eb4397d0001f94e20,testing,1,YObAvcb,1,0,False,648.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,2,TbKMEkJdr,1,1,True,1370.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,3,bNdmGTbk,1,1,True,1512.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,4,aNYmbmCd,1,1,True,1321.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,5,bNdmGvcb,0,0,True,745.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,6,hTtBbDmh,0,1,False,1068.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,7,BEPOlLG,1,0,False,1537.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,8,rGUAYkJdr,0,1,False,1242.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,9,UvOGDmh,1,0,False,714.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,10,YObATbk,0,0,True,1013.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,11,ZcGdNYBO,1,0,False,1174.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,12,adYrcCMdP,1,0,False,2305.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,13,MhKduOAO,1,0,False,910.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,14,rGUAYYBO,1,0,False,765.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,15,UYZlZDmh,1,0,False,28.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,16,uAkruOAO,0,1,False,812.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,17,lrZGlLG,0,0,True,715.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,18,thbOMmCd,0,1,False,706.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,19,DCmhkJdr,1,0,False,699.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,20,hkRKDmh,0,0,True,831.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,21,lrZGCMdP,1,1,True,626.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,22,UvOGAld,0,1,False,770.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,23,uAkrmCd,1,0,False,728.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,24,BATOclLG,1,0,False,611.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,25,bYuQTbk,1,0,False,720.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,26,OEPkvcb,1,0,False,660.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,27,ZcGdNkJdr,0,0,True,738.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,28,DCmhYBO,0,0,True,654.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,29,BEPOCMdP,0,0,True,644.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,30,OEPkTbk,0,0,True,770.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,31,hTtBbAld,1,0,False,910.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,32,aNYmbuOAO,0,1,False,802.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,33,BATOcCMdP,0,0,True,729.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,34,bYuQvcb,0,1,False,562.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,35,adYrclLG,0,1,False,561.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,36,hkRKAld,1,1,True,684.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,37,TbKMEYBO,0,0,True,713.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,38,UYZlZAld,0,1,False,540.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,39,MhKdmCd,0,1,False,694.0,guardare la prima e ultima lettera
+0,5cf14e1eb4397d0001f94e20,testing,40,thbOMuOAO,1,1,True,701.0,guardare la prima e ultima lettera
+0,5d97c38dce449e001244dc15,testing,1,mARMRCdc,0,0,True,2827.0,nessuna
+0,5d97c38dce449e001244dc15,testing,2,UvOGDmh,1,1,True,1044.0,nessuna
+0,5d97c38dce449e001244dc15,testing,3,bNdmGTmTm,1,0,False,1271.0,nessuna
+0,5d97c38dce449e001244dc15,testing,4,RYtkckdrO,1,0,False,1278.0,nessuna
+0,5d97c38dce449e001244dc15,testing,5,AmaclBRDh,1,0,False,1230.0,nessuna
+0,5d97c38dce449e001244dc15,testing,6,TdmAkdrO,1,1,True,1183.0,nessuna
+0,5d97c38dce449e001244dc15,testing,7,PYkCDlDT,0,0,True,1512.0,nessuna
+0,5d97c38dce449e001244dc15,testing,8,DMRPDmh,0,0,True,1456.0,nessuna
+0,5d97c38dce449e001244dc15,testing,9,mARMJZr,1,1,True,1355.0,nessuna
+0,5d97c38dce449e001244dc15,testing,10,BOckPNUZ,1,1,True,1634.0,nessuna
+0,5d97c38dce449e001244dc15,testing,11,OJGQRCdc,1,1,True,1419.0,nessuna
+0,5d97c38dce449e001244dc15,testing,12,YlYcTmTm,0,0,True,1282.0,nessuna
+0,5d97c38dce449e001244dc15,testing,13,TdmABRDh,0,0,True,1319.0,nessuna
+0,5d97c38dce449e001244dc15,testing,14,UAcduJZr,0,0,True,1241.0,nessuna
+0,5d97c38dce449e001244dc15,testing,15,mLdkZBRDh,1,0,False,1368.0,nessuna
+0,5d97c38dce449e001244dc15,testing,16,PYkCNUZ,1,0,False,1167.0,nessuna
+0,5d97c38dce449e001244dc15,testing,17,rkJuDlDT,1,1,True,1052.0,nessuna
+0,5d97c38dce449e001244dc15,testing,18,UvOGJcUk,0,0,True,1588.0,nessuna
+0,5d97c38dce449e001244dc15,testing,19,DlDdark,1,0,False,1281.0,nessuna
+0,5d97c38dce449e001244dc15,testing,20,kcOYDmh,0,1,False,1313.0,nessuna
+0,5d97c38dce449e001244dc15,testing,21,RYtkcBRDh,0,1,False,1308.0,nessuna
+0,5d97c38dce449e001244dc15,testing,22,YOaAbNUZ,0,0,True,1691.0,nessuna
+0,5d97c38dce449e001244dc15,testing,23,YlYcark,1,1,True,1351.0,nessuna
+0,5d97c38dce449e001244dc15,testing,24,OdlNmJcUk,0,1,False,1131.0,nessuna
+0,5d97c38dce449e001244dc15,testing,25,OJGQJZr,0,0,True,858.0,nessuna
+0,5d97c38dce449e001244dc15,testing,26,dGLAlark,0,0,True,1270.0,nessuna
+0,5d97c38dce449e001244dc15,testing,27,mLdkZkdrO,0,0,True,1033.0,nessuna
+0,5d97c38dce449e001244dc15,testing,28,EPERdJZr,1,0,False,864.0,nessuna
+0,5d97c38dce449e001244dc15,testing,29,dGLAlTmTm,1,0,False,1434.0,nessuna
+0,5d97c38dce449e001244dc15,testing,30,DMRPJcUk,1,1,True,1409.0,nessuna
+0,5d97c38dce449e001244dc15,testing,31,OdlNmDmh,1,1,True,1281.0,nessuna
+0,5d97c38dce449e001244dc15,testing,32,AmaclkdrO,0,0,True,1800.0,nessuna
+0,5d97c38dce449e001244dc15,testing,33,BOckPDlDT,0,1,False,1389.0,nessuna
+0,5d97c38dce449e001244dc15,testing,34,rkJuNUZ,0,1,False,1258.0,nessuna
+0,5d97c38dce449e001244dc15,testing,35,UAcduRCdc,1,0,False,1492.0,nessuna
+0,5d97c38dce449e001244dc15,testing,36,DlDdTmTm,0,0,True,1057.0,nessuna
+0,5d97c38dce449e001244dc15,testing,37,YOaAbDlDT,1,1,True,1178.0,nessuna
+0,5d97c38dce449e001244dc15,testing,38,EPERdRCdc,0,0,True,917.0,nessuna
+0,5d97c38dce449e001244dc15,testing,39,kcOYJcUk,1,0,False,1149.0,nessuna
+0,5d97c38dce449e001244dc15,testing,40,bNdmGark,0,0,True,1258.0,nessuna
+0,5e80c7d61a07dd7b0d8f0111,testing,1,COTKNac,1,1,True,4172.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,2,MBKREGUOA,1,0,False,1045.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,3,PcBTdTAh,0,0,True,1383.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,4,YZJmrAm,0,1,False,1182.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,5,COTKtAY,0,0,True,1187.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,6,uQuZcNac,0,1,False,1012.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,7,chEDOYTOM,0,0,True,780.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,8,DmAMEmCd,0,0,True,945.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,9,ldAaOcZJ,0,0,True,724.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,10,NbmQUrba,0,1,False,748.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,11,kdaAJGUOA,0,1,False,932.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,12,YZJmdTAh,1,0,False,825.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,13,cuOJbmAM,1,0,False,817.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,14,tmYhGUOA,1,1,True,1907.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,15,chEDOrba,1,0,False,950.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,16,bAdkYTOM,0,0,True,842.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,17,BATOcrAm,1,0,False,683.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,18,MDKPtAY,0,0,True,666.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,19,ldAamCd,1,0,False,513.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,20,kdaAJmAM,1,1,True,923.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,21,MDKPNac,1,1,True,946.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,22,aUZAYTOM,1,0,False,852.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,23,tmYhmAM,0,1,False,1075.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,24,PcBTrAm,1,1,True,1020.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,25,aUZArba,0,1,False,841.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,26,DmAMEOcZJ,1,0,False,573.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,27,uQuZctAY,1,0,False,890.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,28,NbmQUYTOM,1,1,True,1033.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,29,MBKREmAM,0,0,True,743.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,30,KBKBEmCd,0,0,True,665.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,31,OAblcOcZJ,0,0,True,637.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,32,bAdkrba,1,0,False,609.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,33,ZNLOvtAY,1,1,True,674.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,34,BATOcdTAh,0,0,True,956.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,35,OAblcmCd,1,0,False,716.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,36,KBKBEOcZJ,1,0,False,638.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,37,mZUrQdTAh,1,0,False,911.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,38,cuOJbGUOA,0,0,True,678.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,39,ZNLOvNac,0,0,True,867.0,riconoscere le lettere che più ricordavo
+0,5e80c7d61a07dd7b0d8f0111,testing,40,mZUrQrAm,0,0,True,683.0,riconoscere le lettere che più ricordavo
+0,5e823b35726b2a9508db127c,testing,1,ECtbDYcM,0,1,False,3260.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,2,khmhkJdr,1,1,True,1041.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,3,KTDTBYBO,0,0,True,1223.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,4,RtRhcrdY,1,0,False,1150.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,5,LOLkUkJdr,0,0,True,1363.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,6,ZYcQUCPMl,1,1,True,898.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,7,mkmJNkam,0,0,True,1122.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,8,dTmEDJcUk,1,0,False,935.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,9,khmhCMdP,0,1,False,1192.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,10,EdBbCPMl,0,1,False,1036.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,11,krGukJdr,0,0,True,1010.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,12,EdBbcrdY,1,1,True,1081.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,13,ECtbDkmU,1,1,True,1129.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,14,ZYcQUcrdY,0,0,True,869.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,15,RtRhCPMl,0,1,False,1065.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,16,kRCkOYBO,0,0,True,881.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,17,LOLkUCMdP,1,0,False,856.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,18,kGlUkDOm,1,1,True,891.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,19,kabJbkam,0,1,False,894.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,20,LckGNkDOm,1,0,False,883.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,21,NJZlYcM,1,0,False,912.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,22,kabJbYBO,1,1,True,818.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,23,vQdOkmU,0,1,False,879.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,24,kPOtkJdr,1,0,False,1122.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,25,ZkGmYCPMl,1,0,False,1029.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,26,mkmJNYBO,1,0,False,817.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,27,krGuCMdP,1,0,False,1007.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,28,LckGNJcUk,0,1,False,724.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,29,dTmEDkDOm,0,1,False,929.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,30,kRCkOkam,1,1,True,1013.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,31,tmtEMkmU,1,0,False,824.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,32,KTDTBkam,1,1,True,1097.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,33,NJZlkmU,0,1,False,942.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,34,tmtEMYcM,0,0,True,774.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,35,ZkGmYcrdY,0,1,False,919.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,36,vQdOYcM,1,0,False,926.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,37,dOYmlkDOm,0,0,True,844.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,38,kGlUJcUk,0,0,True,902.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,39,kPOtCMdP,0,1,False,783.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e823b35726b2a9508db127c,testing,40,dOYmlJcUk,1,0,False,820.0,"Fare affidamento anche solo su singole ""lettere"" che ricordavo di aver visto in precedenza in una certa posizione"
+0,5e82e99b37d333a1474dda93,testing,1,KdARJcUk,1,1,True,1722.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,2,PCMPKbLd,1,0,False,878.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,3,lRCBPED,0,0,True,982.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,4,UJmrAkd,1,0,False,1352.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,5,YuaNdlvk,0,0,True,954.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,6,bYuQAkd,1,0,False,1830.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,7,khmhTmTm,0,0,True,1051.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,8,alJYbLd,0,0,True,1707.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,9,htmhCark,1,1,True,2612.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,10,YuaNdPED,1,0,False,1184.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,11,lRCBlvk,1,0,False,962.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,12,rvOvUDbMR,1,1,True,857.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,13,bYuQOJNk,0,1,False,1116.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,14,khmhark,1,0,False,773.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,15,dKDthlvk,1,0,False,1110.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,16,MBmEJcUk,1,0,False,1123.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,17,DBlhbLd,1,0,False,890.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,18,OAblcark,0,1,False,1181.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,19,vblrDbMR,1,1,True,1070.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,20,ukcYbLd,0,1,False,999.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,21,YKRkOJNk,1,0,False,1012.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,22,htmhCTmTm,0,0,True,1051.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,23,KdARDbMR,0,1,False,891.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,24,ukcYbAMO,1,1,True,985.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,25,MBmEDbMR,0,1,False,1162.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,26,UJmrOJNk,0,1,False,1255.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,27,ZdNmUlvk,0,1,False,1127.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,28,dNZATmTm,1,1,True,1414.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,29,DBlhbAMO,0,0,True,888.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,30,rvOvUJcUk,0,1,False,1130.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,31,alJYbAMO,1,0,False,1242.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,32,YKRkAkd,0,0,True,949.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,33,PCMPKbAMO,0,0,True,1401.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,34,PhktkOJNk,1,1,True,1251.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,35,ZdNmUPED,1,0,False,1048.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,36,dNZAark,0,0,True,1175.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,37,dKDthPED,0,0,True,501.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,38,OAblcTmTm,1,1,True,1952.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,39,vblrJcUk,0,1,False,1138.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e82e99b37d333a1474dda93,testing,40,PhktkAkd,0,0,True,839.0,ho cercato di ricordare parole simili a quelle che avevo visto in precedenza
+0,5e8783b0fde5153fbd9dca43,testing,1,KBKBEATc,0,1,False,4175.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,2,aONdravu,0,0,True,1299.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,3,kMbTRvUdm,1,0,False,1423.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,4,OJGQATc,1,1,True,1424.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,5,ZkGmYNYZu,0,1,False,1523.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,6,COtBDravu,1,0,False,1296.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,7,kMbTRbRC,0,0,True,1301.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,8,dKRDCMdP,0,0,True,1516.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,9,TbKMEuvJ,1,0,False,1253.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,10,TEBKMAB,0,0,True,1725.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,11,AbkabRC,1,1,True,1122.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,12,bYuQuvJ,0,0,True,1520.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,13,MTdYmKcD,0,0,True,1284.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,14,OCmkvUdm,1,1,True,1883.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,15,COtBDCMdP,0,0,True,1651.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,16,OJGQuOAO,0,1,False,1738.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,17,TEBKuvJ,1,1,True,1944.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,18,QcladuOAO,0,0,True,2156.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,19,MTdYNYZu,1,1,True,1145.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,20,hAROKmKcD,0,0,True,1080.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,21,bYuQMAB,1,0,False,1041.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,22,blMkuOAO,1,1,True,1272.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,23,YLQmGuvJ,0,0,True,1226.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,24,AbkavUdm,0,0,True,1349.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,25,TbKMEMAB,0,1,False,1479.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,26,aONdCMdP,1,0,False,1182.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,27,dKRDravu,1,0,False,1876.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,28,ukYZNYZu,0,1,False,996.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,29,ZYcQUbRC,1,0,False,1410.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,30,KBKBEuOAO,1,0,False,1454.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,31,ZYcQUvUdm,0,1,False,1429.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,32,OCmkbRC,0,0,True,1284.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,33,hAROKNYZu,1,0,False,1372.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,34,ukYZmKcD,1,0,False,1279.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,35,NJZlravu,0,0,True,1761.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,36,blMkATc,0,1,False,1796.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,37,YLQmGMAB,1,1,True,1776.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,38,ZkGmYmKcD,1,0,False,1025.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,39,QcladATc,1,1,True,1827.0,ho cercato di ricordare le parole
+0,5e8783b0fde5153fbd9dca43,testing,40,NJZlCMdP,1,0,False,1419.0,ho cercato di ricordare le parole
+0,5e99d95e0f50aa04266ad4ad,testing,1,MTdYkKE,0,0,True,2190.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,2,bmbNGQYQ,0,1,False,822.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,3,advYOGUOA,0,1,False,990.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,4,YlYcLkNc,1,0,False,855.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,5,NLQGmbTE,1,0,False,623.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,6,aUZALkNc,0,1,False,695.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,7,KTDTBJZr,1,1,True,854.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,8,alJYkKE,1,1,True,1161.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,9,MTdYvcb,1,1,True,831.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,10,NLQGmJZr,0,1,False,814.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,11,TCbDCLkNc,1,1,True,952.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,12,UdlGQGUOA,0,1,False,1023.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,13,YlCPBmhc,0,0,True,758.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,14,vAuNlbTE,1,0,False,1432.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,15,YlCPBGUOA,1,0,False,711.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,16,thbOMGQYQ,1,0,False,704.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,17,advYOmhc,1,1,True,991.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,18,KTDTBbTE,0,0,True,1096.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,19,QbkAcLkNc,0,1,False,862.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,20,JmvmOvcb,0,0,True,832.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,21,mBbKkKE,0,0,True,831.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,22,vAuNlJZr,0,1,False,879.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,23,QbkAckBD,1,1,True,1118.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,24,RYtkcmhc,0,1,False,975.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,25,TAdhMGQYQ,1,0,False,1176.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,26,mBbKvcb,1,0,False,847.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,27,bmbNRCdc,1,1,True,969.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,28,alJYvcb,0,0,True,831.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,29,TAdhMRCdc,0,1,False,871.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,30,aUZAkBD,1,0,False,1336.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,31,cdKBYJZr,1,1,True,647.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,32,UdlGQmhc,1,1,True,1055.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,33,YlYckBD,0,0,True,903.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,34,bGuORCdc,1,1,True,832.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,35,RYtkcGUOA,1,0,False,991.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,36,JmvmOkKE,1,0,False,703.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,37,TCbDCkBD,0,1,False,855.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,38,cdKBYbTE,0,0,True,1071.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,39,bGuOGQYQ,0,0,True,1255.0,solo a memoria
+0,5e99d95e0f50aa04266ad4ad,testing,40,thbOMRCdc,0,0,True,976.0,solo a memoria
+0,5ec806f532fe7d2afa2e315b,testing,1,cdKBYOJlN,1,0,False,8158.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,2,ALOrlkuvb,0,0,True,1608.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,3,hlbtblMck,0,0,True,998.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,4,cdKBYRYlD,0,0,True,959.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,5,vmuLlOdOP,1,0,False,1410.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,6,hlbtbuUY,1,0,False,1252.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,7,aONdcPK,1,0,False,2098.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,8,YNrAmRYlD,1,1,True,1580.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,9,kCRmcPK,0,1,False,1376.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,10,mdkKOJlN,1,1,True,1462.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,11,PcBTOdOP,0,0,True,1012.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,12,vmuLlkdrO,0,0,True,988.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,13,rvOvUOJlN,0,0,True,1698.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,14,vAuNlkdrO,0,1,False,1605.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,15,NLQGmlMck,1,0,False,978.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,16,lBKtDOk,0,1,False,1285.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,17,vAuNlOdOP,1,0,False,1199.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,18,kCRmkuvb,1,0,False,942.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,19,muYNJUG,0,1,False,759.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,20,dRbDblMck,0,0,True,1131.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,21,KBKBEcPK,0,0,True,1022.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,22,YadrJUG,0,1,False,1301.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,23,tcYbdDOk,0,0,True,988.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,24,BMEMAkdrO,1,0,False,791.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,25,tcYbdJUG,1,0,False,1205.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,26,KBKBEkuvb,1,0,False,1430.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,27,lBKtJUG,1,1,True,1084.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,28,BMEMAOdOP,0,0,True,1038.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,29,dRbDbuUY,1,0,False,1141.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,30,PcBTkdrO,1,1,True,1224.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,31,aONdkuvb,0,1,False,1087.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,32,YadrDOk,1,1,True,891.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,33,NLQGmuUY,0,1,False,1959.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,34,ZYcQUlMck,1,0,False,1448.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,35,YNrAmOJlN,0,1,False,1504.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,36,rvOvURYlD,1,0,False,1485.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,37,muYNDOk,1,1,True,690.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,38,mdkKRYlD,0,1,False,500.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,39,ZYcQUuUY,0,1,False,603.0,vedere la parola nella sua globalità
+0,5ec806f532fe7d2afa2e315b,testing,40,ALOrlcPK,1,1,True,802.0,vedere la parola nella sua globalità
+0,5ed54d02957bee0c0de36cac,testing,1,bAdkKlkD,0,0,True,6139.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,2,krUQukbY,0,0,True,1554.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,3,bvkrKlkD,1,1,True,1211.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,4,bGuOuZc,0,0,True,1611.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,5,YQbcbAMO,1,1,True,1807.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,6,ZJLmrKlkD,1,1,True,1402.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,7,bGuOcDR,1,0,False,2052.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,8,ECtbDark,1,0,False,733.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,9,OAmAdTmTm,0,1,False,1157.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,10,BECkvUdm,1,0,False,1476.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,11,GZJYbAMO,1,1,True,1060.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,12,PEtEAPT,0,0,True,1452.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,13,OAmAdukbY,1,1,True,1106.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,14,PEtEark,1,1,True,1136.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,15,ObOQluZc,0,0,True,1023.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,16,hTDduvJ,1,0,False,1382.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,17,kKRCukbY,1,1,True,1224.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,18,krUQTmTm,1,0,False,1308.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,19,BECkKlkD,0,0,True,2575.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,20,ECtbDAPT,0,0,True,633.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,21,UdbdukbY,0,1,False,599.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,22,ZJLmrvUdm,0,1,False,1695.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,23,KRARmcDR,0,0,True,1153.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,24,GZJYuvJ,0,1,False,1948.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,25,KRARmuZc,1,0,False,1456.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,26,kKRCTmTm,0,0,True,1417.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,27,ZdNmUAPT,1,0,False,1484.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,28,bvkrvUdm,0,1,False,1475.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,29,ObOQlcDR,1,1,True,1280.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,30,htmhCuvJ,1,1,True,1564.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,31,UdbdTmTm,1,0,False,1391.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,32,PYkCcDR,0,0,True,1867.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,33,bAdkvUdm,1,1,True,1172.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,34,OYuvbAPT,1,1,True,1481.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,35,PYkCuZc,1,0,False,1274.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,36,YQbcuvJ,0,0,True,2041.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,37,ZdNmUark,0,0,True,429.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,38,htmhCbAMO,0,0,True,1258.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,39,OYuvbark,0,0,True,927.0,Mi concentro sulla prima lettera
+0,5ed54d02957bee0c0de36cac,testing,40,hTDdbAMO,0,1,False,780.0,Mi concentro sulla prima lettera
+0,5ee7b7c9eef92207297a0ad4,testing,1,bcbMGlu,1,0,False,2921.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,2,BATOclGc,1,0,False,511.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,3,YJLcAuvJ,0,1,False,1028.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,4,tmtEMAlKD,0,0,True,1669.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,5,BATOcBbM,0,0,True,1524.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,6,YQbcvAvb,0,1,False,1374.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,7,AlQaQGlu,0,1,False,1111.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,8,vYLUtRb,1,0,False,1693.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,9,DkTCPbRC,0,1,False,1001.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,10,lkAkuvJ,0,1,False,847.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,11,QbkAclGc,0,1,False,1387.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,12,tmtEMuvJ,1,0,False,680.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,13,YJLcAAlKD,1,1,True,2105.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,14,DBlhGlu,1,1,True,688.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,15,ALGZOtM,1,1,True,1441.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,16,JdOAYbRC,1,1,True,1027.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,17,DdckvAvb,1,1,True,1056.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,18,bYGOZOtM,1,0,False,487.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,19,kCRmuda,1,0,False,461.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,20,YQbcbRC,1,1,True,606.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,21,JdOAYvAvb,0,0,True,1512.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,22,kbmZOlGc,0,1,False,1280.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,23,TEBKuvJ,1,1,True,932.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,24,bYGOZuda,0,1,False,1131.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,25,BKDRYOtM,0,1,False,923.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,26,QbkAcBbM,1,1,True,1257.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,27,DkTCPvAvb,1,1,True,1327.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,28,ALGZuda,0,1,False,1025.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,29,bcbMtRb,0,0,True,778.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,30,TEBKAlKD,0,1,False,827.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,31,vYLUGlu,0,0,True,821.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,32,DcPTclGc,1,1,True,730.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,33,DBlhtRb,0,1,False,1071.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,34,DcPTcBbM,0,1,False,1048.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,35,AlQaQtRb,1,1,True,1443.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,36,BKDRYuda,1,1,True,1320.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,37,kCRmOtM,0,0,True,831.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,38,kbmZOBbM,1,0,False,922.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,39,DdckbRC,0,0,True,675.0,Riconoscimento dei pattern che ricordavo
+0,5ee7b7c9eef92207297a0ad4,testing,40,lkAkAlKD,1,1,True,802.0,Riconoscimento dei pattern che ricordavo
+0,5f11ccbc1a1a2c08b4a99efb,testing,1,kRCkOYht,0,0,True,2479.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,2,ctktcbm,1,1,True,862.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,3,vYLUdPc,1,0,False,1141.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,4,NAacQravu,0,1,False,950.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,5,PMPtkdPc,0,0,True,812.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,6,DmAMEBCAd,0,0,True,912.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,7,BMEMArGl,1,1,True,1037.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,8,KDPANYZu,1,1,True,937.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,9,BMEMADlDT,0,0,True,880.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,10,DmAMEcbm,1,0,False,776.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,11,vuJZuravu,0,1,False,822.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,12,vYLUNYZu,0,1,False,1040.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,13,btlckCKOb,0,1,False,1002.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,14,KDPAdPc,0,0,True,537.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,15,cuOJbCKOb,1,1,True,796.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,16,RKYkravu,1,1,True,1141.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,17,ctktBCAd,0,0,True,984.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,18,Gabkcbm,0,1,False,650.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,19,RKYkYht,0,1,False,1443.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,20,UdlGQDlDT,1,1,True,825.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,21,vuJZuYht,1,0,False,593.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,22,cuOJbrZYd,0,1,False,1060.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,23,PMPtkNYZu,1,0,False,941.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,24,AmaclBCAd,1,1,True,864.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,25,GJZmDlDT,1,0,False,1065.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,26,NAacQYht,1,0,False,1064.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,27,dkLlrZYd,0,1,False,910.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,28,kRCkOravu,1,0,False,770.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,29,lBlECKOb,0,0,True,798.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,30,GJZmrGl,0,1,False,650.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,31,lBlErZYd,1,0,False,714.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,32,YOaAbNYZu,0,0,True,1202.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,33,KdARrGl,1,1,True,726.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,34,btlckrZYd,1,1,True,981.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,35,UdlGQrGl,0,0,True,1041.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,36,dkLlCKOb,1,1,True,775.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,37,Amaclcbm,0,0,True,850.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,38,YOaAbdPc,1,0,False,684.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,39,GabkBCAd,1,1,True,708.0,ho provato a memoria
+0,5f11ccbc1a1a2c08b4a99efb,testing,40,KdARDlDT,0,1,False,916.0,ho provato a memoria
+0,5f3161410f87706425490ae1,testing,1,kcCRtmvG,1,0,False,6664.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,2,uQuZckDOm,1,1,True,2741.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,3,DcPTcdRA,0,0,True,1367.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,4,NbmQUkDOm,1,0,False,1455.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,5,KTDTBbLd,1,0,False,1397.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,6,AYkEhmAM,0,0,True,1696.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,7,uQuZcmvG,0,1,False,1444.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,8,DBlhOQAr,1,0,False,1511.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,9,DhCPmkc,1,0,False,1998.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,10,KBKBEOdOP,0,1,False,1496.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,11,DBlhbAMO,0,1,False,1085.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,12,krUQdRA,1,0,False,1211.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,13,kcCRtkDOm,0,0,True,1208.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,14,aONdkJdr,0,1,False,368.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,15,vmuLlmkc,0,0,True,879.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,16,DcPTcbLd,1,0,False,870.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,17,NvYJbAMO,1,0,False,854.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,18,hbmAkDOm,0,0,True,1628.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,19,MDKPOdOP,0,1,False,1257.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,20,vmuLlmAM,1,1,True,1083.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,21,GAcYbLd,0,0,True,985.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,22,KBKBEkJdr,1,0,False,1219.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,23,NvYJOQAr,0,1,False,1188.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,24,vblrbAMO,1,0,False,686.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,25,rvOvUkJdr,0,0,True,2616.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,26,DhCPmAM,0,0,True,872.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,27,KTDTBdRA,0,0,True,1028.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,28,AYkEhmkc,1,0,False,387.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,29,KABAOQAr,1,1,True,976.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,30,NbmQUmvG,0,0,True,1070.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,31,vblrOQAr,0,1,False,344.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,32,hbmAmvG,1,0,False,533.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,33,MDKPkJdr,1,0,False,950.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,34,GAcYdRA,1,1,True,1018.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,35,KABAbAMO,0,1,False,201.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,36,aONdOdOP,1,0,False,1219.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,37,krUQbLd,0,1,False,877.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,38,kLvdNmAM,1,1,True,408.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,39,rvOvUOdOP,1,1,True,462.0,cercare di ricordarmi le parole viste in precedenza
+0,5f3161410f87706425490ae1,testing,40,kLvdNmkc,0,0,True,954.0,cercare di ricordarmi le parole viste in precedenza
+0,5f4cc4ea00dba58ecd5a98a4,testing,1,vAarEPBT,1,1,True,3352.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,2,tRPDOMC,0,0,True,1448.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,3,hlkTbAMO,0,0,True,1200.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,4,ECtbDYaOk,1,0,False,1192.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,5,OmtlDCdt,0,1,False,1288.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,6,DBklEPBT,0,1,False,1288.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,7,amJmbAMO,1,0,False,896.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,8,tRPDuOAO,1,0,False,887.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,9,OdYPbTE,0,0,True,1240.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,10,vAarYaOk,0,1,False,1095.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,11,ECtbDEPBT,0,0,True,881.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,12,ZdlOJZr,0,0,True,1103.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,13,UdumdYaOk,0,0,True,985.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,14,dYdAbAMO,0,0,True,1208.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,15,YOaAbuOAO,0,1,False,1152.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,16,amJmJcL,0,1,False,1247.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,17,OmtlDJZr,1,0,False,1296.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,18,dkLluOAO,0,0,True,1576.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,19,YJkbbAMO,1,1,True,1096.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,20,dkLlOMC,1,0,False,1336.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,21,EMYKbTE,0,1,False,1032.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,22,YOaAbOMC,1,1,True,1168.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,23,DBklYaOk,1,1,True,1200.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,24,mBbKOMC,0,1,False,968.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,25,EYtYRJZr,1,0,False,855.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,26,mBbKuOAO,1,1,True,1384.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,27,LQuruvJ,0,0,True,1040.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,28,UdumdEPBT,1,0,False,1216.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,29,ZdlOCdt,1,0,False,1528.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,30,ubALmbTE,1,0,False,1336.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,31,EYtYRCdt,0,0,True,1008.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,32,dYdAJcL,1,0,False,1608.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,33,EMYKuvJ,1,1,True,1552.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,34,UaZmaJZr,0,0,True,1136.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,35,ubALmuvJ,0,1,False,1583.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,36,hlkTJcL,1,0,False,1112.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,37,LQurbTE,1,1,True,1208.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,38,YJkbJcL,0,1,False,1408.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,39,OdYPuvJ,1,0,False,1096.0,nessuna
+0,5f4cc4ea00dba58ecd5a98a4,testing,40,UaZmaCdt,1,0,False,1008.0,nessuna
+0,5fb3f38909fc360164f7c98d,testing,1,adYrcNmAG,0,1,False,3702.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,2,mBYlkKE,0,0,True,967.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,3,hYDmtGrub,1,0,False,912.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,4,EhRmOYK,0,1,False,1357.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,5,MBmEOcN,1,0,False,970.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,6,lYruaOYK,1,0,False,1234.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,7,ukYZOcN,0,1,False,1475.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,8,lYruaGrub,0,0,True,1883.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,9,lkAkkBD,1,1,True,1149.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,10,QcladNmAG,0,0,True,1355.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,11,hTDdPED,0,0,True,1698.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,12,mBYlNmAG,1,0,False,1284.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,13,LNUrJPED,1,1,True,1445.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,14,ukYZBbM,1,0,False,1101.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,15,bYuQOYK,1,1,True,1246.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,16,hkRKNmAG,1,1,True,2076.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,17,EhRmGrub,1,0,False,930.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,18,mARMPED,0,0,True,1042.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,19,DmAMErAJu,1,1,True,1055.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,20,vuJZuBbM,1,0,False,1096.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,21,LNUrJLYGA,0,1,False,1927.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,22,bYuQGrub,0,0,True,1306.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,23,vuJZuOcN,0,1,False,1508.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,24,lkAkrAJu,0,0,True,988.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,25,OLJblkBD,1,0,False,1389.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,26,MBmEBbM,0,0,True,1550.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,27,adYrckKE,1,1,True,1387.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,28,EPERdBbM,0,0,True,1006.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,29,hYDmtOYK,0,0,True,1675.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,30,hkRKkKE,0,0,True,2467.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,31,hTDdLYGA,1,1,True,2353.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,32,TPCbrAJu,1,0,False,1169.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,33,mbZlLYGA,0,0,True,1826.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,34,OLJblrAJu,0,0,True,1351.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,35,TPCbkBD,0,1,False,2100.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,36,EPERdOcN,1,0,False,907.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,37,DmAMEkBD,0,0,True,1240.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,38,mARMLYGA,1,1,True,1313.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,39,mbZlPED,1,0,False,1104.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb3f38909fc360164f7c98d,testing,40,QcladkKE,1,1,True,1148.0,Ho decorato alcuni dei simboli più ripetuti
+0,5fb7b8880045d6396a86c803,testing,1,tcYbdcbm,1,1,True,2793.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,2,UAcduQru,0,0,True,1398.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,3,vuJZuNUZ,0,1,False,1146.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,4,lAOKMcbm,1,0,False,1109.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,5,YLQmGAPT,1,1,True,1178.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,6,YcdODKP,1,1,True,1063.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,7,YJLcAAPT,1,0,False,1053.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,8,OcYMQru,1,1,True,760.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,9,COTKBCD,0,0,True,862.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,10,ldAaCMdP,1,0,False,728.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,11,YJkbQONk,0,1,False,442.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,12,EYtYRvAvb,1,1,True,544.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,13,vAarNUZ,0,0,True,337.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,14,KMOcDKP,0,0,True,432.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,15,vuJZuBCD,1,1,True,152.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,16,uQkrdCMdP,1,0,False,346.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,17,OtlRAPT,0,1,False,6.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,18,lCbcmCdt,0,1,False,392.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,19,YLQmGvAvb,0,0,True,515.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,20,DCmhBCD,0,1,False,446.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,21,UAcduCdt,1,0,False,1082.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,22,JmvmOQru,0,1,False,1040.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,23,tcYbdCMdP,0,0,True,997.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,24,YJLcAvAvb,0,0,True,1071.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,25,COTKNUZ,1,1,True,712.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,26,TPCbQONk,1,1,True,1108.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,27,lAOKMCMdP,0,0,True,1066.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,28,OcYMCdt,0,1,False,760.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,29,YJkbDKP,1,0,False,918.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,30,vAarBCD,1,1,True,1266.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,31,TPCbDKP,0,0,True,1148.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,32,ldAacbm,0,1,False,1330.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,33,YcdOQONk,0,0,True,1150.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,34,lCbcmQru,1,1,True,1007.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,35,KMOcQONk,1,1,True,848.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,36,JmvmOCdt,1,0,False,964.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,37,OtlRvAvb,1,0,False,862.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,38,EYtYRAPT,0,0,True,974.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,39,DCmhNUZ,1,1,True,886.0,nessuna in particolare
+0,5fb7b8880045d6396a86c803,testing,40,uQkrdcbm,0,0,True,954.0,nessuna in particolare
+0,5feb64b3341f42bb63200e36,testing,1,BECkmhc,0,0,True,1399.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,2,lhCTCTPOM,0,1,False,918.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,3,kbmZOYbN,0,1,False,1304.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,4,vYLUTPOM,1,0,False,799.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,5,dMYBPmCd,0,0,True,1128.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,6,lRCBTbk,0,1,False,1112.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,7,GLYrAmCd,1,1,True,784.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,8,uQuZcuda,0,1,False,912.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,9,lhCTCkGua,1,0,False,1400.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,10,kKRCtAY,0,1,False,768.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,11,CYPcmhc,0,1,False,1031.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,12,kKRCuda,1,1,True,848.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,13,NJZlkGua,0,0,True,1424.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,14,dMYBPQru,1,0,False,1088.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,15,JmvmOYbN,0,0,True,720.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,16,GJGcZtAY,1,1,True,1032.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,17,BECkYbN,1,1,True,1480.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,18,lRCBYZUZ,1,1,True,1232.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,19,TCbDCTPOM,0,0,True,1592.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,20,CYPcYbN,1,1,True,1071.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,21,EYtYRQru,1,1,True,856.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,22,uQuZctAY,1,1,True,935.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,23,MhKdYZUZ,1,0,False,695.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,24,GLYrAQru,0,0,True,808.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,25,vYLUkGua,0,0,True,680.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,26,GJGcZuda,0,0,True,991.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,27,MhKdTbk,0,0,True,984.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,28,DOBhYuda,1,0,False,712.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,29,EYtYRmCd,0,0,True,760.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,30,JmvmOmhc,1,1,True,1087.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,31,ldAaTbk,1,1,True,1264.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,32,kNuaYZUZ,0,1,False,807.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,33,kbmZOmhc,1,0,False,632.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,34,mLdkZQru,0,1,False,856.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,35,kNuaTbk,1,0,False,1135.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,36,mLdkZmCd,1,1,True,743.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,37,ldAaYZUZ,0,0,True,1432.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,38,NJZlTPOM,1,1,True,1136.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,39,DOBhYtAY,0,0,True,920.0,alcuni simboli non si ripetevano per più di una volta
+0,5feb64b3341f42bb63200e36,testing,40,TCbDCkGua,1,0,False,720.0,alcuni simboli non si ripetevano per più di una volta
+0,6048158f62550615002408af,testing,1,rkYLYZJO,0,0,True,4300.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,2,KABAJQA,1,0,False,1497.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,3,rkYLBCD,1,0,False,1123.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,4,JuamlhEct,1,0,False,1420.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,5,RYtkcYZJO,1,1,True,2797.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,6,hBmMClRE,0,1,False,1146.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,7,JuamlvUdm,0,1,False,1321.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,8,cdKBYJcL,1,0,False,806.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,9,adYrclRE,1,1,True,1060.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,10,bYGOZTRK,1,1,True,1225.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,11,dClOCYZJO,1,1,True,1134.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,12,JauQlRE,1,0,False,777.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,13,ObOQlhEct,1,0,False,693.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,14,KABAlRE,0,0,True,755.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,15,YQbcBCD,1,0,False,804.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,16,DBPhchEct,0,1,False,963.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,17,ObOQlvUdm,0,1,False,1271.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,18,RYtkcBCD,0,0,True,872.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,19,CkBOPkmU,1,1,True,1172.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,20,hbkdvUdm,1,1,True,1125.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,21,YOaAbbdtK,1,0,False,853.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,22,LOLkUTRK,1,0,False,590.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,23,cdKBYbdtK,0,0,True,1145.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,24,BECkTRK,0,1,False,923.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,25,hbkdhEct,0,0,True,843.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,26,DBPhcvUdm,1,1,True,888.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,27,JauQJQA,0,0,True,1245.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,28,lcOcbdtK,1,0,False,1117.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,29,bYGOZkmU,0,1,False,652.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,30,hBmMCJQA,1,0,False,1085.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,31,YQbcYZJO,0,1,False,1225.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,32,LOLkUkmU,0,0,True,756.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,33,tdDdJcL,1,0,False,915.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,34,adYrcJQA,0,1,False,1019.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,35,CkBOPTRK,0,0,True,1032.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,36,YOaAbJcL,0,0,True,800.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,37,dClOCBCD,0,0,True,758.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,38,lcOcJcL,0,0,True,662.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,39,tdDdbdtK,0,1,False,674.0,memorizzare alcuni simboli
+0,6048158f62550615002408af,testing,40,BECkkmU,1,1,True,942.0,memorizzare alcuni simboli
+0,605c9355001a5eb6d51e657d,testing,1,hbkdGQYQ,1,0,False,13336.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,2,UaZmarkra,0,1,False,2496.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,3,lBKtJUNa,1,0,False,808.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,4,bAdkYBO,0,0,True,1048.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,5,UdumdRDM,1,1,True,1367.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,6,OAmAdrkra,1,0,False,1263.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,7,dMThkkam,1,0,False,2072.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,8,hbkdcthB,0,0,True,1177.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,9,rdLJaYBO,1,0,False,1143.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,10,TPCbGQYQ,1,0,False,1287.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,11,Udumdrkra,0,0,True,1312.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,12,UaYLcthB,1,0,False,1311.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,13,chEDORDM,0,0,True,1504.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,14,JauQRYlD,1,0,False,1664.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,15,bmbNPED,1,0,False,984.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,16,rdLJaJUNa,0,0,True,1671.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,17,lBKtYBO,0,1,False,809.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,18,ZkGmYGQYQ,0,0,True,1703.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,19,bmbNkam,0,1,False,1409.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,20,ZkGmYcthB,1,0,False,1047.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,21,GLYrAGrub,0,0,True,1104.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,22,UaYLGQYQ,0,1,False,800.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,23,dYdAGrub,1,0,False,615.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,24,UaZmaRDM,1,1,True,464.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,25,kNuaJUNa,0,0,True,144.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,26,GLYrARYlD,1,1,True,152.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,27,TAdhMkam,1,0,False,134.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,28,DlDdRYlD,0,1,False,129.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,29,chEDOrkra,1,0,False,151.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,30,OAmAdRDM,0,1,False,120.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,31,rckOkam,0,0,True,151.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,32,TPCbcthB,0,1,False,120.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,33,dMThkPED,0,0,True,144.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,34,JauQGrub,0,1,False,95.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,35,dYdARYlD,0,0,True,168.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,36,TAdhMPED,0,1,False,96.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,37,kNuaYBO,1,0,False,159.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,38,rckOPED,1,1,True,144.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,39,DlDdGrub,1,0,False,119.0,"Nessuna, andavo a intuito"
+0,605c9355001a5eb6d51e657d,testing,40,bAdkJUNa,1,0,False,279.0,"Nessuna, andavo a intuito"
+0,608abc6251feb3ddc3b2e01d,testing,1,tKDmhcUN,1,1,True,2297.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,2,TdTDCMdP,0,0,True,981.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,3,dKRDlLG,1,0,False,1115.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,4,rcmuvYkZ,0,1,False,838.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,5,OtlRMCkm,0,0,True,851.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,6,JauQCMdP,1,1,True,1416.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,7,JmNkcUN,0,0,True,909.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,8,KTDTBOQAr,1,1,True,891.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,9,LdQvlLG,0,1,False,906.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,10,JauQlvk,0,0,True,752.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,11,EMbDPMCkm,0,0,True,814.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,12,DOBhYlLG,1,1,True,1098.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,13,NaJblvk,0,1,False,997.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,14,UdlGQlLG,0,1,False,865.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,15,rbYbuYkZ,0,0,True,462.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,16,hCktlvk,1,0,False,631.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,17,chAhcUN,1,1,True,676.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,18,OJGQOQAr,0,0,True,629.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,19,auYAkEKBO,1,0,False,83.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,20,NaJbCMdP,1,1,True,680.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,21,UdlGQdBC,1,1,True,820.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,22,TdTDlvk,1,0,False,1010.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,23,GabkbRC,1,0,False,969.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,24,LdQvdBC,1,1,True,1003.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,25,OJGQEKBO,1,0,False,887.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,26,tKDmhbRC,0,1,False,589.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,27,EMbDPYkZ,1,0,False,755.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,28,COtBDOQAr,1,1,True,935.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,29,rbYbuMCkm,1,0,False,538.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,30,dKRDdBC,0,0,True,906.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,31,COtBDEKBO,0,0,True,422.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,32,auYAkOQAr,0,1,False,333.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,33,chAhbRC,0,1,False,565.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,34,hCktCMdP,0,1,False,805.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,35,GabkcUN,0,0,True,690.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,36,DOBhYdBC,0,0,True,867.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,37,rcmuvMCkm,1,1,True,680.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,38,KTDTBEKBO,0,1,False,251.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,39,JmNkbRC,1,0,False,887.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608abc6251feb3ddc3b2e01d,testing,40,OtlRYkZ,1,0,False,752.0,ho cercato di pensare ala fora dei segni e come erano nell'insieme
+0,608edc13472b2dbc27b369fa,testing,1,McMDKlkD,0,0,True,2777.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,2,kNuadPc,1,1,True,1901.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,3,kdaAJArv,0,1,False,1042.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,4,damYbYArG,0,0,True,854.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,5,OLJblAZbl,0,1,False,240.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,6,RlAKcOJNk,1,0,False,494.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,7,mcOJravu,0,1,False,600.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,8,uvaUYArG,0,0,True,264.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,9,kdEdYArv,1,1,True,482.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,10,damYbRDM,1,0,False,211.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,11,McMDAZbl,1,0,False,367.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,12,EltMBRDM,0,0,True,955.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,13,rLaZmAM,1,1,True,813.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,14,kdaAJKmE,1,1,True,529.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,15,OMlTOJNk,1,0,False,637.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,16,PcBTdPc,0,0,True,449.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,17,BlmclKlkD,0,1,False,259.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,18,uvaURDM,1,0,False,1512.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,19,RKYkKmE,0,1,False,637.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,20,kPkRAdPc,0,1,False,392.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,21,DOBhYRDM,0,0,True,253.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,22,mcOJdPc,1,0,False,521.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,23,kNuaravu,0,1,False,210.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,24,GabkKmE,1,0,False,209.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,25,kPkRAravu,1,1,True,219.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,26,EltMBYArG,1,0,False,164.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,27,GQrcAZbl,0,1,False,230.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,28,ArQuOJNk,0,0,True,126.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,29,OLJblKlkD,1,1,True,323.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,30,RKYkArv,1,0,False,130.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,31,DOBhYYArG,1,1,True,240.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,32,kdEdYKmE,0,0,True,93.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,33,GQrcKlkD,1,0,False,281.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,34,ArQumAM,1,0,False,187.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,35,BlmclAZbl,1,1,True,186.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,36,RlAKcmAM,0,1,False,333.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,37,GabkArv,0,1,False,528.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,38,OMlTmAM,0,0,True,232.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,39,PcBTravu,1,1,True,169.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,608edc13472b2dbc27b369fa,testing,40,rLaZOJNk,0,0,True,84.0,Guardare attentamente i caratteri e confrontarli con quelli del primo esercizio.
+0,609568823ff056b77e565445,testing,1,NulkrZYd,0,1,False,1615.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,2,TKDkOMC,0,0,True,1001.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,3,UaZmamhc,1,0,False,1044.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,4,KABArZYd,1,0,False,1076.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,5,BKDRYEAO,0,1,False,824.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,6,lBKtCPMl,0,0,True,909.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,7,JmNkUdvY,0,0,True,1598.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,8,mdkKmhc,0,1,False,1623.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,9,NkUAbdtK,1,0,False,1065.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,10,ZdlOUdvY,0,0,True,846.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,11,KABAmhc,0,1,False,1023.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,12,EMbDPQvlZ,1,0,False,1235.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,13,JmNkEAO,1,0,False,802.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,14,Nulkmhc,1,0,False,612.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,15,QLrOJQvlZ,0,1,False,570.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,16,tmtEMbdtK,0,0,True,440.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,17,ZvalvYUYa,0,0,True,1185.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,18,PCPDhOMC,0,0,True,873.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,19,vkYGlCPMl,1,1,True,685.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,20,EMbDPbdtK,0,0,True,540.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,21,TKDkYUYa,1,0,False,811.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,22,vkYGlQONk,0,1,False,513.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,23,NkUAQvlZ,0,0,True,691.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,24,UaZmarZYd,0,0,True,706.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,25,mBbKQONk,1,1,True,682.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,26,QLrOJbdtK,1,1,True,1144.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,27,RdPtDUdvY,1,0,False,1062.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,28,JNkaYUYa,0,0,True,568.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,29,RdPtDEAO,0,0,True,771.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,30,tmtEMQvlZ,1,0,False,783.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,31,kulZCPMl,1,0,False,1422.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,32,JNkaOMC,1,1,True,1063.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,33,PCPDhYUYa,1,0,False,712.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,34,ZdlOEAO,1,1,True,1012.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,35,mBbKCPMl,0,0,True,563.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,36,BKDRYUdvY,1,0,False,529.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,37,kulZQONk,0,0,True,966.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,38,ZvalvOMC,1,0,False,658.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,39,lBKtQONk,1,1,True,687.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,609568823ff056b77e565445,testing,40,mdkKrZYd,1,0,False,512.0,"i nuovi alieni hanno utilizzato perlopiù lettere aperte, invece nelle parole dei vecchi alieni c'erano più lettere chiuse"
+0,60a45e33f404ba8cb7a19cfe,testing,1,YQbcGlu,0,0,True,2272.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,2,OmtlDdUr,1,0,False,918.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,3,YQbcOtM,1,0,False,857.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,4,ZkGmYlRE,1,0,False,789.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,5,DhMtGQYQ,1,0,False,921.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,6,BMEMAbTE,0,0,True,912.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,7,kbmZOlRE,1,0,False,975.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,8,CDEmYGlu,1,1,True,1177.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,9,btlckkbu,1,1,True,1009.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,10,BECkCPMl,0,1,False,941.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,11,udkmhBK,1,0,False,818.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,12,kGamNCPMl,1,1,True,1017.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,13,BECkdUr,1,1,True,1108.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,14,NvuGrbTE,1,1,True,1152.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,15,udkmkbu,0,0,True,626.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,16,kLvdNbTE,1,0,False,729.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,17,tRdMOtM,0,0,True,800.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,18,cDOEBhBK,0,0,True,941.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,19,ukYZCPMl,1,1,True,896.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,20,ZkGmYGQYQ,0,1,False,989.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,21,BMEMAJcUk,1,0,False,847.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,22,cDOEBkbu,1,0,False,739.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,23,KBKBElRE,0,0,True,889.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,24,JNkaOtM,1,1,True,1084.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,25,kLvdNJcUk,0,0,True,683.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,26,TdmAbTE,0,0,True,1075.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,27,CDEmYOtM,0,1,False,860.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,28,tRdMGlu,1,0,False,546.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,29,kbmZOGQYQ,0,0,True,922.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,30,rLkmhBK,1,0,False,1044.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,31,OmtlDCPMl,0,0,True,795.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,32,KBKBEGQYQ,1,0,False,781.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,33,JNkaGlu,0,1,False,1072.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,34,ukYZdUr,0,0,True,1009.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,35,btlckhBK,0,0,True,776.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,36,rLkmkbu,0,0,True,834.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,37,DhMtlRE,0,1,False,1088.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,38,NvuGrJcUk,0,1,False,899.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,39,kGamNdUr,0,0,True,636.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60a45e33f404ba8cb7a19cfe,testing,40,TdmAJcUk,1,1,True,782.0,"Ho cercato di ricordare i primi caratteri e la lunghezza della parola, nonché lo stile visivo dell'intera opera."
+0,60b55a6d44e17d6f0b810cdd,testing,1,vkYGluZc,0,1,False,2885.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,2,dRbDbPMYm,0,0,True,751.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,3,rGUAYKOYC,1,0,False,1034.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,4,DOchlOYK,0,1,False,1137.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,5,rGUAYrba,0,0,True,693.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,6,cRElDdRA,0,1,False,1118.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,7,TbKMEPMYm,0,1,False,886.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,8,DhMtdRA,0,0,True,833.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,9,JAdLmkmU,0,0,True,1066.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,10,PEkhAOYK,0,1,False,601.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,11,UdumdcUN,0,0,True,710.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,12,DOBhYBYhT,0,0,True,754.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,13,uQkrdrba,0,1,False,854.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,14,TbKMEcUN,1,0,False,617.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,15,NQZvPMYm,1,1,True,722.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,16,GJGcZNmAG,0,0,True,816.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,17,NQZvcUN,0,1,False,589.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,18,PEkhAkmU,1,1,True,706.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,19,DhMtuZc,1,0,False,551.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,20,AlUYdRA,1,1,True,560.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,21,DBlhrba,1,0,False,552.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,22,YObANmAG,1,1,True,502.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,23,DOchlkmU,1,0,False,455.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,24,YObABYhT,0,1,False,560.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,25,vkYGldRA,1,1,True,559.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,26,YJkbOYK,1,0,False,492.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,27,DOBhYNmAG,1,0,False,489.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,28,GJGcZBYhT,1,0,False,479.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,29,KRARmKOYC,0,1,False,483.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,30,UdumdPMYm,1,1,True,708.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,31,cRElDuZc,1,1,True,640.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,32,YJkbkmU,0,0,True,719.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,33,JAdLmOYK,1,0,False,607.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,34,DBlhKOYC,0,1,False,479.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,35,AlUYuZc,0,0,True,560.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,36,kZUbNmAG,0,0,True,505.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,37,KRARmrba,1,1,True,540.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,38,kZUbBYhT,1,0,False,498.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,39,uQkrdKOYC,1,0,False,532.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60b55a6d44e17d6f0b810cdd,testing,40,dRbDbcUN,1,0,False,440.0,Mi concentravo sulla prima lettera e sull'ultima
+0,60ba2011cd8052508d401296,testing,1,ABPRBOBT,0,0,True,2722.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,2,lRckArZYd,1,1,True,832.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,3,JmvmOkam,0,0,True,1192.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,4,hTtBbYNu,1,0,False,1147.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,5,vYLUOBT,1,0,False,1102.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,6,kNuakam,0,0,True,1012.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,7,AdDbOBT,0,0,True,1079.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,8,damYbrZYd,0,1,False,1057.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,9,vYLUJUNa,0,0,True,878.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,10,ckduAYArG,0,0,True,989.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,11,NaAQdrZYd,0,1,False,1102.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,12,RCcEYArG,1,0,False,832.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,13,NaAQdKmE,1,0,False,1101.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,14,dvNvADOAK,1,1,True,786.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,15,damYbKmE,1,1,True,900.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,16,kNuadTAh,1,1,True,1553.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,17,DBklkam,1,0,False,1282.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,18,hTtBbTmTm,0,0,True,1148.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,19,EhbtYArG,1,0,False,1304.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,20,AdDbJUNa,1,0,False,1440.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,21,RCcEDOAK,0,0,True,787.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,22,rLkmOBT,1,0,False,765.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,23,EhbtDOAK,0,0,True,854.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,24,aUZAYNu,0,0,True,833.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,25,lRckAKmE,0,1,False,1147.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,26,rLkmJUNa,0,0,True,315.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,27,JmvmOdTAh,1,0,False,1057.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,28,dvNvAYArG,0,1,False,765.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,29,DBkldTAh,0,0,True,810.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,30,aUZATmTm,1,0,False,922.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,31,kCRmKmE,0,0,True,1237.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,32,BOckPkam,1,1,True,1102.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,33,UAcduTmTm,1,0,False,765.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,34,ckduADOAK,1,1,True,585.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,35,PMPtkTmTm,0,0,True,607.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,36,BOckPdTAh,0,0,True,1192.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,37,ABPRBJUNa,1,0,False,788.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,38,PMPtkYNu,1,0,False,1125.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,39,kCRmrZYd,1,1,True,945.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60ba2011cd8052508d401296,testing,40,UAcduYNu,0,0,True,1732.0,Alcune parole erano complessivamente più spigolose (linguaggio studiato) mentre altre sembravano più curve o dotate di tante diagonali parallele (linguaggio nuovo)
+0,60c9c6e1728092717b93abde,testing,1,vmuLlTPOM,1,0,False,743.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,2,mBmlAPEdK,0,1,False,472.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,3,bdUNudmkv,0,0,True,257.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,4,ukcYdCKc,1,1,True,137.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,5,RCcEdmkv,1,0,False,131.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,6,KMDYtLkNc,1,1,True,270.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,7,adYrckKE,1,1,True,136.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,8,YQbcdmkv,0,0,True,140.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,9,thbOMJcL,1,0,False,242.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,10,TklDTPOM,0,1,False,174.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,11,JuamlkmU,0,1,False,203.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,12,kPkRAJcL,1,1,True,148.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,13,JuamlTPOM,1,0,False,120.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,14,lrZGLkNc,0,0,True,145.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,15,rvOvUPEdK,1,0,False,313.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,16,mdkKTPOM,0,1,False,222.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,17,TklDkmU,1,0,False,125.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,18,bdUNuCPMl,1,1,True,80.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,19,PCPDhLkNc,1,0,False,124.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,20,PEtEPEdK,0,1,False,84.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,21,ukcYLkNc,0,0,True,100.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,22,kPkRAkKE,0,1,False,78.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,23,BPAlCPMl,0,0,True,126.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,24,OLJblkKE,1,1,True,71.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,25,PCPDhdCKc,0,1,False,265.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,26,YQbcCPMl,1,0,False,230.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,27,adYrcJcL,0,0,True,214.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,28,RCcECPMl,0,0,True,207.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,29,PEtEZckv,1,1,True,61.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,30,vmuLlkmU,0,1,False,202.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,31,LvuOGPEdK,1,0,False,256.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,32,OLJblJcL,0,0,True,168.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,33,rvOvUZckv,0,1,False,44.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,34,thbOMkKE,0,1,False,254.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,35,KMDYtdCKc,0,1,False,169.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,36,mBmlAZckv,1,0,False,181.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,37,lrZGdCKc,1,0,False,221.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,38,BPAldmkv,1,1,True,177.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,39,mdkKkmU,1,1,True,240.0,completamente a caso
+0,60c9c6e1728092717b93abde,testing,40,LvuOGZckv,0,0,True,189.0,completamente a caso
+0,60d87fdab51e54fe4863f97f,testing,1,kdaAJkJdr,0,0,True,7425.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,2,vJabABb,1,0,False,2470.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,3,BbODkJdr,1,0,False,1251.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,4,MBmEBRDh,0,0,True,969.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,5,DOchlAZbl,1,1,True,1204.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,6,AlNUmKcD,1,0,False,875.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,7,EPERdkGua,1,0,False,833.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,8,MBmEOJNk,1,0,False,873.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,9,YLQmGCmYA,1,0,False,908.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,10,NLQGmAZbl,0,0,True,1062.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,11,CkBOPmKcD,0,1,False,949.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,12,LdQvkGua,0,0,True,777.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,13,YZJmQGb,0,0,True,816.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,14,BbODABb,0,0,True,793.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,15,rGUAYOJNk,0,0,True,1052.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,16,mdkKBRDh,0,1,False,903.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,17,tmtEMAZbl,1,0,False,438.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,18,NLQGmCmYA,1,0,False,977.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,19,CkBOPQGb,1,0,False,1174.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,20,tmtEMCmYA,0,1,False,575.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,21,vuJZuBRDh,1,0,False,1038.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,22,YLQmGAZbl,0,0,True,914.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,23,DBlhmKcD,0,1,False,847.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,24,kdaAJABb,1,0,False,582.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,25,NQZvkGua,0,1,False,1041.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,26,EPERdtAY,0,0,True,634.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,27,COTKABb,0,0,True,1229.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,28,DBlhQGb,1,1,True,1248.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,29,NQZvtAY,1,0,False,1025.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,30,COTKkJdr,1,0,False,1726.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,31,vuJZuOJNk,0,0,True,1259.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,32,vJabkJdr,0,1,False,736.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,33,CmcOkGua,1,0,False,929.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,34,rGUAYBRDh,1,0,False,818.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,35,YZJmmKcD,1,1,True,895.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,36,mdkKOJNk,1,0,False,1130.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,37,LdQvtAY,1,0,False,997.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,38,AlNUQGb,0,1,False,1425.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,39,DOchlCmYA,0,1,False,1046.0,intuizione
+0,60d87fdab51e54fe4863f97f,testing,40,CmcOtAY,0,0,True,641.0,intuizione
+0,60ddf71e95896d2595f0e1a5,testing,1,ECtbDCdt,0,1,False,5620.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,2,UaYLrGl,0,1,False,1388.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,3,OLJblBCAd,1,0,False,1345.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,4,Blmclrkra,1,0,False,987.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,5,dmZvmrGl,0,0,True,782.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,6,KAERMkbu,1,0,False,1278.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,7,RtRhrkra,1,0,False,773.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,8,BOckPuUmb,1,1,True,751.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,9,vmuLlCdt,1,1,True,828.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,10,YJkbAPEM,1,0,False,539.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,11,cuOJbEAO,1,1,True,1404.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,12,advYOrkra,0,1,False,767.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,13,BOckPEAO,0,1,False,1614.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,14,NLQGmuUmb,0,1,False,831.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,15,TObCOBCAd,0,0,True,764.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,16,ZcGdNCdt,1,1,True,1133.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,17,kGlUYZUZ,0,0,True,937.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,18,ECtbDkbu,1,1,True,675.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,19,cuOJbuUmb,0,1,False,1439.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,20,ZcGdNkbu,0,1,False,1169.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,21,KAERMCdt,0,0,True,734.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,22,hlkTEAO,0,1,False,796.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,23,hTtBbBCAd,0,1,False,916.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,24,vmuLlkbu,0,0,True,961.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,25,NLQGmEAO,1,0,False,1290.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,26,tRdMrGl,1,0,False,778.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,27,UaYLEKBO,1,1,True,991.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,28,YJkbrkra,0,0,True,1159.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,29,MTdYEKBO,0,1,False,1268.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,30,hTtBbYZUZ,1,1,True,1168.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,31,advYOAPEM,1,0,False,1087.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,32,MTdYrGl,1,1,True,1118.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,33,BlmclAPEM,0,0,True,1345.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,34,kGlUBCAd,1,0,False,950.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,35,TObCOYZUZ,1,1,True,1082.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,36,dmZvmEKBO,1,0,False,770.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,37,RtRhAPEM,0,0,True,946.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,38,tRdMEKBO,0,0,True,876.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,39,hlkTuUmb,1,1,True,1311.0,Associazione di simboli
+0,60ddf71e95896d2595f0e1a5,testing,40,OLJblYZUZ,0,0,True,996.0,Associazione di simboli
+0,60f1846c851ee5a978a0e015,testing,1,AbKDBCD,0,0,True,2725.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,2,UJmrOMC,1,0,False,1158.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,3,bvkrYht,1,1,True,1173.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,4,vYLUdUr,0,0,True,566.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,5,tdDdAOUl,1,1,True,766.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,6,rLaZBCD,1,1,True,1113.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,7,AbKDAOUl,1,1,True,834.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,8,bvkrvAvb,0,1,False,1781.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,9,tdDdBCD,0,1,False,1129.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,10,aYQmAOUl,0,0,True,632.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,11,AdDblRE,0,1,False,1011.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,12,kPkRAcDR,0,1,False,1056.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,13,RKYkJUNa,1,0,False,1205.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,14,TDKhYaOk,1,1,True,838.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,15,rLaZAOUl,0,1,False,1056.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,16,EhbtJUNa,1,0,False,925.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,17,mBmlAYht,0,1,False,1122.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,18,JNkacDR,1,0,False,1008.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,19,dJNrJUNa,0,1,False,993.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,20,aNYmbYaOk,0,0,True,919.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,21,NJZlYht,1,0,False,679.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,22,mBmlAvAvb,1,1,True,577.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,23,TDKhlRE,0,0,True,727.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,24,EhbtOMC,0,1,False,1574.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,25,AdDbYaOk,1,0,False,962.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,26,JNkadUr,0,0,True,834.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,27,KMDYtcDR,0,1,False,679.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,28,dJNrOMC,1,0,False,689.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,29,aNYmblRE,1,1,True,828.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,30,aYQmBCD,1,1,True,513.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,31,kPkRAdUr,1,1,True,719.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,32,RKYkOMC,0,0,True,620.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,33,OJGQYaOk,0,0,True,938.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,34,vYLUcDR,1,0,False,620.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,35,KMDYtdUr,1,0,False,592.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,36,UJmrJUNa,0,0,True,630.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,37,dKRDvAvb,1,0,False,547.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,38,OJGQlRE,1,0,False,1078.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,39,NJZlvAvb,0,1,False,853.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60f1846c851ee5a978a0e015,testing,40,dKRDYht,0,0,True,691.0,stavo cercando per la presenza di uno degli stessi caratteri nella parola 
+0,60fd703ecd62eb39eb07c328,testing,1,damYbEKBO,1,1,True,2113.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,2,YZJmrab,0,1,False,876.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,3,GJZmEPBT,1,1,True,988.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,4,cuOJbrAm,0,0,True,1268.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,5,KDPAEPBT,0,0,True,952.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,6,cBROBrab,1,0,False,947.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,7,CchtdPED,0,1,False,913.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,8,OYuvbuUY,0,1,False,783.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,9,GJZmOcN,0,0,True,629.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,10,cuOJblRE,1,1,True,887.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,11,kcCRtEPBT,0,0,True,770.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,12,JrGvEKBO,1,0,False,1351.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,13,OYuvbPED,1,1,True,821.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,14,tKDmhuUY,1,1,True,836.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,15,CYPcEKBO,0,0,True,807.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,16,JrGvuZc,0,1,False,898.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,17,TKDkrab,1,1,True,810.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,18,YZJmMAB,1,0,False,808.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,19,kcCRtOcN,1,0,False,853.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,20,hTDdrAm,1,0,False,930.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,21,DOBhYlRE,0,0,True,744.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,22,UaZmaMAB,1,0,False,1175.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,23,GumLlOcN,0,1,False,1340.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,24,tKDmhPED,0,1,False,1022.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,25,GumLlEPBT,1,1,True,1133.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,26,bmdABuZc,1,1,True,1132.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,27,AmaclrAm,0,1,False,750.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,28,hTDdlRE,0,0,True,816.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,29,damYbuZc,0,1,False,953.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,30,DOBhYrAm,1,0,False,714.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,31,CchtduUY,1,0,False,1013.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,32,bmdABEKBO,0,0,True,810.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,33,cBROBMAB,0,1,False,919.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,34,UaZmarab,0,0,True,786.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,35,CYPcuZc,1,0,False,998.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,36,AmacllRE,1,1,True,783.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,37,kLvdNPED,1,0,False,841.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,38,TKDkMAB,0,0,True,786.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,39,KDPAOcN,1,0,False,1127.0,cercare di individuare dei pattern
+0,60fd703ecd62eb39eb07c328,testing,40,kLvdNuUY,0,1,False,896.0,cercare di individuare dei pattern
+0,61158a5c1d8390415ff117a8,testing,1,udkmhEct,1,1,True,3319.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,2,lBlELcO,1,0,False,822.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,3,hYDmthEct,0,0,True,936.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,4,PDPhldTAh,0,0,True,1006.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,5,BECkOBT,0,1,False,974.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,6,PDPhlcUN,1,0,False,1234.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,7,uQkrdmhc,1,1,True,783.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,8,AlQaQcUN,0,0,True,1049.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,9,btlckuvJ,1,1,True,1023.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,10,ObZbAcUN,0,0,True,1607.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,11,lRCBOBT,0,0,True,996.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,12,EYtYRYmb,1,0,False,888.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,13,lBlEmhc,0,0,True,801.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,14,YJLcAOtM,1,1,True,1133.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,15,dNZAmhc,1,1,True,1231.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,16,hYDmtuvJ,1,0,False,699.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,17,AlQaQdTAh,1,0,False,836.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,18,EMYKYmb,1,1,True,1113.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,19,dOYmlmhc,0,1,False,1122.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,20,YJLcAYmb,0,1,False,1014.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,21,vblrbadk,0,1,False,1326.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,22,udkmuvJ,0,0,True,857.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,23,lRCBbadk,1,0,False,1295.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,24,EYtYROtM,0,0,True,689.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,25,ukYZuvJ,0,0,True,1129.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,26,LuNZOtM,1,0,False,1392.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,27,ukYZhEct,1,0,False,1018.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,28,vblrOBT,1,1,True,710.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,29,uQkrdLcO,0,1,False,1573.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,30,BECkbadk,1,0,False,1352.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,31,dNZALcO,0,0,True,1158.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,32,LuNZYmb,0,0,True,1007.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,33,amJmbadk,0,0,True,1518.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,34,dOYmlLcO,1,0,False,1190.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,35,EMYKOtM,0,0,True,1258.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,36,KdARcUN,1,0,False,1740.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,37,btlckhEct,0,0,True,1263.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,38,KdARdTAh,0,0,True,1250.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,39,amJmOBT,1,1,True,601.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,61158a5c1d8390415ff117a8,testing,40,ObZbAdTAh,1,0,False,1768.0,ho cercato di memorizzare alcune lettere e di ricordarmi più o meno in quale punto della parola si trovassero
+0,612d5712d75b6c46b4cefc63,testing,1,KAERMmZb,1,0,False,1802.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,2,ldAamtKP,1,0,False,1926.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,3,KdARYBO,0,1,False,944.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,4,NbmQUvcb,0,1,False,1771.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,5,GumLlLkNc,0,0,True,1159.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,6,RkmdCrkra,1,1,True,1116.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,7,NaAQdGlu,0,0,True,2255.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,8,lBlEtAY,0,0,True,1286.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,9,PctRCmtKP,0,0,True,1134.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,10,kZUbTbk,1,1,True,1103.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,11,NbacArkra,0,0,True,1006.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,12,ZcGdNhEct,1,0,False,1107.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,13,JdOAYGlu,0,1,False,955.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,14,hAROKmZb,1,1,True,1061.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,15,JdOAYYBO,1,1,True,1109.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,16,kKEdMGlu,1,0,False,957.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,17,KABATbk,0,1,False,1474.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,18,NaAQdYBO,1,0,False,1271.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,19,KTDTBvcb,1,1,True,1200.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,20,DOchlmtKP,0,0,True,681.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,21,lkAkrkra,0,0,True,1291.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,22,NbmQUTbk,1,1,True,1201.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,23,lBlErkra,1,1,True,1412.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,24,NbacAtAY,1,0,False,1129.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,25,GumLlmtKP,1,0,False,1690.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,26,KTDTBTbk,0,1,False,788.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,27,PctRCLkNc,1,0,False,966.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,28,kZUbvcb,0,1,False,1418.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,29,RkmdCtAY,0,0,True,770.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,30,kKEdMYBO,0,1,False,1091.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,31,lcOcmZb,0,0,True,639.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,32,KdARGlu,1,1,True,1175.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,33,DOchlLkNc,1,0,False,946.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,34,hAROKhEct,0,1,False,1215.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,35,lkAktAY,1,1,True,1292.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,36,KAERMhEct,0,0,True,881.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,37,ldAaLkNc,0,1,False,1096.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,38,ZcGdNmZb,0,1,False,920.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,39,KABAvcb,1,0,False,687.0,ho guradato le parole che più o meno riconoscevo
+0,612d5712d75b6c46b4cefc63,testing,40,lcOchEct,1,1,True,1366.0,ho guradato le parole che più o meno riconoscevo
+0,613d091096ca434d703f77c5,testing,1,UdYUQlMck,1,0,False,2215.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,2,OAmGrDKP,1,1,True,911.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,3,LuNZcbm,0,0,True,855.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,4,bvkrmLJ,0,1,False,815.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,5,lRckAPMYm,0,0,True,919.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,6,laYmrmLJ,0,1,False,903.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,7,lRckAmZb,1,1,True,752.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,8,blMkYkZ,1,0,False,750.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,9,LdQvmZb,0,0,True,1000.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,10,hlctEcbm,1,1,True,703.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,11,PEtEYkZ,1,0,False,758.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,12,hYDmtKOYC,0,1,False,726.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,13,uvaUcbm,0,1,False,895.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,14,AdDblMck,0,1,False,823.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,15,bvkrDOAK,1,0,False,839.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,16,aNYmbDKP,1,1,True,718.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,17,YOaAbPMYm,1,0,False,646.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,18,RKYkmLJ,1,0,False,646.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,19,tDPRkDOAK,0,0,True,775.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,20,dvNvAYZJO,0,1,False,775.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,21,PEtEDKP,0,0,True,791.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,22,ODBDAmZb,1,0,False,783.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,23,OAmGrYkZ,0,1,False,871.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,24,YOaAbmZb,0,0,True,911.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,25,laYmrDOAK,1,0,False,967.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,26,dvNvAlMck,1,1,True,872.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,27,tDPRkmLJ,1,1,True,983.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,28,AdDbYZJO,1,1,True,840.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,29,aNYmbYkZ,0,0,True,735.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,30,RKYkDOAK,0,1,False,376.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,31,YlCPBYZJO,1,0,False,704.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,32,hYDmtcbm,1,0,False,1126.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,33,LuNZKOYC,1,1,True,726.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,34,LdQvPMYm,1,1,True,567.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,35,hlctEKOYC,0,0,True,839.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,36,UdYUQYZJO,0,0,True,1167.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,37,YlCPBlMck,0,1,False,991.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,38,ODBDAPMYm,0,0,True,767.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,39,uvaUKOYC,1,1,True,934.0,Ricerca di nuovi caratteri
+0,613d091096ca434d703f77c5,testing,40,blMkDKP,0,0,True,880.0,Ricerca di nuovi caratteri
+0,614060a52d7c64c27ef9887c,testing,1,UmNJYmb,0,1,False,2887.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,2,kGlUdUr,0,0,True,1250.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,3,DhMtMAB,0,0,True,1148.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,4,GLYrAbdtK,1,0,False,1413.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,5,UmNJMAB,1,1,True,1596.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,6,YKRkBbM,0,1,False,1651.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,7,uauOYDE,1,0,False,1325.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,8,kGamNkbu,0,1,False,1216.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,9,uauOYZUZ,0,0,True,1441.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,10,bGuOYDE,1,0,False,1005.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,11,kGlUKOYC,1,1,True,1909.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,12,DcPTcYDE,0,0,True,1010.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,13,lhCTCdUr,1,0,False,1403.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,14,RKYkbdtK,0,0,True,1201.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,15,JvaAKOYC,1,0,False,847.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,16,aUZAGrub,0,1,False,1488.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,17,lhCTCKOYC,0,0,True,1247.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,18,RKYkGrub,1,0,False,1927.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,19,uAkrMAB,1,1,True,804.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,20,KABAdUr,1,1,True,1410.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,21,BMEMAYmb,1,1,True,1536.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,22,dkLlkbu,0,1,False,1668.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,23,hlkTYDE,0,0,True,2070.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,24,kRCkOBbM,0,0,True,1144.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,25,lbBDEbdtK,0,0,True,843.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,26,kRCkOkbu,1,1,True,881.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,27,lbBDEGrub,1,0,False,1183.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,28,JvaAdUr,0,1,False,1216.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,29,bGuOYZUZ,0,1,False,890.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,30,YKRkkbu,1,1,True,1216.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,31,KABAKOYC,0,0,True,845.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,32,GLYrAGrub,0,1,False,1312.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,33,DcPTcYZUZ,1,0,False,665.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,34,BMEMAMAB,0,0,True,736.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,35,kGamNBbM,1,0,False,1346.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,36,hlkTYZUZ,1,0,False,1077.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,37,uAkrYmb,0,1,False,1708.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,38,aUZAbdtK,1,0,False,1170.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,39,DhMtYmb,1,0,False,860.0,lettere chiave nelle posizioni che mi ricordavo
+0,614060a52d7c64c27ef9887c,testing,40,dkLlBbM,1,0,False,1276.0,lettere chiave nelle posizioni che mi ricordavo
+0,615c43b800752a4f3d0fd1f0,testing,1,kNuabadk,0,0,True,4551.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,2,NvYJuZc,0,1,False,1153.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,3,TCbDCTmc,0,0,True,1022.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,4,dRhtrAm,1,1,True,925.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,5,mkmJNbadk,0,0,True,1070.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,6,hlctEcMRl,0,1,False,748.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,7,kLvdNrAm,0,0,True,936.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,8,mbZlrkra,0,0,True,804.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,9,PDPhlkGua,1,1,True,943.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,10,TCbDCrkra,1,0,False,758.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,11,dmZvmuZc,0,0,True,826.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,12,tdDdDbMR,0,1,False,735.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,13,YmBdATc,0,0,True,448.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,14,hlctEbadk,1,1,True,974.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,15,tDPRkAkd,0,0,True,862.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,16,NvYJATc,1,0,False,716.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,17,ZkGmYrkra,0,1,False,839.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,18,YmBduZc,1,1,True,876.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,19,kcCRtbadk,1,1,True,827.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,20,tDPRkkGua,1,0,False,724.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,21,PDPhlAkd,0,0,True,1184.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,22,kdaAJkGua,0,1,False,1636.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,23,mcOJDbMR,1,0,False,697.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,24,OAblcAkd,1,1,True,976.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,25,RtRhATc,0,1,False,93.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,26,dRhtDbMR,0,0,True,767.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,27,mbZlTmc,1,0,False,522.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,28,mcOJrAm,0,1,False,598.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,29,RtRhuZc,1,0,False,795.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,30,tdDdrAm,1,0,False,517.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,31,ZkGmYTmc,1,1,True,532.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,32,kLvdNDbMR,1,0,False,600.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,33,kdaAJAkd,1,0,False,650.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,34,OAblckGua,0,1,False,392.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,35,mkmJNcMRl,1,1,True,606.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,36,blMkrkra,1,1,True,862.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,37,kcCRtcMRl,0,0,True,715.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,38,dmZvmATc,1,0,False,1401.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,39,kNuacMRl,1,1,True,626.0,restare concentrata
+0,615c43b800752a4f3d0fd1f0,testing,40,blMkTmc,0,0,True,598.0,restare concentrata
+0,6161f43ddd46e845e7b3fab8,testing,1,DlDdcPK,0,0,True,2631.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,2,dCtMAOPE,0,0,True,1143.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,3,LckGNark,0,1,False,1832.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,4,OYuvbJud,0,0,True,2352.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,5,krGurkra,0,1,False,1000.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,6,LdQvJud,0,1,False,1464.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,7,ukcYTRkY,1,1,True,1184.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,8,KElBark,1,0,False,1055.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,9,OYuvbEKBO,1,0,False,1104.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,10,DMRPZAUu,1,0,False,1608.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,11,amJmcPK,1,0,False,975.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,12,DlDdJQA,1,0,False,1008.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,13,YQbccPK,1,1,True,1640.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,14,LdQvEKBO,1,1,True,1431.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,15,krGuCMdP,1,0,False,1168.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,16,bRABtJud,1,0,False,1328.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,17,DMRPOPE,0,0,True,1640.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,18,QbkAcZAUu,0,0,True,1856.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,19,Qcladrkra,0,1,False,1704.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,20,ODBDAJud,1,0,False,1223.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,21,ukcYark,0,0,True,1560.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,22,KElBTRkY,0,0,True,1056.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,23,dCtMAZAUu,1,0,False,920.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,24,LckGNTRkY,1,1,True,1648.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,25,YQbcJQA,0,0,True,768.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,26,TDKhcPK,0,0,True,880.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,27,amJmJQA,0,0,True,1103.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,28,bcORark,1,0,False,1136.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,29,TDKhJQA,1,1,True,1047.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,30,bcORTRkY,0,1,False,1232.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,31,bRABtEKBO,0,1,False,1456.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,32,JrGvZAUu,0,0,True,1656.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,33,kPOtrkra,1,0,False,1720.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,34,RhPmCMdP,0,0,True,1944.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,35,ODBDAEKBO,0,0,True,1888.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,36,JrGvOPE,1,1,True,1624.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,37,QcladCMdP,1,1,True,1463.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,38,QbkAcOPE,1,0,False,1175.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,39,kPOtCMdP,0,0,True,1480.0,memoria
+0,6161f43ddd46e845e7b3fab8,testing,40,RhPmrkra,1,0,False,1440.0,memoria
+0,6175a0a52e748285b3476b27,testing,1,vkYGlCKOb,1,1,True,7319.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,2,kNuaQGb,0,0,True,2097.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,3,cdKBYbTE,0,0,True,486.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,4,ctktYmb,1,0,False,582.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,5,advYOGlu,0,1,False,419.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,6,dmZvmAvdk,0,0,True,311.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,7,OdlNmRYlD,1,1,True,319.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,8,PhktkAZbl,1,0,False,294.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,9,EhbtdPc,0,0,True,321.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,10,AZlLNAZbl,0,1,False,269.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,11,adYrcRYlD,1,0,False,353.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,12,kNuabTE,1,0,False,394.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,13,AlNUdPc,1,1,True,305.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,14,ctktRYlD,0,0,True,419.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,15,cAZuAvdk,0,0,True,436.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,16,lBKtBRDh,0,1,False,252.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,17,adkrbTE,1,0,False,541.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,18,cdKBYQGb,1,0,False,414.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,19,OCmkbTE,0,0,True,158.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,20,bRABtAvdk,1,1,True,354.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,21,advYOdPc,1,0,False,556.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,22,cAZuBRDh,1,1,True,392.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,23,AbKDGlu,1,0,False,747.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,24,EtMDMRYlD,0,1,False,763.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,25,OCmkQGb,1,1,True,570.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,26,DkTCPAZbl,1,0,False,391.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,27,AZlLNCKOb,1,0,False,434.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,28,AbKDdPc,0,0,True,216.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,29,EtMDMYmb,1,0,False,597.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,30,lBKtAvdk,1,0,False,463.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,31,bRABtBRDh,0,0,True,138.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,32,OdlNmYmb,0,0,True,526.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,33,dmZvmBRDh,1,0,False,333.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,34,PhktkCKOb,0,1,False,534.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,35,adYrcYmb,0,0,True,189.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,36,vkYGlAZbl,0,0,True,200.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,37,adkrQGb,0,1,False,274.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,38,AlNUGlu,0,0,True,190.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,39,DkTCPCKOb,0,0,True,405.0,cercare caratteri particolari che sono sicuro aver visto prima
+0,6175a0a52e748285b3476b27,testing,40,EhbtGlu,1,0,False,152.0,cercare caratteri particolari che sono sicuro aver visto prima

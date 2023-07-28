@@ -253,6 +253,8 @@ for x in range(len(BLP_data)): # for each participant datafile
     # add participant scores to big BLP dataframe
     all_BLP_data = pd.concat([all_BLP_data, participant_BLP_data_scored],axis = 0)
     
+all_BLP_data = all_BLP_data.sort_values(by='sbj_ID')
+
 ### TESTING PRE-PROCESSING ###
 testing_data = []
 for x in range(len(all_data)): # extract testing responses
@@ -294,9 +296,6 @@ def testing_scoring(testing_data):
         sbj_ID = ID_line['ID']
         strat_line = json.loads(participant_testing_data[-1]['response'])
         strat = strat_line['testing_strategy']
-        strat_dict = {'sbj_ID':sbj_ID, 'task':'testing','testing_strategy':strat}
-        strat_dict = {k:[v] for k,v in strat_dict.items()} # avoiding index error
-        strat_df = pd.DataFrame(strat_dict)
         for y in range(1,41):
             trial = participant_testing_data[y]
             trialn = y
@@ -308,15 +307,15 @@ def testing_scoring(testing_data):
                 observed = 0
             if trial['response'] == 'd':
                 observed = 1
-            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing','trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt']}
+            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing','trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_testing_data_scored = pd.DataFrame(trial_dict)
             all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
-        all_testing_data_scored = pd.concat([all_testing_data_scored, strat_df],axis = 0)
     return all_testing_data_scored
 
 all_testing_data_scored = testing_scoring(testing_data)
-if all_testing_data_scored.shape[0] == (41*len(testing_data)):
+all_testing_data_scored = all_testing_data_scored.sort_values(by=['sbj_ID','trialn'])
+if all_testing_data_scored.shape[0] == (40*len(testing_data)):
     print('Finished pre-processing testing responses')
 
 ### FAMILIARITY PRE-PROCESSING ###
@@ -374,15 +373,11 @@ def familiarity_scoring(familiarity_data):
     return all_familiarity_data_scored
 
 all_familiarity_data_scored = familiarity_scoring(familiarity_data)
+all_familiarity_data_scored = all_familiarity_data_scored.sort_values(by=['sbj_ID','trialn'])
 if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
     print('Finished pre-processing familiarity responses')
 
-### GROUPING ALL DATA ###
-all_exp_data = pd.concat([all_familiarity_data_scored, all_testing_data_scored])
-full_exp_data = pd.concat([all_exp_data, all_BLP_data])
-full_exp_data = full_exp_data.sort_values(by=['sbj_ID','task'])
-if len(full_exp_data) == (len(all_familiarity_data_scored) + len(all_testing_data_scored) + len(all_BLP_data)):
-    print('Finished collating task responses')
-
 ### EXPORTING ###
-full_exp_data.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\Prolific_preprocessed.csv', index=True, header=True)
+all_familiarity_data_scored.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\familiarity_preprocessed.csv', index=True, header=True)
+all_testing_data_scored.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\testing_preprocessed.csv', index=True, header=True)
+all_BLP_data.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\BLP_preprocessed.csv', index=True, header=True)
