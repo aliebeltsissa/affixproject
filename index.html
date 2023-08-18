@@ -147,8 +147,8 @@
 
       function cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list) {
         const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0];
-        incongruenttesting_list = [];
-        incongruenttesting_dict = {};
+        var incongruenttesting_list = [];
+        var incongruenttesting_dict = {};
         for (let i = 0; i < L1stemsubset_list.length; i++) {
           var indice = testingaffix_indices[i];
           var affix = L1affixsubset_list[indice];
@@ -156,6 +156,7 @@
           var word = stem + affix;
           if (stem[-1] != affix[0] && incongruenttesting_list.includes(word) == false) {
             incongruenttesting_list.push([stem + affix]);
+            var parts = [stem, affix];
             var word = stem + affix;
             incongruenttesting_dict[word] = parts
           };
@@ -221,50 +222,28 @@
       var exp_fours = [];
       var exp_fives = [];
       for (morpheme of all_morphemes) {
-        if (morpheme.length == 3) {
-          exp_threes.push(morpheme)
-        };
-        if (morpheme.length == 4) {
-          exp_fours.push(morpheme)
-        };
-        if (morpheme.length == 5) {
-          exp_fives.push(morpheme)
-        };
+        if (morpheme.length == 3) {exp_threes.push(morpheme)};
+        if (morpheme.length == 4) {exp_fours.push(morpheme)};
+        if (morpheme.length == 5) {exp_fives.push(morpheme)};
       };
       var big_threes = [];
       var big_fours = [];
       var big_fives = [];
       for (morpheme of L1affixes_list) {
-        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {
-          big_threes.push(morpheme)
-        };
-        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {
-          big_fours.push(morpheme)
-        };
+        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {big_threes.push(morpheme)};
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
       };
       for (morpheme of L1stems_list) {
-        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {
-          big_fours.push(morpheme)
-        };
-        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {
-          big_fives.push(morpheme)
-        };
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {big_fives.push(morpheme)};
       };
       for (morpheme of L2affixes_list) {
-        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {
-          big_threes.push(morpheme)
-        };
-        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {
-          big_fours.push(morpheme)
-        };
+        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {big_threes.push(morpheme)};
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
       };
       for (morpheme of L2stems_list) {
-        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {
-          big_fours.push(morpheme)
-        };
-        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {
-          big_fives.push(morpheme)
-        };
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {big_fives.push(morpheme)};
       };
       var all_confounds = [];
       var confound_threes = [];
@@ -340,6 +319,8 @@
       incongruenttesting.push([word,1])
     };
     var testing = congruenttesting.concat(incongruenttesting);
+    var testing_dict = Object.assign({}, congruenttesting_dict, incongruenttesting_dict);
+
     if (training_list.length == 80 && testing.length == 40) {
       console.log('Correctly generated complete stimuli set.')
     };
@@ -414,44 +395,171 @@
     return array;
     };
 
-    // generating MorCode novel words
-    var training_lengths = [];
-    var training_parts = Object.values(training_dict)
-    for (let i = 0; i < training_parts.length; i++) { // extract morpheme lengths from experimental stimuli dict
-      var parts = training_parts[i];
+    /* generating MorCode novel words */
+    // extract morpheme lengths from experimental stimuli dict
+    var testing_lengths = [];
+    var testing_parts = Object.values(testing_dict)
+    for (let i = 0; i < testing_parts.length; i++) { 
+      var parts = testing_parts[i];
       if (parts[0].length == 3) {length_1 = 3};
       if (parts[0].length == 4) {length_1 = 4};
       if (parts[0].length == 5) {length_1 = 5};
       if (parts[1].length == 3) {length_2 = 3};
       if (parts[1].length == 4) {length_2 = 4};
       if (parts[1].length == 5) {length_2 = 5};
-      training_lengths.push([length_1, length_2])
+      testing_lengths.push([length_1, length_2])
     };
-    console.log(training_lengths);
 
-    // pulling new morphemes from big morpheme lists
-    var morcode_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, parseInt(exp_threes.length));
-    var morcode_fours = jsPsych.randomization.sampleWithoutReplacement(big_fours, parseInt(exp_fours.length));
-    var morcode_fives = jsPsych.randomization.sampleWithoutReplacement(big_fives, parseInt(exp_fives.length));
-    var all_morcode = morcode_threes.concat(morcode_fours, morcode_fives);
-
-    // assembling new morphemes in same length combinations as training items
-    var morcode_words_list = [];
-    var morcode_words_dict = {};
-    for (let i = 0; i < training_list.length; i++) {
-      var lengths = training_lengths[i];
-      if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
-      if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
-      if (lengths[0] == 5) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
-      if (lengths[1] == 3) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
-      if (lengths[1] == 4) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
-      if (lengths[1] == 5) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
-      var morcode = morcode_stem + morcode_affix;
-      morcode_words_list.push(morcode);
-      morcode_words_dict[morcode] = [morcode_stem, morcode_affix]
+    var stem_lengths = [];
+    var affix_lengths = [];
+    for (let i = 0; i < testing_lengths.length; i++) {
+      var line = testing_lengths[i];
+      stem_lengths.push(line[0]);
+      affix_lengths.push(line[1])
     };
-    // so morcode_words_list is all the stim to be used in the novelXnovel morcode testing condition
 
+    function elementCount(arr, element) {
+      return arr.reduce((currentElement, arrElement) => (arrElement == element ? currentElement + 1 : currentElement), 0)
+    };
+    var stem_4s = elementCount(stem_lengths, 4);
+    var stem_5s = elementCount(stem_lengths, 5);
+    var affix_3s = elementCount(affix_lengths, 3);
+    var affix_4s = elementCount(affix_lengths, 4);
+
+    // assembling new morphemes in same length combinations as testing items
+    var morcodeXmorcode_words_list = [];
+    var morcodeXmorcode_words_dict = {};
+    while (morcodeXmorcode_words_list < 40) {
+      for (let i = 0; i < testing.length; i++) {
+        var lengths = testing_lengths[i];
+        if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+        if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+        if (lengths[0] == 5) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+        if (lengths[1] == 3) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+        if (lengths[1] == 4) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+        if (lengths[1] == 5) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+        var morcode = morcode_stem + morcode_affix;
+        if (morcodeXmorcode_words_list.includes(morcode) == false) {
+          morcodeXmorcode_words_list.push(morcode);
+          morcodeXmorcode_words_dict[morcode] = [morcode_stem, morcode_affix]
+        }
+      };
+      if (morcodeXmorcode_words_list.length < 40) {var morcodeXmorcode_words_list = []}
+    };
+    var all_morcode = Object.values(morcodeXmorcode_words_dict);
+    var all_morcode = all_morcode.flat();
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return all_morcode.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return all_morcode.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return all_morcode.indexOf( el ) < 0;
+    } );
+
+    // morcode X training word, training word X morcode
+    var testing_affixes = [];
+    var testing_stems = [];
+    var congruenttesting_list;
+    for (let i=0; i < congruenttesting_list.length; i++) {
+      var parts = congruenttesting_dict[congruenttesting_list[i]];
+      var stem = parts[0];
+      var affix = parts[1];
+      testing_stems.push(stem);
+      testing_affixes.push(affix)
+    };
+    
+    // sorting testing affixes and stems according to length
+    var testing_stems_4s = [];
+    var testing_stems_5s = [];
+    var testing_affixes_3s = [];
+    var testing_affixes_4s = [];
+    for (let i = 0; i < testing_stems.length; i++) {
+      if (testing_stems[i].length == 4) {testing_stems_4s.push(testing_stems[i])}
+      if (testing_stems[i].length == 5) {testing_stems_5s.push(testing_stems[i])}
+    };
+    for (let i = 0; i < testing_affixes.length; i++) {
+      if (testing_affixes[i].length == 3) {testing_affixes_3s.push(testing_affixes[i])}
+      if (testing_affixes[i].length == 4) {testing_affixes_4s.push(testing_affixes[i])}
+    };
+
+    // extracting new morcodes of required length
+    var morcode_3s = affix_3s/2;
+    var morcode_4s = (affix_4s/2) + (stem_4s/2);
+    var morcode_5s = stem_5s/2;
+    var morcode_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, morcode_3s);
+    var morcode_fours = jsPsych.randomization.sampleWithoutReplacement(big_fours, morcode_4s);
+    var morcode_fives = jsPsych.randomization.sampleWithoutReplacement(big_fives, morcode_5s);
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return morcode_threes.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return morcode_fours.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return morcode_fives.indexOf( el ) < 0;
+    } );
+
+    var morcodeXmorpheme_list = [];
+    var morcodeXmorpheme_dict = {};
+    var count_3 = 0;
+    var count_4 = 0;
+    var count_5 = 0;
+    for (let i=0; i < testing_lengths.length; i++) {
+      var testing_length = testing_lengths[i];
+      var stem_length = testing_length[0];
+      var affix_length = testing_length[1];
+      if (stem_length == 4) {
+        if (testing_stems_4s.length == 0) {
+          var stem = morcode_fours.shift();
+          var stem_nature = 'morcode';
+          var affix_nature = 'morpheme';
+          if (affix_length == 3) {var affix = testing_affixes_3s.shift()};
+          if (affix_length == 4) {var affix = testing_affixes_4s.shift()}
+        }
+        if (testing_stems_4s.length != 0) {
+          var stem = testing_stems_4s.shift();
+          var stem_nature = 'morpheme';
+          var affix_nature = 'morcode';
+          if (affix_length == 3) {var affix = morcode_threes.shift()};
+          if (affix_length == 4) {var affix = morcode_fours.shift()};
+        }; 
+      };
+      if (stem_length == 5) {
+        if (testing_stems_5s.length == 0) {
+          var stem = morcode_fives.shift();
+          var stem_nature = 'morcode';
+          var affix_nature = 'morpheme';
+          if (affix_length == 3) {var affix = testing_affixes_3s.shift()};
+          if (affix_length == 4) {var affix = testing_affixes_4s.shift()}
+        }
+        if (testing_stems_5s.length != 0) {
+          var stem = testing_stems_5s.shift();
+          var stem_nature = 'morpheme';
+          var affix_nature = 'morcode';
+          if (affix_length == 3) {var affix = morcode_threes.shift()};
+          if (affix_length == 4) {var affix = morcode_fours.shift()}
+        };     
+      };
+      var morcodeXmorpheme = stem + affix;
+      morcodeXmorpheme_list.push(morcodeXmorpheme);
+      var parts = [stem, stem_nature, affix, affix_nature];
+      morcodeXmorpheme_dict[morcodeXmorpheme] = parts
+    };
+    console.log(morcodeXmorpheme_dict);
+
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return morcode_threes.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return morcode_fours.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return morcode_fives.indexOf( el ) < 0;
+    } );
+
+    // list randomisations
     var trainingn = 8;
     var rand_training1 = training_randomisation(training_list);
     var rand_training2 = training_randomisation(training_list);
@@ -461,9 +569,11 @@
     var rand_training6 = training_randomisation(training_list);
     var rand_training7 = training_randomisation(training_list);
     var rand_training8 = training_randomisation(training_list);
+    var rand_morcodeXmorcode = training_randomisation(morcodeXmorcode_words_list);
+    var rand_morcodeXmorpheme = training_randomisation(morcodeXmorpheme_list);
 
     var rand_testing = testing_randomisation(testing);
-    
+
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
 
@@ -768,7 +878,12 @@
     var testing_stimuli = [];
     for (let i = 0; i < rand_testing.length; i++) {
       var item = rand_testing[i];
-      var condition = item[1];
+      if (item[1] == 0 || item[1] == 1) {
+        var morpheme_condition = item[1]; // only sometimes have this (in morphemeXmorpheme condition only)
+      } else {
+        var morpheme_condition = 'NULL'
+      }
+      var testing_condition = item.slice(-1);
       var java1 = item[0];
       if (i < 3) {
         var java2 = '<p style="font-size: 30px;">La parola viene del gruppo di alieni che hai studiato prima?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
@@ -776,11 +891,17 @@
       if (i >= 3) {
         var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Premi <strong>k</strong> per sì, <strong>d</strong> per no.</p>'
       };
-      if (condition == 0) {
-        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2}
+      if (morpheme_condition == 0) { // if morphemeXmorpheme word is congruent, participant should say yes
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
       };
-      if (condition == 1) {
-        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2}
+      if (morpheme_condition == 1) { // if morphemeXmorpheme word is incongruent, participant should say no
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2, testing_condition: testing_condition}
+      };
+      if (testing_condition == 'morphemeXmorcode') { // if word is morphemeXmorcode, participant should say yes
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
+      };
+      if (testing_condition == 'morcodeXmorcode') { // if word is morcodeXmorcode, participant should say no
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2, testing_condition: testing_condition}
       };
       testing_stimuli.push(testing_stimuli_dict)
     };
@@ -792,7 +913,8 @@
       data: {
         item: jsPsych.timelineVariable('stimulus'),
         task: 'testing',
-        correct_response: jsPsych.timelineVariable('correct_response')
+        correct_response: jsPsych.timelineVariable('correct_response'),
+        testing_condition: jsPsych.timelineVariable('testing_condition')
       },
       on_finish: function(data){
         data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
