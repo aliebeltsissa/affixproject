@@ -257,7 +257,7 @@
       if (all_confounds.length == all_morphemes.length && confound_threes.length == exp_threes.length && confound_fours.length == exp_fours.length && confound_fives.length == exp_fives.length) {
         console.log("Correctly generated familiarity confound set.")
       };
-      
+
       big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
         return confound_threes.indexOf( el ) < 0;
       } );
@@ -442,7 +442,7 @@
     var morcodeXmorcode_words_list = [];
     var morcodeXmorcode_words_dict = {};
     while (morcodeXmorcode_words_list < 40) {
-      for (let i = 0; i < testing.length; i++) { // randomly sample from big morpheme lists a novel stem & affix
+      for (let i = 0; i < testing.length; i++) {
         var lengths = testing_lengths[i];
         if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
         if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
@@ -453,7 +453,7 @@
         var morcode = morcode_stem + morcode_affix;
         if (morcodeXmorcode_words_list.includes(morcode) == false) {
           morcodeXmorcode_words_list.push(morcode);
-          morcodeXmorcode_words_dict[morcode] = [morcode_stem, morcode_affix]
+          morcodeXmorcode_words_dict[morcode] = [morcode_stem, 'morcode', morcode_affix, 'morcode']
         }
       };
       if (morcodeXmorcode_words_list.length < 40) {var morcodeXmorcode_words_list = []}
