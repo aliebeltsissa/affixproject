@@ -245,6 +245,7 @@
         if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
         if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {big_fives.push(morpheme)};
       };
+
       var all_confounds = [];
       var confound_threes = [];
       var confound_fours = [];
@@ -256,6 +257,17 @@
       if (all_confounds.length == all_morphemes.length && confound_threes.length == exp_threes.length && confound_fours.length == exp_fours.length && confound_fives.length == exp_fives.length) {
         console.log("Correctly generated familiarity confound set.")
       };
+      
+      big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+        return confound_threes.indexOf( el ) < 0;
+      } );
+      big_fours = big_fours.filter( function( el ) {
+        return confound_fours.indexOf( el ) < 0;
+      } );
+      big_fives = big_fives.filter( function( el ) {
+        return confound_fives.indexOf( el ) < 0;
+      } );
+
       var familiarity_pairs = [];
       for (let i = 0; i < 30; i++) {
         familiarity_pairs.push([all_morphemes[i], all_confounds[i]])
@@ -399,7 +411,7 @@
     // extract morpheme lengths from experimental stimuli dict
     var testing_lengths = [];
     var testing_parts = Object.values(testing_dict)
-    for (let i = 0; i < testing_parts.length; i++) { 
+    for (let i = 0; i < testing_parts.length; i++) { // creates a list of lists with [stem length; affix length]
       var parts = testing_parts[i];
       if (parts[0].length == 3) {length_1 = 3};
       if (parts[0].length == 4) {length_1 = 4};
@@ -412,7 +424,7 @@
 
     var stem_lengths = [];
     var affix_lengths = [];
-    for (let i = 0; i < testing_lengths.length; i++) {
+    for (let i = 0; i < testing_lengths.length; i++) { // splits up the testing_length list into the stem & affix lengths
       var line = testing_lengths[i];
       stem_lengths.push(line[0]);
       affix_lengths.push(line[1])
@@ -421,7 +433,7 @@
     function elementCount(arr, element) {
       return arr.reduce((currentElement, arrElement) => (arrElement == element ? currentElement + 1 : currentElement), 0)
     };
-    var stem_4s = elementCount(stem_lengths, 4);
+    var stem_4s = elementCount(stem_lengths, 4); // count how many 4-character stems are in the current testing words
     var stem_5s = elementCount(stem_lengths, 5);
     var affix_3s = elementCount(affix_lengths, 3);
     var affix_4s = elementCount(affix_lengths, 4);
@@ -430,7 +442,7 @@
     var morcodeXmorcode_words_list = [];
     var morcodeXmorcode_words_dict = {};
     while (morcodeXmorcode_words_list < 40) {
-      for (let i = 0; i < testing.length; i++) {
+      for (let i = 0; i < testing.length; i++) { // randomly sample from big morpheme lists a novel stem & affix
         var lengths = testing_lengths[i];
         if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
         if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
@@ -462,7 +474,7 @@
     var testing_affixes = [];
     var testing_stems = [];
     var congruenttesting_list;
-    for (let i=0; i < congruenttesting_list.length; i++) {
+    for (let i=0; i < congruenttesting_list.length; i++) { // extract all stems & affixes used in the congruent testing condition
       var parts = congruenttesting_dict[congruenttesting_list[i]];
       var stem = parts[0];
       var affix = parts[1];
@@ -470,22 +482,22 @@
       testing_affixes.push(affix)
     };
     
-    // sorting testing affixes and stems according to length
+    // sorts testing affixes and stems according to length
     var testing_stems_4s = [];
     var testing_stems_5s = [];
     var testing_affixes_3s = [];
     var testing_affixes_4s = [];
     for (let i = 0; i < testing_stems.length; i++) {
-      if (testing_stems[i].length == 4) {testing_stems_4s.push(testing_stems[i])}
+      if (testing_stems[i].length == 4) {testing_stems_4s.push(testing_stems[i])};
       if (testing_stems[i].length == 5) {testing_stems_5s.push(testing_stems[i])}
     };
     for (let i = 0; i < testing_affixes.length; i++) {
-      if (testing_affixes[i].length == 3) {testing_affixes_3s.push(testing_affixes[i])}
+      if (testing_affixes[i].length == 3) {testing_affixes_3s.push(testing_affixes[i])};
       if (testing_affixes[i].length == 4) {testing_affixes_4s.push(testing_affixes[i])}
     };
 
-    // extracting new morcodes of required length
-    var morcode_3s = affix_3s/2;
+    // extracts new morcodes of required length
+    var morcode_3s = affix_3s/2; // divided by 2 since we have morphemes as well, so need just 1 half of each word
     var morcode_4s = (affix_4s/2) + (stem_4s/2);
     var morcode_5s = stem_5s/2;
     var morcode_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, morcode_3s);
@@ -503,22 +515,19 @@
 
     var morcodeXmorpheme_list = [];
     var morcodeXmorpheme_dict = {};
-    var count_3 = 0;
-    var count_4 = 0;
-    var count_5 = 0;
     for (let i=0; i < testing_lengths.length; i++) {
       var testing_length = testing_lengths[i];
       var stem_length = testing_length[0];
       var affix_length = testing_length[1];
-      if (stem_length == 4) {
-        if (testing_stems_4s.length == 0) {
+      if (stem_length == 4) { // if the stem length is supposed to be 4
+        if (testing_stems_4s.length == 0) { // if no more 4-character stems in morpheme list
           var stem = morcode_fours.shift();
           var stem_nature = 'morcode';
           var affix_nature = 'morpheme';
           if (affix_length == 3) {var affix = testing_affixes_3s.shift()};
           if (affix_length == 4) {var affix = testing_affixes_4s.shift()}
         }
-        if (testing_stems_4s.length != 0) {
+        if (testing_stems_4s.length != 0) { // if still some 4-character stems in morpheme list
           var stem = testing_stems_4s.shift();
           var stem_nature = 'morpheme';
           var affix_nature = 'morcode';
@@ -526,7 +535,7 @@
           if (affix_length == 4) {var affix = morcode_fours.shift()};
         }; 
       };
-      if (stem_length == 5) {
+      if (stem_length == 5) { // if the stem length is supposed to be 5
         if (testing_stems_5s.length == 0) {
           var stem = morcode_fives.shift();
           var stem_nature = 'morcode';
@@ -559,6 +568,21 @@
       return morcode_fives.indexOf( el ) < 0;
     } );
 
+    // making a master testing list with morphemeXmorpheme, morcodeXmorpheme, morcodeXmorcode
+    var master_testing_list = [];
+    for (word of testing) {
+      master_testing_list.push([word[0], word[1],'morphemeXmorpheme'])
+    };
+    for (word of morcodeXmorpheme_list) {
+      master_testing_list.push([word,'morphemeXmorcode'])
+    };
+    for (word of morcodeXmorcode_words_list) {
+      master_testing_list.push([word,'morcodeXmorcode'])
+    };
+    console.log(master_testing_list);
+    var master_testing_dict = Object.assign({}, testing_dict, morcodeXmorpheme_dict, morcodeXmorcode_words_dict);
+    console.log(master_testing_dict);
+
     // list randomisations
     var trainingn = 8;
     var rand_training1 = training_randomisation(training_list);
@@ -569,13 +593,10 @@
     var rand_training6 = training_randomisation(training_list);
     var rand_training7 = training_randomisation(training_list);
     var rand_training8 = training_randomisation(training_list);
-    var rand_morcodeXmorcode = training_randomisation(morcodeXmorcode_words_list);
-    var rand_morcodeXmorpheme = training_randomisation(morcodeXmorpheme_list);
 
-    var rand_testing = testing_randomisation(testing);
+    var rand_testing = testing_randomisation(master_testing_list);
 
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
-
 
     /* ========== JSPSYCH SCRIPT ========== */
     document.body.style.backgroundColor = "#808080";
