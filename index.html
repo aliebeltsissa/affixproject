@@ -573,8 +573,13 @@
     for (word of testing) {
       master_testing_list.push([word[0], word[1],'morphemeXmorpheme'])
     };
-    for (word of morcodeXmorpheme_list) {
-      master_testing_list.push([word,'morphemeXmorcode'])
+    for (const word of Object.keys(morcodeXmorpheme_dict)) {
+      if (morcodeXmorpheme_dict[word][1] == 'morpheme') {
+        master_testing_list.push([word, 'morphemeXmorcode']);
+      };
+      if (morcodeXmorpheme_dict[word][1] == 'morcode') {
+        master_testing_list.push([word, 'morcodeXmorpheme'])
+      }
     };
     for (word of morcodeXmorcode_words_list) {
       master_testing_list.push([word,'morcodeXmorcode'])
@@ -651,7 +656,6 @@
     };
     timeline.push(enter_fullscreen);
 
-    /*
     var example = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Ecco un esempio delle parole che vedrai:</p>
@@ -660,9 +664,8 @@
       choices: ' '
     };
     timeline.push(example);
-    */
 
-    /* MORPHEME TRAINING */
+    /* MORPHEME TRAINING
     var pre_morpheme_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to study these word parts, which will help you understand the messages we've received!</p>
@@ -1016,7 +1019,6 @@
       var familiarity_pairs_dict = {'target': target2, 'confound': confound2, 'correct_response': familiarity_pairs_sides[i][2], 'java': java2};
       familiarity_stimuli.push(familiarity_pairs_dict);
     };
-    console.log(familiarity_stimuli);
 
     var familiarity_trial = {
       type: jsPsychHtmlKeyboardResponse,
