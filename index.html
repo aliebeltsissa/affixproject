@@ -1226,7 +1226,62 @@
         return big_html
       }
     };
-    timeline.push(use_info);
+    
+    var if_trial = {
+      type: jsPsychInstructions,
+      pages: [`<p style="font-size: 30px; color: #c51005">Attenzione! Non hai fatto che la somma delle percentuali scelte per ogni lingua presentata nelle singole domande è 100%.</p><p>Premi il pulsante per riprovare.</p>`],
+      button_label_next: 'Riprovare',
+      allow_keys: false,
+      allow_backward: false,
+      show_clickable_nav: true
+    };
+
+    var if_node = {
+      timeline: [if_trial],
+      conditional_function: function(){
+        var lasttrial_data = jsPsych.data.getLastTrialData().select('response').values[0];
+        var questions = ['PercAmici', 'PercCalcoli', 'PercFamiglia', 'PercLavoro', 'PercStesso'];
+        var redo = false;
+        for (let i=0; i < questions.length; i++) {
+          if (redo == false) {
+            var L1 = questions[i] + 'L1';
+            var percL1 = lasttrial_data[L1];
+            var L2 = questions[i] + 'L2';
+            var percL2 = lasttrial_data[L2];
+            var L3 = questions[i] + 'L3';
+            var percL3 = lasttrial_data[L3];
+            var L4 = questions[i] + 'L4';
+            var percL4 = lasttrial_data[L4];
+            var percs = [parseInt(percL1), parseInt(percL2), parseInt(percL3), parseInt(percL4)];
+            var red_percs = percs.filter(function (value) {
+              return !Number.isNaN(value);
+            });
+            let sum = 0;
+            red_percs.forEach( num => {
+              sum += num;
+            });
+            if (sum != 100) {
+              var redo = true
+            }
+          }
+        };
+        return redo
+      }
+    };
+
+    var use_info2 = {
+      timeline: [use_info],
+      conditional_function: function(){
+        var redo = false;
+        var lasttrial_type = jsPsych.data.getLastTrialData().select('trial_type').values[0];
+        if (lasttrial_type == 'html-keyboard-response') {var redo = true}
+      }
+    };
+
+    var use_procedure = {
+      timeline: [use_info, if_node, use_info2]
+    };
+    timeline.push(use_procedure);
 
     // proficiency section
     function proficiency (question) {
