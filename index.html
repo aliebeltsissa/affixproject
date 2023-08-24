@@ -33,7 +33,7 @@
     /* ========== INITIALISATION ========== */
     var jsPsych = initJsPsych({
       on_finish: function() {
-        window.location = "https://app.prolific.co/submissions/complete?cc=C180OSSD" // redirect Prolific participants to completed submission page
+        window.location = "https://app.prolific.co/submissions/complete?cc=C193M5AZ" // redirect Prolific participants to completed submission page
       }
     });
     
@@ -627,8 +627,8 @@
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 15px;">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
-      <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be angaged in a session of apprximately 20 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment.You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
-      <p style="font-size: 15px;">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <a href="mailto:dpo@sissa.it">dpo@sissa.it</a> oppure <a href="mailto:rpd@sissa.it">rpd@sissa.it</a> - PEC: <a href="mailto:protocollo@pec.sissa.it">protocollo@pec.sissa.it</a>.</p>
+      <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 20 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
+      <p style="font-size: 15px;">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <a href="mailto:dpo@sissa.it">dpo@sissa.it</a> or <a href="mailto:rpd@sissa.it">rpd@sissa.it</a> - PEC: <a href="mailto:protocollo@pec.sissa.it">protocollo@pec.sissa.it</a>.</p>
       <p style="font-size: 15px;"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>).</p>
       <p style="font-size: 15px;">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
       <p style="font-size: 15px;">We ask that you press the spacebar to proceed to the consent section.</p>`,
@@ -904,9 +904,9 @@
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task it to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
-      <p>This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have time to spend much time thinking on each word.</p>
-      <p>Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group</p><p>Press the spacebar when you're ready to begin.</p>`,
+      stimulus: `<p>In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
+      <p>This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
+      <p>Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p><p>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
     timeline.push(pre_testing);
@@ -989,7 +989,7 @@
       type: jsPsychSurveyHtmlForm,
       preamble: `<p>What strategy (if any) did you use in the previous task?</b></p>`,
       html: '<input name="testing_strategy" type="text" required/></p>',
-      button_label: "Continuare"
+      button_label: "Continue"
     };
     timeline.push(strategy_prompt);
 
@@ -1161,7 +1161,7 @@
         var yearsCountry = years('yearsCountry');
         var yearsFamily = years('yearsFamily');
         var yearsWork = years('yearsWork');
-        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA + `</p><p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase + `</p><p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school thorugh university)?</legend></p>` + yearsEdu + `</p><p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry + `</p><p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily + `</p><p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork;
+        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA + `</p><p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase + `</p><p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu + `</p><p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry + `</p><p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily + `</p><p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork;
         return big_html
       }
     };
@@ -1222,7 +1222,7 @@
 
     var use_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE</p><p style="color: black">In this section, we would like you to answer some questions about your language use by placing a check in the appropriate box. <strong>Total use for all languages in a given question should equal 100%</strong>.</p>',
+      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p>',
       html: function() {
         var PercFriends = percent('PercFriends');
         var PercFamily = percent('PercFamily');
@@ -1328,13 +1328,13 @@
           var color = "#2d7017"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (non molto bene)</label>
+          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (not well at all)</label>
           <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
           <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
           <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
           <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (molto bene)</label></p>`;
+          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (very well)</label></p>`;
         };
         options.push(option)
       };
@@ -1396,13 +1396,13 @@
           var color = "#2d7017"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (non sono d'accordo)</label>
+          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (disagree)</label>
           <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
           <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
           <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
           <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
           <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (sono d'accordo)</label></p>`;
+          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (agree)</label></p>`;
         };
         options.push(option)
       };
