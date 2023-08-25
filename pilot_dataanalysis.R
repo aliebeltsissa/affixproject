@@ -310,7 +310,7 @@ setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject")
 # TESTING
 # import testing data
 data_pilot4_testing <- read.csv("testing_preprocessed.csv",header=T,sep=",");
-data_pilot4_testing = subset(data_pilot4_testing, select = -c(X)) # remove redundant column added by Pavlovia
+data_pilot4_testing <- subset(data_pilot4_testing, select = -c(X)) # remove redundant column added by Pavlovia
 
 # make some variables factors
 data_pilot4_testing$sbj_ID <- as.factor(data_pilot4_testing$sbj_ID);
@@ -461,7 +461,7 @@ plot(data_pilot4.2_familiarity_rt_means$x, data_pilot4.2_familiarity_means$x, xl
 
 # BLP
 data_pilot4_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
-data_pilot4_BLP = subset(data_pilot4_BLP, select = -c(X)) # remove redundant column added by Pavlovia
+data_pilot4_BLP <- subset(data_pilot4_BLP, select = -c(X)) # remove redundant column added by Pavlovia
 
 # standardise language responses
 data_pilot4_BLP[data_pilot4_BLP == "italiano" | data_pilot4_BLP == "italiana" | data_pilot4_BLP == "Italiano" | data_pilot4_BLP == "Italiana"] <- "Italian";
