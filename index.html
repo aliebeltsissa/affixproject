@@ -1073,7 +1073,7 @@
       <legend>Highest level of formal education</legend><div><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></div><div><input type="radio" id="HighSchool" name="Education" value="HighSchool"><label for="HighSchool">High school</label></div><div><input type="radio" id="MinusCollege" name="Education" value="MinusCollege"><label for="MinusCollege">Some college</label></div><div><input type="radio" id="College" name="Education" value="College"><label for="College">College (B.A., B.S.)</label></div><div><input type="radio" id="PlusCollege" name="Education" value="PlusCollege"><label for="PlusCollege">Some graduate school</label></div><div><input type="radio" id="Masters" name="Education" value="Masters"><label for="Masters">Masters</label></div><div><input type="radio" id="PhD" name="Education" value="PhD"><label for="PhD">PhD/MD/JD</label></div></p>
       <p><legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend><input name="L1" type="text" required/></p>
       <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend><input name="L2" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>?If you don't speak a third language, please enter "n/a".</legend><input name="L3" type="text" required/></p>
+      <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend><input name="L3" type="text" required/></p>
       <p><legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend><input name="L4" type="text" required/></p>
       <p><legend>Do you speak any other languages?</legend><input name="otherLs" type="text" required/></p>`,
       button_label: "Continue",
@@ -1163,7 +1163,8 @@
         var yearsWork = years('yearsWork');
         var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA + `</p><p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase + `</p><p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu + `</p><p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry + `</p><p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily + `</p><p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork;
         return big_html
-      }
+      },
+      data: {name: 'history_info'}
     };
     timeline.push(history_info);
 
@@ -1235,7 +1236,8 @@
         <p style="color: black"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
         <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount;
         return big_html
-      }
+      },
+      data: {name: 'use_info'}
     };
     
     var if_trial = {
@@ -1245,7 +1247,8 @@
       button_label_next: 'Retry',
       allow_keys: false,
       allow_backward: false,
-      show_clickable_nav: true
+      show_clickable_nav: true,
+      data: {name: 'use_info_prb'}
     };
 
     var if_node = {
@@ -1272,9 +1275,7 @@
             red_percs.forEach( num => {
               sum += num;
             });
-            if (sum != 100) {
-              var redo = true
-            }
+            if (sum != 100) {var redo = true}
           }
         };
         return redo
@@ -1359,7 +1360,8 @@
         <p style="color: black"><legend>If you're reading this, please answer "2" for all languages.</legend></p>` + Attention + `
         <p style="color: black"><legend>15. How well do you write in the following languages?</legend></p>` + ProfWrite;
         return big_html
-      }
+      },
+      data: {name: 'proficiency_info'}
     };
     timeline.push(proficiency_info);
 
@@ -1381,17 +1383,17 @@
           var color = "#911857"
         };
         if (l == 1) {
-          var tag = L2_tag
+          var tag = L2_tag;
           var name = nameL2;
           var color = "#285f98"
         };
         if (l == 2) {
-          var tag = L3_tag
+          var tag = L3_tag;
           var name = nameL3;
           var color = "#da9d37"
         };
         if (l == 3) {
-          var tag = L4_tag
+          var tag = L4_tag;
           var name = nameL4;
           var color = "#2d7017"
         };
@@ -1425,7 +1427,8 @@
         <p style="color: black"><legend>18. It is important to me to use (or eventually use) the following languages like a native speaker.</legend></p>` + AttNativeLevel + `
         <p style="color: black"><legend>19. I want others to think I am a native speaker of the following languages.</legend></p>` + AttMothertongue;
         return big_html
-      }
+      },
+      data: {name: 'attitudes_info'}
     };
     timeline.push(attitudes_info);
 
