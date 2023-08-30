@@ -6,7 +6,7 @@ allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
 all_data = []
-column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'correct', 'target', 'confound', 'name']
+column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'testing_condition', 'correct', 'target', 'confound', 'name']
 for file in allfiles:
     df = pd.read_csv(file, index_col=1) # separate into each line
     temp = df.to_dict("split")
@@ -18,9 +18,9 @@ for file in allfiles:
         try:
             value2 = {column_names[x]: value[x] for x in range(len(column_names))}
         except IndexError:
-            column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'testing_condition', 'correct', 'target', 'confound', 'name']
-            value2 = {column_names[x]: value[x] for x in range(len(column_names))}
             column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'correct', 'target', 'confound', 'name']
+            value2 = {column_names[x]: value[x] for x in range(len(column_names))}
+            column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'testing_condition', 'correct', 'target', 'confound', 'name']
         temp[x] = value2
     all_data.append(temp)
    
@@ -421,8 +421,8 @@ for x in range(len(all_data)): # extract testing responses
             participant_testing_data.append(line)
         if line['task'] == 'testing':
             participant_testing_data.append(line)
-    if len(participant_testing_data) != 42:
-        print("Warning: participant_testing_data doesn't have 42 items!")
+    if len(participant_testing_data) != 42 and len(participant_testing_data) != 122:
+        print("Warning: participant_testing_data doesn't have correct number of items!")
     testing_data.append(participant_testing_data)
     
 def testing_scoring(testing_data):
@@ -447,21 +447,55 @@ def testing_scoring(testing_data):
         sbj_ID = ID_line['ID']
         strat_line = json.loads(participant_testing_data[-1]['response'])
         strat = strat_line['testing_strategy']
-        for y in range(1,41):
-            trial = participant_testing_data[y]
-            trialn = y
-            if trial['correct_response'] == 'k':
-                expected = 0
-            if trial['correct_response'] == 'd':
-                expected = 1
-            if trial['response'] == 'k':
-                observed = 0
-            if trial['response'] == 'd':
-                observed = 1
-            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing','trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
-            trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
-            participant_testing_data_scored = pd.DataFrame(trial_dict)
-            all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+        if x < 41:
+            for y in range(1,41):
+                trial = participant_testing_data[y]
+                trialn = y
+                if trial['correct_response'] == 'k':
+                    expected = 0
+                if trial['correct_response'] == 'd':
+                    expected = 1
+                if trial['response'] == 'k':
+                    observed = 0
+                if trial['response'] == 'd':
+                    observed = 1
+                trial_dict = {'sbj_ID':sbj_ID, 'task':'testing', 'testing_condition':'2M', 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
+                trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
+                participant_testing_data_scored = pd.DataFrame(trial_dict)
+                all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+        else:
+            for y in range(1,121):
+                trial = participant_testing_data[y]
+                trialn = y
+                condition = 0
+                if trial['testing_condition'] == '["morphemeXmorpheme"]':
+                    condition = '2M'
+                    if trial['correct_response'] == 'k':
+                        expected = 0
+                    if trial['correct_response'] == 'd':
+                        expected = 1
+                    if trial['response'] == 'k':
+                        observed = 0
+                    if trial['response'] == 'd':
+                        observed = 1
+                if trial['testing_condition'] == '["morphemeXmorcode"]' or trial['testing_condition'] == '["morcodeXmorpheme"]':
+                    condition = '1M'
+                    expected = 0
+                    if trial['response'] == 'k':
+                        observed = 0
+                    if trial['response'] == 'd':
+                        observed = 1
+                if trial['testing_condition'] == '["morcodeXmorcode"]':
+                    condition = '0M'
+                    expected = 1
+                    if trial['response'] == 'k':
+                        observed = 0
+                    if trial['response'] == 'd':
+                        observed = 1
+                trial_dict = {'sbj_ID':sbj_ID, 'task':'testing', 'testing_condition':condition, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
+                trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
+                participant_testing_data_scored = pd.DataFrame(trial_dict)
+                all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
     return all_testing_data_scored
 
 all_testing_data_scored = testing_scoring(testing_data)
