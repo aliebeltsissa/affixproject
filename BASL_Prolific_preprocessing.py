@@ -377,12 +377,8 @@ for x in range(len(BLP_data)): # for each participant datafile
         attitude = pd.DataFrame.from_dict(participant[5], orient='index')
         attitude = attitude.transpose()
     else:
-        use_1 = pd.DataFrame.from_dict(participant[3], orient='index')
-        use_1 = use_1.transpose()
-        use_2 = pd.DataFrame.from_dict(participant[4], orient='index')
-        use_2 = use_2.transpose()
-        use = pd.concat([use_1,use_2])
-        use.drop (index = 0, inplace= True)
+        use = pd.DataFrame.from_dict(participant[4], orient='index')
+        use = use.transpose()
         
         proficiency = pd.DataFrame.from_dict(participant[5], orient='index')
         proficiency = proficiency.transpose()
@@ -447,7 +443,7 @@ def testing_scoring(testing_data):
         sbj_ID = ID_line['ID']
         strat_line = json.loads(participant_testing_data[-1]['response'])
         strat = strat_line['testing_strategy']
-        if x < 41:
+        if x < 40:
             for y in range(1,41):
                 trial = participant_testing_data[y]
                 trialn = y
