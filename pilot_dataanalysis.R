@@ -683,3 +683,243 @@ data_pilot4_entacc <- merge(data_pilot4_testing_means,all_entropy,by="sbj_ID")
 cor(data_pilot4_entacc$x, data_pilot4_entacc$lang_ent); # 0.21
 plot(data_pilot4_entacc$lang_ent, data_pilot4_entacc$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", pch=19);
 text(1.9,40,"Pearson's r = 0.21")
+
+
+###########
+# PILOT 5 #
+###########
+setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject")
+
+# TESTING
+# import testing data
+data_pilot_testing <- read.csv("testing_preprocessed.csv",header=T,sep=",");
+data_pilot_testing <- subset(data_pilot_testing, select = -c(X)) # remove redundant column added by Pavlovia
+data_pilot5_testing <- subset(data_pilot_testing, sbj_ID=='58f50400f4ce600001016db5'|sbj_ID=='5b715800b31d480001eda165'|sbj_ID=='5be84b9a40b06b0001370c9f'|sbj_ID=='5c5baaec192d350001d5c8e4'|sbj_ID=='5ed02ffb8090240f93ab74ad'|sbj_ID=='5ee25b060f0ccf35b31431af'|sbj_ID=='5eff6828a958150135ede8a4'|sbj_ID=='5f5282f98bb76c54f2c603a7'|sbj_ID=='5f60713e595007000a8e1da7'|sbj_ID=='5fbbdd11ff4568d9cc3536fb'|sbj_ID=='5fc65d9cc4575b0b47981de8'|sbj_ID=='5fd0c81fc79aef1882cbee94'|sbj_ID=='5fdf808af53c7a7e9199b430'|sbj_ID=='603e0fefed5529d4b14e3546'|sbj_ID=='605de3af48d7a575adb95b09'|sbj_ID=='60b87f3ca1dbf6bb340c9bb0'|sbj_ID=='60bb62cbaccd206e3502516e'|sbj_ID=='60d8873c18e520a7d5ae555f'|sbj_ID=='60fd0845a9a6b47d7adfea22'|sbj_ID=='60fd913b3fd4aeea9829cff3'|sbj_ID=='61086c2bfda98ba5d75b9db4'|sbj_ID=='611d33d7cc16fdd812b1a4c4'|sbj_ID=='6127f94d2af664941ae3bf4f'|sbj_ID=='612b5ed8c3b1fcb978aad0a8'|sbj_ID=='6136aa846e80ebd7daf6e148'|sbj_ID=='614e230ff8700b32ea648508'|sbj_ID=='61533ead92c280c34cc22482'|sbj_ID=='6172a1d4cffa5162140cc8c2'|sbj_ID=='64526929d8f9b780b29d4d8d'|sbj_ID=='648b962b8fdb1fa686213ac1');
+                            
+# make some variables factors
+data_pilot5_testing$sbj_ID <- as.factor(data_pilot5_testing$sbj_ID);
+data_pilot5_testing$task <- as.factor(data_pilot5_testing$task);
+data_pilot5_testing$item <- as.factor(data_pilot5_testing$item);
+data_pilot5_testing$testing_condition <- as.factor(data_pilot5_testing$testing_condition);
+data_pilot5_testing$correct <- as.logical(data_pilot5_testing$correct);
+summary(data_pilot5_testing);
+
+# 0M yes responses boxplot
+data_pilot5_testing_0M_yes <- aggregate(data_pilot5_testing$observed[data_pilot5_testing$testing_condition=='0M'], by=list(data_pilot5_testing$sbj_ID[data_pilot5_testing$testing_condition=='0M']), FUN = function(x) sum(x == 0));
+data_pilot5_testing_0M_yes$x <- (data_pilot5_testing_0M_yes$x)*10/4;
+colnames(data_pilot5_testing_0M_yes)[colnames(data_pilot5_testing_0M_yes)=="Group.1"]="sbj_ID";
+colnames(data_pilot5_testing_0M_yes)[colnames(data_pilot5_testing_0M_yes)=="x"]="x_0";
+boxplot(data_pilot5_testing_0M_yes$x, ylab = "Percent of 'yes' responses");
+abline(h=50, lty=5);
+
+# 1M yes responses boxplot
+data_pilot5_testing_1M_yes <- aggregate(data_pilot5_testing$observed[data_pilot5_testing$testing_condition=='1M'], by=list(data_pilot5_testing$sbj_ID[data_pilot5_testing$testing_condition=='1M']), FUN = function(x) sum(x == 0));
+data_pilot5_testing_1M_yes$x <- (data_pilot5_testing_1M_yes$x)*10/4;
+colnames(data_pilot5_testing_1M_yes)[colnames(data_pilot5_testing_1M_yes)=="Group.1"]="sbj_ID";
+colnames(data_pilot5_testing_1M_yes)[colnames(data_pilot5_testing_1M_yes)=="x"]="x_1";
+boxplot(data_pilot5_testing_1M_yes$x, ylab = "Percent of 'yes' responses");
+abline(h=50, lty=5);
+
+# 2M yes responses boxplot
+data_pilot5_testing_2M_yes <- aggregate(data_pilot5_testing$observed[data_pilot5_testing$testing_condition=='2M'], by=list(data_pilot5_testing$sbj_ID[data_pilot5_testing$testing_condition=='2M']), FUN = function(x) sum(x == 0));
+data_pilot5_testing_2M_yes$x <- (data_pilot5_testing_2M_yes$x)*10/4;
+colnames(data_pilot5_testing_2M_yes)[colnames(data_pilot5_testing_2M_yes)=="Group.1"]="sbj_ID";
+colnames(data_pilot5_testing_2M_yes)[colnames(data_pilot5_testing_2M_yes)=="x"]="x_2";
+boxplot(data_pilot5_testing_2M_yes$x, ylab = "Percent of 'yes' responses");
+abline(h=50, lty=5);
+
+# yes responses across conditions
+library(tidyverse);
+data_pilot5_testing_conditions <- list(data_pilot5_testing_0M_yes,data_pilot5_testing_1M_yes,data_pilot5_testing_2M_yes) %>% reduce(inner_join, by='sbj_ID');
+boxplot(data_pilot5_testing_conditions$x_0,data_pilot5_testing_conditions$x_1,data_pilot5_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'));
+abline(h=50, lty=5);
+
+# 2M correct boxplot
+data_pilot5_testing_2M_means <- aggregate(data_pilot5_testing$correct[data_pilot5_testing$testing_condition=='2M'], list(data_pilot5_testing$sbj_ID[data_pilot5_testing$testing_condition=='2M']), FUN=sum, na.rm=TRUE);
+data_pilot5_testing_2M_means$x<-(data_pilot5_testing_2M_means$x)*10/4;
+colnames(data_pilot5_testing_2M_means)[colnames(data_pilot5_testing_2M_means)=="Group.1"]="sbj_ID";
+boxplot(data_pilot5_testing_2M_means$x, ylab = "Accuracy score (in %)");
+abline(h=50, lty=5);
+
+# testing d'
+dprimes <- dPrime(data_pilot5_testing$sbj_ID, data_pilot5_testing$expected, data_pilot5_testing$observed);
+summary(dprimes);
+
+# testing RTs
+library(paletteer);
+cols <- paletteer_d("khroma::smooth_rainbow");
+IDs <- list(data_pilot5_testing$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_pilot5_testing$rt[data_pilot5_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.0065),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i",lwd=2,cex.lab=1.5);
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
+for (x in 2:30) {
+  lines(density(data_pilot5_testing$rt[data_pilot5_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols[x],lwd=2)
+};
+legend("topright",title="Participant:",legend=c(1:30),fill=cols,bty = "n",
+       cex=0.85,y.intersp=0.5);
+data_pilot5_testing_rt_means <- aggregate(data_pilot5_testing$rt, list(data_pilot5_testing$sbj_ID), FUN=mean, na.rm=TRUE);
+
+# testing accuracy*RTs
+cor(data_pilot5_testing_2M_means$x, data_pilot5_testing_rt_means$x); # r = -0.20
+plot(data_pilot5_testing_rt_means$x, data_pilot5_testing_2M_means$x, pch=19);
+
+# testing strategy
+pilot5_strats <- list(data_pilot5_testing$strategy);
+pilot5_strats <- sapply(pilot5_strats, unique);
+
+
+
+# FAMILIARITY
+data_pilot_familiarity <- read.csv("familiarity_preprocessed.csv",header=T,sep=",");
+data_pilot5_familiarity <- subset(data_pilot_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
+data_pilot5_familiarity <- subset(data_pilot5_familiarity, sbj_ID=='58f50400f4ce600001016db5'|sbj_ID=='5b715800b31d480001eda165'|sbj_ID=='5be84b9a40b06b0001370c9f'|sbj_ID=='5c5baaec192d350001d5c8e4'|sbj_ID=='5ed02ffb8090240f93ab74ad'|sbj_ID=='5ee25b060f0ccf35b31431af'|sbj_ID=='5eff6828a958150135ede8a4'|sbj_ID=='5f5282f98bb76c54f2c603a7'|sbj_ID=='5f60713e595007000a8e1da7'|sbj_ID=='5fbbdd11ff4568d9cc3536fb'|sbj_ID=='5fc65d9cc4575b0b47981de8'|sbj_ID=='5fd0c81fc79aef1882cbee94'|sbj_ID=='5fdf808af53c7a7e9199b430'|sbj_ID=='603e0fefed5529d4b14e3546'|sbj_ID=='605de3af48d7a575adb95b09'|sbj_ID=='60b87f3ca1dbf6bb340c9bb0'|sbj_ID=='60bb62cbaccd206e3502516e'|sbj_ID=='60d8873c18e520a7d5ae555f'|sbj_ID=='60fd0845a9a6b47d7adfea22'|sbj_ID=='60fd913b3fd4aeea9829cff3'|sbj_ID=='61086c2bfda98ba5d75b9db4'|sbj_ID=='611d33d7cc16fdd812b1a4c4'|sbj_ID=='6127f94d2af664941ae3bf4f'|sbj_ID=='612b5ed8c3b1fcb978aad0a8'|sbj_ID=='6136aa846e80ebd7daf6e148'|sbj_ID=='614e230ff8700b32ea648508'|sbj_ID=='61533ead92c280c34cc22482'|sbj_ID=='6172a1d4cffa5162140cc8c2'|sbj_ID=='64526929d8f9b780b29d4d8d'|sbj_ID=='648b962b8fdb1fa686213ac1');
+
+# make some variables factors
+data_pilot5_familiarity$sbj_ID <- as.factor(data_pilot5_familiarity$sbj_ID);
+data_pilot5_familiarity$task <- as.factor(data_pilot5_familiarity$task);
+data_pilot5_familiarity$correct <- as.logical(data_pilot5_familiarity$correct);
+data_pilot5_familiarity$target <- as.factor(data_pilot5_familiarity$target);
+data_pilot5_familiarity$confound <- as.factor(data_pilot5_familiarity$confound);
+
+data_pilot5_familiarity_means <- aggregate(data_pilot5_familiarity$correct, list(data_pilot5_familiarity$sbj_ID), FUN=sum);
+data_pilot5_familiarity_means$x<-(data_pilot5_familiarity_means$x)*10/3;
+boxplot(data_pilot5_familiarity_means$x, ylab = "Familiarity score (in %)");
+abline(h=50, lty=5);
+
+# familiarity RTs
+IDs <- list(data_pilot5_familiarity$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_pilot5_familiarity$rt[data_pilot5_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.0025),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],lwd=2,yaxs="i");
+axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
+for (x in 2:30) {
+  lines(density(data_pilot5_familiarity$rt[data_pilot5_familiarity$sbj_ID==IDs[x]]),col=cols[x],lwd=2)
+};
+legend("topright",title="Participant:",legend=c(1:30),fill=cols,bty = "n",
+       cex=0.75,y.intersp=0.5);
+data_pilot5_familiarity_rt_means <- aggregate(data_pilot5_familiarity$rt, list(data_pilot5_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
+
+# familiarity accuracy*RTs
+cor(data_pilot5_familiarity_means$x, data_pilot5_familiarity_rt_means$x); # r = 0.11
+plot(data_pilot5_familiarity_rt_means$x, data_pilot5_familiarity_means$x, xlab="Mean participant RT (in ms)", ylab="Mean participant familiarity score (in %)", pch=19, cex=2, cex.lab=1.45);
+
+
+# BLP
+data_pilots_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
+data_pilots_BLP <- subset(data_pilots_BLP, select = -c(X)) # remove redundant column added by Pavlovia
+data_pilot5_BLP <- subset(data_pilots_BLP, sbj_ID=='58f50400f4ce600001016db5'|sbj_ID=='5b715800b31d480001eda165'|sbj_ID=='5be84b9a40b06b0001370c9f'|sbj_ID=='5c5baaec192d350001d5c8e4'|sbj_ID=='5ed02ffb8090240f93ab74ad'|sbj_ID=='5ee25b060f0ccf35b31431af'|sbj_ID=='5eff6828a958150135ede8a4'|sbj_ID=='5f5282f98bb76c54f2c603a7'|sbj_ID=='5f60713e595007000a8e1da7'|sbj_ID=='5fbbdd11ff4568d9cc3536fb'|sbj_ID=='5fc65d9cc4575b0b47981de8'|sbj_ID=='5fd0c81fc79aef1882cbee94'|sbj_ID=='5fdf808af53c7a7e9199b430'|sbj_ID=='603e0fefed5529d4b14e3546'|sbj_ID=='605de3af48d7a575adb95b09'|sbj_ID=='60b87f3ca1dbf6bb340c9bb0'|sbj_ID=='60bb62cbaccd206e3502516e'|sbj_ID=='60d8873c18e520a7d5ae555f'|sbj_ID=='60fd0845a9a6b47d7adfea22'|sbj_ID=='60fd913b3fd4aeea9829cff3'|sbj_ID=='61086c2bfda98ba5d75b9db4'|sbj_ID=='611d33d7cc16fdd812b1a4c4'|sbj_ID=='6127f94d2af664941ae3bf4f'|sbj_ID=='612b5ed8c3b1fcb978aad0a8'|sbj_ID=='6136aa846e80ebd7daf6e148'|sbj_ID=='614e230ff8700b32ea648508'|sbj_ID=='61533ead92c280c34cc22482'|sbj_ID=='6172a1d4cffa5162140cc8c2'|sbj_ID=='64526929d8f9b780b29d4d8d'|sbj_ID=='648b962b8fdb1fa686213ac1');
+data_pilot5_BLP <- subset(data_pilot5_BLP, select = -c(AoAgioL1, AoAgioL2, AoAgioL3, AoAgioL4, anniInstrL1, anniInstrL2, anniInstrL3, anniInstrL4, anniPaeseL1, anniPaeseL2, anniPaeseL3, anniPaeseL4, anniFamigliaL1, anniFamigliaL2, anniFamigliaL3, anniFamigliaL4, anniLavoroL1, anniLavoroL2, anniLavoroL3, anniLavoroL4, PercAmiciL1, PercAmiciL2, PercAmiciL3, PercAmiciL4, PercFamigliaL1, PercFamigliaL2, PercFamigliaL3, PercFamigliaL4, PercLavoroL1, PercLavoroL2, PercLavoroL3, PercLavoroL4, PercStessoL1, PercStessoL2, PercStessoL3, PercStessoL4, PercCalcoliL1, PercCalcoliL2, PercCalcoliL3, PercCalcoliL4, ProfParlaL1, ProfParlaL2, ProfParlaL3, ProfParlaL4, ProfCapisceL1, ProfCapisceL2, ProfCapisceL3, ProfCapisceL4, ProfLeggeL1, ProfLeggeL2, ProfLeggeL3, ProfLeggeL4, ProfScriveL1, ProfScriveL2, ProfScriveL3, ProfScriveL4, AttMiStessoL1, AttMiStessoL2, AttMiStessoL3, AttMiStessoL4, AttCulturaL1, AttCulturaL2, AttCulturaL3, AttCulturaL4, AttLivNativoL1, AttLivNativoL2, AttLivNativoL3, AttLivNativoL4, AttMadrelinguaL1, AttMadrelinguaL2, AttMadrelinguaL3, AttMadrelinguaL4));
+
+# standardise language responses
+data_pilot5_BLP[data_pilot5_BLP == "polish"] <- "Polish";
+data_pilot5_BLP[data_pilot5_BLP == "spanish"] <- "Spanish";
+data_pilot5_BLP[data_pilot5_BLP == "hindi"] <- "Hindi";
+data_pilot5_BLP[data_pilot5_BLP == "english" | data_pilot5_BLP == "engish"] <- "English";
+data_pilot5_BLP[data_pilot5_BLP == "sepedi"] <- "Sepedi";
+data_pilot5_BLP[data_pilot5_BLP == "sesotho"] <- "Sesotho";
+data_pilot5_BLP[data_pilot5_BLP == "german"] <- "German";
+data_pilot5_BLP[data_pilot5_BLP == "french"] <- "French";
+data_pilot5_BLP[data_pilot5_BLP == "italian"] <- "Italian";
+data_pilot5_BLP[data_pilot5_BLP == "setwana"] <- "Setwana";
+data_pilot5_BLP[data_pilot5_BLP == "N/A"] <- "n/a";
+
+# make some variables factors
+data_pilot5_BLP$sbj_ID <- as.factor(data_pilot5_BLP$sbj_ID);
+data_pilot5_BLP$Gender <- as.factor(data_pilot5_BLP$Gender);
+data_pilot5_BLP$Education <- as.factor(data_pilot5_BLP$Education);
+data_pilot5_BLP$L1 <- as.factor(data_pilot5_BLP$L1);
+data_pilot5_BLP$L2 <- as.factor(data_pilot5_BLP$L2);
+data_pilot5_BLP$L3 <- as.factor(data_pilot5_BLP$L3);
+data_pilot5_BLP$L4 <- as.factor(data_pilot5_BLP$L4);
+data_pilot5_BLP$otherLs <- as.factor(data_pilot5_BLP$otherLs);
+data_pilot5_BLP$AttentionL1 <- as.factor(data_pilot5_BLP$AttentionL1);
+data_pilot5_BLP$AttentionL2 <- as.factor(data_pilot5_BLP$AttentionL2);
+data_pilot5_BLP$AttentionL3 <- as.factor(data_pilot5_BLP$AttentionL3);
+data_pilot5_BLP$AttentionL4 <- as.factor(data_pilot5_BLP$AttentionL4);
+summary(data_pilot5_BLP);
+
+
+library(toolbox);
+scores_list <- combineCols(data_pilot5_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
+data_pilot5_BLP$temp_sbjID <- c(1:30); # necessary: R doesn't like format of Prolific IDs
+
+# multilingual balance: variance
+vars <- list();
+for (i in 1:30) { # calculate variance for each participant
+  temp <- unlist(scores_list[i]);
+  var <- var(temp,na.rm=TRUE);
+  vars <- append(vars, var)
+};
+data_pilot5_BLP$lang_var <- vars;
+data_pilot5_BLP$lang_var <- as.numeric(data_pilot5_BLP$lang_var);
+plot(data_pilot5_BLP$temp_sbjID,data_pilot5_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,13000),cex.lab=1.5,yaxs="i");
+
+# multilingual balance: entropy
+entropies <- list();
+library(DescTools);
+for (i in 1:30) { # calculate entropy for each participant
+  temp <- unlist(scores_list[i]);
+  entropy <- Entropy(temp,na.rm=TRUE);
+  entropies <- append(entropies, entropy)
+};
+data_pilot5_BLP$lang_ent <- entropies;
+data_pilot5_BLP$lang_ent <- as.numeric(data_pilot5_BLP$lang_ent);
+plot(data_pilot5_BLP$temp_sbjID,data_pilot5_BLP$lang_ent,pch=19,xlab="Subject number",ylab="Language score entropy",cex.lab=1.5,ylim=c(0.7,2),yaxs="i");
+
+# corr of variance & entropy
+cor(unlist(data_pilot5_BLP$lang_var),unlist(data_pilot5_BLP$lang_ent),method="pearson"); # r = -0.89 so strongly negatively correlated
+
+# multilingual experience: summing all language scores
+data_pilot5_BLP["L2Score"][is.na(data_pilot5_BLP["L2Score"])] <- 0;
+data_pilot5_BLP["L3Score"][is.na(data_pilot5_BLP["L3Score"])] <- 0;
+data_pilot5_BLP["L4Score"][is.na(data_pilot5_BLP["L4Score"])] <- 0;
+data_pilot5_BLP$multi_exp <- data_pilot5_BLP$L1Score + data_pilot5_BLP$L2Score + data_pilot5_BLP$L3Score + data_pilot5_BLP$L4Score;
+plot(data_pilot5_BLP$temp_sbjID,data_pilot5_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),cex.lab=1.5,yaxs="i");
+
+# L1 - L2 score
+data_pilot5_BLP$L1_L2_diff <- data_pilot5_BLP$L1Score - data_pilot5_BLP$L2Score;
+plot(data_pilot5_BLP$temp_sbjID,data_pilot5_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",cex.lab=1.5,ylim=c(0,218),yaxs="i");
+
+# corr of variance & accuracy
+cor(data_pilot5_testing_2M_means$x, data_pilot5_BLP$lang_var); # r = 0.02
+plot(data_pilot5_BLP$lang_var, data_pilot5_testing_2M_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
+
+# corr of entropy & accuracy
+cor(data_pilot5_testing_2M_means$x, data_pilot5_BLP$lang_ent); # r = 0.11
+plot(data_pilot5_BLP$lang_ent, data_pilot5_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+text(1.6,40,"Pearson's r = 0.11",cex=1.5);
+
+# corr of multilingual experience & accuracy
+cor(data_pilot5_testing_means$x, data_pilot5_BLP$multi_exp); # r = -0.32
+plot(data_pilot5_BLP$multi_exp, data_pilot5_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+text(1.6,40,"Pearson's r = -0.32",cex=1.5);
+
+# corr of L1-L2 score & accuracy
+cor(data_pilot5_testing_2M_means$x, data_pilot5_BLP$L1_L2_diff); # r = -0.26
+plot(data_pilot5_BLP$L1_L2_diff, data_pilot5_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+text(1.6,40,"Pearson's r = -0.26",cex=1.5);
+
+# remove datapoints if participant doesn't know additional languages
+data_pilot5_BLP$langfilter1 <- TRUE;
+data_pilot5_BLP$langfilter2 <- TRUE;
+data_pilot5_BLP$langfilter3 <- TRUE;
+data_pilot5_BLP$langfilter4 <- TRUE;
+data_pilot5_BLP$langfilter2[data_pilot5_BLP$L2Score==0] <- FALSE;
+data_pilot5_BLP$langfilter3[data_pilot5_BLP$L3Score==0] <- FALSE;
+data_pilot5_BLP$langfilter4[data_pilot5_BLP$L4Score==0] <- FALSE;
+data_pilot5_BLP$L2Score[data_pilot5_BLP$langfilter2==FALSE] <- NA;
+data_pilot5_BLP$L3Score[data_pilot5_BLP$langfilter3==FALSE] <- NA;
+data_pilot5_BLP$L4Score[data_pilot5_BLP$langfilter4==FALSE] <- NA;
+ok2 <- ! is.na(data_pilot5_BLP$L2Score);
+ok3 <- ! is.na(data_pilot5_BLP$L3Score);
+ok4 <- ! is.na(data_pilot5_BLP$L4Score);
+
+# plot language scores per participant
+cols <- paletteer_d("ggthemes::Classic_20");
+plot(data_pilot5_BLP$L1Score~data_pilot5_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex=2,cex.lab=1.5,col=cols[1],xaxt="n",yaxs="i");
+axis(1, at = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30));
+points(data_pilot5_BLP$L2Score~data_pilot5_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[2]);
+points(data_pilot5_BLP$L3Score~data_pilot5_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[3]);
+points(data_pilot5_BLP$L4Score~data_pilot5_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
+legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
+       cex=1,y.intersp=0.5);
+abline(h=218, lty=5);
