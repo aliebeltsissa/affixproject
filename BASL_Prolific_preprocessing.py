@@ -500,7 +500,7 @@ def testing_scoring(testing_data):
 
 all_testing_data_scored = testing_scoring(testing_data)
 all_testing_data_scored = all_testing_data_scored.sort_values(by=['sbj_ID','trialn'])
-if all_testing_data_scored.shape[0] == (40*len(testing_data)):
+if all_testing_data_scored.shape[0] != 0:
     print('Finished pre-processing testing responses')
 
 ### FAMILIARITY PRE-PROCESSING ###
