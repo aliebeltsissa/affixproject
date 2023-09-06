@@ -340,6 +340,14 @@ abline(h=50, lty=5);
 dprimes <- dPrime(data_pilot4.1_testing$sbj_ID, data_pilot4.1_testing$expected, data_pilot4.1_testing$observed);
 summary(dprimes);
 
+# yes responses
+data_pilot4.1_testing_yes <- aggregate(data_pilot4.1_testing$observed, by=list(data_pilot4.1_testing$sbj_ID), FUN = function(x) sum(x == 0));
+data_pilot4.1_testing_yes$x <- (data_pilot4.1_testing_yes$x)*10/4;
+colnames(data_pilot4.1_testing_yes)[colnames(data_pilot4.1_testing_yes)=="Group.1"]="sbj_ID";
+colnames(data_pilot4.1_testing_yes)[colnames(data_pilot4.1_testing_yes)=="x"]="x_0";
+boxplot(data_pilot4.1_testing_yes$x, ylab = "Percent of 'yes' responses");
+abline(h=50, lty=5);
+
 # testing RTs
 library(paletteer);
 cols <- paletteer_d("ggthemes::Classic_20");
@@ -372,6 +380,14 @@ abline(h=50, lty=5);
 # testing d'
 dprimes <- dPrime(data_pilot4.2_testing$sbj_ID, data_pilot4.2_testing$expected, data_pilot4.2_testing$observed);
 summary(dprimes);
+
+# yes responses
+data_pilot4.2_testing_yes <- aggregate(data_pilot4.2_testing$observed, by=list(data_pilot4.2_testing$sbj_ID), FUN = function(x) sum(x == 0));
+data_pilot4.2_testing_yes$x <- (data_pilot4.2_testing_yes$x)*10/4;
+colnames(data_pilot4.2_testing_yes)[colnames(data_pilot4.2_testing_yes)=="Group.1"]="sbj_ID";
+colnames(data_pilot4.2_testing_yes)[colnames(data_pilot4.2_testing_yes)=="x"]="x_0";
+boxplot(data_pilot4.2_testing_yes$x, ylab = "Percent of 'yes' responses");
+abline(h=50, lty=5);
 
 # testing RTs
 IDs <- list(data_pilot4.2_testing$sbj_ID);
@@ -764,9 +780,18 @@ cor(data_pilot5_testing_2M_means$x, data_pilot5_testing_rt_means$x); # r = -0.20
 plot(data_pilot5_testing_rt_means$x, data_pilot5_testing_2M_means$x, pch=19);
 
 # testing strategy
-pilot5_strats <- list(data_pilot5_testing$strategy);
-pilot5_strats <- sapply(pilot5_strats, unique);
+pilot5_strats <- subset(data_pilot5_testing);
+pilot5_strats <- pilot5_strats[!duplicated(pilot5_strats), ];
+pilot5_strats$intuition <- FALSE;
 
+# boxplot for accuracy of participants saying they just used intuition
+data_pilot5_testing$intuition <- FALSE;
+data_pilot5_testing$intuition[data_pilot5_testing$sbj_ID=='58f50400f4ce600001016db5'|data_pilot5_testing$sbj_ID=='5fc65d9cc4575b0b47981de8'| data_pilot5_testing$sbj_ID=='60d8873c18e520a7d5ae555f'|data_pilot5_testing$sbj_ID=='612b5ed8c3b1fcb978aad0a8'|data_pilot5_testing$sbj_ID=='61533ead92c280c34cc22482'|data_pilot5_testing$sbj_ID=='64526929d8f9b780b29d4d8d'|data_pilot5_testing$sbj_ID=='648b962b8fdb1fa686213ac1'] <- TRUE;
+data_pilot5_testing_intuition_2M_means <- aggregate(data_pilot5_testing$correct[data_pilot5_testing$testing_condition=='2M'& data_pilot5_testing$intuition==TRUE], list(data_pilot5_testing$sbj_ID[data_pilot5_testing$testing_condition=='2M'& data_pilot5_testing$intuition==TRUE]), FUN=sum, na.rm=TRUE);
+data_pilot5_testing_intuition_2M_means$x<-(data_pilot5_testing_intuition_2M_means$x)*10/4;
+colnames(data_pilot5_testing_intuition_2M_means)[colnames(data_pilot5_testing_intuition_2M_means)=="Group.1"]="sbj_ID";
+boxplot(data_pilot5_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
+abline(h=50, lty=5); # mean around 48%
 
 
 # FAMILIARITY
@@ -889,9 +914,8 @@ plot(data_pilot5_BLP$lang_ent, data_pilot5_testing_2M_means$x, xlab="Language sc
 text(1.6,40,"Pearson's r = 0.11",cex=1.5);
 
 # corr of multilingual experience & accuracy
-cor(data_pilot5_testing_means$x, data_pilot5_BLP$multi_exp); # r = -0.32
+cor(data_pilot5_testing_2M_means$x, data_pilot5_BLP$multi_exp); # r = 0.06
 plot(data_pilot5_BLP$multi_exp, data_pilot5_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
-text(1.6,40,"Pearson's r = -0.32",cex=1.5);
 
 # corr of L1-L2 score & accuracy
 cor(data_pilot5_testing_2M_means$x, data_pilot5_BLP$L1_L2_diff); # r = -0.26
