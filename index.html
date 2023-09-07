@@ -11,6 +11,7 @@
     <!-- response plugins-->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-keyboard-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-image-keyboard-response.js"></script>
+    <script src="lib/verdors/jspsych-7.1.2/plugin-html-button-response.js"></script>
     <script src="lib/vendors/jspsych-7.1.2/plugin-instructions.js"></script>
     <!-- survey plugins -->
     <script src="lib/vendors/jspsych-7.1.2/plugin-html-button-response.js"></script>
@@ -31,11 +32,7 @@
   <body></body>
   <script>
     /* ========== INITIALISATION ========== */
-    var jsPsych = initJsPsych({
-      on_finish: function() {
-        window.location = "https://app.prolific.co/submissions/complete?cc=C193M5AZ" // redirect Prolific participants to completed submission page
-      }
-    });
+    var jsPsych = initJsPsych();
     
     // capture info from Prolific
     var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
@@ -1288,6 +1285,7 @@
         var redo = false;
         var lasttrial_type = jsPsych.data.getLastTrialData().select('trial_type').values[0];
         if (lasttrial_type == 'html-keyboard-response') {var redo = true}
+        return redo
       }
     };
 
@@ -1435,7 +1433,7 @@
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
-      <p>Press any key to finish, you should be automatically redirected to Prolific with your completion code.</p>`
+      <p>Please press any key to upload your data.</p>`
     };
     timeline.push(goodbye);
 
@@ -1454,6 +1452,16 @@
       }
     };
     timeline.push(pavlovia_finish);
+
+    var redirect = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `<p>Press any key to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
+      choices: ['Submit'],
+      on_finish: function() {
+        window.location = "https://app.prolific.co/submissions/complete?cc=C193M5AZ" // redirect Prolific participants to completed submission page
+      }
+    };
+    timeline.push(redirect);
 
     jsPsych.run(timeline);
   </script>
