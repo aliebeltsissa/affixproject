@@ -477,6 +477,7 @@ plot(data_pilot4.2_familiarity_rt_means$x, data_pilot4.2_familiarity_means$x, xl
 
 # BLP
 data_pilot4_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
+data_pilot4_BLP <- subset(data_pilot4_BLP, sbj_ID=='60d87fdab51e54fe4863f97f'|sbj_ID=='5f3161410f87706425490ae1'|sbj_ID=='60ba2011cd8052508d401296'|sbj_ID=='60b55a6d44e17d6f0b810cdd'|sbj_ID=='614060a52d7c64c27ef9887c'|sbj_ID=='5f4cc4ea00dba58ecd5a98a4'|sbj_ID=='5fb7b8880045d6396a86c803'|sbj_ID=='5ee7b7c9eef92207297a0ad4'|sbj_ID=='6175a0a52e748285b3476b27'|sbj_ID=='615c43b800752a4f3d0fd1f0'|sbj_ID=='5d97c38dce449e001244dc15'|sbj_ID=='60c9c6e1728092717b93abde'|sbj_ID=='5feb64b3341f42bb63200e36'|sbj_ID=='5cb4adc019ee7300189e8547'|sbj_ID=='5e8783b0fde5153fbd9dca43'|sbj_ID=='5cf14e1eb4397d0001f94e20'|sbj_ID=='5caca6b4a9acb200011a6547'|sbj_ID=='5ed54d02957bee0c0de36cac'|sbj_ID=='5e823b35726b2a9508db127c'|sbj_ID=='61158a5c1d8390415ff117a8'|sbj_ID=='612d5712d75b6c46b4cefc63'|sbj_ID=='5f11ccbc1a1a2c08b4a99efb'|sbj_ID=='608edc13472b2dbc27b369fa'|sbj_ID=='60ddf71e95896d2595f0e1a5'|sbj_ID=='608abc6251feb3ddc3b2e01d'|sbj_ID=='605c9355001a5eb6d51e657d'|sbj_ID=='60fd703ecd62eb39eb07c328'|sbj_ID=='5fb3f38909fc360164f7c98d'|sbj_ID=='6048158f62550615002408af'|sbj_ID=='6161f43ddd46e845e7b3fab8'|sbj_ID=='5c5e04ca6539fe00016e1afa'|sbj_ID=='60f1846c851ee5a978a0e015'|sbj_ID=='60a45e33f404ba8cb7a19cfe'|sbj_ID=='5e99d95e0f50aa04266ad4ad'|sbj_ID=='5e80c7d61a07dd7b0d8f0111'|sbj_ID=='5ec806f532fe7d2afa2e315b'|sbj_ID=='609568823ff056b77e565445'|sbj_ID=='613d091096ca434d703f77c5'|sbj_ID=='5e82e99b37d333a1474dda93'|sbj_ID=='59aaf4b1321f870001d16f6c');
 data_pilot4_BLP <- subset(data_pilot4_BLP, select = -c(X)) # remove redundant column added by Pavlovia
 
 # standardise language responses
@@ -496,7 +497,7 @@ data_pilot4_BLP[data_pilot4_BLP == "tedesco" | data_pilot4_BLP == "Tedesco"] <- 
 
 # make some variables factors
 data_pilot4_BLP$sbj_ID <- as.factor(data_pilot4_BLP$sbj_ID);
-data_pilot4_BLP$Sex <- as.factor(data_pilot4_BLP$Sex);
+data_pilot4_BLP$Gender <- as.factor(data_pilot4_BLP$Gender);
 data_pilot4_BLP$Education <- as.factor(data_pilot4_BLP$Education);
 data_pilot4_BLP$L1 <- as.factor(data_pilot4_BLP$L1);
 data_pilot4_BLP$L2 <- as.factor(data_pilot4_BLP$L2);
