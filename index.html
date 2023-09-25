@@ -54,13 +54,6 @@
     };
     timeline.push(pavlovia_init);
 
-    // preload BACS
-    var BACS_preload = {
-      type: jsPsychPreload,
-      images: ['BACS1.otf']
-    };
-    timeline.push(BACS_preload);
-
     /* ========== WORD_GENERATION SCRIPT ========== */
     function import_morphemes() {
       const L1affixes_list = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv'];
@@ -668,6 +661,16 @@
       choices: ' '
     };
     timeline.push(welcome);
+
+    var BACS_preload = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 120px; font-family: BACS"> </p>`,
+      choices: 'NO_KEYS',
+      stimulus_duration: 25,
+      trial_duration: 50,
+      response_ends_trial: false
+    };
+    timeline.push(BACS_preload);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
