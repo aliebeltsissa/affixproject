@@ -24,7 +24,7 @@ for file in allfiles:
         temp[x] = value2
     all_data.append([file,temp])
     
-import json
+import ast
 testing_data = []
 for x in range(len(all_data)): # extract testing responses
     file_name = all_data[x][0]
@@ -32,8 +32,10 @@ for x in range(len(all_data)): # extract testing responses
     participant_testing_data = []
     for y in participant_data.keys():
         line = participant_data[y]
+        if type(line) == list and line[0] == 'fullscreen':
+            continue
         if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
-            response_line = json.loads(line['response']) # convert from string to dict
+            response_line = ast.literal_eval(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             ID = line['sbj_ID']
             testing_data.append([file_name,ID])

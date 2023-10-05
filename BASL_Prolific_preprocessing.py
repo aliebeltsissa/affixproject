@@ -23,17 +23,21 @@ for file in allfiles:
             column_names = ['trial_type', 'time_elapsed', 'internal_node_id', 'sbj_ID', 'study_id', 'session_id', 'rt', 'response', 'stimulus', 'success', 'item', 'task', 'correct_response', 'testing_condition', 'correct', 'target', 'confound', 'name']
         temp[x] = value2
     all_data.append(temp)
+if len(all_data) != len(allfiles):
+    print('Not all data extracted!')
    
 ### BLP PRE-PROCESSING ###
-import json
+import json, ast
 BLP_data = []
 for x in range(len(all_data)): # extract BLP responses
     participant_data = all_data[x]
     participant_BLP_data = []
-    for y in participant_data.keys():
+    for y in participant_data.keys(): # weird bug with fullscreen closure line being a list instead of a dictionary: so discard
         line = participant_data[y]
+        if type(line) == list and line[0] == 'fullscreen':
+            continue
         if line['trial_type'] == 'survey-html-form':
-            response_line = json.loads(line['response']) # convert from string to dict
+            response_line = ast.literal_eval(line['response']) # convert from string to dict
             if  'consent1' not in response_line.keys() and 'testing_strategy' not in response_line.keys():
                 participant_BLP_data.append(response_line)
     BLP_data.append(participant_BLP_data)
@@ -217,6 +221,8 @@ def BLP_preprocessing(BLP_file, file_number):
         all_history_scoreL4.append(history_scoreL4)
             
         # USE
+        
+        
         all_use_scoreL1 = []
         all_use_scoreL2 = []
         all_use_scoreL3 = []
@@ -376,7 +382,7 @@ for x in range(len(BLP_data)): # for each participant datafile
         
         attitude = pd.DataFrame.from_dict(participant[5], orient='index')
         attitude = attitude.transpose()
-    else:
+    if x > 39 and x < 68:
         use = pd.DataFrame.from_dict(participant[4], orient='index')
         use = use.transpose()
         
@@ -384,6 +390,16 @@ for x in range(len(BLP_data)): # for each participant datafile
         proficiency = proficiency.transpose()
         
         attitude = pd.DataFrame.from_dict(participant[6], orient='index')
+        attitude = attitude.transpose()
+        
+    if x > 67:
+        use = pd.DataFrame.from_dict(participant[3], orient='index')
+        use = use.transpose()
+        
+        proficiency = pd.DataFrame.from_dict(participant[5], orient='index')
+        proficiency = proficiency.transpose()
+        
+        attitude = pd.DataFrame.from_dict(participant[4], orient='index')
         attitude = attitude.transpose()
 
     # combine section dataframes into a BLP dataframe
