@@ -662,6 +662,8 @@
     };
     timeline.push(welcome);
 
+    // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
+    // This trial isn't perceptible, but allowed BACS to be loaded in.
     var BACS_preload = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 120px; font-family: BACS"> </p>`,
@@ -806,7 +808,6 @@
     };
     timeline.push(training_procedure4);
 
-    // for 8 training reps:
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Great, you've seen the fourth block of words. You may now take a short break.</p>
@@ -817,12 +818,11 @@
     
     // training round 5
     var training_stimuli5 = [];
-    var item = ' '
     for (let i = 0; i < rand_training5.length; i++) {
       var item = rand_training5[i];
       var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
       var training_stimuli_dict5 = {stimulus: java, correct_response: ''};
-      training_stimuli5.push(training_stimuli_dict1)
+      training_stimuli5.push(training_stimuli_dict5)
     };
 
     var training_procedure5 = {
