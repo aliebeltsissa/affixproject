@@ -947,4 +947,4 @@ points(data_pilot5_BLP$L3Score~data_pilot5_BLP$temp_sbjID,subset=ok2,pch=19,cex=
 points(data_pilot5_BLP$L4Score~data_pilot5_BLP$temp_sbjID,subset=ok2,pch=19,cex=2,col=cols[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols[1],cols[2],cols[3],cols[4]),bty = "n",
        cex=1,y.intersp=0.5);
-abline(h=218, lty=5);
+abline(h=218, lty=5)

@@ -499,7 +499,7 @@ def training_repeated(training_data):
             training_repeated.append([sbj_ID, repeated])
     return training_repeated
     
-def testing_scoring(testing_data):
+def testing_scoring(testing_data, training_repeated):
     '''
     Scores testing data.
 
@@ -507,14 +507,20 @@ def testing_scoring(testing_data):
     ----------
     testing_data : LIST
         List of raw participant testing responses.
+    training_repeated : LIST
+        List of participants with repeated training words.
 
     Returns
     -------
     all_testing_data_scored : DataFrame
         List of scored participant testing responses.
+    all_testing_data_scored_clean : DataFrame
+        List of scored participant testing responses, without the repeated training block 5 morphemes.
     '''
     participant_testing_data_scored = pd.DataFrame()
     all_testing_data_scored = pd.DataFrame()
+    all_testing_data_scored_clean = pd.DataFrame()
+    sbjs = [training_repeated[y][0] for y in range(len(training_repeated))]
     for x in range(len(testing_data)):
         participant_testing_data = testing_data[x]
         ID_line = json.loads(participant_testing_data[0]['response'])
@@ -523,6 +529,11 @@ def testing_scoring(testing_data):
             sbj_ID = "5e42f03607b468000d8eb912"
         strat_line = json.loads(participant_testing_data[-1]['response'])
         strat = strat_line['testing_strategy']
+        repeated_word = ''
+        if sbj_ID in sbjs:
+            for z in range(len(training_repeated)):
+                if sbj_ID[:10] == training_repeated[z][0][:10]:
+                    repeated_word = training_repeated[z][1]
         if x < 40:
             for y in range(1,41):
                 trial = participant_testing_data[y]
@@ -539,6 +550,8 @@ def testing_scoring(testing_data):
                 trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
                 participant_testing_data_scored = pd.DataFrame(trial_dict)
                 all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
+                if trial['item'][:3] != repeated_word[:3] and trial['item'][-3:] != repeated_word[-3:]:
+                    all_testing_data_scored_clean = pd.concat([all_testing_data_scored_clean, participant_testing_data_scored],axis = 0)
         else:
             for y in range(1,121):
                 trial = participant_testing_data[y]
@@ -572,10 +585,13 @@ def testing_scoring(testing_data):
                 trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
                 participant_testing_data_scored = pd.DataFrame(trial_dict)
                 all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
-    return all_testing_data_scored
+                if trial['item'][:3] != repeated_word[:3] and trial['item'][-3:] != repeated_word[-3:]:
+                    all_testing_data_scored_clean = pd.concat([all_testing_data_scored_clean, participant_testing_data_scored],axis = 0)
+        print(f'Finished pre-processing testing data {x}/{len(testing_data)}')
+    return all_testing_data_scored, all_testing_data_scored_clean
 
 training_repeated = training_repeated(training_data)
-all_testing_data_scored = testing_scoring(testing_data)
+all_testing_data_scored, all_testing_data_scored_clean = testing_scoring(testing_data, training_repeated)
 all_testing_data_scored = all_testing_data_scored.sort_values(by=['sbj_ID','trialn'])
 if all_testing_data_scored.shape[0] != 0:
     print('Finished pre-processing testing responses')
@@ -599,7 +615,7 @@ for x in range(len(all_data)): # extract testing responses
         print("Warning: participant_testing_data doesn't have 31 items!")
     familiarity_data.append(participant_familiarity_data)
     
-def familiarity_scoring(familiarity_data):
+def familiarity_scoring(familiarity_data, training_repeated):
     '''
     Scores familiarity data.
 
@@ -615,10 +631,19 @@ def familiarity_scoring(familiarity_data):
     '''
     participant_familiarity_data_scored = pd.DataFrame()
     all_familiarity_data_scored = pd.DataFrame()
+    all_familiarity_data_scored_clean = pd.DataFrame()
+    sbjs = [training_repeated[y][0] for y in range(len(training_repeated))]
     for x in range(len(familiarity_data)):
         participant_familiarity_data = familiarity_data[x]
         ID_line = json.loads(participant_familiarity_data[0]['response'])
         sbj_ID = ID_line['ID']
+        if sbj_ID == "5e42f03607b468000d8eb9125e42f03607b468000d8eb912":
+            sbj_ID = "5e42f03607b468000d8eb912"
+        repeated_word = ''
+        if sbj_ID in sbjs:
+            for z in range(len(training_repeated)):
+                if sbj_ID[:10] == training_repeated[z][0][:10]:
+                    repeated_word = training_repeated[z][1]
         for y in range(1,31):
             trial = participant_familiarity_data[y]
             trialn = y
@@ -634,14 +659,18 @@ def familiarity_scoring(familiarity_data):
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_familiarity_data_scored = pd.DataFrame(trial_dict)
             all_familiarity_data_scored = pd.concat([all_familiarity_data_scored, participant_familiarity_data_scored],axis = 0)
-    return all_familiarity_data_scored
+            if trial['target'][:3] != repeated_word[:3] and trial['target'][-3:] != repeated_word[-3:]:
+                all_familiarity_data_scored_clean = pd.concat([all_familiarity_data_scored_clean, participant_familiarity_data_scored],axis = 0)
+    return all_familiarity_data_scored, all_familiarity_data_scored_clean
 
-all_familiarity_data_scored = familiarity_scoring(familiarity_data)
+all_familiarity_data_scored, all_familiarity_data_scored_clean = familiarity_scoring(familiarity_data, training_repeated)
 all_familiarity_data_scored = all_familiarity_data_scored.sort_values(by=['sbj_ID','trialn'])
 if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
     print('Finished pre-processing familiarity responses')
 
 ### EXPORTING ###
 all_familiarity_data_scored.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\familiarity_preprocessed.csv', index=True, header=True)
+all_familiarity_data_scored_clean.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\familiarity_preprocessed_clean.csv', index=True, header=True)
 all_testing_data_scored.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\testing_preprocessed.csv', index=True, header=True)
+all_testing_data_scored_clean.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\testing_preprocessed_clean.csv', index=True, header=True)
 all_BLP_data.to_csv('C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\BLP_preprocessed.csv', index=True, header=True)
