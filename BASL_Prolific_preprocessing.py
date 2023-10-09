@@ -221,13 +221,29 @@ def BLP_preprocessing(BLP_file, file_number):
         all_history_scoreL4.append(history_scoreL4)
             
         # USE
-        
+        variables = ["PercFriendsL1", "PercFriendsL2", "PercFriendsL3", "PercFriendsL4", 
+                "PercFamilyL1", "PercFamilyL2", "PercFamilyL3", "PercFamilyL4", 
+                "PercWorkL1", "PercWorkL2", "PercWorkL3", "PercWorkL4", 
+                "PercSelfL1", "PercSelfL2", "PercSelfL3", "PercSelfL4", 
+                "PercCountL1", "PercCountL2", "PercCountL3", "PercCountL4"]
+        for var in variables: # fixing issue with some numbers being strings
+            try: 
+                BLP_data2.loc[0, var] = int(BLP_data2.loc[0, var])
+            except KeyError:
+                continue
         
         all_use_scoreL1 = []
         all_use_scoreL2 = []
         all_use_scoreL3 = []
         all_use_scoreL4 = []
-        use_scoreL1 = (BLP_data2["PercFriendsL1"][0] + BLP_data2["PercFamilyL1"][0] + BLP_data2["PercWorkL1"][0] + BLP_data2["PercSelfL1"][0] + BLP_data2["PercCountL1"][0])*1.09
+        try:
+            use_scoreL1 = (BLP_data2["PercFriendsL1"][0] + BLP_data2["PercFamilyL1"][0] + BLP_data2["PercWorkL1"][0] + BLP_data2["PercSelfL1"][0] + BLP_data2["PercCountL1"][0])*1.09
+        except TypeError:
+            print(BLP_data2["PercFriendsL1"][0], type(BLP_data2["PercFriendsL1"][0]))
+            print(BLP_data2["PercFamilyL1"][0], type(BLP_data2["PercFamilyL1"][0]))
+            print(BLP_data2["PercWorkL1"][0], type(BLP_data2["PercWorkL1"][0]))
+            print(BLP_data2["PercSelfL1"][0], type(BLP_data2["PercSelfL1"][0]))
+            print(BLP_data2["PercCountL1"][0], type(BLP_data2["PercCountL1"][0]))
         try:
             use_scoreL2 = (BLP_data2["PercFriendsL2"][0] + BLP_data2["PercFamilyL2"][0] + BLP_data2["PercWorkL2"][0] + BLP_data2["PercSelfL2"][0] + BLP_data2["PercCountL2"][0])*1.09
         except KeyError:
@@ -359,6 +375,9 @@ all_BLP_data = pd.DataFrame() # empty dataframe
 for x in range(len(BLP_data)): # for each participant datafile
     participant = BLP_data[x]
     sbj_ID = participant[0]['ID'] # extract subject ID
+    # for some reason one sbj_ID is doubled
+    if sbj_ID == "5e42f03607b468000d8eb9125e42f03607b468000d8eb912":
+        sbj_ID = "5e42f03607b468000d8eb912"
     
     # transform sections into dataframes:
     bioinfo = pd.DataFrame.from_dict(participant[1], orient='index')
@@ -420,22 +439,65 @@ all_BLP_data = all_BLP_data.sort_values(by='sbj_ID')
 
 ### TESTING PRE-PROCESSING ###
 testing_data = []
+training_data = []
 for x in range(len(all_data)): # extract testing responses
     participant_data = all_data[x]
     participant_testing_data = []
+    participant_training_stim = []
     for y in participant_data.keys():
         line = participant_data[y]
+        if type(line) == list and line[0] == 'fullscreen':
+            continue
         if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
-            response_line = json.loads(line['response']) # convert from string to dict
+            response_line = ast.literal_eval(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_testing_data.append(line)
+            participant_training_stim.append(line)
         if line['trial_type'] == 'survey-html-form' and 'testing_strategy' in response_line.keys():
             participant_testing_data.append(line)
+        if line['trial_type'] == 'html-keyboard-response' and line['task'] != 'testing' and type(line['stimulus']) == str:
+            if line['stimulus'][0:46] == '<p style="font-size: 60px; font-family: BACS">':
+                participant_training_stim.append(line['stimulus'][46:-4])
         if line['task'] == 'testing':
             participant_testing_data.append(line)
     if len(participant_testing_data) != 42 and len(participant_testing_data) != 122:
         print("Warning: participant_testing_data doesn't have correct number of items!")
     testing_data.append(participant_testing_data)
+    training_data.append(participant_training_stim)
+    
+def training_repeated(training_data):
+    '''
+    Function extracting the word that participants were over-familiarised with in training.
+
+    Parameters
+    ----------
+    training_data : LIST
+        List of words seen by participants in training.
+
+    Returns
+    -------
+    training_repeated : LIST
+        List of [sbj_ID, repeated word] for each participant with repeats.
+    '''
+    training_repeated = []
+    for x in range(len(training_data)):
+        participant_training_data = training_data[x]
+        ID_line = json.loads(participant_training_data[0]['response'])
+        sbj_ID = ID_line['ID']
+        if sbj_ID == "5e42f03607b468000d8eb9125e42f03607b468000d8eb912":
+            sbj_ID = "5e42f03607b468000d8eb912"
+        participant_stim = participant_training_data[1:]
+        repeated = []
+        for word in participant_stim:
+            if participant_stim.count(word) > 40:
+                repeated.append(word)
+        repeated = [*set(repeated)]
+        if len(repeated) > 1:
+            print('Error: More than 1 word seen more than 40 times.')
+        if len(repeated) == 1:
+            repeated = repeated[0]    
+            training_repeated.append([sbj_ID, repeated])
+    return training_repeated
     
 def testing_scoring(testing_data):
     '''
@@ -457,6 +519,8 @@ def testing_scoring(testing_data):
         participant_testing_data = testing_data[x]
         ID_line = json.loads(participant_testing_data[0]['response'])
         sbj_ID = ID_line['ID']
+        if sbj_ID == "5e42f03607b468000d8eb9125e42f03607b468000d8eb912":
+            sbj_ID = "5e42f03607b468000d8eb912"
         strat_line = json.loads(participant_testing_data[-1]['response'])
         strat = strat_line['testing_strategy']
         if x < 40:
@@ -510,6 +574,7 @@ def testing_scoring(testing_data):
                 all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
     return all_testing_data_scored
 
+training_repeated = training_repeated(training_data)
 all_testing_data_scored = testing_scoring(testing_data)
 all_testing_data_scored = all_testing_data_scored.sort_values(by=['sbj_ID','trialn'])
 if all_testing_data_scored.shape[0] != 0:
@@ -522,8 +587,10 @@ for x in range(len(all_data)): # extract testing responses
     participant_familiarity_data = []
     for y in participant_data.keys():
         line = participant_data[y]
+        if type(line) == list and line[0] == 'fullscreen':
+            continue
         if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
-            response_line = json.loads(line['response']) # convert from string to dict
+            response_line = ast.literal_eval(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_familiarity_data.append(line)
         if line['task'] == 'familiarity':
