@@ -101,12 +101,33 @@ data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_tes
 boxplot(data_testing_conditions$x_0,data_testing_conditions$x_1,data_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'));
 abline(h=50, lty=5);
 
+conditions_table <- table(data_testing$testing_condition, data_testing$observed);
+chisq.test(conditions_table);
+# X-squared=307.32, df=2, p<2.2e-16
+
+library(ggplot2);
+conditions_dataframe <- as.data.frame(conditions_table);
+ggplot(conditions_dataframe,
+       aes(x = Var1,
+           y = Freq,
+           fill = Var2)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.line = element_line()) +
+  theme_classic() +
+  scale_y_continuous(limits = c(0,8000), expand = c(0, 0)) +
+  labs(x="Testing conditions", y="Frequency of responses", fill="Response") +
+  scale_fill_manual(values = c("#F1BB7B","#FD6467"), labels=c("Yes","No"));
+
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=sum, na.rm=TRUE);
 data_testing_2M_means$x<-(data_testing_2M_means$x)*10/4;
 colnames(data_testing_2M_means)[colnames(data_testing_2M_means)=="Group.1"]="sbj_ID";
 boxplot(data_testing_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=50, lty=5);
+summary(data_testing_2M_means$x);
+# min:22.5 Q1:37.5 med:42.5 mean:42.2 Q3:45.62 max:60
+hist(data_testing_2M_means$x); # normally distributed
+t.test(data_testing_2M_means$x, mu=50); # significantly below chance
 
 # testing accuracy*RTs
 cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.04
@@ -227,7 +248,7 @@ summary(data_BLP);
 
 library(toolbox);
 scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
-data_BLP$temp_sbjID <- c(1:193); # necessary: R doesn't like format of Prolific IDs
+data_BLP$temp_sbjID <- c(1:192); # necessary: R doesn't like format of Prolific IDs
 
 # multilingual balance: variance
 vars <- list();
@@ -312,3 +333,33 @@ legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],co
 abline(h=218, lty=5)
 
 # LANG DOMINANCE SCORES WAY ABOVE 218 SOMETIMES!
+
+# clustering
+complete_cases <- complete.cases(data_BLP)
+data_filtered <- data_BLP[complete_cases, ]
+
+png('corrPlot.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+par(mfrow=c(2,2));
+hist(data_BLP$HistoryL1Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$UseL1Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$HistoryL2Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$UseL2Score, xlim=c(0,60), breaks=seq(0,60,2));
+par(mfrow=c(2,1));
+
+Hmisc::varclus(blp_5[,20:39]); # Error: x matrix must be numeric
+
+pca_varimax <- psych::principal(data_BLP[,19:38], nfactors=16, rotate='varimax');
+data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC7','RC11')]);
+names(data_BLP)[120:121] <- c('RC7_use','RC11_use_L2');
+summary(ppt_in_pca_space_5);
+cor(ppt_in_pca_space_5);
+
+source("C:/Users/annal/OneDrive/Documents/Me/SISSA/BASL/BASL analysis/FunnyPeopleFunction_RodriguezLaioClustering.R");
+funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep(1:5, each=30), outForMatlabFunction=F)
