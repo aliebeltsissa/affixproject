@@ -186,12 +186,11 @@ def BLP_preprocessing(BLP_file, file_number):
         BLP_data2 = BLP_data3.replace({"yearsFamilyL1": AoA_mapping, "yearsFamilyL2": AoA_mapping, "yearsFamilyL3": AoA_mapping, "yearsFamilyL4": AoA_mapping})
         BLP_data3 = BLP_data2.replace({"yearsWorkL1": AoA_mapping, "yearsWorkL2": AoA_mapping, "yearsWorkL3": AoA_mapping, "yearsWorkL4": AoA_mapping})
         
-        percent_mapping = {"0": 0, "10": 1, "20": 2, "30": 3, "40": 4, "50": 5, "60": 6, "70": 7, "80": 8, "90": 9, "100": 10}
-        BLP_data2 = BLP_data3.replace({"PercFriendsL1": percent_mapping, "PercFriendsL2": percent_mapping, "PercFriendsL3": percent_mapping, "PercFriendsL4": percent_mapping})
-        BLP_data3 = BLP_data2.replace({"PercFamilyL1": percent_mapping, "PercFamilyL2": percent_mapping, "PercFamilyL3": percent_mapping, "PercFamilyL4": percent_mapping})
-        BLP_data2 = BLP_data3.replace({"PercWorkL1": percent_mapping, "PercWorkL2": percent_mapping, "PercWorkL3": percent_mapping, "PercWorkL4": percent_mapping})
-        BLP_data3 = BLP_data2.replace({"PercSelfL1": percent_mapping, "PercSelfL2": percent_mapping, "PercSelfL3": percent_mapping, "PercSelfL4": percent_mapping})
-        BLP_data2 = BLP_data3.replace({"PercCountL1": percent_mapping, "PercCountL2": percent_mapping, "PercCountL3": percent_mapping, "PercCountL4": percent_mapping})
+        cols = ["PercFriendsL1","PercFriendsL2","PercFriendsL3","PercFriendsL4","PercFamilyL1","PercFamilyL2","PercFamilyL3","PercFamilyL4","PercWorkL1","PercWorkL2","PercWorkL3","PercWorkL4","PercSelfL1","PercSelfL2","PercSelfL3","PercSelfL4","PercCountL1","PercCountL2","PercCountL3","PercCountL4"]
+        existing_cols = [col for col in cols if col in BLP_data3.columns]
+        BLP_data3.loc[:, existing_cols] = BLP_data3.loc[:, existing_cols].apply(pd.to_numeric)
+        BLP_data3.loc[:, existing_cols] = BLP_data3.loc[:, existing_cols] / 10
+        BLP_data2 = BLP_data3.copy()
         
         # HISTORY
         all_history_scoreL1 = []
