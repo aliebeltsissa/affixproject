@@ -76,8 +76,6 @@ axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 for (x in 2:195) {
   lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols[x],lwd=1)
 };
-legend("topright",title="Participant:",legend=c(1:30),fill=cols,bty = "n",
-       cex=0.85,y.intersp=0.5);
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means);
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
@@ -131,16 +129,77 @@ ggplot(conditions_dataframe,
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 colnames(data_testing_2M_means)[colnames(data_testing_2M_means)=="Group.1"]="sbj_ID";
-boxplot(data_testing_2M_means$x, ylab = "Accuracy score (out of 34)");
+boxplot(data_testing_2M_means$x, ylab = "Accuracy score");
 abline(h=0.5, lty=5);
 summary(data_testing_2M_means$x);
 # min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
 hist(data_testing_2M_means$x); # normally distributed
 t.test(data_testing_2M_means$x, mu=50);
 
+# 2M - hits only
+data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
+colnames(data_testing_2M_hits_means)[colnames(data_testing_2M_hits_means)=="Group.1"]="sbj_ID";
+boxplot(data_testing_2M_hits_means$x, ylab = "Accuracy score - 2M hits");
+abline(h=0.5, lty=5);
+summary(data_testing_2M_hits_means$x);
+# min:0.12 Q1:0.53 med:0.65 mean:0.64 Q3:0.71 max:1
+hist(data_testing_2M_hits_means$x); # normally distributed
+t.test(data_testing_2M_hits_means$x, mu=50);
+# significantly above chance: t=-4444, p<2.2e-16, CI=[0.62,0.66]
+plot(data_testing_2M_hits_means$x,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
+abline(h=0.5, lty=5);
+
+# 2M - correct rejections only
+data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=mean, na.rm=TRUE);
+colnames(data_testing_2M_rejs_means)[colnames(data_testing_2M_rejs_means)=="Group.1"]="sbj_ID";
+boxplot(data_testing_2M_rejs_means$x, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections");
+abline(h=0.5, lty=5);
+summary(data_testing_2M_rejs_means$x);
+# min:0.0 Q1:0.24 med:0.35 mean:0.36 Q3:0.47 max:0.94
+hist(data_testing_2M_rejs_means$x); # normally distributed
+t.test(data_testing_2M_rejs_means$x, mu=50);
+# significantly below chance: t=-4174, p<2.2e-16, CI=[0.33,0.38]
+plot(data_testing_2M_rejs_means$x,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
+abline(h=0.5, lty=5);
+
+# 2M - combined plots
+#1 - side-by-side scatterplots of hits & correct rejection accuracy
+par(mfrow=c(2,1), mai = c(1, 1, 0.25, 0.5));
+plot(data_testing_2M_hits_means$x,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
+abline(h=0.5, lty=5);
+plot(data_testing_2M_rejs_means$x,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
+abline(h=0.5, lty=5);
+par(mfrow=c(1,1), mai = c(1, 1, 1, 1));
+
+#2 - scatterplot with hits accuracy & correct rejection accuracy
+plot(data_testing_2M_hits_means$x,ylim=c(0,1),ylab = "Accuracy",xlab="Participants",main="2M testing",pch=3,yaxs="i",col="#3B9AB2");
+points(data_testing_2M_rejs_means$x,ylim=c(0,1),xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
+abline(h=0.5, lty=5);
+
+#3 - plot connecting hit score to correct rejection score
+library(ggplot2);
+data_testing_2M_bygroup_means <- merge(data_testing_2M_hits_means,data_testing_2M_rejs_means,by="sbj_ID");
+colnames(data_testing_2M_bygroup_means)[colnames(data_testing_2M_bygroup_means)=="x.x"]="hits_mean";
+colnames(data_testing_2M_bygroup_means)[colnames(data_testing_2M_bygroup_means)=="x.y"]="rejs_mean";
+data_long <- reshape2::melt(data_testing_2M_bygroup_means, id.vars = "sbj_ID", variable.name = "condition", value.name = "accuracy");
+ggplot(data_long, aes(x = condition, y = accuracy, group = sbj_ID)) +
+  geom_line(size=0.2) +
+  geom_point(aes(color = condition), size = 3);
+
+#4 - plot of difference between hit & correct rejection accuracy
+data_testing_2M_bygroup_means$diff <- data_testing_2M_bygroup_means$hits_mean-data_testing_2M_bygroup_means$rejs_mean;
+plot(data_testing_2M_bygroup_means$diff,ylim=c(-1,1),ylab="Accuracy difference",main="Difference between hits & correct rejection accuracy",xlab="Participants",pch=19,yaxs="i",col="#0B775E",cex=1.5);
+abline(h=0, lty=5);
+
 # testing accuracy*RTs
 cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.04
 plot(data_testing_rt_means$x, data_testing_2M_means$x, pch=19);
+
+cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 0.04
+plot(data_testing_rt_means$x, data_testing_2M_hits_means$x, pch=19);
+
+cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.01
+plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
 
 # testing d'
 dprimes <- dPrime(data_testing$sbj_ID, data_testing$expected, data_testing$observed);
@@ -158,8 +217,7 @@ strats <- strats[!duplicated(strats),];
 
 # boxplot for accuracy of participants saying they just used intuition
 data_testing$intuition <- FALSE;
-data_testing$intuition[data_testing$sbj_ID=='6172078b966225960be2a7b5'|data_testing$sbj_ID=='5ee83da8817af0000d47448f'|data_testing$sbj_ID=='5ed013f88fce6e0d858b732e'|data_testing$sbj_ID=='5f858743256d25036d9fa693'|data_testing$sbj_ID=='60a68725b2b424dc0d7ce793'|data_testing$sbj_ID=='5eaf1c50f3540c614eb973a5'|data_testing$sbj_ID=='5fa59d4d5a29c90da975efe9'|data_testing$sbj_ID=='5e89e89bf025be000c01eead'|data_testing$sbj_ID=='5f11c9f84078cd0888177499'|data_testing$sbj_ID=='5fe2308a91773957e88b89be'|data_testing$sbj_ID=='605aa0bb5fb71bbcf0808892'|data_testing$sbj_ID=='60645fe61129208791535d15'|data_testing$sbj_ID=='60d7605d7af8d66774061717'|data_testing$sbj_ID=='5ae5db897edeb000014a85ee'|data_testing$sbj_ID=='5fa5793490f10705755818c0'|data_testing$sbj_ID=='5fd2416e5061f30735e202e9'|data_testing$sbj_ID=='60ec51c51a3158a50ded8a3e'|data_testing$sbj_ID=='5fc781689771f106330abf6a'|data_testing$sbj_ID=='5e8e55509422bb10abed1f54'|data_testing$sbj_ID=='5f18a80367ef6b0bbc5f3720'|data_testing$sbj_ID=='5f0d65ef2ad0c60009209f0f'|data_testing$sbj_ID=='617142c2a843eef6f8f148b6'|data_testing$sbj_ID=='611e9c16e90a0d4c6f0d8df5'|data_testing$sbj_ID=='5b213220809d160001a2c36d'|data_testing$sbj_ID=='6155e204cc071b306458dfff'|data_testing$sbj_ID=='60a3fe2d888e7a090d6d8f82'|data_testing$sbj_ID=='61125e23136464bd2cbbefc9'|data_testing$sbj_ID=='5ec6d06c67b0da0fb6f85e83'|data_testing$sbj_ID=='5dcb33ab0550ef819f508abf'|data_testing$sbj_ID=='613867f34e206e4f573bc6ef'|data_testing$sbj_ID=='5f219602670e5a0af2cf5237'|data_testing$sbj_ID=='614c8e5469405530dc27b9d5'|data_testing$sbj_ID=='6156b68cc77b48d6693b361c'|data_testing$sbj_ID=='60f030dca19a06db1b50d16a'|data_testing$sbj_ID=='611cebb780fbae98c5bcc84d'|data_testing$sbj_ID=='5eb35dff41a381156be161c2'|data_testing$sbj_ID=='611eeafa283a2d1f57537fea'|data_testing$sbj_ID=='5f91dc284909fe0b08f9e2e1'|data_testing$sbj_ID=='5ecd21dec04cca02c9032485'
-] <- TRUE;
+data_testing$intuition[data_testing$sbj_ID=='6172078b966225960be2a7b5'|data_testing$sbj_ID=='5ee83da8817af0000d47448f'|data_testing$sbj_ID=='5ed013f88fce6e0d858b732e'|data_testing$sbj_ID=='5f858743256d25036d9fa693'|data_testing$sbj_ID=='60a68725b2b424dc0d7ce793'|data_testing$sbj_ID=='5eaf1c50f3540c614eb973a5'|data_testing$sbj_ID=='5fa59d4d5a29c90da975efe9'|data_testing$sbj_ID=='5e89e89bf025be000c01eead'|data_testing$sbj_ID=='5f11c9f84078cd0888177499'|data_testing$sbj_ID=='5fe2308a91773957e88b89be'|data_testing$sbj_ID=='605aa0bb5fb71bbcf0808892'|data_testing$sbj_ID=='60645fe61129208791535d15'|data_testing$sbj_ID=='60d7605d7af8d66774061717'|data_testing$sbj_ID=='5ae5db897edeb000014a85ee'|data_testing$sbj_ID=='5fa5793490f10705755818c0'|data_testing$sbj_ID=='5fd2416e5061f30735e202e9'|data_testing$sbj_ID=='60ec51c51a3158a50ded8a3e'|data_testing$sbj_ID=='5fc781689771f106330abf6a'|data_testing$sbj_ID=='5e8e55509422bb10abed1f54'|data_testing$sbj_ID=='5f18a80367ef6b0bbc5f3720'|data_testing$sbj_ID=='5f0d65ef2ad0c60009209f0f'|data_testing$sbj_ID=='617142c2a843eef6f8f148b6'|data_testing$sbj_ID=='611e9c16e90a0d4c6f0d8df5'|data_testing$sbj_ID=='5b213220809d160001a2c36d'|data_testing$sbj_ID=='6155e204cc071b306458dfff'|data_testing$sbj_ID=='60a3fe2d888e7a090d6d8f82'|data_testing$sbj_ID=='61125e23136464bd2cbbefc9'|data_testing$sbj_ID=='5ec6d06c67b0da0fb6f85e83'|data_testing$sbj_ID=='5dcb33ab0550ef819f508abf'|data_testing$sbj_ID=='613867f34e206e4f573bc6ef'|data_testing$sbj_ID=='5f219602670e5a0af2cf5237'|data_testing$sbj_ID=='614c8e5469405530dc27b9d5'|data_testing$sbj_ID=='6156b68cc77b48d6693b361c'|data_testing$sbj_ID=='60f030dca19a06db1b50d16a'|data_testing$sbj_ID=='611cebb780fbae98c5bcc84d'|data_testing$sbj_ID=='5eb35dff41a381156be161c2'|data_testing$sbj_ID=='611eeafa283a2d1f57537fea'|data_testing$sbj_ID=='5f91dc284909fe0b08f9e2e1'|data_testing$sbj_ID=='5ecd21dec04cca02c9032485'] <- TRUE;
 data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
 colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="sbj_ID";
 boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
@@ -190,7 +248,7 @@ data_familiarity$confound <- as.factor(data_familiarity$confound);
 
 # familiarity accuracy boxplot
 data_familiarity_means <- aggregate(data_familiarity$correct, list(data_familiarity$sbj_ID), FUN=mean);
-boxplot(data_familiarity_means$x, ylab = "Familiarity score (in %)");
+boxplot(data_familiarity_means$x, ylab = "Familiarity score");
 abline(h=0.5, lty=5);
 summary(data_familiarity_means$x);
 # min:0.29 Q1:0.50 med:0.57 mean:0.57 Q3:0.64 max:0.86
@@ -214,6 +272,11 @@ data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarit
 # familiarity accuracy*RTs
 cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.20
 plot(data_familiarity_rt_means$x, data_familiarity_means$x, xlab="Mean participant RT (in ms)", ylab="Mean participant familiarity score (in %)", pch=19, cex=2, cex.lab=1.45);
+
+# familiarity accuracy*testing accuracy
+cor(data_familiarity_means$x, data_testing_2M_means$x); # r = 0.11
+cor(data_familiarity_means$x, data_testing_2M_hits_means$x); # r = 0.12
+cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 
 #######
 # BLP #
@@ -323,17 +386,41 @@ plot(data_BLP$temp_sbjID,data_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="
 cor(data_testing_2M_means$x, data_BLP$lang_var); # r = -0.06
 plot(data_BLP$lang_var, data_testing_2M_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
 
+cor(data_testing_2M_hits_means$x, data_BLP$lang_var); # r = -0.08
+plot(data_BLP$lang_var, data_testing_2M_hits_means$x, xlab="Language score variance", ylab="Testing hit accuracy (in %)", pch=19);
+
+cor(data_testing_2M_rejs_means$x, data_BLP$lang_var); # r = 0.03
+plot(data_BLP$lang_var, data_testing_2M_rejs_means$x, xlab="Language score variance", ylab="Testing rejection accuracy (in %)", pch=19);
+
 # corr of entropy & accuracy
 cor(data_testing_2M_means$x, data_BLP$lang_ent); # r = 0.007
 plot(data_BLP$lang_ent, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_testing_2M_hits_means$x, data_BLP$lang_ent); # r = 0.12
+plot(data_BLP$lang_ent, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_testing_2M_rejs_means$x, data_BLP$lang_ent); # r = -0.11
+plot(data_BLP$lang_ent, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
 
 # corr of multilingual experience & accuracy
 cor(data_testing_2M_means$x, data_BLP$multi_exp); # r = 0.02
 plot(data_BLP$multi_exp, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
 
+cor(data_testing_2M_hits_means$x, data_BLP$multi_exp); # r = 0.12
+plot(data_BLP$multi_exp, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_testing_2M_rejs_means$x, data_BLP$multi_exp); # r = -0.10
+plot(data_BLP$multi_exp, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
+
 # corr of L1-L2 score & accuracy
 cor(data_testing_2M_means$x, data_BLP$L1_L2_diff); # r = -0.008
 plot(data_BLP$L1_L2_diff, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_testing_2M_hits_means$x, data_BLP$L1_L2_diff); # r = -0.17
+plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_testing_2M_rejs_means$x, data_BLP$L1_L2_diff); # r = 0.15
+plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
 
 # remove datapoints if participant doesn't know additional languages
 data_BLP$langfilter1 <- TRUE;
