@@ -83,7 +83,6 @@ plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants
 
 # 0M yes responses boxplot
 data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 0));
-data_testing_0M_yes$x <- (data_testing_0M_yes$x)*10/4;
 colnames(data_testing_0M_yes)[colnames(data_testing_0M_yes)=="Group.1"]="sbj_ID";
 colnames(data_testing_0M_yes)[colnames(data_testing_0M_yes)=="x"]="x_0";
 boxplot(data_testing_0M_yes$x, ylab = "Percent of 'yes' responses");
@@ -91,7 +90,6 @@ abline(h=50, lty=5);
 
 # 1M yes responses boxplot
 data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 0));
-data_testing_1M_yes$x <- (data_testing_1M_yes$x)*10/4;
 colnames(data_testing_1M_yes)[colnames(data_testing_1M_yes)=="Group.1"]="sbj_ID";
 colnames(data_testing_1M_yes)[colnames(data_testing_1M_yes)=="x"]="x_1";
 boxplot(data_testing_1M_yes$x, ylab = "Percent of 'yes' responses");
@@ -99,7 +97,6 @@ abline(h=50, lty=5);
 
 # 2M yes responses boxplot
 data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 0));
-data_testing_2M_yes$x <- (data_testing_2M_yes$x)*10/4;
 colnames(data_testing_2M_yes)[colnames(data_testing_2M_yes)=="Group.1"]="sbj_ID";
 colnames(data_testing_2M_yes)[colnames(data_testing_2M_yes)=="x"]="x_2";
 boxplot(data_testing_2M_yes$x, ylab = "Percent of 'yes' responses");
@@ -450,6 +447,41 @@ plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score ent
 
 cor(data_testing_2M_rejs_means$x, data_BLP$L1_L2_diff); # r = 0.15
 plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
+
+# variance of BLP variables
+var(data_BLP$HistoryL1Score); # var = 36.65
+var(data_BLP$HistoryL2Score); # var = 147.63
+var(data_BLP$HistoryL3Score); # var = 104.32
+var(data_BLP$HistoryL4Score); # var = 60.74
+var(data_BLP$UseL1Score); # var = 115.14
+var(data_BLP$UseL2Score); # var = 93.08
+var(data_BLP$UseL3Score); # var = 33.70
+var(data_BLP$UseL4Score); # var = 5.76
+var(data_BLP$ProficiencyL1Score); # var = 10.31
+var(data_BLP$ProficiencyL2Score); # var = 109.57
+var(data_BLP$ProficiencyL3Score); # var = 299.17
+var(data_BLP$ProficiencyL4Score); # var = 164.59
+var(data_BLP$AttitudeL1Score); # var = 76.82
+var(data_BLP$AttitudeL2Score); # var = 173.52
+var(data_BLP$AttitudeL3Score); # var = 299.25
+var(data_BLP$AttitudeL4Score); # var = 155.48
+var(data_BLP$L1Score); # var = 369.41
+var(data_BLP$L2Score); # var = 1167.72
+var(data_BLP$L3Score); # var = 2066.13
+var(data_BLP$L4Score); # var = 980.75
+
+# count number of participants in each category
+#monolinguals: n=4
+data_BLP_monos <- subset(data_BLP[data_BLP$L2Score==0,]);
+
+#bilinguals: n=80
+data_BLP_bis <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score==0,]);
+
+#trilinguals: n=58
+data_BLP_tris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BLP$L4Score==0,]);
+
+#quadrilinguals: n=51
+data_BLP_quadris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BLP$L4Score!=0,]);
 
 # remove datapoints if participant doesn't know additional languages
 data_BLP$langfilter1 <- TRUE;
