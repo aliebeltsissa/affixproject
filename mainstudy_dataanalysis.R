@@ -483,6 +483,87 @@ data_BLP_tris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BL
 #quadrilinguals: n=51
 data_BLP_quadris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BLP$L4Score!=0,]);
 
+# CLUSTERING
+complete_cases <- complete.cases(data_BLP)
+data_filtered <- data_BLP[complete_cases, ]
+
+# all with language dominance scores
+png('corrPlot.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+# all without language dominance scores
+png('corrPlot2.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:34)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering2.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_filtered[,c(19:34)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+par(mfrow=c(2,2));
+hist(data_BLP$HistoryL1Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$UseL1Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$HistoryL2Score, xlim=c(0,60), breaks=seq(0,60,2));
+hist(data_BLP$UseL2Score, xlim=c(0,60), breaks=seq(0,60,2));
+par(mfrow=c(1,1));
+
+Hmisc::varclus(data_BLP[,19:38]); # Error: x matrix must be numeric
+
+# all participants
+#with language dominance scores
+pca_varimax <- psych::principal(data_BLP[,19:38], nfactors=16, rotate='varimax');
+data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC12','RC1','RC2', 'RC7','RC3','RC6')]);
+names(data_BLP)[116:121] <- c('RC12_L3','RC1_L4','RC2_use_L1vsL2','RC7_hist_L2','RC3_prof_L2','RC6_use_L4');
+summary(ppt_in_pca_space_5);
+cor(ppt_in_pca_space_5);
+
+#without language dominance scores
+pca_varimax2 <- psych::principal(data_BLP[,19:34], nfactors=16, rotate='varimax');
+data_BLP <- cbind(data_BLP, pca_varimax2$scores[,c('RC1','RC9','RC2','RC6')]);
+names(data_BLP)[116:119] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
+summary(ppt_in_pca_space_5);
+cor(ppt_in_pca_space_5);
+
+# monolinguals
+#without language dominance scores
+data_BLP_monos <- data_BLP_monos[, !is.na(colSums(data_BLP_monos != 0)) & colSums(data_BLP_monos != 0) > 0];
+data_BLP_monos <- subset(data_BLP_monos, select = -c(AttentionL2,AttentionL3,AttentionL4));
+pca_varimax3 <- psych::principal(data_BLP_monos[,13:17], nfactors=5, rotate='varimax');
+# the PCA doesn't want to run due to NAs but there are none?
+data_BLP_monos <- cbind(data_BLP, pca_varimax3$scores[,c('RC1','RC9','RC2','RC6')]);
+names(data_BLP_monos)[116:119] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
+
+# bilinguals
+#without language dominance scores
+data_BLP_bis <- data_BLP_bis[, !is.na(colSums(data_BLP_bis != 0)) & colSums(data_BLP_bis != 0) > 0];
+data_BLP_bis <- subset(data_BLP_bis, select = -c(AttentionL3,AttentionL4));
+pca_varimax4 <- psych::principal(data_BLP_bis[,15:22], nfactors=8, rotate='varimax');
+data_BLP_bis <- cbind(data_BLP_bis, pca_varimax4$scores[,c('RC1','RC7','RC6')]);
+names(data_BLP_bis)[66:68] <- c('RC1_use_L1vsL2','RC7_prof_L2','RC6_hist_L2');
+
+# trilinguals
+#without language dominance scores
+data_BLP_tris <- data_BLP_tris[, !is.na(colSums(data_BLP_tris != 0)) & colSums(data_BLP_tris != 0) > 0];
+data_BLP_tris <- subset(data_BLP_tris, select = -c(AttentionL4));
+pca_varimax5 <- psych::principal(data_BLP_tris[,15:26], nfactors=12, rotate='varimax');
+data_BLP_tris <- cbind(data_BLP_tris, pca_varimax5$scores[,c('RC1','RC3','RC10','RC6','RC8','RC9')]);
+names(data_BLP_tris)[61:66] <- c('RC1_use_L1vsL2','RC3_prof_L2','RC10_L3','RC6_hist_L2','RC8_use_L3','RC9_hist_L3');
+
+# quadrilinguals
+#without language dominance scores
+data_BLP_quadris <- data_BLP_quadris[, !is.na(colSums(data_BLP_quadris != 0)) & colSums(data_BLP_quadris != 0) > 0];
+pca_varimax6 <- psych::principal(data_BLP_quadris[,17:32], nfactors=16, rotate='varimax');
+data_BLP_quadris <- cbind(data_BLP_quadris, pca_varimax6$scores[,c('RC15','RC2','RC12','RC11','RC3','RC4','RC10','RC1','RC13')]);
+names(data_BLP_quadris)[79:87] <- c('RC15_use_L1vsL2','RC2_prof_morethanbi','RC12_L4','RC11_use_L4','RC3_prof_L2','RC4_use_L3','RC10_att_L3','RC1_hist_morethanmono','R13_hist_l2');
+
+source("C:/Users/annal/OneDrive/Documents/Me/SISSA/BASL/BASL analysis/FunnyPeopleFunction_RodriguezLaioClustering.R");
+funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep(1:5, each=30), outForMatlabFunction=F);
+
 # remove datapoints if participant doesn't know additional languages
 data_BLP$langfilter1 <- TRUE;
 data_BLP$langfilter2 <- TRUE;
@@ -508,51 +589,3 @@ points(data_BLP$L4Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[4]);
 legend("bottomleft",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
 abline(h=218, lty=5)
-
-# clustering
-complete_cases <- complete.cases(data_BLP)
-data_filtered <- data_BLP[complete_cases, ]
-
-# with language dominance scores
-png('corrPlot.png', width=1000, height=1000);
-corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
-dev.off();
-
-png('corrPlotClustering.png', width=1000, height=1000);
-corrplot::corrplot(cor(data_filtered[,c(19:38)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
-dev.off();
-
-# without language dominance scores
-png('corrPlot2.png', width=1000, height=1000);
-corrplot::corrplot(cor(data_filtered[,c(19:34)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
-dev.off();
-
-png('corrPlotClustering2.png', width=1000, height=1000);
-corrplot::corrplot(cor(data_filtered[,c(19:34)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
-dev.off();
-
-par(mfrow=c(2,2));
-hist(data_BLP$HistoryL1Score, xlim=c(0,60), breaks=seq(0,60,2));
-hist(data_BLP$UseL1Score, xlim=c(0,60), breaks=seq(0,60,2));
-hist(data_BLP$HistoryL2Score, xlim=c(0,60), breaks=seq(0,60,2));
-hist(data_BLP$UseL2Score, xlim=c(0,60), breaks=seq(0,60,2));
-par(mfrow=c(1,1));
-
-Hmisc::varclus(data_BLP[,19:38]); # Error: x matrix must be numeric
-
-# with language dominance scores
-pca_varimax <- psych::principal(data_BLP[,19:38], nfactors=16, rotate='varimax');
-data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC12','RC1','RC2', 'RC7','RC3','RC6')]);
-names(data_BLP)[116:121] <- c('RC12_L3','RC1_L4','RC2_use_L1vsL2','RC7_hist_L2','RC3_prof_L2','RC6_use_L4');
-summary(ppt_in_pca_space_5);
-cor(ppt_in_pca_space_5);
-
-# without language dominance scores
-pca_varimax2 <- psych::principal(data_BLP[,19:34], nfactors=16, rotate='varimax');
-data_BLP <- cbind(data_BLP, pca_varimax2$scores[,c('RC1','RC9','RC2','RC6')]);
-names(data_BLP)[116:119] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
-summary(ppt_in_pca_space_5);
-cor(ppt_in_pca_space_5);
-
-source("C:/Users/annal/OneDrive/Documents/Me/SISSA/BASL/BASL analysis/FunnyPeopleFunction_RodriguezLaioClustering.R");
-funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep(1:5, each=30), outForMatlabFunction=F)
