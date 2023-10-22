@@ -322,7 +322,6 @@ cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 
 
 # BLP ---------------------------------------------------------------------
-
 data_all_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)) # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 196 participants
@@ -337,7 +336,7 @@ data_BLP[data_BLP == "spanish"] <- "Spanish";
 data_BLP[data_BLP == "greek"|data_BLP=="Greece"] <- "Greek";
 data_BLP[data_BLP == "french"|data_BLP=="fRANCH"] <- "French";
 data_BLP[data_BLP == "arabic"] <- "Arabic";
-data_BLP[data_BLP == "ENGLISH"|data_BLP == "english"|data_BLP == "englis"|data_BLP == "eanglish"|data_BLP == "Enlish"] <- "English";
+data_BLP[data_BLP == "ENGLISH"|data_BLP == "english"|data_BLP=="english "|data_BLP == "englis"|data_BLP == "eanglish"|data_BLP == "Enlish"] <- "English";
 data_BLP[data_BLP == "xhosa"|data_BLP=="XHOSA"] <- "Xhosa";
 data_BLP[data_BLP == "tshivenda"] <- "Tshivenda";
 data_BLP[data_BLP == "SETSWANA"] <- "Setswana";
@@ -354,6 +353,7 @@ data_BLP[data_BLP == "SESOTHO"] <- "Sesotho";
 data_BLP[data_BLP == "RUSSIAN"|data_BLP=="russian"] <- "Russian";
 data_BLP[data_BLP == "tswana"] <- "Tswana";
 data_BLP[data_BLP == "SEPEDI"|data_BLP=="sepedi"] <- "Sepedi";
+data_BLP[data_BLP == "XItsonga"] <- "Xitsonga";
 data_BLP[data_BLP == "N/A"] <- "n/a";
 
 # correcting some participants' demographic information - correction based off of Prolific's information
