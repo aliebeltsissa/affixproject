@@ -34,10 +34,8 @@ dPrime <- function(sbj, expectedResp, observedResp)
   print(data.frame(sbj=subjects, dprime=dprimes, log_beta=log_beta, c=c));
 };
 
-###########
-# TESTING #
-###########
 
+# Testing -----------------------------------------------------------------
 # import testing data
 data_all_testing <- read.csv("testing_preprocessed_clean.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
@@ -94,6 +92,8 @@ colnames(data_testing_0M_means)[colnames(data_testing_0M_means)=="Group.1"]="sbj
 colnames(data_testing_0M_means)[colnames(data_testing_0M_means)=="x"]="x_0";
 summary(data_testing_0M_means);
 #min:0 Q1:0.40 med:0.50 mean:0.51 Q3:0.6 max:0.88
+var(data_testing_0M_means$x_0);
+#var=0.02
 plot(data_testing_0M_means$x_0,pch=3,ylim=c(0,1));
 abline(h=0.5, lty=5);
 #6170821d1e8ffb9c893b28a4 at 0% -> 100% at 1M (!) and 44% at 2M
@@ -115,6 +115,8 @@ colnames(data_testing_1M_means)[colnames(data_testing_1M_means)=="Group.1"]="sbj
 colnames(data_testing_1M_means)[colnames(data_testing_1M_means)=="x"]="x_1";
 summary(data_testing_1M_means);
 #60d478e72e8251287b641b2d & 6170821d1e8ffb9c893b28a4 at 100%? -> they're at 0.5 and 0.44 respectively in 2M
+var(data_testing_1M_means$x_1);
+#var=0.02
 plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1));
 abline(h=0.5, lty=5);
 #quite a wide range of scores
@@ -159,6 +161,8 @@ boxplot(data_testing_2M_means$x_2, ylab = "Accuracy score");
 abline(h=0.5, lty=5);
 summary(data_testing_2M_means$x_2);
 #min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
+var(data_testing_2M_means$x_2);
+#var=0.005
 plot(data_testing_2M_means$x_2,pch=3,ylim=c(0,1));
 abline(h=0.5, lty=5); 
 #nicely clustered around 50%
@@ -260,9 +264,9 @@ boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_intuition_2M_means); # mean: 48%
 
-###############
-# FAMILIARITY #
-###############
+
+
+# Familiarity -------------------------------------------------------------
 data_all_familiarity <- read.csv("familiarity_preprocessed_clean.csv",header=T,sep=",");
 data_all_familiarity <- subset(data_all_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
 data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 196 participants
@@ -284,6 +288,7 @@ data_familiarity$confound <- as.factor(data_familiarity$confound);
 
 # familiarity accuracy boxplot
 data_familiarity_means <- aggregate(data_familiarity$correct, list(data_familiarity$sbj_ID), FUN=mean);
+colnames(data_familiarity_means)[colnames(data_familiarity_means)=="Group.1"]="sbj_ID";
 boxplot(data_familiarity_means$x, ylab = "Familiarity score");
 abline(h=0.5, lty=5);
 summary(data_familiarity_means$x);
@@ -296,14 +301,15 @@ t.test(data_familiarity_means$x, mu=50);
 # familiarity RTs
 IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.005),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],lwd=2,yaxs="i");
+plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.007),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
 for (x in 2:193) {
   lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols[x],lwd=2)
 };
-legend("topright",title="Participant:",legend=c(1:193),fill=cols,bty = "n",
-       cex=0.75,y.intersp=0.5);
 data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
+summary(data_familiarity_rt_means);
+#min:222 Q1:1275 med:1671 mean:1892 Q3:2140 max:9185
+#5e577e79ce30ae13226e61ae max: 57% accuracy so good
 
 # familiarity accuracy*RTs
 cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.20
@@ -314,9 +320,9 @@ cor(data_familiarity_means$x, data_testing_2M_means$x); # r = 0.11
 cor(data_familiarity_means$x, data_testing_2M_hits_means$x); # r = 0.12
 cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 
-#######
-# BLP #
-#######
+
+# BLP ---------------------------------------------------------------------
+
 data_all_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)) # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 196 participants
@@ -520,6 +526,7 @@ data_BLP_tris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BL
 
 #quadrilinguals: n=51
 data_BLP_quadris <- subset(data_BLP[data_BLP$L2Score!=0&data_BLP$L3Score!=0&data_BLP$L4Score!=0,]);
+
 
 # CLUSTERING
 complete_cases <- complete.cases(data_BLP)
