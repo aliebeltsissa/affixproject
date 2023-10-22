@@ -88,12 +88,39 @@ colnames(data_testing_0M_yes)[colnames(data_testing_0M_yes)=="x"]="x_0";
 boxplot(data_testing_0M_yes$x, ylab = "Percent of 'yes' responses");
 abline(h=50, lty=5);
 
+# 0M scores
+data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
+colnames(data_testing_0M_means)[colnames(data_testing_0M_means)=="Group.1"]="sbj_ID";
+colnames(data_testing_0M_means)[colnames(data_testing_0M_means)=="x"]="x_0";
+summary(data_testing_0M_means);
+#min:0 Q1:0.40 med:0.50 mean:0.51 Q3:0.6 max:0.88
+plot(data_testing_0M_means$x_0,pch=3,ylim=c(0,1));
+abline(h=0.5, lty=5);
+#6170821d1e8ffb9c893b28a4 at 0% -> 100% at 1M (!) and 44% at 2M
+#quite a wide range of scores
+hist(data_testing_0M_means$x_0); # normally distributed
+t.test(data_testing_0M_means$x_0, mu=50);
+#t=-4707 p<2.2e-16 CI=[0.48,0.53] -> not significantly different from 0
+
 # 1M yes responses boxplot
 data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 0));
 colnames(data_testing_1M_yes)[colnames(data_testing_1M_yes)=="Group.1"]="sbj_ID";
 colnames(data_testing_1M_yes)[colnames(data_testing_1M_yes)=="x"]="x_1";
 boxplot(data_testing_1M_yes$x, ylab = "Percent of 'yes' responses");
 abline(h=50, lty=5);
+
+# 1M scores
+data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
+colnames(data_testing_1M_means)[colnames(data_testing_1M_means)=="Group.1"]="sbj_ID";
+colnames(data_testing_1M_means)[colnames(data_testing_1M_means)=="x"]="x_1";
+summary(data_testing_1M_means);
+#60d478e72e8251287b641b2d & 6170821d1e8ffb9c893b28a4 at 100%? -> they're at 0.5 and 0.44 respectively in 2M
+plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1));
+abline(h=0.5, lty=5);
+#quite a wide range of scores
+hist(data_testing_1M_means$x_1); # normally distributed
+t.test(data_testing_1M_means$x_1, mu=50);
+#t=-4879.5 p<2.2e-16 CI=[0.53,0.57]
 
 # 2M yes responses boxplot
 data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 0));
@@ -127,12 +154,23 @@ ggplot(conditions_dataframe,
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 colnames(data_testing_2M_means)[colnames(data_testing_2M_means)=="Group.1"]="sbj_ID";
-boxplot(data_testing_2M_means$x, ylab = "Accuracy score");
+colnames(data_testing_2M_means)[colnames(data_testing_2M_means)=="x"]="x_2";
+boxplot(data_testing_2M_means$x_2, ylab = "Accuracy score");
 abline(h=0.5, lty=5);
-summary(data_testing_2M_means$x);
-# min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
-hist(data_testing_2M_means$x); # normally distributed
-t.test(data_testing_2M_means$x, mu=50);
+summary(data_testing_2M_means$x_2);
+#min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
+plot(data_testing_2M_means$x_2,pch=3,ylim=c(0,1));
+abline(h=0.5, lty=5); 
+#nicely clustered around 50%
+hist(data_testing_2M_means$x_2); # normally distributed
+t.test(data_testing_2M_means$x_2, mu=50);
+
+# yes responses across conditions
+library(tidyverse);
+data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='sbj_ID');
+summary(data_testing_conditions_scores);
+boxplot(data_testing_conditions_scores$x_0,data_testing_conditions_scores$x_1,data_testing_conditions_scores$x_2, ylab='Percent of correct responses', xlab="Condition", ylim=c(0,1), names=c('0M','1M','2M'));
+abline(h=0.5, lty=5);
 
 # 2M - hits only
 data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
