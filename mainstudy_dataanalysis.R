@@ -7,30 +7,27 @@ participants <- list("5aa787c66219a30001c765f8", "5ae5db897edeb000014a85ee", "5b
 dPrime <- function(sbj, expectedResp, observedResp)
 {
   sbjNumbers <- unique(sbj);
-  
   dprimes <- vector(length=length(sbjNumbers), mode="numeric");
   log_beta <- vector(length=length(sbjNumbers), mode="numeric");
   c <- vector(length=length(sbjNumbers), mode="numeric");
   subjects <- vector(length=length(sbjNumbers), mode="integer");
-  
   counter <- 1;
   for (s in sbjNumbers)
   {
-    contingencyTable <- xtabs(~ expectedResp[sbj==s] + observedResp[sbj==s]); 
-    percVector <- contingencyTable[,2] / xtabs(~ expectedResp[sbj==s]);
-    nTrials <- length(expectedResp);
-    
-    zhr <- ifelse( percVector[2]==1, qnorm( 1-(1/(2*nTrials))), qnorm(percVector[2]));
-    zfar <- ifelse(percVector[1]==0, qnorm( 1/(2*nTrials) ), qnorm(percVector[1])); 
-    dprimes[counter] <- round(zhr - zfar, digits = 3);
-    log_beta[counter] <- round((zfar^2 - zhr^2)/2, digits = 3); #this is taken from Stanislaw and Todorov, PBR 1999. Log_beta=0 indicates no bias; negative values is bias for YES; positive values is bias for NO
-    c[counter] <- round( -(zhr + zfar)/2, digits = 3); # this is taken again from Stanislaw and Todorov, PBR 1999, who note that c "...assumes that subjects respond yes when the decision variable exceeds the criterion and no otherwise; responses are based directly on the decision variable, which some researchers regard as more plausible than assuming that responses are based on a likelihood ratio [which the assumption behind beta] (Richardson, 1994). Another advantage of c is that it is unaffected by changes in d', whereas {3 is not (Ingham, 1970; Macmil- lan, 1993; McNicol, 1972, pp. 63--64)". Similarly to log_beta, c=0 is no bias, negative c is bias for YES, negative c is bias for NO.
-    
+    expectedRespCurrentSbj <- expectedResp[sbj==s];
+    observedRespCurrentSbj <- observedResp[sbj==s];
+    num_of_hits <- sum(observedRespCurrentSbj[expectedRespCurrentSbj==1])+.5;
+    num_of_fa <- sum(observedRespCurrentSbj[expectedRespCurrentSbj==0])+.5;
+    prop_of_hits <- num_of_hits/ (xtabs(~expectedRespCurrentSbj)[2]+1);
+    prop_of_fa <- num_of_fa/ (xtabs(~expectedRespCurrentSbj)[1]+1);
+    z_hits <- qnorm(prop_of_hits);
+    z_fa <- qnorm(prop_of_fa); 
+    dprimes[counter] <- round(z_hits - z_fa, digits = 3);
+    log_beta[counter] <- round((z_fa^2 - z_hits^2)/2, digits = 3); #this is taken from Stanislaw and Todorov, PBR 1999. Log_beta=0 indicates no bias; negative values is bias for YES; positive values is bias for NO
+    c[counter] <- round( -(z_hits + z_fa)/2, digits = 3); # this is taken again from Stanislaw and Todorov, PBR 1999, who note that c "...assumes that subjects respond yes when the decision variable exceeds the criterion and no otherwise; responses are based directly on the decision variable, which some researchers regard as more plausible than assuming that responses are based on a likelihood ratio [which the assumption behind beta] (Richardson, 1994). Another advantage of c is that it is unaffected by changes in d', whereas Beta is (Ingham, 1970; Macmil- lan, 1993; McNicol, 1972, pp. 63--64)". Similarly to log_beta, c=0 is no bias, negative c is bias for YES, negative c is bias for NO.
     subjects[counter] <- s;
-    
     counter <- counter + 1;
   };
-  
   print(data.frame(sbj=subjects, dprime=dprimes, log_beta=log_beta, c=c));
 };
 
@@ -578,8 +575,8 @@ cor(ppt_in_pca_space_5);
 #without language dominance scores
 data_BLP_monos <- data_BLP_monos[, !is.na(colSums(data_BLP_monos != 0)) & colSums(data_BLP_monos != 0) > 0];
 data_BLP_monos <- subset(data_BLP_monos, select = -c(AttentionL2,AttentionL3,AttentionL4));
-pca_varimax3 <- psych::principal(data_BLP_monos[,13:17], nfactors=5, rotate='varimax');
-# the PCA doesn't want to run due to NAs but there are none?
+pca_varimax3 <- psych::principal(data_BLP_monos[,13:16], nfactors=5, rotate='varimax');
+#error: NAs in the correlation matrix?
 data_BLP_monos <- cbind(data_BLP, pca_varimax3$scores[,c('RC1','RC9','RC2','RC6')]);
 names(data_BLP_monos)[116:119] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
 
@@ -603,7 +600,7 @@ names(data_BLP_tris)[61:66] <- c('RC1_use_L1vsL2','RC3_prof_L2','RC10_L3','RC6_h
 #without language dominance scores
 data_BLP_quadris <- data_BLP_quadris[, !is.na(colSums(data_BLP_quadris != 0)) & colSums(data_BLP_quadris != 0) > 0];
 pca_varimax6 <- psych::principal(data_BLP_quadris[,17:32], nfactors=16, rotate='varimax');
-data_BLP_quadris <- cbind(data_BLP_quadris, pca_varimax6$scores[,c('RC15','RC2','RC12','RC11','RC3','RC4','RC10','RC1','RC13')]);
+pca_Varidata_BLP_quadris <- cbind(data_BLP_quadris, pca_varimax6$scores[,c('RC15','RC2','RC12','RC11','RC3','RC4','RC10','RC1','RC13')]);
 names(data_BLP_quadris)[79:87] <- c('RC15_use_L1vsL2','RC2_prof_morethanbi','RC12_L4','RC11_use_L4','RC3_prof_L2','RC4_use_L3','RC10_att_L3','RC1_hist_morethanmono','R13_hist_l2');
 
 source("C:/Users/annal/OneDrive/Documents/Me/SISSA/BASL/BASL analysis/FunnyPeopleFunction_RodriguezLaioClustering.R");
