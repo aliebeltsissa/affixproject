@@ -52,7 +52,7 @@ data_testing_exclude$correct <- as.logical(data_testing_exclude$correct);
 summary(data_testing_exclude);
 data_testing_exclude_2M <- aggregate(data_testing_exclude$correct[data_testing_exclude$testing_condition=='2M'], list(data_testing_exclude$sbj_ID[data_testing_exclude$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 # testing data looks okay: 56% accuracy
-# familiarity data: only 36% accuracy
+# familiarity data: only 36% accuracy!!
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -74,6 +74,7 @@ for (x in 2:195) {
 };
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means);
+#min:158 Q1:815 med:961 mean:955 Q3:1147 max:1694
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
 
 # 0M yes responses boxplot
@@ -176,27 +177,29 @@ abline(h=0.5, lty=5);
 # 2M - hits only
 data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
 colnames(data_testing_2M_hits_means)[colnames(data_testing_2M_hits_means)=="Group.1"]="sbj_ID";
-boxplot(data_testing_2M_hits_means$x, ylab = "Accuracy score - 2M hits");
+colnames(data_testing_2M_hits_means)[colnames(data_testing_2M_hits_means)=="x"]="x_2_hits";
+boxplot(data_testing_2M_hits_means$x_2_hits, ylab = "Accuracy score - 2M hits");
 abline(h=0.5, lty=5);
-summary(data_testing_2M_hits_means$x);
+summary(data_testing_2M_hits_means$x_2_hits);
 # min:0.12 Q1:0.53 med:0.65 mean:0.64 Q3:0.71 max:1
-hist(data_testing_2M_hits_means$x); # normally distributed
-t.test(data_testing_2M_hits_means$x, mu=50);
+hist(data_testing_2M_hits_means$x_2_hits); # normally distributed
+t.test(data_testing_2M_hits_means$x_2_hits, mu=50);
 # significantly above chance: t=-4444, p<2.2e-16, CI=[0.62,0.66]
-plot(data_testing_2M_hits_means$x,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
+plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
 abline(h=0.5, lty=5);
 
 # 2M - correct rejections only
 data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=mean, na.rm=TRUE);
 colnames(data_testing_2M_rejs_means)[colnames(data_testing_2M_rejs_means)=="Group.1"]="sbj_ID";
-boxplot(data_testing_2M_rejs_means$x, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections");
+colnames(data_testing_2M_rejs_means)[colnames(data_testing_2M_rejs_means)=="x"]="x_2_rejs";
+boxplot(data_testing_2M_rejs_means$x_2_rejs, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections");
 abline(h=0.5, lty=5);
-summary(data_testing_2M_rejs_means$x);
+summary(data_testing_2M_rejs_means$x_2_rejs);
 # min:0.0 Q1:0.24 med:0.35 mean:0.36 Q3:0.47 max:0.94
-hist(data_testing_2M_rejs_means$x); # normally distributed
-t.test(data_testing_2M_rejs_means$x, mu=50);
+hist(data_testing_2M_rejs_means$x_2_rejs); # normally distributed
+t.test(data_testing_2M_rejs_means$x_2_rejs, mu=50);
 # significantly below chance: t=-4174, p<2.2e-16, CI=[0.33,0.38]
-plot(data_testing_2M_rejs_means$x,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
+plot(data_testing_2M_rejs_means$x_2_rejs,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
 abline(h=0.5, lty=5);
 
 # 2M - combined plots
@@ -244,7 +247,6 @@ summary(dprimes)
 
 data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
 dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected, data_testing_2M$observed);
-# ERROR: subscript out of bounds?
 summary(data_testing_2M);
 
 # testing strategy
@@ -600,11 +602,177 @@ names(data_BLP_tris)[61:66] <- c('RC1_use_L1vsL2','RC3_prof_L2','RC10_L3','RC6_h
 #without language dominance scores
 data_BLP_quadris <- data_BLP_quadris[, !is.na(colSums(data_BLP_quadris != 0)) & colSums(data_BLP_quadris != 0) > 0];
 pca_varimax6 <- psych::principal(data_BLP_quadris[,17:32], nfactors=16, rotate='varimax');
-pca_Varidata_BLP_quadris <- cbind(data_BLP_quadris, pca_varimax6$scores[,c('RC15','RC2','RC12','RC11','RC3','RC4','RC10','RC1','RC13')]);
-names(data_BLP_quadris)[79:87] <- c('RC15_use_L1vsL2','RC2_prof_morethanbi','RC12_L4','RC11_use_L4','RC3_prof_L2','RC4_use_L3','RC10_att_L3','RC1_hist_morethanmono','R13_hist_l2');
+data_BLP_quadris <- cbind(data_BLP_quadris, pca_varimax6$scores[,c('RC15','RC2','RC12','RC11','RC3','RC4','RC10','RC1','RC13')]);
+names(data_BLP_quadris)[79:87] <- c('RC15_use_L1vsL2','RC2_prof_morethanbi','RC12_L4','RC11_use_L4','RC3_prof_L2','RC4_use_L3','RC10_att_L3','RC1_hist_morethanmono','RC13_hist_L2');
 
 source("C:/Users/annal/OneDrive/Documents/Me/SISSA/BASL/BASL analysis/FunnyPeopleFunction_RodriguezLaioClustering.R");
 funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep(1:5, each=30), outForMatlabFunction=F);
+
+# adding testing scores and BLP metrics together
+library(tidyverse);
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC9_L4,RC2_use_L1vsL2,RC6_use_L4));
+data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+summary(data_BLP_testing_all);
+
+data_BLP_extracted_monos <- subset(data_BLP_monos, select=c(sbj_ID,HistoryL1Score,UseL1Score,ProficiencyL1Score,AttitudeL1Score,L1Score,lang_var,multi_exp));
+data_BLP_testing_monos <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_monos) %>% reduce(inner_join, by='sbj_ID');
+summary(data_BLP_testing_monos);
+
+data_BLP_extracted_bis <- subset(data_BLP_bis, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,UseL1Score,UseL2Score,ProficiencyL1Score,ProficiencyL2Score,AttitudeL1Score,AttitudeL2Score,L1Score,L2Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_use_L1vsL2,RC7_prof_L2,RC6_hist_L2));
+data_BLP_testing_bis <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_bis) %>% reduce(inner_join, by='sbj_ID');
+summary(data_BLP_testing_bis);
+
+data_BLP_extracted_tris <- subset(data_BLP_tris, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,HistoryL3Score,UseL1Score,UseL2Score,UseL3Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,L1Score,L2Score,L3Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_use_L1vsL2,RC3_prof_L2,RC10_L3,RC6_hist_L2,RC8_use_L3,RC9_hist_L3));
+data_BLP_testing_tris <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_tris) %>% reduce(inner_join, by='sbj_ID');
+summary(data_BLP_testing_tris);
+
+data_BLP_extracted_quadris <- subset(data_BLP_quadris, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC15_use_L1vsL2,RC2_prof_morethanbi,RC12_L4,RC11_use_L4,RC3_prof_L2,RC4_use_L3,RC10_att_L3,RC1_hist_morethanmono,RC13_hist_L2));
+data_BLP_testing_quadris <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_quadris) %>% reduce(inner_join, by='sbj_ID');
+summary(data_BLP_testing_quadris);
+
+# correlation plot of testing scores and BLP metrics
+png('corrPlot3_all.png', width=1500, height=1500);
+corrplot::corrplot(cor(data_BLP_testing_all[,c(2:30)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlot4_bis.png', width=1500, height=1500);
+corrplot::corrplot(cor(data_BLP_testing_bis[,c(2:21)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlot5_tris.png', width=1500, height=1500);
+corrplot::corrplot(cor(data_BLP_testing_tris[,c(2:29)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlot6_quadris.png', width=1500, height=1500);
+corrplot::corrplot(cor(data_BLP_testing_quadris[,c(2:37)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+# caalculating exact correlations of interesting correlations found in corrplots
+cor(data_BLP_testing_all$HistoryL2Score, data_BLP_testing_all$x_2_hits); # r = 0.20
+cor(data_BLP_testing_all$HistoryL3Score, data_BLP_testing_all$x_2_hits); # r = 0.19
+cor(data_BLP_testing_all$UseL4Score, data_BLP_testing_all$x_2_rejs); # r = 0.19
+cor(data_BLP_testing_all$L2Score, data_BLP_testing_all$x_2_hits); # r = 0.19
+cor(data_BLP_testing_all$L2Score, data_BLP_testing_all$x_2_rejs); # r = -0.19
+
+cor(data_BLP_testing_tris$HistoryL2Score, data_BLP_testing_tris$x_2_hits); # r = 0.38
+cor(data_BLP_testing_tris$HistoryL2Score, data_BLP_testing_tris$x_2_rejs); # r = -0.50
+cor(data_BLP_testing_tris$HistoryL3Score, data_BLP_testing_tris$x_2_hits); # r = 0.37
+cor(data_BLP_testing_tris$HistoryL3Score, data_BLP_testing_tris$x_2_rejs); # r = -0.39
+cor(data_BLP_testing_tris$UseL1Score, data_BLP_testing_tris$x_2_hits); # r = -0.23
+cor(data_BLP_testing_tris$UseL1Score, data_BLP_testing_tris$x_2_rejs); # r = 0.18
+cor(data_BLP_testing_tris$ProficiencyL2Score, data_BLP_testing_tris$x_2_rejs); # r = -0.21
+cor(data_BLP_testing_tris$ProficiencyL3Score, data_BLP_testing_tris$x_2_rejs); # r = -0.29
+cor(data_BLP_testing_tris$L2Score, data_BLP_testing_tris$x_2_hits); # r = 0.28
+cor(data_BLP_testing_tris$L2Score, data_BLP_testing_tris$x_2_rejs); # r = -0.29
+cor(data_BLP_testing_tris$L3Score, data_BLP_testing_tris$x_2_rejs); # r = -0.29
+cor(data_BLP_testing_tris$lang_ent, data_BLP_testing_tris$x_2); # r = -0.25
+cor(data_BLP_testing_tris$lang_ent, data_BLP_testing_tris$x_2_rejs); # r = -0.38
+cor(data_BLP_testing_tris$L1_L2_diff, data_BLP_testing_tris$x_2_hits); # r = -0.29
+cor(data_BLP_testing_tris$L1_L2_diff, data_BLP_testing_tris$x_2_rejs); # r = 0.28
+cor(data_BLP_testing_tris$RC3_prof_L2, data_BLP_testing_tris$x_2_rejs); # r = -0.24
+cor(data_BLP_testing_tris$RC6_hist_L2, data_BLP_testing_tris$x_2_hits); # r = 0.32
+cor(data_BLP_testing_tris$RC6_hist_L2, data_BLP_testing_tris$x_2_rejs); # r = -0.47
+cor(data_BLP_testing_tris$RC9_hist_L3, data_BLP_testing_tris$x_2_hits); # r = 0.29
+cor(data_BLP_testing_tris$RC9_hist_L3, data_BLP_testing_tris$x_2_rejs); # r = -0.18
+
+cor(data_BLP_testing_quadris$HistoryL1Score, data_BLP_testing_quadris$x_2); # r = -0.20
+cor(data_BLP_testing_quadris$HistoryL2Score, data_BLP_testing_quadris$x_2); # r = 0.20
+cor(data_BLP_testing_quadris$HistoryL2Score, data_BLP_testing_quadris$x_2_hits); # r = 0.21
+cor(data_BLP_testing_quadris$HistoryL3Score, data_BLP_testing_quadris$x_2); # r = 0.20
+cor(data_BLP_testing_quadris$HistoryL3Score, data_BLP_testing_quadris$x_2_hits); # r = 0.17
+cor(data_BLP_testing_quadris$HistoryL4Score, data_BLP_testing_quadris$x_2); # r = 0.34
+cor(data_BLP_testing_quadris$HistoryL4Score, data_BLP_testing_quadris$x_2_rejs); # r = 0.31
+cor(data_BLP_testing_quadris$UseL2Score, data_BLP_testing_quadris$x_2_hits); # r = 0.30
+cor(data_BLP_testing_quadris$UseL2Score, data_BLP_testing_quadris$x_2_rejs); # r = -0.31
+cor(data_BLP_testing_quadris$UseL4Score, data_BLP_testing_quadris$x_2_hits); # r = -0.38
+cor(data_BLP_testing_quadris$UseL4Score, data_BLP_testing_quadris$x_2_rejs); # r = 0.43
+cor(data_BLP_testing_quadris$ProficiencyL2Score, data_BLP_testing_quadris$x_2); # r = -0.48
+cor(data_BLP_testing_quadris$ProficiencyL2Score, data_BLP_testing_quadris$x_2_rejs); # r = -0.32
+cor(data_BLP_testing_quadris$ProficiencyL4Score, data_BLP_testing_quadris$x_2); # r = 0.20
+cor(data_BLP_testing_quadris$ProficiencyL4Score, data_BLP_testing_quadris$x_2_rejs); # r = 0.24
+cor(data_BLP_testing_quadris$AttitudeL2Score, data_BLP_testing_quadris$x_2_rejs); # r = -0.22
+cor(data_BLP_testing_quadris$L2Score, data_BLP_testing_quadris$x_2_hits); # r = 0.25
+cor(data_BLP_testing_quadris$L2Score, data_BLP_testing_quadris$x_2_rejs); # r = -0.32
+cor(data_BLP_testing_quadris$L4Score, data_BLP_testing_quadris$x_2_hits); # r = -0.19
+cor(data_BLP_testing_quadris$L4Score, data_BLP_testing_quadris$x_2_rejs); # r = 0.32
+cor(data_BLP_testing_quadris$lang_var, data_BLP_testing_quadris$x_2); # r = -0.24
+cor(data_BLP_testing_quadris$lang_ent, data_BLP_testing_quadris$x_2); # r = 0.24
+cor(data_BLP_testing_quadris$L1_L2_diff, data_BLP_testing_quadris$x_2_hits); # r = -0.22
+cor(data_BLP_testing_quadris$L1_L2_diff, data_BLP_testing_quadris$x_2_rejs); # r = 0.23
+cor(data_BLP_testing_quadris$RC15_use_L1vsL2, data_BLP_testing_quadris$x_2_hits); # r = 0.23
+cor(data_BLP_testing_quadris$RC15_use_L1vsL2, data_BLP_testing_quadris$x_2_rejs); # r = -0.25
+cor(data_BLP_testing_quadris$RC12_L4, data_BLP_testing_quadris$x_2); # r = 0.24
+cor(data_BLP_testing_quadris$RC12_L4, data_BLP_testing_quadris$x_2_rejs); # r = 0.21
+cor(data_BLP_testing_quadris$RC11_use_L4, data_BLP_testing_quadris$x_2_hits); # r = -0.41
+cor(data_BLP_testing_quadris$RC11_use_L4, data_BLP_testing_quadris$x_2_rejs); # r = 0.42
+cor(data_BLP_testing_quadris$RC3_prof_L2, data_BLP_testing_quadris$x_2); # r = -0.49
+cor(data_BLP_testing_quadris$RC3_prof_L2, data_BLP_testing_quadris$x_2_rejs); # r = -0.26
+cor(data_BLP_testing_quadris$RC13_hist_L2, data_BLP_testing_quadris$x_2); # r = 0.20
+cor(data_BLP_testing_quadris$RC13_hist_L2, data_BLP_testing_quadris$x_2_hits); # r = 0.17
+
+# group boxplot
+collapsed_monos <- subset(data_BLP_testing_monos, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_monos$group <- "mono";
+collapsed_monos$group <- as.factor(collapsed_monos$group);
+collapsed_bis <- subset(data_BLP_testing_bis, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_bis$group <- "bi";
+collapsed_bis$group <- as.factor(collapsed_bis$group);
+collapsed_tris <- subset(data_BLP_testing_tris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_tris$group <- "tri";
+collapsed_tris$group <- as.factor(collapsed_tris$group);
+collapsed_quadris <- subset(data_BLP_testing_quadris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_quadris$group <- "quadri";
+collapsed_quadris$group <- as.factor(collapsed_quadris$group);
+
+data_BLP_testing_conditions <- rbind(collapsed_monos,collapsed_bis,collapsed_tris,collapsed_quadris);
+summary(data_BLP_testing_conditions);
+boxplot(data_BLP_testing_conditions$x_2 ~ data_BLP_testing_conditions$group,xlab='Group',ylab='Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5); # all at 50% mean, quite even
+boxplot(data_BLP_testing_conditions$x_2_hits ~ data_BLP_testing_conditions$group,xlab='Group',ylab='Accuracy - hits',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5); # monos at chance, bis & tris together, quadris a bit higher
+boxplot(data_BLP_testing_conditions$x_2_rejs ~ data_BLP_testing_conditions$group,xlab='Group',ylab='Accuracy - correct rejections',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5); # monos a bit higher than the others
+
+# testing hits in each language group
+boxplot(data_BLP_testing_monos$x_2_hits, ylim=c(0,1), ylab = "Accuracy score - 2M hits");
+abline(h=0.5, lty=5);
+summary(data_BLP_testing_monos$x_2_hits);
+#min:0.24 Q1:0.46 med:0.53 mean:0.49 Q3:0.56 max:0.65
+hist(data_BLP_testing_monos$x_2_hits);
+t.test(data_BLP_testing_monos$x_2_hits, mu=50);
+#t=-564, p=1.23e-8, CI=[0.21,0.76]
+plot(data_BLP_testing_monos$x_2_hits,ylim=c(0,1),ylab = "Correct responses - hits",xlab="Participants",pch=3,yaxs="i");
+abline(h=0.5, lty=5);
+
+boxplot(data_BLP_testing_bis$x_2_hits, ylim=c(0,1), ylab = "Accuracy score - 2M hits");
+abline(h=0.5, lty=5);
+summary(data_BLP_testing_bis$x_2_hits);
+#min:0.29 Q1:0.57 med:0.65 mean:0.64 Q3:0.71 max:1
+hist(data_BLP_testing_bis$x_2_hits); # normally distributed
+t.test(data_BLP_testing_bis$x_2_hits, mu=50);
+#t=-3117, p<2.2e-16, CI=[0.61,0.67]
+plot(data_BLP_testing_bis$x_2_hits,ylim=c(0,1),ylab = "Correct responses - hits",xlab="Participants",pch=3,yaxs="i");
+abline(h=0.5, lty=5);
+
+boxplot(data_BLP_testing_tris$x_2_hits, ylim=c(0,1), ylab = "Accuracy score - 2M hits");
+abline(h=0.5, lty=5);
+summary(data_BLP_testing_tris$x_2_hits);
+#min:0.24 Q1:0.53 med:0.65 mean:0.62 Q3:0.71 max:1
+hist(data_BLP_testing_tris$x_2_hits); # normally distributed
+t.test(data_BLP_testing_tris$x_2_hits, mu=50);
+#t=-2281, p<2.2e-16, CI=[0.58,0.67]
+plot(data_BLP_testing_tris$x_2_hits,ylim=c(0,1),ylab = "Correct responses - hits",xlab="Participants",pch=3,yaxs="i");
+abline(h=0.5, lty=5);
+
+boxplot(data_BLP_testing_quadris$x_2_hits, ylim=c(0,1), ylab = "Accuracy score - 2M hits");
+abline(h=0.5, lty=5);
+summary(data_BLP_testing_quadris$x_2_hits);
+#min:0.12 Q1:0.59 med:0.71 mean:0.66 Q3:0.76 max:88
+hist(data_BLP_testing_quadris$x_2_hits); # normally distributed, very right-skewed
+t.test(data_BLP_testing_quadris$x_2_hits, mu=50);
+#t=-2258, p<2.2e-16, CI=[0.61,0.70]
+plot(data_BLP_testing_quadris$x_2_hits,ylim=c(0,1),ylab = "Correct responses - hits",xlab="Participants",pch=3,yaxs="i");
+abline(h=0.5, lty=5);
 
 # remove datapoints if participant doesn't know additional languages
 data_BLP$langfilter1 <- TRUE;
