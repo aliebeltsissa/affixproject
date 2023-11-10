@@ -167,7 +167,7 @@ abline(h=0.5, lty=5);
 hist(data_testing_2M_means$x_2); # normally distributed
 t.test(data_testing_2M_means$x_2, mu=50);
 
-# yes responses across conditions
+# scores across conditions
 library(tidyverse);
 data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='sbj_ID');
 summary(data_testing_conditions_scores);
@@ -262,7 +262,6 @@ colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_mea
 boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_intuition_2M_means); # mean: 48%
-
 
 
 # Familiarity -------------------------------------------------------------
@@ -612,6 +611,20 @@ funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep
 library(tidyverse);
 data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC9_L4,RC2_use_L1vsL2,RC6_use_L4));
 data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+
+# dprimes - 2M
+data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC1_L3);
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2);
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC6_use_L4);
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC9_L4);
+
+# dprimes - all
+data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC1_L3);
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2);
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC6_use_L4);
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC9_L4);
 summary(data_BLP_testing_all);
 
 data_BLP_extracted_monos <- subset(data_BLP_monos, select=c(sbj_ID,HistoryL1Score,UseL1Score,ProficiencyL1Score,AttitudeL1Score,L1Score,lang_var,multi_exp));
@@ -711,20 +724,20 @@ cor(data_BLP_testing_quadris$RC13_hist_L2, data_BLP_testing_quadris$x_2); # r = 
 cor(data_BLP_testing_quadris$RC13_hist_L2, data_BLP_testing_quadris$x_2_hits); # r = 0.17
 
 # group boxplot
-collapsed_monos <- subset(data_BLP_testing_monos, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
-collapsed_monos$group <- "mono";
-collapsed_monos$group <- as.factor(collapsed_monos$group);
-collapsed_bis <- subset(data_BLP_testing_bis, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
-collapsed_bis$group <- "bi";
-collapsed_bis$group <- as.factor(collapsed_bis$group);
-collapsed_tris <- subset(data_BLP_testing_tris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
-collapsed_tris$group <- "tri";
-collapsed_tris$group <- as.factor(collapsed_tris$group);
-collapsed_quadris <- subset(data_BLP_testing_quadris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
-collapsed_quadris$group <- "quadri";
-collapsed_quadris$group <- as.factor(collapsed_quadris$group);
+collapsed_testing_monos <- subset(data_BLP_testing_monos, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_testing_monos$group <- "mono";
+collapsed_testing_monos$group <- as.factor(collapsed_testing_monos$group);
+collapsed_testing_bis <- subset(data_BLP_testing_bis, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_testing_bis$group <- "bi";
+collapsed_testing_bis$group <- as.factor(collapsed_testing_bis$group);
+collapsed_testing_tris <- subset(data_BLP_testing_tris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_testing_tris$group <- "tri";
+collapsed_testing_tris$group <- as.factor(collapsed_testing_tris$group);
+collapsed_testing_quadris <- subset(data_BLP_testing_quadris, select=c(sbj_ID,x_2,x_2_hits,x_2_rejs));
+collapsed_testing_quadris$group <- "quadri";
+collapsed_testing_quadris$group <- as.factor(collapsed_testing_quadris$group);
 
-data_BLP_testing_conditions <- rbind(collapsed_monos,collapsed_bis,collapsed_tris,collapsed_quadris);
+data_BLP_testing_conditions <- rbind(collapsed_testing_monos,collapsed_testing_bis,collapsed_testing_tris,collapsed_testing_quadris);
 summary(data_BLP_testing_conditions);
 boxplot(data_BLP_testing_conditions$x_2 ~ data_BLP_testing_conditions$group,xlab='Group',ylab='Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5); # all at 50% mean, quite even
@@ -773,6 +786,45 @@ t.test(data_BLP_testing_quadris$x_2_hits, mu=50);
 #t=-2258, p<2.2e-16, CI=[0.61,0.70]
 plot(data_BLP_testing_quadris$x_2_hits,ylim=c(0,1),ylab = "Correct responses - hits",xlab="Participants",pch=3,yaxs="i");
 abline(h=0.5, lty=5);
+
+# familiarity responses in each language group
+data_BLP_familiarity_monos <- list(data_familiarity_means,data_BLP_extracted_monos) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_familiarity_bis <- list(data_familiarity_means,data_BLP_extracted_bis) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_familiarity_tris <- list(data_familiarity_means,data_BLP_extracted_tris) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_familiarity_quadris <- list(data_familiarity_means,data_BLP_extracted_quadris) %>% reduce(inner_join, by='sbj_ID');
+collapsed_familiarity_monos <- subset(data_BLP_familiarity_monos, select=c(sbj_ID,x));
+collapsed_familiarity_monos$group <- "mono";
+collapsed_familiarity_monos$group <- as.factor(collapsed_familiarity_monos$group);
+collapsed_familiarity_bis <- subset(data_BLP_familiarity_bis, select=c(sbj_ID,x));
+collapsed_familiarity_bis$group <- "bi";
+collapsed_familiarity_bis$group <- as.factor(collapsed_familiarity_bis$group);
+collapsed_familiarity_tris <- subset(data_BLP_familiarity_tris, select=c(sbj_ID,x));
+collapsed_familiarity_tris$group <- "tri";
+collapsed_familiarity_tris$group <- as.factor(collapsed_familiarity_tris$group);
+collapsed_familiarity_quadris <- subset(data_BLP_familiarity_quadris, select=c(sbj_ID,x));
+collapsed_familiarity_quadris$group <- "quadri";
+collapsed_familiarity_quadris$group <- as.factor(collapsed_familiarity_quadris$group);
+
+data_BLP_familiarity_conditions <- rbind(collapsed_familiarity_monos,collapsed_familiarity_bis,collapsed_familiarity_tris,collapsed_familiarity_quadris);
+summary(data_BLP_familiarity_conditions$x);
+#min:0.29 Q1:0.50 med:0.57 mean:0.57 Q3:0.64 max:0.86
+boxplot(data_BLP_familiarity_conditions$x ~ data_BLP_familiarity_conditions$group,xlab='Group',ylab='Familiarity accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5); # all at 57% roughly
+hist(data_BLP_familiarity_conditions$x); # normally distributed
+t.test(data_BLP_familiarity_conditions$x, mu=50);
+#t=-6768 p<2.2e-16 CI=[0.55,0.58]
+
+# lmer
+data_testing <- merge(data_testing, data_BLP[,c('sbj_ID','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+library(lme4);
+m1 <- glmer(observed ~ trialn + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing, rt>300 & rt<3000), family='binomial');
+summary(m1); # RC1 non significant as main effect and interaction
+m2 <- glmer(observed ~ trialn + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing, rt>300 & rt<3000), family='binomial');
+summary(m2); # RC9 non significant as main effect and interaction
+m3 <- glmer(observed ~ trialn + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing, rt>300 & rt<3000), family='binomial');
+summary(m3); # failed to converge
+m4 <- glmer(observed ~ trialn + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing, rt>300 & rt<3000), family='binomial');
+summary(m4); # RC9 non significant as main effect and interaction
 
 # remove datapoints if participant doesn't know additional languages
 data_BLP$langfilter1 <- TRUE;
