@@ -261,9 +261,13 @@ data_BLP$langfilter3[data_BLP$ProficiencyL3Score<45.4] <- FALSE;
 data_BLP$langfilter4 <- TRUE;
 data_BLP$langfilter4[data_BLP$ProficiencyL4Score<45.4] <- FALSE;
 
+#if they're only fluent in one language, they're a monolingual
 data_BLP$lang_group <- 'mono';
+#if they're fluent in two languages, they're a bilingual
 data_BLP$lang_group[data_BLP$langfilter1+data_BLP$langfilter2+data_BLP$langfilter3+data_BLP$langfilter4==2] <- 'bi';
+#if they're fluent in three languages, they're a trilingual
 data_BLP$lang_group[data_BLP$langfilter1+data_BLP$langfilter2+data_BLP$langfilter3+data_BLP$langfilter4==3] <- 'tri';
+#if they're fluent in four languages, they're a quadrilingual
 data_BLP$lang_group[data_BLP$langfilter1+data_BLP$langfilter2+data_BLP$langfilter3+data_BLP$langfilter4==4] <- 'quadri';
 data_BLP$lang_group <- as.factor(data_BLP$lang_group);
 summary(data_BLP$lang_group);
@@ -277,6 +281,52 @@ data_BLP_monos <- subset(data_BLP[data_BLP$lang_group=='mono',]);
 data_BLP_bis <- subset(data_BLP[data_BLP$lang_group=='bi',]);
 data_BLP_tris <- subset(data_BLP[data_BLP$lang_group=='tri',]);
 data_BLP_quadris <- subset(data_BLP[data_BLP$lang_group=='quadri',]);
+
+# proficiency plots for each language group
+library(paletteer);
+cols2 <- paletteer_d("ggthemes::Classic_20");
+par(mfrow=c(2,2));
+#monolinguals
+plot(data_BLP_monos$ProficiencyL1Score,pch=19,ylim=c(0,55),ylab="Monolingual L1 Proficiency",xlab='Participant',col=cols2[1]);
+abline(h=45.4,lty=5);
+plot(data_BLP_monos$ProficiencyL2Score,pch=19,ylim=c(0,55),ylab="Monolingual L2 Proficiency",xlab='Participant',col=cols2[2]);
+abline(h=45.4,lty=5);
+plot(data_BLP_monos$ProficiencyL3Score,pch=19,ylim=c(0,55),ylab="Monolingual L3 Proficiency",xlab='Participant',col=cols2[3]);
+abline(h=45.4,lty=5);
+plot(data_BLP_monos$ProficiencyL4Score,pch=19,ylim=c(0,55),ylab="Monolingual L4 Proficiency",xlab='Participant',col=cols2[4]);
+abline(h=45.4,lty=5);
+
+#bilinguals
+plot(data_BLP_bis$ProficiencyL1Score,pch=19,ylim=c(0,55),ylab="Monolingual L1 Proficiency",xlab='Participant',col=cols2[1]);
+abline(h=45.4,lty=5);
+plot(data_BLP_bis$ProficiencyL2Score,pch=19,ylim=c(0,55),ylab="Monolingual L2 Proficiency",xlab='Participant',col=cols2[2]);
+abline(h=45.4,lty=5);
+plot(data_BLP_bis$ProficiencyL3Score,pch=19,ylim=c(0,55),ylab="Monolingual L3 Proficiency",xlab='Participant',col=cols2[3]);
+abline(h=45.4,lty=5);
+plot(data_BLP_bis$ProficiencyL4Score,pch=19,ylim=c(0,55),ylab="Monolingual L4 Proficiency",xlab='Participant',col=cols2[4]);
+abline(h=45.4,lty=5);
+
+#trilinguals
+plot(data_BLP_tris$ProficiencyL1Score,pch=19,ylim=c(0,55),ylab="Monolingual L1 Proficiency",xlab='Participant',col=cols2[1]);
+abline(h=45.4,lty=5);
+plot(data_BLP_tris$ProficiencyL2Score,pch=19,ylim=c(0,55),ylab="Monolingual L2 Proficiency",xlab='Participant',col=cols2[2]);
+abline(h=45.4,lty=5);
+plot(data_BLP_tris$ProficiencyL3Score,pch=19,ylim=c(0,55),ylab="Monolingual L3 Proficiency",xlab='Participant',col=cols2[3]);
+abline(h=45.4,lty=5);
+plot(data_BLP_tris$ProficiencyL4Score,pch=19,ylim=c(0,55),ylab="Monolingual L4 Proficiency",xlab='Participant',col=cols2[4]);
+abline(h=45.4,lty=5);
+
+#quadrilinguals
+plot(data_BLP_quadris$ProficiencyL1Score,pch=19,ylim=c(0,55),ylab="Monolingual L1 Proficiency",xlab='Participant',col=cols2[1]);
+abline(h=45.4,lty=5);
+plot(data_BLP_quadris$ProficiencyL2Score,pch=19,ylim=c(0,55),ylab="Monolingual L2 Proficiency",xlab='Participant',col=cols2[2]);
+abline(h=45.4,lty=5);
+plot(data_BLP_quadris$ProficiencyL3Score,pch=19,ylim=c(0,55),ylab="Monolingual L3 Proficiency",xlab='Participant',col=cols2[3]);
+abline(h=45.4,lty=5);
+plot(data_BLP_quadris$ProficiencyL4Score,pch=19,ylim=c(0,55),ylab="Monolingual L4 Proficiency",xlab='Participant',col=cols2[4]);
+abline(h=45.4,lty=5);
+par(mfrow=c(1,1));
+
 
 # if have lower boundary at 4/6:
 #monolinguals: n=18
@@ -673,6 +723,6 @@ for (x in 1:193) {
 };
 summary(data_clustering);
 
-result <- density_peak_clustering(data_clustering$scores,data_clustering$sbj_ID,data_clustering$dimensions);
+result <- density_peak_clustering(data_clustering$scores,data_clustering$sbj_ID,data_clustering$dimensions)
 # cluster centre: 135
 # outlier: 149 (and maybe 145 too)
