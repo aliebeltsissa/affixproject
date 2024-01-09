@@ -136,6 +136,8 @@ rand_training4 = training_randomisation(training, trainingn)
 rand_testing = testing_randomisation(testing, testingn)
 shuffle(familiarity_pairs)
 
+import collections
+collections.Callable = collections.abc.Callable
 from psychopy import visual, event, core, gui
 
 # press esc to close window
