@@ -927,6 +927,16 @@ hist(data_BLP_familiarity_conditions$x); # normally distributed
 t.test(data_BLP_familiarity_conditions$x, mu=50);
 #t=-6768 p<2.2e-16 CI=[0.55,0.58]
 
+data_BLP_familiaritymeans <- merge(data_familiarity_means, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4','group')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+png('corrPlot_familiarity.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_familiaritymeans[,c(2:9)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering_familiarity.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_familiaritymeans[,c(2:9)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+# mean familiarity accuracy not correlated with any BLP variables
+
 
 ################
 # LINEAR MODEL #
