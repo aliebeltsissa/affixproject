@@ -3,6 +3,9 @@ setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject");
 participants <- list("5aa787c66219a30001c765f8","5ae5db897edeb000014a85ee","5b212164cfbf200001cfb3ad","5b213220809d160001a2c36d","5bcd11401662020001fe82c1","5c19254b0b9f6b00014769ee","5c1bfabab0fcc900019d9ff4","5caccaed2f93d700157b4782","5cbe02ab39447e0001745a5e","5cefe8856e0eec00015971dd","5d9a125f1714540016a40a27","5dab6e7d80e1780016d5bc9b","5dcb33ab0550ef819f508abf","5e12048c7605fe8839180a14","5e283f8ad48ecf000ddd0724","5e2c6968e97bec29709a53c6","5e3ff59bf2160b23942ada93","5e42b6421f44d3143440b25c","5e42f03607b468000d8eb912","5e433ed3393e971e19f4735d","5e577e79ce30ae13226e61ae","5e6d3324f14d262fced5bbfe","5e87b28549538b0fdf96b318","5e89e89bf025be000c01eead","5e8b66490d48450346bf2755","5e8c57d9b4483e012006e7aa","5e8e55509422bb10abed1f54","5e9bd025eb6b380e1d66d04c","5ea171c1a8782801263e7540","5ea9611edec14d052ada0bae","5ea9cd383b32cf15448a86ac","5eaae42f19a24d05cbd6ccb4","5eaf1c50f3540c614eb973a5","5eb35dff41a381156be161c2","5eb71c59c55b3b0ce571ae7c","5ebc0c153f8b2e04d3833423","5ec12ed7a66dbf01c7d740c1","5ec1c01a8ccaaa5ec0080c91","5ec6d06c67b0da0fb6f85e83","5ecbb4c00bc62403dae2df59","5ecd21dec04cca02c9032485","5ed013f88fce6e0d858b732e","5ee623674afa60375e30eec3","5ee83da8817af0000d47448f","5ee942381a22491bbb7170f8","5eef3de3fb4e031bf546d887","5efd2964d36f63162f263795","5f0471a92ec97b6d1aec7739","5f09d989eff16b266fba44c0","5f0d65ef2ad0c60009209f0f","5f0f93938935de000855898b","5f11c9f84078cd0888177499","5f18a80367ef6b0bbc5f3720","5f19fa0f3e85b20d0336258c","5f1e8dc7e2161c86cdcd220a","5f219602670e5a0af2cf5237","5f33289c1fe9181376ee67d9","5f33c58329beab1f63c0dfaa","5f350f459bf003464a03ea5e","5f47e34858dd331165bf9f00","5f5a713d37f71112463ab4d9","5f5e7de4c81d3672642cd612","5f6cd5ce1758e90f12ae1123","5f708f5f0d32bb66960d4473","5f784f5b98f4963cdf902340","5f7bd801486f5e1ce581980f","5f858743256d25036d9fa693","5f91dc284909fe0b08f9e2e1","5f99cee5a2a7d109a1624e10","5fa4258658811d03fbc6ce8b","5fa4725a186c050edc3bcc20","5fa5793490f10705755818c0","5fa59d4d5a29c90da975efe9","5fc2d2d79da439201ab6addc","5fc44d83862e3e79b02e0438","5fc781689771f106330abf6a","5fd2416e5061f30735e202e9","5fd69a0014c3b25ee539f66b","5fd9c5c67fa7c74ec42bb318","5fdbf74c5474cd11e39eeaf3","5fe2308a91773957e88b89be","600e0dadada7da69afc5b3de","600f0f9c3bfcdc077c924e51","60123adc24c9f126819861b6","601705a0246e51313e8ed38e","601951245f481e000980504f","601b5c79e845ac360826c9df","601ffb441dc6d959b855eea5","602bb123612bfe330818d4ef","6042a56575ab0c1ccffc3152","60491025dd8eb31e48a0ca8d","60536ffae4f98513b671f482","605aa0bb5fb71bbcf0808892","60645fe61129208791535d15","6065d7d47409810344f7e6bb","60664619eac28843177fee96","60670ac0fc7e169231369ab1","606dc21c1ce7dc64af9d81fb","6074768dc48e0753011d3d72","607ea5504e74d104da5a108a","60883a7e91c0be66dbb96fc8","608858869a591bd129fbbc6c","608c2e566d92c2aa3543e2d2","608c64e14968cdd8dcbe1be4","6092e2aac56871319199b6a5","6093cacf9a39751eedd55916","60957b300f08087b0af0031c","60a3fe2d888e7a090d6d8f82","60a68725b2b424dc0d7ce793","60b7b8126c0c4524e913236e","60bbe0da43325dadf2b1b6a9","60c49e68081928c86ba7b98a","60d478e72e8251287b641b2d","60d7605d7af8d66774061717","60db4aed5dd7b87124f51341","60dee3200c7c3355c62326d9","60e12640be1b69b66053d55b","60e3b18d3d4205b4c52ada56","60e9ea97d19e613e60a994da","60eb26fb8db6845a14fe5a91","60ec51c51a3158a50ded8a3e","60edd136d544e7c8f5fac8a7","60f030dca19a06db1b50d16a","60f56f0103876eae7c0d870f","60f579085ebf24f9c80f223e","60f6b8f8e574e14634ead43e","60f88d7fef1959734061e5a7","60fd0f49858465796afd5da9","6100174f92a7a0e5141b195e","61001b6892ebd05a24fe82e1","61055020201a7da5a704f7dd","6107d788163252e3b5c348e3","610834993bac40f050062896","610958b8473c7b96e4bd207d","610a52647a452dee7ca89360","610d2275ba5f1ee0fdcee3e8","610f2eabb45be8717fc155e0","61125e23136464bd2cbbefc9","61143bd22a1649da3b52ae32","611bdb0fed7c9df6dce28c3f","611cebb780fbae98c5bcc84d","611dc53f0098557586e89b17","611e7d1295185bf6f56fd951","611e9c16e90a0d4c6f0d8df5","611eafa6011b0423f7d7230f",
                      "611eeafa283a2d1f57537fea","6120211d8e1eab16fcb7ad69","6122966a93af160af481836c","6124a4ba3df07e768bd9c90b","61275a3158c67415afb971ff","612a98181f4b6d1cf01f926c","61301fcb49db2f170cb02b93","6131f7010e926c9103558040","613867f34e206e4f573bc6ef","613a73d06cf1fcfef304d3fa","613ab1e64acd61ebd0a7116d","613f57084e80f056c78f9b7b","6140f1c4ead758f1b72bbe2f","6140ff9c5750f0081ca8d71f","6144742e57a61e489cc9e978","6147aed5b2a4f748dc2b6ba4","614b323022fcd8b7408005a6","614c80483d06dcf7ad552679","614c8e5469405530dc27b9d5","614dd6473c74b217ad73cc9c","61520b079436973e05f72d33","61548fa2b637194e04c9bc09","6155e204cc071b306458dfff","6156a440279fdf408ee663ae","6156b68cc77b48d6693b361c","615b042301e3a24311563ee4","615b1ab789b14c9996251fb4","615b41767003d4ece749ed9d","615da9ee365ab7d547b98979","615f371e6688c87e53e7acf5","61616ce2bb94584e11c911af","6163faf9d9ac4586fe776568","616494f1ae4537c01914c758","616631efeeac0979c1ba85a9","616891e25a026e1f7262116c","616eb493bb7e4ab4fa1de8d4","6170821d1e8ffb9c893b28a4","6171349b89a54d4823f9eca1","617142c2a843eef6f8f148b6","6171d922c871ba795b6a4827","6172078b966225960be2a7b5","617679054948369cb824d837","63ee5d8aaee278de46b7d4cc","6455490f7c5f35e4221a810a","64764d56699f097a96ec6e5c","64973d83e4fc64d6ae59c370","64a288758b7c82ff2d18da75","64ef422a4789bd6b6b9042ce","65032a60861e9a17bc1a7444","65089e7ce53888b0b3840c62","650aee87054446f772acdfcc");
 
+library(paletteer);
+cols <- paletteer_d("MetBrewer::Degas");
+
 # d' function
 dPrime <- function(sbj, expectedResp, observedResp)
 {
@@ -64,13 +67,13 @@ summary(data_testing);
 
 # testing RTs
 library(paletteer);
-cols <- paletteer_d("palettesForR::Named");
+cols2 <- paletteer_d("palettesForR::Named");
 IDs <- list(data_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.007),xlab="RTs (ms)",main="",xaxt = "n",col=cols[1],yaxs="i",lwd=1,cex.lab=1.5);
+plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.007),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[1],yaxs="i",lwd=1,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 for (x in 2:195) {
-  lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols[x],lwd=1)
+  lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x],lwd=1)
 };
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means);
@@ -241,6 +244,11 @@ plot(data_testing_rt_means$x, data_testing_2M_hits_means$x, pch=19);
 
 cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.01
 plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
+
+# correlation between 1M & 2M
+temp <- merge(data_testing_2M_means, data_testing_1M_means,by.x='sbj_ID',by.y='sbj_ID');
+cor(temp$x_1, temp$x_2); # r=-0.04
+# 1M accuracy uncorrelated with 2M accuracy
 
 # testing d'
 dprimes <- dPrime(data_testing$sbj_ID, data_testing$expected, data_testing$observed);
@@ -694,7 +702,30 @@ png('corrPlot6_quadris.png', width=1500, height=1500);
 corrplot::corrplot(cor(data_BLP_testing_quadris[,c(2:37)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
 dev.off();
 
-# caalculating exact correlations of interesting correlations found in corrplots
+data_testing_1M2M_means <- merge(data_testing_1M_means,data_testing_2M_means,by.x='sbj_ID',by.y='sbj_ID');
+data_BLP_testing_1M2M_means <- merge(data_testing_1M2M_means, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+png('corrPlot_1M2Mmeans.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_testing_1M2M_means[,c(2:10)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering_1M2Mmeans.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_testing_1M2M_means[,c(2:10)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+# some small correlations of x_1 (1M accuracy) with BLP variables
+
+data_testing_1M2M_yes <- merge(data_testing_1M_yes,data_testing_2M_yes,by.x='sbj_ID',by.y='sbj_ID');
+data_BLP_testing_1M2M_yes <- merge(data_testing_1M2M_yes, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+png('corrPlot_1M2Myes.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_testing_1M2M_yes[,c(2:10)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+
+png('corrPlotClustering_1M2Myes.png', width=1000, height=1000);
+corrplot::corrplot(cor(data_BLP_testing_1M2M_yes[,c(2:10)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+dev.off();
+# r=0.61 between x_1 and x_2: those who respond "yes" more in 1M condition also
+# respond "yes" more in 2M condition.
+
+# calculating exact correlations of interesting correlations found in corrplots
 cor(data_BLP_testing_all$HistoryL2Score, data_BLP_testing_all$x_2_hits); # r = 0.20
 cor(data_BLP_testing_all$HistoryL3Score, data_BLP_testing_all$x_2_hits); # r = 0.19
 cor(data_BLP_testing_all$UseL4Score, data_BLP_testing_all$x_2_rejs); # r = 0.19
@@ -956,7 +987,7 @@ data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','Gender','Age','lang
 #all testing conditions - 'yes' responses
 m1 <- glmer(observed ~ trialn + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m1); # Gender non significant as main effect and interaction
-m2 <- glmer(observed ~ trialn + testing_condition*Age + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+m2 <- glmer(observed ~ trialn + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m2); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.06. Age*2M p=0.01)
 m3 <- glmer(observed ~ trialn + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m3); # RC1 non significant as main effect (p=0.165) and interaction
@@ -972,8 +1003,9 @@ m8 <- glmer(observed ~ trialn + testing_condition*lang_ent + (1+testing_conditio
 summary(m8); # 2M sig, lang_ent non-sig (p=0.67)
 m9 <- glmer(observed ~ scale(trialn) + testing_condition*multi_exp + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m9); # 2M sig, multi_exp non-sig (p=0.42)
-m10 <- glmer(observed ~ trialn + testing_condition*L1_L2_diff + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+m10 <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m10); # 1M & 2M sig, L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
+
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -1061,6 +1093,28 @@ abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_di
 #and L2 score means that participants respond "yes" to items less.
 #With a bilingual perspective, the more balanced they are, the more
 #likely they are to say "yes" to 1M and 2M items.
+
+library(effects);
+L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
+L1_L2_diff_predictions <- data.frame(Effect(mod=m10, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
+with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
+     plot(L1_L2_diff, fit, type='b', ylim=c(.2,.6),col='black'));
+with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
+with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
+     lines(L1_L2_diff, fit, type='b', lty=2,col='black'));
+with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[3])/255),alpha=0.5)));
+with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
+     lines(L1_L2_diff, fit, type='b', lty=3,col='black'));
+with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
+
+#correlation between L1_L2_diff and age?
+cor(data_BLP$Age, data_BLP$L1_L2_diff); # r=-0.01
+#So age and L1_L2_diff uncorrelated: the effects they have on the 'yes' 
+#responses are separate.
+
 
 
 ######################
