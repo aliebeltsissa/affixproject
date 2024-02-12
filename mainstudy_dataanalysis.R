@@ -53,6 +53,26 @@ data_testing$testing_condition <- as.factor(data_testing$testing_condition);
 data_testing$correct <- as.logical(data_testing$correct);
 summary(data_testing);
 
+# change coding: make YES into 1 and NO into 0
+data_expected <- replace(data_testing$expected, data_testing$expected == 0, 'YES');
+data_expected <- replace(data_expected, data_expected == 1, 'NO');
+data_expected <- replace(data_expected, data_expected == 'NO', 0);
+data_expected <- replace(data_expected, data_expected == 'YES', 1);
+data_testing$expected <- data_expected;
+data_testing$expected <- as.numeric(data_testing$expected);
+
+data_observed <- replace(data_testing$observed, data_testing$observed == 0, 'YES');
+data_observed <- replace(data_observed, data_observed == 1, 'NO');
+data_observed <- replace(data_observed, data_observed == 'NO', 0);
+data_observed <- replace(data_observed, data_observed == 'YES', 1);
+data_testing$observed <- data_observed;
+data_testing$observed <- as.numeric(data_testing$observed);
+
+# due to technical issue: n(0M)=40, n(1M)=37, n(2M)=34
+total_0M <- 40;
+total_1M <- 37;
+total_2M <- 34;
+
 # testing RTs
 library(paletteer);
 cols2 <- paletteer_d("palettesForR::Named");
@@ -69,40 +89,51 @@ summary(data_testing_rt_means);
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
 
 # 0M yes responses boxplot
-data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 0));
+data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
 names(data_testing_0M_yes) <- c("sbj_ID","x_0");
-boxplot(data_testing_0M_yes$x, ylab = "Percent of 'yes' responses");
-abline(h=20, lty=5);
+data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/total_0M*100; #transform into percent
+summary(data_testing_0M_yes$x_0);
+#min:12.5 Q1:40 med:50 mean:49.44 Q3:60 max:100
+t.test(data_testing_0M_yes$x_0, mu=50);
+#t=-0.53 p=0.60 CI=[47.37;51.52] -> not significantly different from 50%
+boxplot(data_testing_0M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
 
 # 0M scores
 data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
 names(data_testing_0M_means) <- c("sbj_ID","x_0");
-summary(data_testing_0M_means);
+summary(data_testing_0M_means$x_0);
 #min:0 Q1:0.40 med:0.50 mean:0.51 Q3:0.6 max:0.88
 var(data_testing_0M_means$x_0);
 #var=0.02
-plot(data_testing_0M_means$x_0,pch=3,ylim=c(0,1));
+plot(data_testing_0M_means$x_0,pch=3,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5);
 #6170821d1e8ffb9c893b28a4 at 0% -> 100% at 1M (!) and 44% at 2M
 #quite a wide range of scores
 hist(data_testing_0M_means$x_0); # normally distributed
 t.test(data_testing_0M_means$x_0, mu=50);
-#t=-4707 p<2.2e-16 CI=[0.48,0.53] -> not significantly different from 0
+#t=-4707 p<2.2e-16 CI=[0.48;0.53] -> not significantly different from 50%
 
 # 1M yes responses boxplot
-data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 0));
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
 names(data_testing_1M_yes) <- c("sbj_ID","x_1");
-boxplot(data_testing_1M_yes$x, ylab = "Percent of 'yes' responses");
-abline(h=20, lty=5);
+data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/total_1M*100; #transform into percent
+summary(data_testing_1M_yes$x_1);
+#min:10.8 Q1:46 med:56.8 mean:55 Q3:62.2 max:100
+t.test(data_testing_1M_yes$x_1, mu=50);
+#t=4.94 p=1.70e-6 CI=[53.01;57.01] -> significantly above from 50%
+boxplot(data_testing_1M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
 
 # 1M scores
 data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
 names(data_testing_1M_means) <- c("sbj_ID","x_1");
-summary(data_testing_1M_means);
+summary(data_testing_1M_means$x_1);
+#min:0.1 Q1:0.46 med:0.57 mean:0.55 Q3:0.62 max:1
 #60d478e72e8251287b641b2d & 6170821d1e8ffb9c893b28a4 at 100%? -> they're at 0.5 and 0.44 respectively in 2M
 var(data_testing_1M_means$x_1);
 #var=0.02
-plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1));
+plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5);
 #quite a wide range of scores
 hist(data_testing_1M_means$x_1); # normally distributed
@@ -110,19 +141,24 @@ t.test(data_testing_1M_means$x_1, mu=50);
 #t=-4879.5 p<2.2e-16 CI=[0.53,0.57]
 
 # 2M yes responses boxplot
-data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 0));
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
 names(data_testing_2M_yes) <- c("sbj_ID","x_2");
-boxplot(data_testing_2M_yes$x, ylab = "Percent of 'yes' responses");
-abline(h=20, lty=5);
+data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/total_2M*100; #transform into percent
+summary(data_testing_2M_yes$x_2);
+#min:11.8 Q1:55.9 med:64.7 mean:64 Q3:73.5 max:100
+t.test(data_testing_2M_yes$x_2, mu=50);
+#t=13.54 p<2.2e-16 CI=[61.98;66.06] -> significantly above 50%
+boxplot(data_testing_2M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
 
 # yes responses across conditions
 library(tidyverse);
 data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_testing_2M_yes) %>% reduce(inner_join, by='sbj_ID');
-boxplot(data_testing_conditions$x_0,data_testing_conditions$x_1,data_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'));
+boxplot(data_testing_conditions$x_0,data_testing_conditions$x_1,data_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'),ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 conditions_table <- table(data_testing$testing_condition, data_testing$observed);
 chisq.test(conditions_table);
-# X-squared=307.32, df=2, p<2.2e-16
+# X-squared=308.03, df=2, p<2.2e-16
 
 library(ggplot2);
 conditions_dataframe <- as.data.frame(conditions_table);
@@ -135,7 +171,7 @@ ggplot(conditions_dataframe,
   theme_classic() +
   scale_y_continuous(limits = c(0,8000), expand = c(0, 0)) +
   labs(x="Testing conditions", y="Frequency of responses", fill="Response") +
-  scale_fill_manual(values = c("#F1BB7B","#FD6467"), labels=c("Yes","No"));
+  scale_fill_manual(values = c("#F1BB7B","#FD6467"), labels=c("No","Yes"));
 
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
@@ -584,7 +620,7 @@ png('corrPlotClustering_1M2Myes.png', width=1000, height=1000);
 corrplot::corrplot(cor(data_BLP_testing_1M2M_yes[,c(2:10)]), type="lower", order="hclust", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
 dev.off();
 # r=0.61 between x_1 and x_2: those who respond "yes" more in 1M condition also
-# respond "yes" more in 2M condition.
+#respond "yes" more in 2M condition.
 
 # calculating exact correlations of interesting correlations found in corrplots
 cor(data_BLP_testing_all$HistoryL2Score, data_BLP_testing_all$x_2_hits); # r = 0.20
@@ -628,21 +664,21 @@ data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender
 m1 <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m1); # Gender non significant as main effect and interaction
 m2 <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m2); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.01)
+summary(m2); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
 m3 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(m3); # RC1 non significant as main effect (p=0.165) and interaction
 m4 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m4); # RC9 non significant as main effect and interaction
+summary(m4); # RC9 non significant as main effect (p=0.19) and interaction
 m5 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m5); # RC2 non significant as main effect and interaction
+summary(m5); # RC2 non significant as main effect (p=0.22) and interaction
 m6 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m6); # RC9 non significant as main effect and interaction
+summary(m6); # RC9 non significant as main effect (p=0.11) and interaction
 m7 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m7); # 2M sig, lang_ent non-sig (p=0.67)
+summary(m7); # 2M sig (p=0.003), lang_ent non-sig (p=0.67)
 m8 <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m8); # 2M sig, multi_exp non-sig (p=0.42)
+summary(m8); # 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
 m9 <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m9); # 1M & 2M sig, L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
+summary(m9); # 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
 
 
 #2M - accuracy
@@ -689,13 +725,13 @@ summary(m25); # L1_L2_diff non sig (p=0.40)
 #age
 data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('sbj_ID','Age')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_0M_yes$x_0);
-#min:5 Q1:16 med:20 mean:20 Q3:24 max:40
+#min:12.5 Q1:40 med:50 mean:49 Q3:60 max:100
 data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','Age')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_1M_yes$x_1);
-#min:4 Q1:17 med:21 mean:20 Q3:23 max:37
+#min:11 Q1:46 med:57 mean:55 Q3:62 max:100
 data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','Age')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_2M_yes$x_2);
-#min:4 Q1:19 med:22 mean:22 Q3:25 max:34
+#min:12 Q1:56 med:65 mean:64 Q3:74 max:100
 
 data_BLP_testing_0M_yes_av <- aggregate(data_BLP_testing_0M_yes$x_0, by=list(data_BLP_testing_0M_yes$Age), FUN = mean);
 names(data_BLP_testing_0M_yes_av) <- c('Age','mean_0M_yes');
@@ -704,11 +740,11 @@ names(data_BLP_testing_1M_yes_av) <- c('Age','mean_1M_yes');
 data_BLP_testing_2M_yes_av <- aggregate(data_BLP_testing_2M_yes$x_2, by=list(data_BLP_testing_2M_yes$Age), FUN = mean);
 names(data_BLP_testing_2M_yes_av) <- c('Age','mean_2M_yes');
 
-plot(data_BLP_testing_0M_yes$Age,data_BLP_testing_0M_yes$x_0,xlab="Age",ylab="0M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_0M_yes$Age,data_BLP_testing_0M_yes$x_0,xlab="Age",ylab="0M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 points(data_BLP_testing_0M_yes_av$Age,data_BLP_testing_0M_yes_av$mean_0M_yes,type="b",pch=19,col='red',lwd=2);
-plot(data_BLP_testing_1M_yes$Age,data_BLP_testing_1M_yes$x_1,xlab="Age",ylab="1M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_1M_yes$Age,data_BLP_testing_1M_yes$x_1,xlab="Age",ylab="1M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 points(data_BLP_testing_1M_yes_av$Age,data_BLP_testing_1M_yes_av$mean_1M_yes,type="b",pch=19,col='red',lwd=2);
-plot(data_BLP_testing_2M_yes$Age,data_BLP_testing_2M_yes$x_2,xlab="Age",ylab="2M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_2M_yes$Age,data_BLP_testing_2M_yes$x_2,xlab="Age",ylab="2M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 points(data_BLP_testing_2M_yes_av$Age,data_BLP_testing_2M_yes_av$mean_2M_yes,type="b",pch=19,col='red',lwd=2);
 #Not sure the effect of Age is visible in these graphs
 #I think, from 0M to 2M, the lower-age score lowers and the higher-
@@ -722,11 +758,11 @@ data_BLP_testing_0M_L1L2_yes <- merge(data_testing_0M_yes, subset(data_BLP,selec
 data_BLP_testing_1M_L1L2_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 data_BLP_testing_2M_L1L2_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
-plot(data_BLP_testing_0M_L1L2_yes$L1_L2_diff,data_BLP_testing_0M_L1L2_yes$x_0,xlab="L1-L2 difference",ylab="0M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_0M_L1L2_yes$L1_L2_diff,data_BLP_testing_0M_L1L2_yes$x_0,xlab="L1-L2 difference",ylab="0M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 abline(lm(data_BLP_testing_0M_L1L2_yes$x_0~data_BLP_testing_0M_L1L2_yes$L1_L2_diff), col = "red",lwd=2);
-plot(data_BLP_testing_1M_L1L2_yes$L1_L2_diff,data_BLP_testing_1M_L1L2_yes$x_1,xlab="L1-L2 difference",ylab="1M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_1M_L1L2_yes$L1_L2_diff,data_BLP_testing_1M_L1L2_yes$x_1,xlab="L1-L2 difference",ylab="1M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 abline(lm(data_BLP_testing_1M_L1L2_yes$x_1~data_BLP_testing_1M_L1L2_yes$L1_L2_diff), col = "red",lwd=2);
-plot(data_BLP_testing_2M_L1L2_yes$L1_L2_diff,data_BLP_testing_2M_L1L2_yes$x_2,xlab="L1-L2 difference",ylab="2M 'yes' responses",ylim=c(0,40),pch=19);
+plot(data_BLP_testing_2M_L1L2_yes$L1_L2_diff,data_BLP_testing_2M_L1L2_yes$x_2,xlab="L1-L2 difference",ylab="2M 'yes' responses (in %)",ylim=c(0,100),pch=19,yaxs="i");
 abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_diff), col = "red",lwd=2);
 #So in 1M and even more in 2M, a bigger difference between the L1
 #and L2 score means that participants respond "yes" to items less.
@@ -735,9 +771,9 @@ abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_di
 
 library(effects);
 L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
-L1_L2_diff_predictions <- data.frame(Effect(mod=m10, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
+L1_L2_diff_predictions <- data.frame(Effect(mod=m9, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
-     plot(L1_L2_diff, fit, type='b', ylim=c(.2,.6),col='black'));
+     plot(L1_L2_diff, fit, type='b', ylim=c(0.4,0.8),col='black'));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
      polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
@@ -769,8 +805,8 @@ plot(data_BLP$temp_sbjID,data_BLP$lang_ent_just3,pch=19,xlab="Subject number",yl
 # some outliers very close to 0 - the monolinguals
 
 data_ent_lm <- merge(data_testing, data_BLP[,c('sbj_ID','lang_ent_just3')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
-m23 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent_just3 + (1+testing_condition|sbj_ID), data=subset(data_ent_lm, rt>300 & rt<3000), family='binomial');
-summary(m23); # lang_ent_just3 non sig, interaction non sig
+m26 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent_just3 + (1+testing_condition|sbj_ID), data=subset(data_ent_lm, rt>300 & rt<3000), family='binomial');
+summary(m26); # lang_ent_just3 non sig (p=0.55), interaction non sig
 # so this effect only visible at bilingual level, not including trilingual data
 
 
@@ -1000,9 +1036,9 @@ data_BLP_extracted_all$cluster <- as.factor(data_BLP_extracted_all$cluster);
 data_BLP_testing_all <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 summary(data_BLP_testing_all);
 
-boxplot(data_BLP_testing_all$x_0 ~ data_BLP_testing_all$cluster,xlab='Cluster',ylab='2M Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+boxplot(data_BLP_testing_all$x_0 ~ data_BLP_testing_all$cluster,xlab='Cluster',ylab='0M Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5); # all at 50% mean, some fluctuation across groups
-boxplot(data_BLP_testing_all$x_1 ~ data_BLP_testing_all$cluster,xlab='Cluster',ylab='2M Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
+boxplot(data_BLP_testing_all$x_1 ~ data_BLP_testing_all$cluster,xlab='Cluster',ylab='1M Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5); # most above 50%, cluster 5 below (but cluster 5 n = 5)
 boxplot(data_BLP_testing_all$x_2 ~ data_BLP_testing_all$cluster,xlab='Cluster',ylab='2M Accuracy',cex.lab=1.5,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5); # all at 50% mean, quite even
@@ -1033,16 +1069,16 @@ data_testing_lm$cluster[data_testing_lm$temp_sbjID %in% new_cluster5] <- "5";
 data_testing_lm$cluster <- as.factor(data_testing_lm$cluster);
 
 #all testing conditions - 'yes' responses
-m26 <- glmer(observed ~ scale(trialn) + testing_condition*cluster + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m26); # cluster non significant as main effect, 1M*cluster5 sig (p < 0.01), 2M*cluster5 sig (p < 0.01)
+m27 <- glmer(observed ~ scale(trialn) + testing_condition*cluster + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(m27); # cluster non significant as main effect, 1M*cluster5 sig (p < 0.01), 2M*cluster5 sig (p < 0.01)
 #2M accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
-m27 <- glmer(observed ~ scale(trialn) + expected*cluster + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m27); # cluster non sig
+m28 <- glmer(observed ~ scale(trialn) + expected*cluster + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(m28); # cluster non sig
 #familiarity
 data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','cluster','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
-m28 <- glmer(correct ~ scale(trialn) + cluster + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m28); # cluster non sig
+m29 <- glmer(correct ~ scale(trialn) + cluster + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(m29); # cluster non sig
 
 # examination of significant cluster5*1M interaction
 data_BLP_testing_0M_cluster_yes <- merge(data_testing_0M_yes, subset(data_BLP_extracted_all,select=c('sbj_ID','cluster')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -1073,7 +1109,7 @@ legend("bottomright",title="Condition:",c("0M","1M","2M"),
        cex=1,y.intersp=0.5);
 
 #Cluster 5 n=5 so not reliable, but despite that, significant interaction
-#Cluster 5 score highest
+#Cluster 5 say 'yes' more in 0M, then 1M, then 2M: opposite from other clusters
 
 
 
