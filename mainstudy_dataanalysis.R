@@ -111,8 +111,8 @@ abline(h=0.5, lty=5);
 #6170821d1e8ffb9c893b28a4 at 0% -> 100% at 1M (!) and 44% at 2M
 #quite a wide range of scores
 hist(data_testing_0M_means$x_0); # normally distributed
-t.test(data_testing_0M_means$x_0, mu=50);
-#t=-4707 p<2.2e-16 CI=[0.48;0.53] -> not significantly different from 50%
+t.test(data_testing_0M_means$x_0, mu=0.5);
+#t=0.53 p=0.60 CI=[0.48;0.53] -> not significantly different from 50%
 
 # 1M yes responses boxplot
 data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
@@ -137,8 +137,8 @@ plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1),yaxs="i");
 abline(h=0.5, lty=5);
 #quite a wide range of scores
 hist(data_testing_1M_means$x_1); # normally distributed
-t.test(data_testing_1M_means$x_1, mu=50);
-#t=-4879.5 p<2.2e-16 CI=[0.53,0.57]
+t.test(data_testing_1M_means$x_1, mu=0.5);
+#t=4.94 p=1.69e-6 CI=[0.53,0.57]
 
 # 2M yes responses boxplot
 data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
@@ -176,7 +176,7 @@ ggplot(conditions_dataframe,
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 names(data_testing_2M_means) <- c("sbj_ID","x_2");
-boxplot(data_testing_2M_means$x_2, ylab = "Accuracy score");
+boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score");
 abline(h=0.5, lty=5);
 summary(data_testing_2M_means$x_2);
 #min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
@@ -773,7 +773,7 @@ library(effects);
 L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
 L1_L2_diff_predictions <- data.frame(Effect(mod=m9, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
-     plot(L1_L2_diff, fit, type='b', ylim=c(0.4,0.8),col='black'));
+     plot(L1_L2_diff, fit, type='b', ylim=c(0.4,0.8),col='black',xlab='L1-L2 difference',ylab='Model fit'));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
      polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
@@ -784,6 +784,9 @@ with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
      lines(L1_L2_diff, fit, type='b', lty=3,col='black'));
 with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
      polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
+legend("topright",title="Condition:",c("0M","1M","2M"),
+       fill=c(cols[2],cols[3],cols[4]),bty = "n",
+       cex=1,y.intersp=0.75);
 
 #correlation between L1_L2_diff and age?
 cor(data_BLP$Age, data_BLP$L1_L2_diff); # r=-0.01
@@ -1110,6 +1113,223 @@ legend("bottomright",title="Condition:",c("0M","1M","2M"),
 
 #Cluster 5 n=5 so not reliable, but despite that, significant interaction
 #Cluster 5 say 'yes' more in 0M, then 1M, then 2M: opposite from other clusters
+
+
+################################
+# ANALYSIS WITH JUST CLUSTER 1 #
+################################
+# testing
+data_testing_c1 <- subset(data_testing_lm[data_testing_lm$cluster=="1",]);
+data_testing_c1_0M_yes <- aggregate(data_testing_c1$observed[data_testing_c1$testing_condition=='0M'], by=list(data_testing_c1$sbj_ID[data_testing_c1$testing_condition=='0M']), FUN = function(x) sum(x == 1));
+names(data_testing_c1_0M_yes) <- c("sbj_ID","x_0");
+data_testing_c1_0M_yes$x_0 <- data_testing_c1_0M_yes$x_0/total_0M*100; #transform into percent
+summary(data_testing_c1_0M_yes$x_0);
+#FULL DATASET: min:12.5 Q1:40 med:50 mean:49.44 Q3:60 max:100
+#CLUSTER 1: min:12.5 Q1:40 med:50 mean:48.47 Q3:57.5 max:100
+t.test(data_testing_c1_0M_yes$x_0, mu=50);
+#FULL DATASET: t=-0.53 p=0.60 CI=[47.37;51.52] -> not significantly different from 50%
+#CLUSTER 1: t=-1.22 p=0.23 CI=[45.98;50.96] -> not significantly different from 50%
+boxplot(data_testing_c1_0M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
+
+# 0M scores
+data_testing_c1_0M_means <- aggregate(data_testing_c1$correct[data_testing_c1$testing_condition=='0M'], list(data_testing_c1$sbj_ID[data_testing_c1$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
+names(data_testing_c1_0M_means) <- c("sbj_ID","x_0");
+summary(data_testing_c1_0M_means$x_0);
+#FULL DATASET: min:0 Q1:0.40 med:0.50 mean:0.51 Q3:0.6 max:0.88
+#CLUSTER 1: min:0 Q1:0.43 med:0.50 mean:0.52 Q3:0.6 max:0.88
+var(data_testing_c1_0M_means$x_0);
+#FULL DATASET: var=0.02
+#CLUSTER 1: var=0.02
+plot(data_testing_c1_0M_means$x_0,pch=3,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5);
+#quite a wide range of scores
+hist(data_testing_c1_0M_means$x_0); # normally distributed
+t.test(data_testing_c1_0M_means$x_0, mu=0.5);
+#FULL DATASET: t=0.53 p=0.60 CI=[0.48;0.53] -> not significantly different from 50%
+#CLUSTER 1: t=1.22 p=0.23 CI=[0.49;0.54] -> not significantly different from 50%
+
+# 1M yes responses boxplot
+data_testing_c1_1M_yes <- aggregate(data_testing_c1$observed[data_testing_c1$testing_condition=='1M'], by=list(data_testing_c1$sbj_ID[data_testing_c1$testing_condition=='1M']), FUN = function(x) sum(x == 1));
+names(data_testing_c1_1M_yes) <- c("sbj_ID","x_1");
+data_testing_c1_1M_yes$x_1 <- data_testing_c1_1M_yes$x_1/total_1M*100; #transform into percent
+summary(data_testing_c1_1M_yes$x_1);
+#FULL DATASET: min:10.8 Q1:46 med:56.8 mean:55 Q3:62.2 max:100
+#CLUSTER 1: min:10.8 Q1:46 med:54.01 mean:54.3 Q3:62.2 max:100
+t.test(data_testing_c1_1M_yes$x_1, mu=50);
+#FULL DATASET: t=4.94 p=1.70e-6 CI=[53.01;57.01] -> significantly above 50%
+#CLUSTER 1: t=3.53 p=0.001 CI=[51.89;56.72] -> significantly above 50%
+boxplot(data_testing_c1_1M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
+
+# 1M scores
+data_testing_c1_1M_means <- aggregate(data_testing_c1$correct[data_testing_c1$testing_condition=='1M'], list(data_testing_c1$sbj_ID[data_testing_c1$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
+names(data_testing_c1_1M_means) <- c("sbj_ID","x_1");
+summary(data_testing_c1_1M_means$x_1);
+#FULL DATASET: min:0.1 Q1:0.46 med:0.57 mean:0.55 Q3:0.62 max:1
+#CLUSTER 1: min:0.11 Q1:0.46 med:0.54 mean:0.54 Q3:0.62 max:1
+var(data_testing_c1_1M_means$x_1);
+#FULL DATASET: var=0.02
+#CLUSTER 1: var=0.02
+plot(data_testing_c1_1M_means$x_1,pch=3,ylim=c(0,1),yaxs="i");
+abline(h=0.5, lty=5);
+#quite a wide range of scores
+hist(data_testing_c1_1M_means$x_1); # normally distributed
+t.test(data_testing_c1_1M_means$x_1, mu=0.5);
+#FULL DATASET: t=4.94 p=1.69e-6 CI=[0.53,0.57] -> significantly above 50%
+#CLUSTER 1: t=3.53 p=0.001 CI=[0.52,0.57] -> significantly above 50%
+
+# 2M yes responses boxplot
+data_testing_c1_2M_yes <- aggregate(data_testing_c1$observed[data_testing_c1$testing_condition=='2M'], by=list(data_testing_c1$sbj_ID[data_testing_c1$testing_condition=='2M']), FUN = function(x) sum(x == 1));
+names(data_testing_c1_2M_yes) <- c("sbj_ID","x_2");
+data_testing_c1_2M_yes$x_2 <- data_testing_c1_2M_yes$x_2/total_2M*100; #transform into percent
+summary(data_testing_c1_2M_yes$x_2);
+#FULL DATASET: min:11.8 Q1:55.9 med:64.7 mean:64 Q3:73.5 max:100
+#CLUSTER 1: min:11.8 Q1:55.9 med:64.7 mean:63.6 Q3:73.5 max:94.12
+t.test(data_testing_c1_2M_yes$x_2, mu=50);
+#FULL DATASET: t=13.54 p<2.2e-16 CI=[61.98;66.06] -> significantly above 50%
+#CLUSTER 1: t=11.13 p<2.2e-16 CI=[61.17;66.01] -> significantly above 50%
+boxplot(data_testing_c1_2M_yes$x, ylab = "Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
+
+# yes responses across conditions
+library(tidyverse);
+data_testing_c1_conditions <- list(data_testing_c1_0M_yes,data_testing_c1_1M_yes,data_testing_c1_2M_yes) %>% reduce(inner_join, by='sbj_ID');
+boxplot(data_testing_c1_conditions$x_0,data_testing_c1_conditions$x_1,data_testing_c1_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'),ylim=c(0,100),yaxs="i");
+abline(h=50, lty=5);
+conditions_table_c1 <- table(data_testing_c1$testing_condition, data_testing_c1$observed);
+chisq.test(conditions_table_c1);
+#FULL DATASET: X-squared=308.03, df=2, p<2.2e-16
+#CLUSTER 1: X-squared=220.61, df=2, p<2.2e-16
+
+#FAMILIARITY
+# familiarity accuracy boxplot
+data_familiarity_c1 <- subset(data_familiarity[data_familiarity$sbj_ID %in% data_testing_c1$sbj_ID,])
+data_familiarity_c1_means <- aggregate(data_familiarity_c1$correct, list(data_familiarity_c1$sbj_ID), FUN=mean);
+colnames(data_familiarity_c1_means)[colnames(data_familiarity_c1_means)=="Group.1"]="sbj_ID";
+boxplot(data_familiarity_c1_means$x, ylab = "Familiarity score");
+abline(h=0.5, lty=5);
+summary(data_familiarity_c1_means$x);
+#FULL DATASET: min:0.29 Q1:0.50 med:0.57 mean:0.57 Q3:0.64 max:0.86
+#CLUSTER 1: min:0.32 Q1:0.50 med:0.57 mean:0.57 Q3:0.64 max:0.86
+hist(data_familiarity_c1_means$x); # normally distributed
+t.test(data_familiarity_c1_means$x, mu=0.50);
+#FULL DATASET: t = 9.16, p < 2.2e-16, CI = [0.55, 0.58] -> significantly above chance
+#CLUSTER 1: t = 7.26, p=3.31e-11, CI = [0.55, 0.58] -> significantly above chance
+
+# lmer
+# TESTING #
+data_testing_c1_lm <- subset(data_testing_lm[data_testing_lm$sbj_ID %in% data_testing_c1$sbj_ID,]);
+
+#all testing conditions - 'yes' responses
+m30 <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m30);
+#FULL DATASET: Gender non significant as main effect and interaction
+#CLUSTER 1: Gender non significant as main effect and interaction
+m31 <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m31);
+#FULL DATASET: Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
+#CLUSTER 1: Age non significant as main effect (p=0.07) and sig as interaction (Age*1M p=0.03; Age*2M p=0.001)
+m32 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m32);
+#FULL DATASET: RC1 non significant as main effect (p=0.165) and interaction
+#CLUSTER 1: RC1 non significant as main effect (p=0.198) and interaction
+m33 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m33);
+#FULL DATASET: RC9 non significant as main effect (p=0.19) and interaction
+#CLUSTER 1: RC9 non significant as main effect (p=0.47) and interaction
+m34 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m34);
+#FULL DATASET: RC2 non significant as main effect (p=0.22) and interaction
+#CLUSTER 1: RC2 non significant as main effect (p=0.25) and interaction
+m35 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m35);
+#FULL DATASET: RC6 non significant as main effect (p=0.11) and interaction
+#CLUSTER 1: RC6 non significant as main effect (p=0.12) and interaction
+m36 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m36);
+#FULL DATASET: 2M sig (p=0.003), lang_ent non-sig (p=0.67)
+#CLUSTER 1: 2M sig (p=0.002), lang_ent non-sig (p=0.31)
+m37 <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m37);
+#FULL DATASET: 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
+#CLUSTER 1: 1M sig (p=8e-5), 2M sig (p=6e-11), multi_exp non-sig (p=0.22)
+m38 <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(m38);
+#FULL DATASET: 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
+#CLUSTER 1: 1M sig (p=9e-10) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.47), 1M*L1_L2_diff non sig (p=0.34) & 2M*L1_L2_diff non sig (p=0.10)
+
+
+#2M - accuracy
+data_testing_c1_lm_2M <- subset(data_testing_lm_2M[data_testing_lm_2M$sbj_ID %in% data_testing_c1$sbj_ID,]);
+m39 <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m39);
+#FULL DATASET: Gender non sig (p=0.13 for Other, p=0.15 for Woman)
+#CLUSTER 1: Gender non sig (p=0.10 for Other, p=0.40 for Woman), expected*Other sig (p=0.04)
+m40 <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m40);
+#FULL DATASET: Age non sig (p=0.62), also for interaction (p=0.16)
+#CLUSTER 1: Age non sig (p=0.95), also for interaction (p=0.48)
+m41 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m41);
+#FULL DATASET: RC1 non sig (p=0.58), also for interaction (p=0.75)
+#CLUSTER 1: RC1 non sig (p=0.44), also for interaction (p=0.96)
+m42 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m42);
+#FULL DATASET: RC9 non sig (p=0.91), also for interaction (p=0.16)
+#CLUSTER 1: RC9 non sig (p=0.30), also for interaction (p=0.15)
+m43 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m43);
+#FULL DATASET: RC2 non sig (p=0.15), also for interaction (p=0.62)
+#CLUSTER 1: RC2 non sig (p=0.11), also for interaction (p=0.67)
+m44 <- glmer(observed ~ scale(trialn) + expected*RC6_use_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m44);
+#FULL DATASET: RC6 non sig (p=0.24), also for interaction (p=0.39)
+#CLUSTER 1: RC6 sig (p=0.03), non sig for interaction (p=0.40)
+m45 <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m45);
+#FULL DATASET: lang_ent non sig (p=0.14), also for interaction (p=0.11)
+#CLUSTER 1: lang_ent non sig (p=0.44), also for interaction (p=0.40)
+m46 <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m46);
+#FULL DATASET: multi_exp sig (p=0.04), marginally sig for interaction (p=0.08)
+#CLUSTER 1: multi_exp non sig (p=0.33), non sig for interaction (p=0.35)
+m47 <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(m47);
+#FULL DATASET: L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
+#CLUSTER 1: L1_L2_diff marginally sig (p=0.06), interaction non sig (p=0.77)
+
+
+# FAMILIARITY #
+data_c1_BLP_familiarity <- subset(data_BLP_familiarity[data_BLP_familiarity$sbj_ID %in% data_testing_c1$sbj_ID,]);
+m48 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m48);
+#FULL DATASET: RC1_L3 non sig (p=0.34)
+#CLUSTER 1: RC1_L3 non sig (p=0.71)
+m49 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m49);
+#FULL DATASET: RC9_L4 non sig (p=0.51)
+#CLUSTER 1: RC9_L4 non sig (p=0.56)
+m50 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m50);
+#FULL DATASET: RC2_use_L1vsL2 non sig (p=0.52)
+#CLUSTER 1: RC2_use_L1vsL2 non sig (p=0.53)
+m51 <- glmer(correct ~ scale(trialn) + RC6_use_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m51);
+#FULL DATASET: RC6_use_L4 marginally non sig (p=0.06)
+#CLUSTER 1: RC6_use_L4 marginally non sig (p=0.07)
+m52 <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m52);
+#FULL DATASET: lang_ent non sig (p=0.72)
+#CLUSTER 1: lang_ent non sig (0.44)
+m53 <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m53);
+#FULL DATASET: multi_exp non sig (p=0.63)
+#CLUSTER 1: multi_exp non sig (p=0.47)
+m54 <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(m54);
+#FULL DATASET: L1_L2_diff non sig (p=0.40)
+#CLUSTER 1: L1_L2_diff non sig (p=0.38)
 
 
 
