@@ -574,7 +574,7 @@ funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep
 
 # adding testing scores and BLP metrics together
 library(tidyverse);
-data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC9_L4,RC2_use_L1vsL2,RC6_use_L4));
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC9_L4,RC2_use_L1vsL2,RC6_use_L4));
 data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 
 
@@ -661,64 +661,68 @@ library(lme4);
 data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
-m1 <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m1); # Gender non significant as main effect and interaction
-m2 <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m2); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
-m3 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m3); # RC1 non significant as main effect (p=0.165) and interaction
-m4 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m4); # RC9 non significant as main effect (p=0.19) and interaction
-m5 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m5); # RC2 non significant as main effect (p=0.22) and interaction
-m6 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m6); # RC9 non significant as main effect (p=0.11) and interaction
-m7 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m7); # 2M sig (p=0.003), lang_ent non-sig (p=0.67)
-m8 <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m8); # 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
-m9 <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m9); # 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
+lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_Gender); # Gender non significant as main effect and interaction
+lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_Age); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
+lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_RC1); # RC1 non significant as main effect (p=0.165) and interaction
+lm_RC9 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_RC9); # RC9 non significant as main effect (p=0.19) and interaction
+lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_RC2); # RC2 non significant as main effect (p=0.22) and interaction
+lm_RC6 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_RC6); # RC9 non significant as main effect (p=0.11) and interaction
+lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_ent); # 2M sig (p=0.003), lang_ent non-sig (p=0.67)
+lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_multiexp); # 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
+lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_L1L2diff); # 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
 
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
-m10 <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m10); # Gender non sig (p=0.13 for Other, p=0.15 for Woman)
-m11 <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m11); # Age non sig (p=0.62), also for interaction (p=0.16)
-m12 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m12); # RC1 non sig (p=0.58), also for interaction (p=0.75)
-m13 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m13); # RC9 non sig (p=0.91), also for interaction (p=0.16)
-m14 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m14); # RC2 non sig (p=0.15), also for interaction (p=0.62)
-m15 <- glmer(observed ~ scale(trialn) + expected*RC6_use_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m15); # RC6 non sig (p=0.24), also for interaction (p=0.39)
-m16 <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m16); # lang_ent non sig (p=0.14), also for interaction (p=0.11)
-m17 <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m17); # multi_exp sig (p=0.04), marginally sig for interaction (p=0.08)
-m18 <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m18); # L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
+lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_Gender); # Gender non sig (p=0.13 for Other, p=0.15 for Woman)
+lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_Age); # Age non sig (p=0.62), also for interaction (p=0.16)
+lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_RC1); # RC1 non sig (p=0.58), also for interaction (p=0.75)
+lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_RC9); # RC9 non sig (p=0.91), also for interaction (p=0.16)
+lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_RC2); # RC2 non sig (p=0.15), also for interaction (p=0.62)
+lm_2M_RC6 <- glmer(observed ~ scale(trialn) + expected*RC6_use_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_RC6); # RC6 non sig (p=0.24), also for interaction (p=0.39)
+lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_ent); # lang_ent non sig (p=0.14), also for interaction (p=0.11)
+lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_multiexp); # multi_exp sig (p=0.04), marginally sig for interaction (p=0.08)
+lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
 
 
 # FAMILIARITY #
-data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
-m19 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m19); # RC1_L3 non sig (p=0.34)
-m20 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m20); # RC9_L4 non sig (p=0.51)
-m21 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m21); # RC2_use_L1vsL2 non sig (p=0.52)
-m22 <- glmer(correct ~ scale(trialn) + RC6_use_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m22); # RC6_use_L4 marginally non sig (p=0.06)
-m23 <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m23); # lang_ent non sig (p=0.72)
-m24 <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m24); # multi_exp non sig (p=0.63)
-m25 <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m25); # L1_L2_diff non sig (p=0.40)
+data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_Gender); # Gender(Other) marginally sig (p=0.06); Woman non sig (p=0.82)
+lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_Gender); # Age marginally sig (p=0.06)
+lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC1); # RC1_L3 non sig (p=0.34)
+lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC9); # RC9_L4 non sig (p=0.51)
+lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC2); # RC2_use_L1vsL2 non sig (p=0.52)
+lm_fam_RC6 <- glmer(correct ~ scale(trialn) + RC6_use_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC6); # RC6_use_L4 marginally non sig (p=0.06)
+lm_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_ent); # lang_ent non sig (p=0.72)
+lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_multiexp); # multi_exp non sig (p=0.63)
+lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.40)
 
 
 # exploration of main effects & directionality of interactions #
@@ -771,7 +775,7 @@ abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_di
 
 library(effects);
 L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
-L1_L2_diff_predictions <- data.frame(Effect(mod=m9, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
+L1_L2_diff_predictions <- data.frame(Effect(mod=lm_L1L2diff, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
      plot(L1_L2_diff, fit, type='b', ylim=c(0.4,0.8),col='black',xlab='L1-L2 difference',ylab='Model fit'));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
@@ -1072,16 +1076,16 @@ data_testing_lm$cluster[data_testing_lm$temp_sbjID %in% new_cluster5] <- "5";
 data_testing_lm$cluster <- as.factor(data_testing_lm$cluster);
 
 #all testing conditions - 'yes' responses
-m27 <- glmer(observed ~ scale(trialn) + testing_condition*cluster + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(m27); # cluster non significant as main effect, 1M*cluster5 sig (p < 0.01), 2M*cluster5 sig (p < 0.01)
+lm_clusters <- glmer(observed ~ scale(trialn) + testing_condition*cluster + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_clusters); # cluster non significant as main effect, 1M*cluster5 sig (p < 0.01), 2M*cluster5 sig (p < 0.01)
 #2M accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
-m28 <- glmer(observed ~ scale(trialn) + expected*cluster + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(m28); # cluster non sig
+lm_2M_clusters <- glmer(observed ~ scale(trialn) + expected*cluster + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_clusters); # cluster non sig
 #familiarity
 data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','cluster','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
-m29 <- glmer(correct ~ scale(trialn) + cluster + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(m29); # cluster non sig
+lm_fam_clusters <- glmer(correct ~ scale(trialn) + cluster + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_clusters); # cluster non sig
 
 # examination of significant cluster5*1M interaction
 data_BLP_testing_0M_cluster_yes <- merge(data_testing_0M_yes, subset(data_BLP_extracted_all,select=c('sbj_ID','cluster')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -1222,79 +1226,79 @@ t.test(data_familiarity_c1_means$x, mu=0.50);
 data_testing_c1_lm <- subset(data_testing_lm[data_testing_lm$sbj_ID %in% data_testing_c1$sbj_ID,]);
 
 #all testing conditions - 'yes' responses
-m30 <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m30);
+lm_c1_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_Gender);
 #FULL DATASET: Gender non significant as main effect and interaction
 #CLUSTER 1: Gender non significant as main effect and interaction
-m31 <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m31);
+lm_c1_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_Age);
 #FULL DATASET: Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
 #CLUSTER 1: Age non significant as main effect (p=0.07) and sig as interaction (Age*1M p=0.03; Age*2M p=0.001)
-m32 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m32);
+lm_c1_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_RC1);
 #FULL DATASET: RC1 non significant as main effect (p=0.165) and interaction
 #CLUSTER 1: RC1 non significant as main effect (p=0.198) and interaction
-m33 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m33);
+lm_c1_RC9 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_RC9);
 #FULL DATASET: RC9 non significant as main effect (p=0.19) and interaction
 #CLUSTER 1: RC9 non significant as main effect (p=0.47) and interaction
-m34 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m34);
+lm_c1_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_RC2);
 #FULL DATASET: RC2 non significant as main effect (p=0.22) and interaction
 #CLUSTER 1: RC2 non significant as main effect (p=0.25) and interaction
-m35 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m35);
+lm_c1_RC6 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_RC6);
 #FULL DATASET: RC6 non significant as main effect (p=0.11) and interaction
 #CLUSTER 1: RC6 non significant as main effect (p=0.12) and interaction
-m36 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m36);
+lm_c1_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_ent);
 #FULL DATASET: 2M sig (p=0.003), lang_ent non-sig (p=0.67)
 #CLUSTER 1: 2M sig (p=0.002), lang_ent non-sig (p=0.31)
-m37 <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m37);
+lm_c1_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_multiexp);
 #FULL DATASET: 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
 #CLUSTER 1: 1M sig (p=8e-5), 2M sig (p=6e-11), multi_exp non-sig (p=0.22)
-m38 <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
-summary(m38);
+lm_c1_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_L1L2diff);
 #FULL DATASET: 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
 #CLUSTER 1: 1M sig (p=9e-10) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.47), 1M*L1_L2_diff non sig (p=0.34) & 2M*L1_L2_diff non sig (p=0.10)
 
 
 #2M - accuracy
 data_testing_c1_lm_2M <- subset(data_testing_lm_2M[data_testing_lm_2M$sbj_ID %in% data_testing_c1$sbj_ID,]);
-m39 <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m39);
+lm_c1_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_Gender);
 #FULL DATASET: Gender non sig (p=0.13 for Other, p=0.15 for Woman)
 #CLUSTER 1: Gender non sig (p=0.10 for Other, p=0.40 for Woman), expected*Other sig (p=0.04)
-m40 <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m40);
+lm_c1_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_Age);
 #FULL DATASET: Age non sig (p=0.62), also for interaction (p=0.16)
 #CLUSTER 1: Age non sig (p=0.95), also for interaction (p=0.48)
-m41 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m41);
+lm_c1_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_RC1);
 #FULL DATASET: RC1 non sig (p=0.58), also for interaction (p=0.75)
 #CLUSTER 1: RC1 non sig (p=0.44), also for interaction (p=0.96)
-m42 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m42);
+lm_c1_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_RC9);
 #FULL DATASET: RC9 non sig (p=0.91), also for interaction (p=0.16)
 #CLUSTER 1: RC9 non sig (p=0.30), also for interaction (p=0.15)
-m43 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m43);
+lm_c1_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_RC2);
 #FULL DATASET: RC2 non sig (p=0.15), also for interaction (p=0.62)
 #CLUSTER 1: RC2 non sig (p=0.11), also for interaction (p=0.67)
-m44 <- glmer(observed ~ scale(trialn) + expected*RC6_use_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m44);
+lm_c1_2M_RC6 <- glmer(observed ~ scale(trialn) + expected*RC6_use_L4 + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_RC6);
 #FULL DATASET: RC6 non sig (p=0.24), also for interaction (p=0.39)
 #CLUSTER 1: RC6 sig (p=0.03), non sig for interaction (p=0.40)
-m45 <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m45);
+lm_c1_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_ent);
 #FULL DATASET: lang_ent non sig (p=0.14), also for interaction (p=0.11)
 #CLUSTER 1: lang_ent non sig (p=0.44), also for interaction (p=0.40)
-m46 <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
-summary(m46);
+lm_c1_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+summary(lm_c1_2M_multiexp);
 #FULL DATASET: multi_exp sig (p=0.04), marginally sig for interaction (p=0.08)
 #CLUSTER 1: multi_exp non sig (p=0.33), non sig for interaction (p=0.35)
-m47 <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
+lm_c1_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_c1_lm_2M, family='binomial');
 summary(m47);
 #FULL DATASET: L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
 #CLUSTER 1: L1_L2_diff marginally sig (p=0.06), interaction non sig (p=0.77)
@@ -1302,32 +1306,40 @@ summary(m47);
 
 # FAMILIARITY #
 data_c1_BLP_familiarity <- subset(data_BLP_familiarity[data_BLP_familiarity$sbj_ID %in% data_testing_c1$sbj_ID,]);
-m48 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m48);
+lm_c1_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_Gender);
+#FULL DATASET: Gender(Other) marginally sig (p=0.06); Woman non sig (p=0.82)
+#CLUSTER 1: Gender non sig (p=0.12 for Other; p=0.77 for Woman)
+lm_c1_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_Age);
+#FULL DATASET: Age marginally sig (p=0.06)
+#CLUSTER 1: Age marginally sig (p=0.06)
+lm_c1_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_RC1);
 #FULL DATASET: RC1_L3 non sig (p=0.34)
 #CLUSTER 1: RC1_L3 non sig (p=0.71)
-m49 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m49);
+lm_c1_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_RC9);
 #FULL DATASET: RC9_L4 non sig (p=0.51)
 #CLUSTER 1: RC9_L4 non sig (p=0.56)
-m50 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m50);
+lm_c1_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_RC2);
 #FULL DATASET: RC2_use_L1vsL2 non sig (p=0.52)
 #CLUSTER 1: RC2_use_L1vsL2 non sig (p=0.53)
-m51 <- glmer(correct ~ scale(trialn) + RC6_use_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m51);
+lm_c1_fam_RC6 <- glmer(correct ~ scale(trialn) + RC6_use_L4 + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_RC6);
 #FULL DATASET: RC6_use_L4 marginally non sig (p=0.06)
 #CLUSTER 1: RC6_use_L4 marginally non sig (p=0.07)
-m52 <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m52);
+lm_c1_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_ent);
 #FULL DATASET: lang_ent non sig (p=0.72)
 #CLUSTER 1: lang_ent non sig (0.44)
-m53 <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m53);
+lm_c1_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_multiexp);
 #FULL DATASET: multi_exp non sig (p=0.63)
 #CLUSTER 1: multi_exp non sig (p=0.47)
-m54 <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
-summary(m54);
+lm_c1_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_c1_BLP_familiarity, family='binomial');
+summary(lm_c1_fam_L1L2diff);
 #FULL DATASET: L1_L2_diff non sig (p=0.40)
 #CLUSTER 1: L1_L2_diff non sig (p=0.38)
 
@@ -1367,7 +1379,7 @@ points(data_BLP$L3Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[3]);
 points(data_BLP$L4Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[4]);
 legend("bottomleft",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
-abline(h=218, lty=5)
+abline(h=218, lty=5);
 
 #by lang_ent
 sorted_order1 <- order(data_BLP$lang_ent);
@@ -1377,7 +1389,7 @@ points(data_BLP$L3Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],subset
 points(data_BLP$L4Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],subset=ok2,pch=19,col=cols2[4]);
 legend("bottomleft",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
-abline(h=218, lty=5)
+abline(h=218, lty=5);
 
 #by multi_exp
 sorted_order2 <- order(data_BLP$multi_exp);
@@ -1387,7 +1399,7 @@ points(data_BLP$L3Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],subset
 points(data_BLP$L4Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],subset=ok2,pch=19,col=cols2[4]);
 legend("bottomleft",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
-abline(h=218, lty=5)
+abline(h=218, lty=5);
 
 #by L1_L2_diff
 sorted_order3 <- order(data_BLP$L1_L2_diff);
