@@ -1,4 +1,4 @@
-on: [push]
+yamlCopy codeon: [push]
 
 jobs:
   cognition-deploy:
