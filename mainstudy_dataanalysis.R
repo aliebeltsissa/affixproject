@@ -661,6 +661,8 @@ library(lme4);
 data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
+lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_TestingConditions); # all conditions sig
 lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_Gender); # Gender non significant as main effect and interaction
 lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
