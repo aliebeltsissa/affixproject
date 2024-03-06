@@ -792,6 +792,7 @@ legend("topright",title="Condition:",c("0M","1M","2M"),
        fill=c(cols[2],cols[3],cols[4]),bty = "n",
        cex=1,y.intersp=0.75);
 
+
 #correlation between L1_L2_diff and age?
 cor(data_BLP$Age, data_BLP$L1_L2_diff); # r=-0.01
 #So age and L1_L2_diff uncorrelated: the effects they have on the 'yes' 
