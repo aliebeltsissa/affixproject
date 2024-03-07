@@ -1085,10 +1085,21 @@
       preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
       html: `<legend>Age</legend><div><input name="Age" type="text" required/></p>
 
-      <p><legend>Gender</legend></p>
-      <p><input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/><label for="Woman">Woman</label></p>
-      <p><input type="radio" id="Man" name="Gender" value="Man"><label for="Man">Man</label></p>
-      <p><input type="radio" id="Other" name="Gender" value="Other"><label for="Other">Other/would prefer not to say</label></p>
+      <p>
+        <legend>Gender</legend>
+        <div class="radio-container">
+          <input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/>
+          <label for="Woman">Woman</label>
+        </div>
+        <div class="radio-container">
+          <input type="radio" id="Man" name="Gender" value="Man">
+          <label for="Man">Man</label>
+        </div>
+        <div class="radio-container">
+          <input type="radio" id="Other" name="Gender" value="Other">
+          <label for="Other">Other/would prefer not to say</label>
+        </div>
+      </p>
       
       <p><legend>Highest level of formal education</legend></p>
       <p><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></p>
