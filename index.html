@@ -648,7 +648,7 @@
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
-      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, you can exit it at any time by pressing the escape key on your keyboard./n</p>`,
+      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
       button_label: 'Enter fullscreen mode'
     };
     timeline.push(enter_fullscreen);
@@ -1074,7 +1074,9 @@
       type: jsPsychSurveyHtmlForm,
       preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
       html: `<legend>Age</legend><div><input name="Age" type="text" required/></p>
-      <p><legend>Gender</legend><input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/><label for="Woman">Woman</label>/n<input type="radio" id="Man" name="Gender" value="Man"><label for="Man">Man</label>/n<input type="radio" id="Other" name="Gender" value="Other"><label for="Other">Other/would prefer not to say</label></p>
+      <p><legend>Gender</legend><input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/><label for="Woman">Woman</label></p>
+        <input type="radio" id="Man" name="Gender" value="Man"><label for="Man">Man</label></p>
+        <input type="radio" id="Other" name="Gender" value="Other"><label for="Other">Other/would prefer not to say</label></p>
       <legend>Highest level of formal education</legend><div><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></div>/n<div><input type="radio" id="HighSchool" name="Education" value="HighSchool"><label for="HighSchool">High school</label></div>/n<div><input type="radio" id="MinusCollege" name="Education" value="MinusCollege"><label for="MinusCollege">Some college</label></div>/n<div><input type="radio" id="College" name="Education" value="College"><label for="College">College (B.A., B.S.)</label></div>/n<div><input type="radio" id="PlusCollege" name="Education" value="PlusCollege"><label for="PlusCollege">Some graduate school</label></div>/n<div><input type="radio" id="Masters" name="Education" value="Masters"><label for="Masters">Masters</label></div>/n<div><input type="radio" id="PhD" name="Education" value="PhD"><label for="PhD">PhD/MD/JD</label></div>/n</p>
       <p><legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend>/n<input name="L1" type="text" required/>/n</p>
       <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend>/n<input name="L2" type="text" required/>/n</p>
