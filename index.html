@@ -641,14 +641,14 @@
       <p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
       <p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
       <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
-      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p></p>`
+      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p></n>`
     };
     timeline.push(consent);
 
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
-      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, you can exit it at any time by pressing the escape key on your keyboard.</p><p></p>`,
+      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, you can exit it at any time by pressing the escape key on your keyboard./n</p>`,
       button_label: 'Enter fullscreen mode'
     };
     timeline.push(enter_fullscreen);
@@ -676,7 +676,7 @@
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Here is an example of the words you'll see:</p>
+      stimulus: `<p>Here is an example of the words you'll see:</p></n>
       <img src='esempio.png' height='400px'>
       <p>When you're ready to begin, press the spacebar.</p></div>`,
       choices: ' '
