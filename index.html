@@ -1394,26 +1394,16 @@
       },
       data: {name: 'use_info'}
     };
+    timeline.push(use_info);
     
-    var while_trial = {
-      type: jsPsychInstructions,
-      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
-        <p>Please press the button below to try again.</p>`],
-      button_label_next: 'Retry',
-      allow_keys: false,
-      allow_backward: false,
-      show_clickable_nav: true,
-      data: {name: 'use_info_prb'}
-    };
-
-    var while_node = {
-      timeline: [while_trial],
+    var check_node = {
+      timeline: [use_info, error_screen],
       conditional_function: function(){
         var lasttrial_data = jsPsych.data.getLastTrialData().select('response').values[0];
         var questions = ['PercFriends', 'PercCount', 'PercFamily', 'PercWork', 'PercSelf'];
         var redo = false;
         for (let i=0; i < questions.length; i++) {
-          while (redo == false) {
+          if (redo == false) {
             var L1 = questions[i] + 'L1';
             var percL1 = lasttrial_data[L1];
             var L2 = questions[i] + 'L2';
@@ -1429,24 +1419,36 @@
             let sum = 0;
             red_percs.forEach( num => {sum += num;});
             if (sum != 100) {var redo = true}
-          }
+          };
         };
         return redo
       }
     };
+    timeline.push(check_node);
 
-    var use_info2 = {
-      timeline: [use_info],
+    var error_screen = {
+      type: jsPsychInstructions,
+      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
+        <p>Please press the button below to try again.</p>`],
+      button_label_next: 'Retry',
+      allow_keys: false,
+      allow_backward: false,
+      show_clickable_nav: true,
+      data: {name: 'use_info_prb'}
+    };
+
+    var while_loop = {
+      timeline: [use_info,check_node],
       conditional_function: function(){
-        var redo = false;
-        var lasttrial_type = jsPsych.data.getLastTrialData().select('trial_type').values[0];
-        if (lasttrial_type == 'html-keyboard-response') {var redo = true}
+        var redo = jsPsych.data.getLastTrialData().select('redo').values[0];
+
         return redo
       }
     };
+    timeline.push(while_loop)
 
     var use_procedure = {
-      timeline: [use_info, if_node, use_info2]
+      timeline: [use_info, check_node, use_info2]
     };
     timeline.push(use_procedure);
 
