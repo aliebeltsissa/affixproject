@@ -1087,34 +1087,72 @@
 
       <div>
         <legend>Gender</legend>
-        <div class="radio-container">
-          <input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/>
+        <div>
+          <input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required>
           <label for="Woman">Woman</label>
         </div>
-        <div class="radio-container">
+        <div>
           <input type="radio" id="Man" name="Gender" value="Man">
           <label for="Man">Man</label>
         </div>
-        <div class="radio-container">
+        <div>
           <input type="radio" id="Other" name="Gender" value="Other">
           <label for="Other">Other/would prefer not to say</label>
         </div>
       </div>
       
-      <p><legend>Highest level of formal education</legend></p>
-      <p><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></p>
-      <p><input type="radio" id="HighSchool" name="Education" value="HighSchool"><label for="HighSchool">High school</label></p>
-      <p><input type="radio" id="MinusCollege" name="Education" value="MinusCollege"><label for="MinusCollege">Some college</label></p>
-      <p><input type="radio" id="College" name="Education" value="College"><label for="College">College (B.A., B.S.)</label></p>
-      <p><input type="radio" id="PlusCollege" name="Education" value="PlusCollege"><label for="PlusCollege">Some graduate school</label></p>
-      <p><input type="radio" id="Masters" name="Education" value="Masters"><label for="Masters">Masters</label></p>
-      <p><input type="radio" id="PhD" name="Education" value="PhD"><label for="PhD">PhD/MD/JD</label></p>
+      <div>
+        <legend>Highest level of formal education</legend>
+        <div>
+          <input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required>
+          <label for="MinusHighSchool">Less than high school</label>
+        </div>
+        <div>
+          <input type="radio" id="HighSchool" name="Education" value="HighSchool">
+          <label for="HighSchool">High school</label>
+        </div>
+        <div>
+          <input type="radio" id="MinusCollege" name="Education" value="MinusCollege">
+          <label for="MinusCollege">Some college</label>
+        </div>
+        <div>
+          <input type="radio" id="College" name="Education" value="College">
+          <label for="College">College (B.A., B.S.)</label>
+        </div>
+        <div>
+          <input type="radio" id="PlusCollege" name="Education" value="PlusCollege">
+          <label for="PlusCollege">Some graduate school</label>
+        </div>
+        <div>
+          <input type="radio" id="Masters" name="Education" value="Masters">
+          <label for="Masters">Masters</label>
+        </div>
+        <div>
+          <input type="radio" id="PhD" name="Education" value="PhD">
+          <label for="PhD">PhD/MD/JD</label>
+        </div>
+      </div
       
-      <p><legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend></p><p><input name="L1" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend></p><p><input name="L2" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend></p><p><input name="L3" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend></p><p><input name="L4" type="text" required/></p>
-      <p><legend>Do you speak any other languages?</p><p></legend>/n<input name="otherLs" type="text" required/></p><p>`,
+      <div>
+        <legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend>
+        <input name="L1" type="text" required/>
+      </div>
+      <div>
+        <legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend>
+        <input name="L2" type="text" required/>
+      </div>
+      <div>
+        <legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend>
+        <input name="L3" type="text" required/>
+      </div>
+      <div>
+        <legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend>
+        <input name="L4" type="text" required/>
+      </div>
+      <div>
+        <legend>Do you speak any other languages?</legend>
+        <input name="otherLs" type="text" required/>
+      </div>`,
       button_label: "Continue",
       data: {name: 'bio_info'}
     };
