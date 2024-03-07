@@ -1093,7 +1093,7 @@
       <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend></p><p><input name="L2" type="text" required/></p>
       <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend></p><p><input name="L3" type="text" required/></p>
       <p><legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend></p><p><input name="L4" type="text" required/></p>
-      <p><legend>Do you speak any other languages?</p><p></legend><input name="otherLs" type="text" required/></p><p>`,
+      <p><legend>Do you speak any other languages?</p><p></legend>/n<input name="otherLs" type="text" required/></p><p>`,
       button_label: "Continue",
       data: {name: 'bio_info'}
     };
@@ -1131,13 +1131,13 @@
           var name = nameL4;
           var color = "#2d7017"
         };
-        if (question == 'AoA') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Since birth</label></p>`;};
-        if (question == 'AoEase') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">As early as I can remember</label></p>
-          <p><input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Not yet</label></p>`};
-        if (question == 'yearsEdu') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label></p>`};
-        if (question == 'yearsCountry') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label></p>`};
-        if (question == 'yearsFamily') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label></p>`};
-        if (question == 'yearsWork') {var extras = `<p><input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label></p>`};
+        if (question == 'AoA') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Since birth</label>`;};
+        if (question == 'AoEase') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">As early as I can remember</label>
+          <input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Not yet</label>`};
+        if (question == 'yearsEdu') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsCountry') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsFamily') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsWork') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
           `+ extras +`
@@ -1179,11 +1179,11 @@
         var yearsCountry = years('yearsCountry');
         var yearsFamily = years('yearsFamily');
         var yearsWork = years('yearsWork');
-        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p><p>` + AoA +
-        `<p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p><p>` + AoEase +
-        `<p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p><p>` + yearsEdu +
-        `<p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p><p>` + yearsCountry +
-        `<p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p><p>` + yearsFamily +
+        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA +
+        `<p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase +
+        `<p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu +
+        `<p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry +
+        `<p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily +
         `<p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork + `</p>`;
         return big_html
       },
