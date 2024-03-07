@@ -1229,6 +1229,8 @@ t.test(data_familiarity_c1_means$x, mu=0.50);
 data_testing_c1_lm <- subset(data_testing_lm[data_testing_lm$sbj_ID %in% data_testing_c1$sbj_ID,]);
 
 #all testing conditions - 'yes' responses
+lm_c1_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
+summary(lm_c1_TestingConditions); # all conditions sig
 lm_c1_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_c1_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_c1_Gender);
 #FULL DATASET: Gender non significant as main effect and interaction
