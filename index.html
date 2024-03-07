@@ -641,7 +641,7 @@
       <p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
       <p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
       <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
-      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p></n><p>`
+      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><><p>`
     };
     //timeline.push(consent);
 
@@ -676,7 +676,7 @@
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Here is an example of the words you'll see:</p></n>
+      stimulus: `<p>Here is an example of the words you'll see:</p><>
       <img src='esempio.png' height='400px'>
       <p>When you're ready to begin, press the spacebar.</p></div>`,
       choices: ' '
@@ -992,7 +992,7 @@
 
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p>What strategy (if any) did you use in the previous task?/n</b></p>`,
+      preamble: `<p>What strategy (if any) did you use in the previous task?</b></p>`,
       html: '<input name="testing_strategy" type="text" required/></p>',
       button_label: "Continue"
     };
@@ -1181,36 +1181,36 @@
           var color = "#2d7017"
         };
         if (question == 'AoA') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">Since birth</label>
           </div>`;};
         if (question == 'AoEase') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">As early as I can remember</label>
           </div>
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet">
             <label for="`+ name +`_notyet">Not yet</label>
           </div>`};
         if (question == 'yearsEdu') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">0</label>
           </div>`};
         if (question == 'yearsCountry') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">0</label>
           </div>`};
         if (question == 'yearsFamily') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">0</label>
           </div>`};
         if (question == 'yearsWork') {var extras = `
-          <div>
+          <div class="radio-container">
             <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
             <label for="`+ name +`_0">0</label>
           </div>`};
@@ -1218,83 +1218,83 @@
           var option = `
           <div>
             <strong><font color="`+ color +`">`+ tag +`: </strong></font>`+ extras +`
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
               <label for="`+ name +`_1">1</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
               <label for="`+ name +`_2">2</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
               <label for="`+ name +`_3">3</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
               <label for="`+ name +`_4">4</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
               <label for="`+ name +`_5">5</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
               <label for="`+ name +`_6">6</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/>
               <label for="`+ name +`_7">7</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/>
               <label for="`+ name +`_8">8</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/>
               <label for="`+ name +`_9">9</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
               <label for="`+ name +`_10">10</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/>
               <label for="`+ name +`_11">11</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/>
               <label for="`+ name +`_12">12</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/>
               <label for="`+ name +`_13">13</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/>
               <label for="`+ name +`_14">14</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/>
               <label for="`+ name +`_15">15</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/>
               <label for="`+ name +`_16">16</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/>
               <label for="`+ name +`_17">17</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/>
               <label for="`+ name +`_18">18</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/>
               <label for="`+ name +`_19">19</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/>
               <label for="`+ name +`_20+">20+</label>
             </div>
@@ -1365,47 +1365,47 @@
           var option = `
           <div>
             <strong><font color="`+ color +`">`+ tag +`: </strong></font>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/>
               <label for="`+ name +`_0">0%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
               <label for="`+ name +`_10">10%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/>
               <label for="`+ name +`_20">20%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/>
               <label for="`+ name +`_30">30%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/>
               <label for="`+ name +`_40">40%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/>
               <label for="`+ name +`_50">50%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/>
               <label for="`+ name +`_60">60%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/>
               <label for="`+ name +`_70">70%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/>
               <label for="`+ name +`_80">80%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/>
               <label for="`+ name +`_90">90%</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/>
               <label for="`+ name +`_100">100%</label>
             </div>
@@ -1420,7 +1420,7 @@
 
     var use_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE/n</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p><p>',
+      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p><p>',
       html: function() {
         var PercFriends = percent('PercFriends');
         var PercFamily = percent('PercFamily');
@@ -1431,7 +1431,7 @@
         <p style="color: black"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend></p>` + PercFamily + `</p>
         <p style="color: black"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend></p>` + PercWork + `</p>
         <p style="color: black"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
-        <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend>/n</p>` + PercCount +`</p><p>`;
+        <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount +`</p><p>`;
         return big_html
       },
       data: {name: 'use_info'}
@@ -1439,7 +1439,7 @@
     
     var while_trial = {
       type: jsPsychInstructions,
-      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%./n</p>
+      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
         <p>Please press the button below to try again.</p>`],
       button_label_next: 'Retry',
       allow_keys: false,
@@ -1528,31 +1528,31 @@
           var option = `
           <div>
             <strong><font color="`+ color +`">`+ tag +`: </strong></font>
-            <div>
+            <div class="radio-container">
               <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
               <label for="`+ name +`_0">0 (not well at all)</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
               <label for="`+ name +`_1">1</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
               <label for="`+ name +`_2">2</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
               <label for="`+ name +`_3">3</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
               <label for="`+ name +`_4">4</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
               <label for="`+ name +`_5">5</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
               <label for="`+ name +`_6">6 (very well)</label>
             </div>
@@ -1622,31 +1622,31 @@
           var option = `
           <div>
             <strong><font color="`+ color +`">`+ tag +`: </strong></font>
-            <div>
+            <div class="radio-container">
               <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
               <label for="`+ name +`_0">0 (disagree)</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
               <label for="`+ name +`_1">1</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
               <label for="`+ name +`_2">2</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
               <label for="`+ name +`_3">3</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
               <label for="`+ name +`_4">4</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
               <label for="`+ name +`_5">5</label>
             </div>
-            <div>
+            <div class="radio-container">
               <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
               <label for="`+ name +`_6">6 (agree)</label>
             </div>

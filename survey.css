@@ -23,3 +23,13 @@ input[type="radio"]:checked + label {
 input[type="radio"]:invalid + label {
   background-color: #cb4154;
 }
+
+.radio-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.radio-container input[type="radio"] {
+  margin-right: 10px;
+}
