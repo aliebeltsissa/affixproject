@@ -43,6 +43,16 @@
       session_id: session_id
     });
 
+    var font = document.createElement('style');
+    font.innerHTML = `
+      @font-face {
+        font-family: 'BACS';
+        src: url('BACS1'.otf) format('opentype');
+      }
+      /* Add more @font-face rules for other font variations if needed */
+    `;
+    document.head.appendChild(font);
+
     var timeline = [];
 
     /* ========== WORD_GENERATION SCRIPT ========== */
