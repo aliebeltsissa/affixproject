@@ -1070,6 +1070,13 @@
     timeline.push(pre_BLP);
 
     /* BLP */
+    var trial = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p>How are you feeling <b>right now?</b></p>',
+      html: '<p> I am feeling <input name="first" type="text" />, <input name="second" type="text" />, and <input name="third" type="text" />.</p>'
+    };
+    timeline.push(trial)
+
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
