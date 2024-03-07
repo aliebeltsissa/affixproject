@@ -26,16 +26,6 @@
       font-family: "BACS";
       src: url('BACS1.otf') format('opentype'); 
     };
-
-    .radio-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .radio-container input[type="radio"] {
-      margin-right: 10px;
-    }
   </style>
   <body></body>
   <script>
@@ -1083,7 +1073,7 @@
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
       preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
-      html: `<legend>Age</legend><div><input name="Age" type="text" required/></p>
+      html: `<legend>Age</legend><div><input name="Age" type="text" required/></div>
 
       <div>
         <legend>Gender</legend>
@@ -1190,36 +1180,125 @@
           var name = nameL4;
           var color = "#2d7017"
         };
-        if (question == 'AoA') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">Since birth</label>`;};
-        if (question == 'AoEase') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">As early as I can remember</label>
-          <input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet"><label for="`+ name +`_notyet">Not yet</label>`};
-        if (question == 'yearsEdu') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (question == 'yearsCountry') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (question == 'yearsFamily') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
-        if (question == 'yearsWork') {var extras = `<input type="radio" id="`+ name +`_0" name="`+ name +`" value="0"><label for="`+ name +`_0">0</label>`};
+        if (question == 'AoA') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">Since birth</label>
+          </div>`;};
+        if (question == 'AoEase') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">As early as I can remember</label>
+          </div>
+          <div>
+            <input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet">
+            <label for="`+ name +`_notyet">Not yet</label>
+          </div>`};
+        if (question == 'yearsEdu') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">0</label>
+          </div>`};
+        if (question == 'yearsCountry') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">0</label>
+          </div>`};
+        if (question == 'yearsFamily') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">0</label>
+          </div>`};
+        if (question == 'yearsWork') {var extras = `
+          <div>
+            <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+            <label for="`+ name +`_0">0</label>
+          </div>`};
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
-          `+ extras +`
-          <div class="radio-container"><input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/><label for="`+ name +`_7">7</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/><label for="`+ name +`_8">8</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/><label for="`+ name +`_9">9</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/><label for="`+ name +`_11">11</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/><label for="`+ name +`_12">12</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/><label for="`+ name +`_13">13</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/><label for="`+ name +`_14">14</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/><label for="`+ name +`_15">15</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/><label for="`+ name +`_16">16</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/><label for="`+ name +`_17">17</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/><label for="`+ name +`_18">18</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/><label for="`+ name +`_19">19</label></div>
-          <div class="radio-container"><input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/><label for="`+ name +`_20+">20+</label></div>`;
+          var option = `
+          <div>
+            <strong><font color="`+ color +`">`+ tag +`: </strong></font>`+ extras +`
+            <div>
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/>
+              <label for="`+ name +`_7">7</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/>
+              <label for="`+ name +`_8">8</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/>
+              <label for="`+ name +`_9">9</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
+              <label for="`+ name +`_10">10</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/>
+              <label for="`+ name +`_11">11</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/>
+              <label for="`+ name +`_12">12</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/>
+              <label for="`+ name +`_13">13</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/>
+              <label for="`+ name +`_14">14</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/>
+              <label for="`+ name +`_15">15</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/>
+              <label for="`+ name +`_16">16</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/>
+              <label for="`+ name +`_17">17</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/>
+              <label for="`+ name +`_18">18</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/>
+              <label for="`+ name +`_19">19</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/>
+              <label for="`+ name +`_20+">20+</label>
+            </div>
+          </div>`;
           };
         options.push(option)
       };
@@ -1283,18 +1362,54 @@
           var color = "#2d7017"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
-          <p><input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/><label for="`+ name +`_0">0%</label></p>
-          <p><input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10%</label></p>
-          <p><input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/><label for="`+ name +`_20">20%</label></p>
-          <p><input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/><label for="`+ name +`_30">30%</label></p>
-          <p><input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/><label for="`+ name +`_40">40%</label></p>
-          <p><input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/><label for="`+ name +`_50">50%</label></p>
-          <p><input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/><label for="`+ name +`_60">60%</label></p>
-          <p><input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/><label for="`+ name +`_70">70%</label></p>
-          <p><input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/><label for="`+ name +`_80">80%</label></p>
-          <p><input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/><label for="`+ name +`_90">90%</label></p>
-          <p><input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/><label for="`+ name +`_100">100%</label></p><p>`;
+          var option = `
+          <div>
+            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <div>
+              <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/>
+              <label for="`+ name +`_0">0%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
+              <label for="`+ name +`_10">10%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/>
+              <label for="`+ name +`_20">20%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/>
+              <label for="`+ name +`_30">30%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/>
+              <label for="`+ name +`_40">40%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/>
+              <label for="`+ name +`_50">50%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/>
+              <label for="`+ name +`_60">60%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/>
+              <label for="`+ name +`_70">70%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/>
+              <label for="`+ name +`_80">80%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/>
+              <label for="`+ name +`_90">90%</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/>
+              <label for="`+ name +`_100">100%</label>
+            </div>
+          </div>`;
         };
         options.push(option)
       };
@@ -1410,13 +1525,38 @@
           var color = "#2d7017"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (not well at all)</label>
-          <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
-          <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
-          <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
-          <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
-          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (very well)</label></p>`;
+          var option = `
+          <div>
+            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <div>
+              <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
+              <label for="`+ name +`_0">0 (not well at all)</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6 (very well)</label>
+            </div>
+          </div>`;
         };
         options.push(option)
       };
@@ -1479,13 +1619,38 @@
           var color = "#2d7017"
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
-          var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font><input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/><label for="`+ name +`_0">0 (disagree)</label>
-          <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
-          <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
-          <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
-          <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
-          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6 (agree)</label></p>`;
+          var option = `
+          <div>
+            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <div>
+              <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
+              <label for="`+ name +`_0">0 (disagree)</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            </div>
+            <div>
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6 (agree)</label>
+            </div>
+          </div>`;
         };
         options.push(option)
       };
