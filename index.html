@@ -631,7 +631,7 @@
       <p style="font-size: 15px;">We ask that you press the spacebar to proceed to the consent section.</p>`,
       choices: ' '
     };
-    timeline.push(instructions);
+    //timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyHtmlForm,
@@ -643,7 +643,7 @@
       <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
       <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p></n>`
     };
-    timeline.push(consent);
+    //timeline.push(consent);
 
     var enter_fullscreen = {
       type: jsPsychFullscreen,
@@ -660,7 +660,7 @@
       <p>Press the spacebar to continue.<p>`,
       choices: ' '
     };
-    timeline.push(welcome);
+    //timeline.push(welcome);
 
     // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
     // This trial isn't perceptible, but allowed BACS to be loaded in.
@@ -672,7 +672,7 @@
       trial_duration: 50,
       response_ends_trial: false
     };
-    timeline.push(BACS_preload);
+    //timeline.push(BACS_preload);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
@@ -681,7 +681,7 @@
       <p>When you're ready to begin, press the spacebar.</p></div>`,
       choices: ' '
     };
-    timeline.push(example);
+    //timeline.push(example);
 
     /* MORPHEME TRAINING */
     var pre_morpheme_training = {
@@ -704,7 +704,7 @@
       show_page_number: true,
       page_label: 'Word part'
     };
-    timeline.push(morpheme_training);
+    //timeline.push(morpheme_training);
 
     /* TRAINING */
     var pre_training = {
@@ -735,7 +735,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli1,
     };
-    timeline.push(training_procedure1);
+    //timeline.push(training_procedure1);
 
     var inter_training1 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -743,7 +743,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(inter_training1);
+    //timeline.push(inter_training1);
     
     // training round 2
     var training_stimuli2 = [];
@@ -758,7 +758,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli2,
     };
-    timeline.push(training_procedure2);
+    //timeline.push(training_procedure2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -766,7 +766,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(inter_training2);
+    //timeline.push(inter_training2);
 
     // training round 3
     var training_stimuli3 = [];
@@ -781,7 +781,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli3,
     };
-    timeline.push(training_procedure3);
+    //timeline.push(training_procedure3);
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -789,7 +789,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
-    timeline.push(inter_training3);
+    //timeline.push(inter_training3);
 
     // training round 4
     var training_stimuli4 = [];
@@ -804,7 +804,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli4,
     };
-    timeline.push(training_procedure4);
+    //timeline.push(training_procedure4);
 
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -812,7 +812,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(inter_training4);
+    //timeline.push(inter_training4);
     
     // training round 5
     var training_stimuli5 = [];
@@ -827,7 +827,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli5,
     };
-    timeline.push(training_procedure5);
+    //timeline.push(training_procedure5);
 
     var inter_training5 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -835,7 +835,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(inter_training5);
+    //timeline.push(inter_training5);
     
     // training round 6
     var training_stimuli6 = [];
@@ -850,7 +850,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli6,
     };
-    timeline.push(training_procedure6);
+    //timeline.push(training_procedure6);
 
     var inter_training6 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -858,7 +858,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(inter_training6);
+    //timeline.push(inter_training6);
 
     // training round 7
     var training_stimuli7 = [];
@@ -873,7 +873,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli7,
     };
-    timeline.push(training_procedure7);
+    //timeline.push(training_procedure7);
 
     var inter_training7 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -881,7 +881,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
-    timeline.push(inter_training7);
+    //timeline.push(inter_training7);
 
     // training round 8
     var training_stimuli8 = [];
@@ -896,7 +896,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli8,
     };
-    timeline.push(training_procedure8);
+    //timeline.push(training_procedure8);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
@@ -904,7 +904,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    timeline.push(post_training);
+    //timeline.push(post_training);
 
     /* TESTING */
     var pre_testing = {
@@ -914,7 +914,7 @@
       <p>Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p><p>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
-    timeline.push(pre_testing);
+    //timeline.push(pre_testing);
 
     var testing_stimuli = [];
     for (let i = 0; i < rand_testing.length; i++) {
@@ -988,15 +988,15 @@
       timeline: [testing_trial, if_node],
       timeline_variables: testing_stimuli,
     };
-    timeline.push(testing_procedure);
+    //timeline.push(testing_procedure);
 
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p>What strategy (if any) did you use in the previous task?</b></p>`,
+      preamble: `<p>What strategy (if any) did you use in the previous task?/n</b></p>`,
       html: '<input name="testing_strategy" type="text" required/></p>',
       button_label: "Continue"
     };
-    timeline.push(strategy_prompt);
+    //timeline.push(strategy_prompt);
 
     /* FAMILIARITY TEST */
     var pre_familiarity = {
@@ -1006,7 +1006,7 @@
       <p>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
-    timeline.push(pre_familiarity);
+    //timeline.push(pre_familiarity);
 
     var familiarity_pairs_sides = [];
     for (let i = 0; i < familiarity_pairs.length; i++) {
@@ -1058,7 +1058,7 @@
       timeline: [familiarity_trial],
       timeline_variables: familiarity_stimuli,
     };
-    timeline.push(familiarity_procedure);
+    //timeline.push(familiarity_procedure);
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1074,13 +1074,13 @@
       type: jsPsychSurveyHtmlForm,
       preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
       html: `<legend>Age</legend><div><input name="Age" type="text" required/></p>
-      <p><legend>Gender</legend><input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/><label for="Woman">Woman</label><input type="radio" id="Man" name="Gender" value="Man"><label for="Man">Man</label><input type="radio" id="Other" name="Gender" value="Other"><label for="Other">Other/would prefer not to say</label></p>
-      <legend>Highest level of formal education</legend><div><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></div><div><input type="radio" id="HighSchool" name="Education" value="HighSchool"><label for="HighSchool">High school</label></div><div><input type="radio" id="MinusCollege" name="Education" value="MinusCollege"><label for="MinusCollege">Some college</label></div><div><input type="radio" id="College" name="Education" value="College"><label for="College">College (B.A., B.S.)</label></div><div><input type="radio" id="PlusCollege" name="Education" value="PlusCollege"><label for="PlusCollege">Some graduate school</label></div><div><input type="radio" id="Masters" name="Education" value="Masters"><label for="Masters">Masters</label></div><div><input type="radio" id="PhD" name="Education" value="PhD"><label for="PhD">PhD/MD/JD</label></div></p>
-      <p><legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend><input name="L1" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend><input name="L2" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend><input name="L3" type="text" required/></p>
-      <p><legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend><input name="L4" type="text" required/></p>
-      <p><legend>Do you speak any other languages?</legend><input name="otherLs" type="text" required/></p>`,
+      <p><legend>Gender</legend><input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required/><label for="Woman">Woman</label>/n<input type="radio" id="Man" name="Gender" value="Man"><label for="Man">Man</label>/n<input type="radio" id="Other" name="Gender" value="Other"><label for="Other">Other/would prefer not to say</label></p>
+      <legend>Highest level of formal education</legend><div><input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required><label for="MinusHighSchool">Less than high school</label></div>/n<div><input type="radio" id="HighSchool" name="Education" value="HighSchool"><label for="HighSchool">High school</label></div>/n<div><input type="radio" id="MinusCollege" name="Education" value="MinusCollege"><label for="MinusCollege">Some college</label></div>/n<div><input type="radio" id="College" name="Education" value="College"><label for="College">College (B.A., B.S.)</label></div>/n<div><input type="radio" id="PlusCollege" name="Education" value="PlusCollege"><label for="PlusCollege">Some graduate school</label></div>/n<div><input type="radio" id="Masters" name="Education" value="Masters"><label for="Masters">Masters</label></div>/n<div><input type="radio" id="PhD" name="Education" value="PhD"><label for="PhD">PhD/MD/JD</label></div>/n</p>
+      <p><legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend>/n<input name="L1" type="text" required/>/n</p>
+      <p><legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend>/n<input name="L2" type="text" required/>/n</p>
+      <p><legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend>/n<input name="L3" type="text" required/>/n</p>
+      <p><legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend>/n<input name="L4" type="text" required/>/n</p>
+      <p><legend>Do you speak any other languages?</legend>/n<input name="otherLs" type="text" required/>/n</p>`,
       button_label: "Continue",
       data: {name: 'bio_info'}
     };
@@ -1128,26 +1128,26 @@
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
           `+ extras +`
-          <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>
-          <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>
-          <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>
-          <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>
-          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>
-          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6</label>
-          <input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/><label for="`+ name +`_7">7</label>
-          <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/><label for="`+ name +`_8">8</label>
-          <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/><label for="`+ name +`_9">9</label>
-          <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10</label>
-          <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/><label for="`+ name +`_11">11</label>
-          <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/><label for="`+ name +`_12">12</label>
-          <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/><label for="`+ name +`_13">13</label>
-          <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/><label for="`+ name +`_14">14</label>
-          <input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/><label for="`+ name +`_15">15</label>
-          <input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/><label for="`+ name +`_16">16</label>
-          <input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/><label for="`+ name +`_17">17</label>
-          <input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/><label for="`+ name +`_18">18</label>
-          <input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/><label for="`+ name +`_19">19</label>
-          <input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/><label for="`+ name +`_20+">20+</label></p>`;
+          <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/><label for="`+ name +`_1">1</label>/n
+          <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/><label for="`+ name +`_2">2</label>/n
+          <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/><label for="`+ name +`_3">3</label>/n
+          <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/><label for="`+ name +`_4">4</label>/n
+          <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/><label for="`+ name +`_5">5</label>/n
+          <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/><label for="`+ name +`_6">6</label>/n
+          <input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/><label for="`+ name +`_7">7</label>/n
+          <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/><label for="`+ name +`_8">8</label>/n
+          <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/><label for="`+ name +`_9">9</label>/n
+          <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10</label>/n
+          <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/><label for="`+ name +`_11">11</label>/n
+          <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/><label for="`+ name +`_12">12</label>/n
+          <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/><label for="`+ name +`_13">13</label>/n
+          <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/><label for="`+ name +`_14">14</label>/n
+          <input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/><label for="`+ name +`_15">15</label>/n
+          <input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/><label for="`+ name +`_16">16</label>/n
+          <input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/><label for="`+ name +`_17">17</label>/n
+          <input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/><label for="`+ name +`_18">18</label>/n
+          <input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/><label for="`+ name +`_19">19</label>/n
+          <input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/><label for="`+ name +`_20+">20+</label>/n</p>`;
           };
         options.push(option)
       };
@@ -1158,7 +1158,7 @@
 
     var history_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE HISTORY</p><p style="color: black">In this section, we would like you to answer some factual questions about your language history.</p>',
+      preamble: '<p style="font-size: 25px; color: black">LANGUAGE HISTORY</p>/n<p style="color: black">In this section, we would like you to answer some factual questions about your language history./n</p>',
       html: function(){
         var AoA = years('AoA');
         var AoEase = years('AoEase');
@@ -1166,7 +1166,12 @@
         var yearsCountry = years('yearsCountry');
         var yearsFamily = years('yearsFamily');
         var yearsWork = years('yearsWork');
-        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA + `</p><p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase + `</p><p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu + `</p><p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry + `</p><p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily + `</p><p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork;
+        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend>/n</p>` + AoA + `/n</p>
+        <p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend>/n</p>` + AoEase + `/n</p>
+        <p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend>/n</p>` + yearsEdu + `/n</p>
+        <p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend>/n</p>` + yearsCountry + `/n</p>
+        <p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend>/n</p>` + yearsFamily + `/n</p>
+        <p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend>/n</p>` + yearsWork + `/n</p>`;
         return big_html
       },
       data: {name: 'history_info'}
@@ -1207,17 +1212,17 @@
         };
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `<strong><font color="`+ color +`">`+ tag +`: </strong></font>
-          <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/><label for="`+ name +`_0">0%</label>
-          <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10%</label>
-          <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/><label for="`+ name +`_20">20%</label>
-          <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/><label for="`+ name +`_30">30%</label>
-          <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/><label for="`+ name +`_40">40%</label>
-          <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/><label for="`+ name +`_50">50%</label>
-          <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/><label for="`+ name +`_60">60%</label>
-          <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/><label for="`+ name +`_70">70%</label>
-          <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/><label for="`+ name +`_80">80%</label>
-          <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/><label for="`+ name +`_90">90%</label>
-          <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/><label for="`+ name +`_100">100%</label></p>`;
+          <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/><label for="`+ name +`_0">0%</label>/n
+          <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/><label for="`+ name +`_10">10%</label>/n
+          <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/><label for="`+ name +`_20">20%</label>/n
+          <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/><label for="`+ name +`_30">30%</label>/n
+          <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/><label for="`+ name +`_40">40%</label>/n
+          <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/><label for="`+ name +`_50">50%</label>/n
+          <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/><label for="`+ name +`_60">60%</label>/n
+          <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/><label for="`+ name +`_70">70%</label>/n
+          <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/><label for="`+ name +`_80">80%</label>/n
+          <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/><label for="`+ name +`_90">90%</label>/n
+          <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/><label for="`+ name +`_100">100%</label>/n</p>`;
         };
         options.push(option)
       };
@@ -1228,26 +1233,26 @@
 
     var use_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p>',
+      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE/n</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>./n</p>',
       html: function() {
         var PercFriends = percent('PercFriends');
         var PercFamily = percent('PercFamily');
         var PercWork = percent('PercWork');
         var PercSelf = percent('PercSelf');
         var PercCount = percent('PercCount');
-        var big_html = `<p style="color: black"><legend>7. In an average week, what percentage of time do you use the following languages with friends?</legend></p>` + PercFriends + `</p>
-        <p style="color: black"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend></p>` + PercFamily + `</p>
-        <p style="color: black"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend></p>` + PercWork + `</p>
-        <p style="color: black"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
-        <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount;
+        var big_html = `<p style="color: black"><legend>7. In an average week, what percentage of time do you use the following languages with friends?</legend>/n</p>` + PercFriends + `/n</p>
+        <p style="color: black"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend>/n</p>` + PercFamily + `/n</p>
+        <p style="color: black"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend>/n</p>` + PercWork + `/n</p>
+        <p style="color: black"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend>/n</p>` + PercSelf + `/n</p>
+        <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend>/n</p>` + PercCount +`/n</p>`;
         return big_html
       },
       data: {name: 'use_info'}
     };
     
-    var if_trial = {
+    var while_trial = {
       type: jsPsychInstructions,
-      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
+      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%./n</p>
         <p>Please press the button below to try again.</p>`],
       button_label_next: 'Retry',
       allow_keys: false,
@@ -1256,14 +1261,14 @@
       data: {name: 'use_info_prb'}
     };
 
-    var if_node = {
-      timeline: [if_trial],
+    var while_node = {
+      timeline: [while_trial],
       conditional_function: function(){
         var lasttrial_data = jsPsych.data.getLastTrialData().select('response').values[0];
         var questions = ['PercFriends', 'PercCount', 'PercFamily', 'PercWork', 'PercSelf'];
         var redo = false;
         for (let i=0; i < questions.length; i++) {
-          if (redo == false) {
+          while (redo == false) {
             var L1 = questions[i] + 'L1';
             var percL1 = lasttrial_data[L1];
             var L2 = questions[i] + 'L2';
@@ -1277,9 +1282,7 @@
               return !Number.isNaN(value);
             });
             let sum = 0;
-            red_percs.forEach( num => {
-              sum += num;
-            });
+            red_percs.forEach( num => {sum += num;});
             if (sum != 100) {var redo = true}
           }
         };
