@@ -631,7 +631,7 @@
       <p style="font-size: 15px;">We ask that you press the spacebar to proceed to the consent section.</p>`,
       choices: ' '
     };
-    //timeline.push(instructions);
+    timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyHtmlForm,
@@ -641,9 +641,9 @@
       <p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
       <p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
       <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
-      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><><p>`
+      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p>`
     };
-    //timeline.push(consent);
+    timeline.push(consent);
 
     var enter_fullscreen = {
       type: jsPsychFullscreen,
@@ -660,7 +660,7 @@
       <p>Press the spacebar to continue.<p>`,
       choices: ' '
     };
-    //timeline.push(welcome);
+    timeline.push(welcome);
 
     // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
     // This trial isn't perceptible, but allowed BACS to be loaded in.
@@ -672,16 +672,16 @@
       trial_duration: 50,
       response_ends_trial: false
     };
-    //timeline.push(BACS_preload);
+    timeline.push(BACS_preload);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Here is an example of the words you'll see:</p><>
+      stimulus: `<p>Here is an example of the words you'll see:</p>
       <img src='esempio.png' height='400px'>
       <p>When you're ready to begin, press the spacebar.</p></div>`,
       choices: ' '
     };
-    //timeline.push(example);
+    timeline.push(example);
 
     /* MORPHEME TRAINING */
     var pre_morpheme_training = {
@@ -704,14 +704,15 @@
       show_page_number: true,
       page_label: 'Word part'
     };
-    //timeline.push(morpheme_training);
+    timeline.push(morpheme_training);
 
     /* TRAINING */
     var pre_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly; it seems that the aliens were in a hurry :-)</p>
       <p>Please presss the spacebar when you're ready to begin.<p>`
-    }
+    };
+    timeline.push(pre_training);
 
     var training_stimuli1 = [];
     var item = ' '
@@ -735,7 +736,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli1,
     };
-    //timeline.push(training_procedure1);
+    timeline.push(training_procedure1);
 
     var inter_training1 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -743,7 +744,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(inter_training1);
+    timeline.push(inter_training1);
     
     // training round 2
     var training_stimuli2 = [];
@@ -758,7 +759,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli2,
     };
-    //timeline.push(training_procedure2);
+    timeline.push(training_procedure2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -766,7 +767,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(inter_training2);
+    timeline.push(inter_training2);
 
     // training round 3
     var training_stimuli3 = [];
@@ -781,7 +782,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli3,
     };
-    //timeline.push(training_procedure3);
+    timeline.push(training_procedure3);
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -789,7 +790,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
-    //timeline.push(inter_training3);
+    timeline.push(inter_training3);
 
     // training round 4
     var training_stimuli4 = [];
@@ -804,7 +805,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli4,
     };
-    //timeline.push(training_procedure4);
+    timeline.push(training_procedure4);
 
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -812,7 +813,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(inter_training4);
+    timeline.push(inter_training4);
     
     // training round 5
     var training_stimuli5 = [];
@@ -827,7 +828,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli5,
     };
-    //timeline.push(training_procedure5);
+    timeline.push(training_procedure5);
 
     var inter_training5 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -835,7 +836,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(inter_training5);
+    timeline.push(inter_training5);
     
     // training round 6
     var training_stimuli6 = [];
@@ -850,7 +851,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli6,
     };
-    //timeline.push(training_procedure6);
+    timeline.push(training_procedure6);
 
     var inter_training6 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -858,7 +859,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(inter_training6);
+    timeline.push(inter_training6);
 
     // training round 7
     var training_stimuli7 = [];
@@ -873,7 +874,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli7,
     };
-    //timeline.push(training_procedure7);
+    timeline.push(training_procedure7);
 
     var inter_training7 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -881,7 +882,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
-    //timeline.push(inter_training7);
+    timeline.push(inter_training7);
 
     // training round 8
     var training_stimuli8 = [];
@@ -896,7 +897,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli8,
     };
-    //timeline.push(training_procedure8);
+    timeline.push(training_procedure8);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
@@ -904,7 +905,7 @@
       <p>Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
-    //timeline.push(post_training);
+    timeline.push(post_training);
 
     /* TESTING */
     var pre_testing = {
@@ -914,7 +915,7 @@
       <p>Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p><p>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
-    //timeline.push(pre_testing);
+    timeline.push(pre_testing);
 
     var testing_stimuli = [];
     for (let i = 0; i < rand_testing.length; i++) {
@@ -988,7 +989,7 @@
       timeline: [testing_trial, if_node],
       timeline_variables: testing_stimuli,
     };
-    //timeline.push(testing_procedure);
+    timeline.push(testing_procedure);
 
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
@@ -996,7 +997,7 @@
       html: '<input name="testing_strategy" type="text" required/></p>',
       button_label: "Continue"
     };
-    //timeline.push(strategy_prompt);
+    timeline.push(strategy_prompt);
 
     /* FAMILIARITY TEST */
     var pre_familiarity = {
@@ -1006,7 +1007,7 @@
       <p>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
-    //timeline.push(pre_familiarity);
+    timeline.push(pre_familiarity);
 
     var familiarity_pairs_sides = [];
     for (let i = 0; i < familiarity_pairs.length; i++) {
@@ -1058,7 +1059,7 @@
       timeline: [familiarity_trial],
       timeline_variables: familiarity_stimuli,
     };
-    //timeline.push(familiarity_procedure);
+    timeline.push(familiarity_procedure);
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1295,7 +1296,7 @@
       },
       data: {name: 'history_info'}
     };
-    //timeline.push(history_info);
+    timeline.push(history_info);
 
     // use section
     function percent (question) {
