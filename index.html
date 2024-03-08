@@ -1295,7 +1295,7 @@
       },
       data: {name: 'history_info'}
     };
-    timeline.push(history_info);
+    //timeline.push(history_info);
 
     // use section
     function percent (question) {
@@ -1394,10 +1394,20 @@
       },
       data: {name: 'use_info'}
     };
-    timeline.push(use_info);
+
+    var error_screen = {
+      type: jsPsychInstructions,
+      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
+        <p>Please press the button below to try again.</p>`],
+      button_label_next: 'Retry',
+      allow_keys: false,
+      allow_backward: false,
+      show_clickable_nav: true,
+      data: {name: 'use_info_prb'}
+    };
     
     var check_node = {
-      timeline: [use_info, error_screen],
+      timeline: [error_screen],
       conditional_function: function(){
         var lasttrial_data = jsPsych.data.getLastTrialData().select('response').values[0];
         var questions = ['PercFriends', 'PercCount', 'PercFamily', 'PercWork', 'PercSelf'];
@@ -1418,39 +1428,34 @@
             });
             let sum = 0;
             red_percs.forEach( num => {sum += num;});
-            if (sum != 100) {var redo = true}
+            if (sum != 100) {
+              var redo = true
+            } else {
+              var redo = false
+            }
           };
         };
         return redo
       }
     };
-    timeline.push(check_node);
 
-    var error_screen = {
-      type: jsPsychInstructions,
-      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
-        <p>Please press the button below to try again.</p>`],
-      button_label_next: 'Retry',
-      allow_keys: false,
-      allow_backward: false,
-      show_clickable_nav: true,
-      data: {name: 'use_info_prb'}
-    };
-
-    var while_loop = {
-      timeline: [use_info,check_node],
-      conditional_function: function(){
-        var redo = jsPsych.data.getLastTrialData().select('redo').values[0];
-
-        return redo
+    var repeat = {
+      timeline: [use_info, check_node],
+      loop_function: function(){
+        var lasttrial_name = jsPsych.data.getLastTrialData().select('name').values[0];
+        if(lasttrial_name == 'use_info_prb') {
+          return true;
+        } else {
+          return false
+        }
       }
-    };
-    timeline.push(while_loop)
+    }
 
-    var use_procedure = {
-      timeline: [use_info, check_node, use_info2]
+    var testing_procedure = {
+      timeline: [use_info, check_node, repeat]
     };
-    timeline.push(use_procedure);
+    timeline.push(testing_procedure);
+
 
     // proficiency section
     function proficiency (question) {

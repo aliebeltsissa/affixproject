@@ -5,6 +5,7 @@
     <script src="https://unpkg.com/jspsych@7.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.4"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
     <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
@@ -17,6 +18,57 @@
     });
 
     var timeline = [];
+
+    var questionnaire = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>If you want to repeat this trial, press 'r'.`,
+      choices: [' ', 'r']
+    };
+
+    var error = {
+      type: jsPsychInstructions,
+      pages: [`You wanted to repeat this trial. Click 'Continue' to do so.`],
+      button_label_next: "Continue",
+      show_clickable_nav: true,
+      allow_backward: false,
+      data: {name: 'use_prb'}
+    };
+
+    var check = {
+      timeline: [error],
+      conditional_function: function(){
+        var lasttrial_response = jsPsych.data.getLastTrialData().select('response').values[0];
+        if(lasttrial_response == 'r') {
+          return true;
+        } else {
+          return false
+        }
+      }
+    }
+
+    var repeat = {
+      timeline: [questionnaire, check],
+      loop_function: function(){
+        var lasttrial_name = jsPsych.data.getLastTrialData().select('name').values[0];
+        if(lasttrial_name == 'use_prb') {
+          return true;
+        } else {
+          return false
+        }
+      }
+    }
+
+    var testing_procedure = {
+      timeline: [questionnaire, check, repeat]
+    };
+    timeline.push(testing_procedure);
+
+    var done = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "All done!"
+    };
+    timeline.push(done); /* add trial to end of timeline */
+
 
     var preload = { /* preload images to be used so there's no lag later */
       type: jsPsychPreload,
