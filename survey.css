@@ -33,3 +33,9 @@ input[type="radio"]:invalid + label {
 .radio-container input[type="radio"] {
   margin-right: 10px;
 }
+
+.jspsych-btn {
+  height: 80px; /* Adjust the height value as per your requirement */
+  font-size: 40px;
+  font-family:BACS;
+}

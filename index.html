@@ -684,6 +684,97 @@
     timeline.push(example);
 
     /* MORPHEME TRAINING */
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z', 'a', 'b', 'c', 'd', 'g', 'h', 'i', 'k', 'l', 'm', 'o', 'r', 't', 'u', 'v', 'y','BACKSPACE']
+    var letters_buttons = [];
+    for (let i=0;i<letters.length;i++) {
+      var letter = letters[i];
+      if (letter != 'BACKSPACE'){ // display in BACS
+        letters_buttons.push('<span style="class:jspsych-btn;">' + letter + '</span>')
+      } else { // display in Latin characters (arial)
+        letters_buttons.push('<span style="font-size:20px;font-family:arial">' + letter + '</span>')
+      }
+    };
+
+    var words = ['MouSE','BARK','HorSE','Rack','STANK','MailmaN'];
+    var words = FisherYatesShuffle(words);
+    var stimuli = [];
+    for (let i=0; i<words.length; i++) {
+      var word = words[i];
+      var stimulus = '<p style="font-size: 30px;color:blue">Please spell this word:</p><p style="font-size: 40px;font-family:BACS;color:blue">'+word+'</p><p style="font-size: 40px;font-family:BACS">';
+      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length+2)})
+    };
+        
+    var morph_training = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: letters_buttons,
+      data: {
+        'word': jsPsych.timelineVariable('word'),
+        'stimulus': jsPsych.timelineVariable('stimulus')
+      },
+      on_finish: function(data){
+        var length = jsPsych.timelineVariable('length');
+        if (letters[data.response] != 'BACKSPACE') {
+          data.new_stim = data.stimulus + letters[data.response]; // previous stimulus + inputted key
+        } else {
+          data.new_stim = data.stimulus.slice(0,data.stimulus.length-1);
+        };
+        data.input = data.new_stim.slice(length-2);
+        for (let i=0; i<words.length; i++) {
+          if (words[i] == data.word) {
+            var trial = stimuli[i];
+            trial['stimulus'] = jsPsych.data.getLastTrialData().select('new_stim').values[0];
+            data.stimuli = stimuli;
+          }
+        };
+        console.log(data.input);
+      }
+    };
+
+    var check = {
+      timeline: [morph_training],
+      conditional_function: function(){
+        var input = jsPsych.data.getLastTrialData().select('input').values[0];
+        console.log(input)
+        for (let i = 0; i < words.length; i++) {
+          if (input == words[i]) {
+            var progression = false; // This return statement should be outside the loop
+            break; // This break statement is unnecessary
+          } else {
+            var progression = true;
+          }
+        } ;
+        return progression
+      },
+      on_finish: function(data){
+        data.input = jsPsych.data.getLastTrialData().select('input').values[0];
+        var trial = stimuli[i];
+        trial['stimulus'] = jsPsych.data.getLastTrialData().select('new_stim').values[0];
+        data.stimuli = stimuli;
+        console.log(stimuli)
+      }
+    };
+
+    var repeat = {
+      timeline: [morph_training, check],
+      loop_function: function(){
+        var input = jsPsych.data.getLastTrialData().select('input').values[0];
+        for (let i = 0; i < words.length; i++) {
+          if (input == words[i]) {
+            return false;
+          }
+        }
+        return true;
+      }
+    };
+
+    var training_procedure = {
+      timeline: [morph_training,check,repeat],
+      timeline_variables: stimuli,
+    };
+    timeline.push(training_procedure);
+
+
     var pre_morpheme_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to study these word parts, which will help you understand the messages we've received!</p>
