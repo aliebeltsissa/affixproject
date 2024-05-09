@@ -6,6 +6,10 @@ participants <- list("5aa787c66219a30001c765f8","5ae5db897edeb000014a85ee","5b21
 library(paletteer);
 cols <- paletteer_d("MetBrewer::Degas");
 
+library(extrafont)
+font_import()
+loadfonts()
+
 # d' function
 dPrime <- function(sbj, expectedResp, observedResp)
 {
@@ -176,8 +180,10 @@ ggplot(conditions_dataframe,
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 names(data_testing_2M_means) <- c("sbj_ID","x_2");
-boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score");
+par(mar=c(2,5,2,2))
+boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score",family="Montserrat",cex.lab=2,cex.axis=1.75);
 abline(h=0.5, lty=5);
+par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 summary(data_testing_2M_means$x_2);
 #min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
 var(data_testing_2M_means$x_2);
@@ -775,24 +781,48 @@ abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_di
 #With a bilingual perspective, the more balanced they are, the more
 #likely they are to say "yes" to 1M and 2M items.
 
+cols3 <- paletteer_d("MetBrewer::Homer2");
+
 library(effects);
+par(mar=c(5,5,2,2))
+par(family="Montserrat")
+
 L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
 L1_L2_diff_predictions <- data.frame(Effect(mod=lm_L1L2diff, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
+L1_L2_diff_predictions <- na.omit(L1_L2_diff_predictions)
+
+# plot 1
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
-     plot(L1_L2_diff, fit, type='b', ylim=c(0.4,0.8),col='black',xlab='L1-L2 difference',ylab='Model fit'));
+     plot(L1_L2_diff, fit, type='b', lwd=2, ylim=c(0.4,0.8),col='black',xlab='Amount of imbalance between top 2 languages',ylab='Proportion of "yes" responses',family="Montserrat",cex.lab=2,cex.axis=1.75));
 with(subset(L1_L2_diff_predictions, testing_condition=='0M'),
-     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols3[6])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
-     lines(L1_L2_diff, fit, type='b', lty=2,col='black'));
+     lines(L1_L2_diff, fit, type='b', lwd=2,col='black'));
 with(subset(L1_L2_diff_predictions, testing_condition=='1M'),
-     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[3])/255),alpha=0.5)));
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols3[5])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
-     lines(L1_L2_diff, fit, type='b', lty=3,col='black'));
+     lines(L1_L2_diff, fit, type='b', lwd=2, col='black'));
 with(subset(L1_L2_diff_predictions, testing_condition=='2M'),
-     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
+     polygon(c(L1_L2_diff, L1_L2_diff[4:1]), c(upper,lower[4:1]), col=rgb(t(col2rgb(cols3[4])/255),alpha=0.5)));
 legend("topright",title="Condition:",c("0M","1M","2M"),
-       fill=c(cols[2],cols[3],cols[4]),bty = "n",
-       cex=1,y.intersp=0.75);
+       fill=c(cols3[6],cols3[5],cols3[4]),bty = "n",
+       cex=1.5,y.intersp=0.75);
+
+# plot 2
+with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
+     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=4, col=cols[4], ylim=c(0.45,0.7), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
+axis(2,at=c(0.45,0.5,0.6,0.7),cex.axis=1.5)
+axis(1,at=c(1,2,3),labels=c("0M","1M","2M"),cex.axis=1.5)
+abline(h=0.5, lty=5, lwd=2);
+with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
+     lines(as.numeric(testing_condition), fit, type="b", lty=2, lwd=4, col=cols[3]))
+with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
+     lines(as.numeric(testing_condition), fit, type="b", lty=3, lwd=4, col=cols[2]))
+legend("topleft",title="Language balance:",c("Balanced","Moderately balanced","Unbalanced"),
+       lty=c(1,2,3),lwd=4,col=c(cols[4],cols[3],cols[2]),bty = "n",
+       cex=1.5,y.intersp=0.75);
+
+par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 
 
 #correlation between L1_L2_diff and age?

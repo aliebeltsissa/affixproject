@@ -586,6 +586,21 @@
     console.log(master_testing_dict);
     console.log(familiarity_pairs);
 
+    // extract stimuli for morpheme training
+    var grouped_characters = [];
+    for (morpheme of all_morphemes) {
+      var characters = morpheme.split("");
+      grouped_characters.push(characters)
+    };
+
+    function removeDuplicates(arr) {
+      return [...new Set(arr)];
+    };
+
+    var all_characters = removeDuplicates(grouped_characters.flat());
+    console.log(all_characters);
+
+
     // list randomisations
     var trainingn = 8;
     var rand_training1 = training_randomisation(training_list);
@@ -615,16 +630,16 @@
     /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p>Prolific ID:</b></p>',
-      html: '<input name="ID" type="text" required/></p><p></p>',
-      button_label: "Continue"
+      preamble: '<p>Prolific ID:</p>',
+      html: '<p><input name="ID" type="text" required/></p>',
+      button_label: 'Continue'
     };
     timeline.push(sbjIDPrompt);
 
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 15px;">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
-      <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 20 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
+      <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 25-30 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
       <p style="font-size: 15px;">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <a href="mailto:dpo@sissa.it">dpo@sissa.it</a> or <a href="mailto:rpd@sissa.it">rpd@sissa.it</a> - PEC: <a href="mailto:protocollo@pec.sissa.it">protocollo@pec.sissa.it</a>.</p>
       <p style="font-size: 15px;"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>).</p>
       <p style="font-size: 15px;">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
@@ -666,42 +681,41 @@
     // This trial isn't perceptible, but allowed BACS to be loaded in.
     var BACS_preload = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size: 120px; font-family: BACS"> x </p>`,
+      stimulus: `<p style="font-size: 1px; font-family: BACS"> x </p>`,
       choices: 'NO_KEYS',
-      stimulus_duration: 25,
-      trial_duration: 50,
+      stimulus_duration: 1,
+      trial_duration: 1,
       response_ends_trial: false
     };
     timeline.push(BACS_preload);
 
-    var example = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Here is an example of the words you'll see:</p>
-      <img src='esempio.png' height='400px'>
-      <p>When you're ready to begin, press the spacebar.</p></div>`,
-      choices: ' '
-    };
-    timeline.push(example);
-
     /* MORPHEME TRAINING */
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z', 'a', 'b', 'c', 'd', 'g', 'h', 'i', 'k', 'l', 'm', 'o', 'r', 't', 'u', 'v', 'y','BACKSPACE']
+    var pre_morpheme_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out some word parts, which will help you understand the messages we've received!</p>
+      <p>Please press the spacebar when you're ready.</p>`
+    }
+    timeline.push(pre_morpheme_training);
+
+    all_characters.push('BACKSPACE');
+    const letters = all_characters;
     var letters_buttons = [];
     for (let i=0;i<letters.length;i++) {
       var letter = letters[i];
       if (letter != 'BACKSPACE'){ // display in BACS
-        letters_buttons.push('<span style="class:jspsych-btn;">' + letter + '</span>')
+        letters_buttons.push('<span style="font-family:BACS;font-size:40px">' + letter + '</span>')
       } else { // display in Latin characters (arial)
-        letters_buttons.push('<span style="font-size:20px;font-family:arial">' + letter + '</span>')
+        letters_buttons.push('<span style="font-size:20px">' + letter + '</span>')
       }
     };
 
-    var words = ['MouSE','BARK','HorSE','Rack','STANK','MailmaN'];
+    var words = all_morphemes;
     var words = FisherYatesShuffle(words);
     var stimuli = [];
     for (let i=0; i<words.length; i++) {
       var word = words[i];
-      var stimulus = '<p style="font-size: 30px;color:blue">Please spell this word:</p><p style="font-size: 40px;font-family:BACS;color:blue">'+word+'</p><p style="font-size: 40px;font-family:BACS">';
-      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length+2)})
+      var stimulus = '<p style="font-size: 30px;color:#911857">Please spell this word:</p><p style="font-size: 50px;font-family:BACS;color:#911857">'+word+'</p><p style="font-size: 50px;font-family:BACS"><p style="font-size: 50px;color:#808080">i</p>';
+      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length-44)}) // length of the stimulus string, without the hidden new line
     };
         
     var morph_training = {
@@ -714,12 +728,20 @@
       },
       on_finish: function(data){
         var length = jsPsych.timelineVariable('length');
-        if (letters[data.response] != 'BACKSPACE') {
-          data.new_stim = data.stimulus + letters[data.response]; // previous stimulus + inputted key
+        if (data.stimulus.slice(-2,) == 'p>') { // if first time displaying that word
+           var inter_stim = data.stimulus.slice(0,-46) // delete extra space
         } else {
-          data.new_stim = data.stimulus.slice(0,data.stimulus.length-1);
+          var inter_stim = data.stimulus
+        };
+        if (letters[data.response] != 'BACKSPACE') {
+          data.new_stim = inter_stim + letters[data.response]; // previous stimulus + inputted key
+        } else {
+          data.new_stim = inter_stim.slice(0,data.stimulus.length-1);
         };
         data.input = data.new_stim.slice(length-2);
+        if (data.new_stim.slice(-2,) == '">') { // if do BACKSPACE all the way to the start
+          data.new_stim = data.new_stim + '<p style="font-size: 50px;color:#808080">i</p>'
+        };
         for (let i=0; i<words.length; i++) {
           if (words[i] == data.word) {
             var trial = stimuli[i];
@@ -727,7 +749,6 @@
             data.stimuli = stimuli;
           }
         };
-        console.log(data.input);
       }
     };
 
@@ -735,7 +756,6 @@
       timeline: [morph_training],
       conditional_function: function(){
         var input = jsPsych.data.getLastTrialData().select('input').values[0];
-        console.log(input)
         for (let i = 0; i < words.length; i++) {
           if (input == words[i]) {
             var progression = false; // This return statement should be outside the loop
@@ -775,35 +795,22 @@
     timeline.push(training_procedure);
 
 
-    var pre_morpheme_training = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to study these word parts, which will help you understand the messages we've received!</p>
-      <p>Please press the spacebar when you're ready.</p>`
-    }
-
-    var all_morphemes_BACS = [];
-    for (let i = 0; i < all_morphemes.length; i++) {
-      var item = all_morphemes[i];
-      var BACS_item = `<p style="font-size: 120px; font-family: BACS">`+item+`</p>`;
-      all_morphemes_BACS.push(BACS_item)
-    };
-
-    var morpheme_training = {
-      type: jsPsychInstructions,
-      pages: all_morphemes_BACS,
-      show_clickable_nav: true,
-      show_page_number: true,
-      page_label: 'Word part'
-    };
-    timeline.push(morpheme_training);
-
     /* TRAINING */
     var pre_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly; it seems that the aliens were in a hurry :-)</p>
-      <p>Please presss the spacebar when you're ready to begin.<p>`
+      <p>Please presss the spacebar.<p>`
     };
     timeline.push(pre_training);
+
+    var example = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p>Here is an example of the words you'll see:</p>
+      <img src='esempio.png' height='400px'>
+      <p>When you're ready to begin, press the spacebar.</p></div>`,
+      choices: ' '
+    };
+    timeline.push(example);
 
     var training_stimuli1 = [];
     var item = ' '
@@ -1742,7 +1749,7 @@
       stimulus: `<p>Press any key to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
       choices: ['Submit'],
       on_finish: function() {
-        window.location = "https://app.prolific.co/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
+        window.location = "https://app.prolific.com/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
       }
     };
     timeline.push(redirect);
