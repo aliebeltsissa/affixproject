@@ -641,7 +641,7 @@
       stimulus: `<p style="font-size: 15px;">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
       <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 25-30 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
       <p style="font-size: 15px;">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <a href="mailto:dpo@sissa.it">dpo@sissa.it</a> or <a href="mailto:rpd@sissa.it">rpd@sissa.it</a> - PEC: <a href="mailto:protocollo@pec.sissa.it">protocollo@pec.sissa.it</a>.</p>
-      <p style="font-size: 15px;"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>).</p>
+      <p style="font-size: 15px;"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>). Please feel free to contact the researcher through the Messaging feature on Prolific if you have any questions or issues.</p>
       <p style="font-size: 15px;">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
       <p style="font-size: 15px;">We ask that you press the spacebar to proceed to the consent section.</p>`,
       choices: ' '
@@ -663,7 +663,7 @@
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
-      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
+      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, or run into any problems, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
       button_label: 'Enter fullscreen mode'
     };
     timeline.push(enter_fullscreen);
@@ -692,7 +692,7 @@
     /* MORPHEME TRAINING */
     var pre_morpheme_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out some word parts, which will help you understand the messages we've received!</p>
+      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
       <p>Please press the spacebar when you're ready.</p>`
     }
     timeline.push(pre_morpheme_training);
@@ -724,7 +724,8 @@
       choices: letters_buttons,
       data: {
         'word': jsPsych.timelineVariable('word'),
-        'stimulus': jsPsych.timelineVariable('stimulus')
+        'stimulus': jsPsych.timelineVariable('stimulus'),
+        task:'morph_training'
       },
       on_finish: function(data){
         var length = jsPsych.timelineVariable('length');
@@ -798,7 +799,7 @@
     /* TRAINING */
     var pre_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly; it seems that the aliens were in a hurry :-)</p>
+      stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly, each round only takes 80 seconds; it seems that the aliens were in a hurry :-)</p>
       <p>Please presss the spacebar.<p>`
     };
     timeline.push(pre_training);
@@ -827,7 +828,10 @@
       choices: 'NO_KEYS',
       stimulus_duration: 800,
       trial_duration: 1000,
-      response_ends_trial: false
+      response_ends_trial: false,
+      data:{
+        task: 'training'
+      }
     };
 
     var training_procedure1 = {
