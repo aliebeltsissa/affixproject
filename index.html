@@ -759,8 +759,8 @@
         var input = jsPsych.data.getLastTrialData().select('input').values[0];
         for (let i = 0; i < words.length; i++) {
           if (input == words[i]) {
-            var progression = false; // This return statement should be outside the loop
-            break; // This break statement is unnecessary
+            var progression = false; 
+            break; 
           } else {
             var progression = true;
           }
@@ -1547,6 +1547,7 @@
       loop_function: function(){
         var lasttrial_name = jsPsych.data.getLastTrialData().select('name').values[0];
         if(lasttrial_name == 'use_info_prb') {
+          console.log('use error')
           return true;
         } else {
           return false
@@ -1554,10 +1555,10 @@
       }
     }
 
-    var testing_procedure = {
-      timeline: [use_info, check_node, repeat]
+    var use_procedure = {
+      timeline: [repeat]
     };
-    timeline.push(testing_procedure);
+    timeline.push(use_procedure);
 
 
     // proficiency section
