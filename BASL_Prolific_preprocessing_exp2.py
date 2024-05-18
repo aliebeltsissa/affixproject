@@ -1,14 +1,14 @@
 ### IMPORTING ###
 from os import listdir, chdir
 from os.path import isfile
-chdir("C:\\Users\\annal\\Downloads\\test_data") # set working directory to responses folder
+chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\data\\exp2") # set working directory to responses folder
 allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
 all_data = []
-column_names = ['rt','response','trial_type','time_elapsed','internal_node_id','run_id','condition','recorded_at','source_code_version','ip','user_agent','device','browser','browser_version','platform','platform_version','referer','accept_language','PROLIFIC_PID','STUDY_ID','SESSION_ID','subject_id','study_id','session_id','stimulus','success','word','new_stim','input','stimuli','item','task','correct_response','testing_condition','correct','target','confound','name','view_history']
+column_names = ['rt','response','trial_type','time_elapsed','internal_node_id','run_id','condition','recorded_at','source_code_version','ip','user_agent','device','browser','browser_version','platform','platform_version','referer','accept_language','PROLIFIC_PID','STUDY_ID','SESSION_ID','subject_id','study_id','session_id','stimulus','success','word','task','new_stim','input','stimuli','item','correct_response','testing_condition','correct','target','confound','name']
 for file in allfiles:
-    df = pd.read_csv(file, index_col=3) # separate into each line
+    df = pd.read_csv(file, index_col=0) # separate into each line
     temp = df.to_dict("split")
     temp = dict(zip(temp["index"], temp["data"]))
     temp_length = len(temp.values())
@@ -91,10 +91,10 @@ def BLP_preprocessing(BLP_file, file_number):
         history_scoreL4 = (BLP_data2["AoAL4"][0] + BLP_data2["AoEaseL4"][0] + BLP_data2["yearsEduL4"][0] + BLP_data2["yearsCountryL4"][0] + BLP_data2["yearsFamilyL4"][0] + BLP_data2["yearsWorkL4"][0])*0.454
     except KeyError:
         history_scoreL4 = 0
-        all_history_scoreL1.append(history_scoreL1)
-        all_history_scoreL2.append(history_scoreL2)
-        all_history_scoreL3.append(history_scoreL3)
-        all_history_scoreL4.append(history_scoreL4)
+    all_history_scoreL1.append(history_scoreL1)
+    all_history_scoreL2.append(history_scoreL2)
+    all_history_scoreL3.append(history_scoreL3)
+    all_history_scoreL4.append(history_scoreL4)
             
     # USE
     variables = ["PercFriendsL1", "PercFriendsL2", "PercFriendsL3", "PercFriendsL4", 
@@ -263,19 +263,28 @@ for x in range(len(BLP_data)): # for each participant datafile
     history = pd.DataFrame.from_dict(participant[2], orient='index')
     history = history.transpose()
     
-    use = pd.DataFrame.from_dict(participant[3], orient='index')
+    if len(participant) == 6:
+        use = pd.DataFrame.from_dict(participant[3], orient='index')
+    elif len(participant) == 7:
+        use = pd.DataFrame.from_dict(participant[4], orient='index')
+    elif len(participant) == 8:
+        use = pd.DataFrame.from_dict(participant[5], orient='index')
     use = use.transpose()
         
     if len(participant) == 6:
         proficiency = pd.DataFrame.from_dict(participant[4], orient='index')
     elif len(participant) == 7:
         proficiency = pd.DataFrame.from_dict(participant[5], orient='index')
+    elif len(participant) == 8:
+        proficiency = pd.DataFrame.from_dict(participant[6], orient='index')
     proficiency = proficiency.transpose()
     
     if len(participant) == 6:
         attitude = pd.DataFrame.from_dict(participant[5], orient='index')
     elif len(participant) == 7:
         attitude = pd.DataFrame.from_dict(participant[6], orient='index')
+    elif len(participant) == 8:
+        attitude = pd.DataFrame.from_dict(participant[7], orient='index')
     attitude = attitude.transpose()
 
     # combine section dataframes into a BLP dataframe
@@ -305,7 +314,7 @@ for x in range(len(all_data)): # extract testing responses
         line = participant_data[y]
         if type(line) == list and line[0] == 'fullscreen':
             continue
-        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 15: # CHANGE BACK TO 20 
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
             response_line = ast.literal_eval(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_testing_data.append(line)
@@ -396,7 +405,7 @@ for x in range(len(all_data)): # extract testing responses
         line = participant_data[y]
         if type(line) == list and line[0] == 'fullscreen':
             continue
-        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 15: # CHANGE BACK TO 20!
+        if type(line['response']) == str and line['response'] != ' ' and line['task'] != 'testing' and line['task'] != 'familiarity' and len(line['response']) > 20:
             response_line = ast.literal_eval(line['response']) # convert from string to dict
         if line['trial_type'] == 'survey-html-form' and 'ID' in response_line.keys():
             participant_familiarity_data.append(line)
@@ -451,6 +460,6 @@ if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
     print('Finished pre-processing familiarity responses')
 
 ### EXPORTING ###
-all_familiarity_data_scored.to_csv("C:\\Users\\annal\\Downloads\\test_data\\familiarity_preprocessed.csv", index=True, header=True)
-all_testing_data_scored.to_csv("C:\\Users\\annal\\Downloads\\test_data\\testing_preprocessed.csv", index=True, header=True)
-all_BLP_data.to_csv("C:\\Users\\annal\\Downloads\\test_data\\BLP_preprocessed.csv", index=True, header=True)
+all_familiarity_data_scored.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_familiarity_preprocessed.csv", index=True, header=True)
+all_testing_data_scored.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_testing_preprocessed.csv", index=True, header=True)
+all_BLP_data.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_BLP_preprocessed.csv", index=True, header=True)

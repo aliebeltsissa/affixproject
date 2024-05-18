@@ -163,6 +163,23 @@ abline(h=50, lty=5);
 conditions_table <- table(data_testing$testing_condition, data_testing$observed);
 chisq.test(conditions_table);
 # X-squared=308.03, df=2, p<2.2e-16
+data_testing_conditions <- data_testing_conditions %>%
+  gather(condition, score, -sbj_ID);
+data_testing_conditions$score <- data_testing_conditions$score/100;
+
+ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black") +
+  labs(x = "Condition", y = 'Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        text=element_text(family="Montserrat",size=20)) +
+  scale_y_continuous(expand = c(0, 0),breaks=seq(0,1,0.2)) +
+  expand_limits(y = 1) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "gray") +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 3,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  scale_x_discrete(labels=c("0M", "1M", "2M"));
 
 library(ggplot2);
 conditions_dataframe <- as.data.frame(conditions_table);
@@ -201,6 +218,20 @@ data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_mea
 summary(data_testing_conditions_scores);
 boxplot(data_testing_conditions_scores$x_0,data_testing_conditions_scores$x_1,data_testing_conditions_scores$x_2, ylab='Percent of correct responses', xlab="Condition", ylim=c(0,1), names=c('0M','1M','2M'));
 abline(h=0.5, lty=5);
+
+ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
+  geom_jitter(width = 0.1, alpha = 0.3,color= "black") +
+  labs(x = "Condition", y = 'Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        text=element_text(family="Montserrat",size=20)) +
+  scale_y_continuous(expand = c(0, 0),breaks=seq(0,1,0.2)) +
+  expand_limits(y = 1) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "gray") +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 3,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  scale_x_discrete(labels=c("0M", "1M", "2M"));
 
 # 2M - hits only
 data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
@@ -466,6 +497,28 @@ data_BLP$lang_ent <- as.numeric(data_BLP$lang_ent);
 plot(data_BLP$temp_sbjID,data_BLP$lang_ent,pch=19,xlab="Subject number",ylab="Language score entropy",cex.lab=1.5,ylim=c(0,2.5),yaxs="i");
 # some outliers very close to 0 - the monolinguals
 
+# multilingual balance: entropy - Gullifer & Titone (2018)
+library(languageEntropy);
+for (i in 1:193) { # transfrom 0-10 scores into 0-1
+  temp <- unlist(scores_list[i]);
+  total <- sum(temp)
+  for (j in 1:4) {
+    temp[j] <- temp[j]/total
+  }
+  scores_list[i] <- list(temp)
+}
+entropies_gul <- data.frame(t(sapply(scores_list,c)))
+colnames(entropies_gul) <- c('L1Score','L2Score','L3Score','L4Score');
+sbj_ID <- seq.int(193);
+entropies_gul <- data.frame(sbj_ID, entropies_gul);
+entropies_gul$L2Score[entropies_gul$L2Score==0] <- NA;
+entropies_gul$L3Score[entropies_gul$L3Score==0] <- NA;
+entropies_gul$L4Score[entropies_gul$L4Score==0] <- NA;
+entropy_gul <- languageEntropy(entropies_gul, sbj_ID, L1Score, L2Score, L3Score, L4Score, 
+                               contextName = "All");
+data_BLP$lang_ent_gul <- entropy_gul$All.entropy;
+cor(unlist(data_BLP$lang_ent),unlist(data_BLP$lang_ent_gul),method="pearson"); # r = 1 so same function
+
 # corr of variance & entropy
 cor(unlist(data_BLP$lang_var),unlist(data_BLP$lang_ent),method="pearson"); # r = -0.86 strongly negatively correlated
 
@@ -662,6 +715,7 @@ dev.off();
 # LINEAR MODEL #
 ################
 library(lme4);
+library(emmeans)
 
 # TESTING #
 data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -669,6 +723,10 @@ data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_TestingConditions); # all conditions sig
+emmeans(lm_TestingConditions, pairwise ~ testing_condition, adjust = "tukey");
+# 0M-1M: estimate=0.275, p<0.001
+# 0M-2M: estimate=0.675, p<0.001
+# 1M-2M: estimate=0.400, p<0.001
 lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_Gender); # Gender non significant as main effect and interaction
 lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
@@ -810,14 +868,20 @@ legend("topright",title="Condition:",c("0M","1M","2M"),
 
 # plot 2
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
-     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=4, col=cols[4], ylim=c(0.45,0.7), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
+     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=4, col=cols[4], ylim=c(0.45,0.75), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
 axis(2,at=c(0.45,0.5,0.6,0.7),cex.axis=1.5)
 axis(1,at=c(1,2,3),labels=c("0M","1M","2M"),cex.axis=1.5)
 abline(h=0.5, lty=5, lwd=2);
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
      lines(as.numeric(testing_condition), fit, type="b", lty=2, lwd=4, col=cols[3]))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[3])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
      lines(as.numeric(testing_condition), fit, type="b", lty=3, lwd=4, col=cols[2]))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
 legend("topleft",title="Language balance:",c("Balanced","Moderately balanced","Unbalanced"),
        lty=c(1,2,3),lwd=4,col=c(cols[4],cols[3],cols[2]),bty = "n",
        cex=1.5,y.intersp=0.75);

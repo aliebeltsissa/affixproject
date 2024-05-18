@@ -1547,7 +1547,6 @@
       loop_function: function(){
         var lasttrial_name = jsPsych.data.getLastTrialData().select('name').values[0];
         if(lasttrial_name == 'use_info_prb') {
-          console.log('use error')
           return true;
         } else {
           return false
@@ -1751,7 +1750,7 @@
 
     var redirect = {
       type: jsPsychHtmlButtonResponse,
-      stimulus: `<p>Press any key to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
+      stimulus: `<p>Click the button below to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
       choices: ['Submit'],
       on_finish: function() {
         window.location = "https://app.prolific.com/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
