@@ -44,6 +44,7 @@ dPrime <- function(sbj, expectedResp, observedResp)
 data_all_testing <- read.csv("exp2_testing_preprocessed.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n =  participants
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('6488afe97766c9083ffc3171'),]; # excluded for RTs
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -87,9 +88,8 @@ plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants
 # looks healthy overall
 plot(data_testing$rt[data_testing$sbj_ID=="6488afe97766c9083ffc3171"],ylim=c(0,1000))
 #exclude 6488afe97766c9083ffc3171: mean RT of 175ms too fast
-data_testing <- data_testing[!data_testing$sbj_ID %in% c('6488afe97766c9083ffc3171'),]
 data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('6488afe97766c9083ffc3171'),]
-plot(data_testing$rt[data_testing$sbj_ID=="660c265dce47171c0dd7d359"])
+plot(data_testing$rt[data_testing$sbj_ID=="660c265dce47171c0dd7d359"]);
 #fine to include: very long with the first item (50s!) but others all around 1s afterwards
 
 # 0M yes responses boxplot
@@ -168,17 +168,18 @@ data_testing_conditions <- data_testing_conditions %>%
 data_testing_conditions$score <- data_testing_conditions$score/100;
 
 ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
-  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black") +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black",size=2) +
   labs(x = "Condition", y = 'Proportion of "yes" responses') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        text=element_text(family="Montserrat",size=20)) +
+        axis.text = element_text(family = "Montserrat", size = 28, color = "black"),
+        text=element_text(family="Montserrat",size=28)) +
   scale_y_continuous(expand = c(0, 0),breaks=seq(0,1,0.2)) +
-  expand_limits(y = 1) +
-  geom_hline(yintercept=0.5, linetype="dashed", 
-               color = "gray") +
-  stat_summary(geom = "point",fun = "mean",col = "red",size = 3,shape = 19) +
-  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  expand_limits(y = 1.05) +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 4,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.1,col="red",position = position_dodge(width = 0.5)) +
   scale_x_discrete(labels=c("0M", "1M", "2M"));
 
 # FIX THIS: NOT DISPLAYING
@@ -221,30 +222,88 @@ boxplot(data_testing_conditions_scores$x_0,data_testing_conditions_scores$x_1,da
 abline(h=0.5, lty=5);
 
 # 2M - hits only
-data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
+data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
 names(data_testing_2M_hits_means) <- c("sbj_ID","x_2_hits");
-boxplot(data_testing_2M_hits_means$x_2_hits, ylab = "Accuracy score - 2M hits");
+data_testing_2M_hits_means$x_2_hits <- data_testing_2M_hits_means$x_2_hits/20;
+par(mar=c(2,5,2,2))
+boxplot(data_testing_2M_hits_means$x_2_hits, ylab = "Accuracy score - 2M hits",boxwex=1.5,ylim=c(0,1),yaxs="i",cex.lab=2);
 abline(h=0.5, lty=5);
 summary(data_testing_2M_hits_means$x_2_hits);
-# min:0 Q1:0.25 med:0.35 mean:0.36 Q3:0.5 max:1
+# min:0 Q1:0.5 med:0.65 mean:0.63 Q3:0.75 max:1
 hist(data_testing_2M_hits_means$x_2_hits); # normally distributed
 t.test(data_testing_2M_hits_means$x_2_hits, mu=0.50);
-# t=-7.12, p=2.7e-10, CI=[0.33;0.4] -> sig below chance
+# t=6.8, p=9.3e-10, CI=[0.59;0.66] -> sig above chance
 plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
 abline(h=0.5, lty=5);
 
 # 2M - correct rejections only
-data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=mean, na.rm=TRUE);
+data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
 names(data_testing_2M_rejs_means) <- c("sbj_ID","x_2_rejs");
-boxplot(data_testing_2M_rejs_means$x_2_rejs, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections");
+boxplot(data_testing_2M_rejs_means$x_2_rejs, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections",boxwex=1.5,yaxs="i",cex.lab=1.5);
 abline(h=0.5, lty=5);
+par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 summary(data_testing_2M_rejs_means$x_2_rejs);
-# min:0 Q1:0.5 med:0.65 mean:0.63 Q3:0.75 max:1
+# min:0 Q1:0.25 med:0.35 mean:0.36 Q3:0.5 max:1
 hist(data_testing_2M_rejs_means$x_2_rejs); # normally distributed
 t.test(data_testing_2M_rejs_means$x_2_rejs, mu=0.50);
-# t=6.8, p=9.3e-10, CI=[0.59;0.66]
+# t=-7.12, p=2.7e-10, CI=[0.33;0.4] -> sig below chance
 plot(data_testing_2M_rejs_means$x_2_rejs,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
 abline(h=0.5, lty=5);
+
+# 2M - all response types
+data_testing$temp_sbjID <- rep(1:91, each=120); # necessary: R doesn't like format of Prolific IDs
+
+misses <- list();
+for (i in 1:91) { # calculate misses for each participant
+  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  miss <- temp %>%
+    summarize(count = sum(expected == 1 & observed == 0));
+  miss <- miss/40;
+  misses <- append(misses, miss)
+};
+data_testing_2M_means$misses <- misses;
+data_testing_2M_means$misses <- as.numeric(data_testing_2M_means$misses);
+summary(data_testing_2M_means$misses);
+# min:0 Q1:0.13 med:0.18 mean:0.19 Q3:0.25 max:0.50
+
+hits <- list();
+for (i in 1:91) { # calculate hits for each participant
+  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  hit <- temp %>%
+    summarize(count = sum(expected == 1 & observed == 1));
+  hit <- hit/40
+  hits <- append(hits, hit)
+};
+data_testing_2M_means$hits <- hits;
+data_testing_2M_means$hits <- as.numeric(data_testing_2M_means$hits);
+summary(data_testing_2M_means$hits);
+# min:0 Q1:0.25 med:0.33 mean:0.31 Q3:0.38 max:0.5
+
+rejs <- list();
+for (i in 1:91) { # calculate correct rejections for each participant
+  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  rej <- temp %>%
+    summarize(count = sum(expected == 0 & observed == 0));
+  rej <- rej/40
+  rejs <- append(rejs, rej)
+};
+data_testing_2M_means$rejs <- rejs;
+data_testing_2M_means$rejs <- as.numeric(data_testing_2M_means$rejs);
+summary(data_testing_2M_means$rejs);
+# min:0 Q1:0.13 med:0.18 mean:0.18 Q3:0.25 max:0.5
+
+alarms <- list();
+for (i in 1:91) { # calculate false alarms for each participant
+  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  alarm <- temp %>%
+    summarize(count = sum(expected == 0 & observed == 1));
+  alarm <- alarm/40
+  alarms <- append(alarms, alarm)
+};
+data_testing_2M_means$alarms <- alarms;
+data_testing_2M_means$alarms <- as.numeric(data_testing_2M_means$alarms);
+summary(data_testing_2M_means$alarms);
+# min:0 Q1:0.25 med:0.33 mean:0.32 Q3:0.38 max:0.5
 
 # 2M - combined plots
 #1 - side-by-side scatterplots of hits & correct rejection accuracy
@@ -263,7 +322,8 @@ abline(h=0.5, lty=5);
 #3 - plot connecting hit score to correct rejection score
 library(ggplot2);
 data_testing_2M_bygroup_means <- merge(data_testing_2M_hits_means,data_testing_2M_rejs_means,by="sbj_ID");
-names(data_testing_2M_bygroup_means) <- c("sbj_ID","hits_mean","rejs_mean");
+data_testing_2M_bygroup_means <- merge(data_testing_2M_bygroup_means,data_testing_2M_means,by="sbj_ID");
+names(data_testing_2M_bygroup_means) <- c("sbj_ID","hits_mean","rejs_mean","mean");
 data_long <- reshape2::melt(data_testing_2M_bygroup_means, id.vars = "sbj_ID", variable.name = "condition", value.name = "accuracy");
 ggplot(data_long, aes(x = condition, y = accuracy, group = sbj_ID)) +
   geom_line(linewidth=0.2) +
@@ -275,14 +335,25 @@ data_testing_2M_bygroup_means$diff <- data_testing_2M_bygroup_means$hits_mean-da
 plot(data_testing_2M_bygroup_means$diff,ylim=c(-1,1),ylab="Accuracy difference",main="Difference between hits & correct rejection accuracy",xlab="Participants",pch=19,yaxs="i",col="#0B775E",cex=1.5);
 abline(h=0, lty=5);
 
+#5 - plot of "yes" responses in 2M & accuracy
+names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
+testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="sbj_ID");
+cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.04
+plot(testing_all$x_2_yes,testing_all$x_2,pch=19);
+#more 2M yes doesn't give you a better score
+testing_all <- merge(testing_all,data_testing_2M_hits_means, by="sbj_ID");
+cor(testing_all$x_2_hits,testing_all$x_2_yes); # r = 0.89
+plot(testing_all$x_2_yes,testing_all$x_2_hits,pch=19);
+#more 2M yes means more hits, means higher scores
+
 # testing accuracy*RTs
-cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.19
+cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 
 plot(data_testing_rt_means$x, data_testing_2M_means$x, pch=19);
 
-cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = -0.02
+cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 
 plot(data_testing_rt_means$x, data_testing_2M_hits_means$x, pch=19);
 
-cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = 0.19
+cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = 
 plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
 
 # correlation between 1M & 2M
@@ -298,10 +369,12 @@ summary(dprimes);
 data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
 dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected, data_testing_2M$observed);
 names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
-summary(data_testing_2M);
+summary(dprimes2M);
+data_testing_2M_means$dprime <- dprimes2M$dprime;
+data_testing_2M_means$c <- dprimes2M$c;
 
 # testing strategy
-library(tidyverse)
+library(tidyverse);
 strats <- subset(data_testing, select = c(sbj_ID, strategy));
 strats <- strats[!duplicated(strats),];
 
@@ -488,46 +561,6 @@ data_BLP$L1_L2_diff <- data_BLP$L1Score - data_BLP$L2Score;
 plot(data_BLP$temp_sbjID,data_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",cex.lab=1.5,ylim=c(0,218),yaxs="i");
 # very varied
 
-# corr of variance & accuracy
-cor(data_testing_2M_means$x, data_BLP$lang_var); # r = -0.15
-plot(data_BLP$lang_var, data_testing_2M_means$x, xlab="Language score variance", ylab="2M accuracy (in %)", pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$lang_var); # r = 0.04
-plot(data_BLP$lang_var, data_testing_2M_hits_means$x, xlab="Language score variance", ylab="2M hit accuracy (in %)", pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$lang_var); # r = -0.18
-plot(data_BLP$lang_var, data_testing_2M_rejs_means$x, xlab="Language score variance", ylab="2M rejection accuracy (in %)", pch=19);
-
-# corr of entropy & accuracy
-cor(data_testing_2M_means$x, data_BLP$lang_ent); # r = 0.31
-plot(data_BLP$lang_ent, data_testing_2M_means$x, xlab="Language score entropy", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$lang_ent); # r = 0.04
-plot(data_BLP$lang_ent, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$lang_ent); # r = 0.24
-plot(data_BLP$lang_ent, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
-
-# corr of multilingual experience & accuracy
-cor(data_testing_2M_means$x, data_BLP$multi_exp); # r = 0.23
-plot(data_BLP$multi_exp, data_testing_2M_means$x, xlab="Multilingual experience", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$multi_exp); # r = -0.04
-plot(data_BLP$multi_exp, data_testing_2M_hits_means$x, xlab="Multilingual experience", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$multi_exp); # r = 0.24
-plot(data_BLP$multi_exp, data_testing_2M_rejs_means$x, xlab="Multilingual experience", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
-
-# corr of L1-L2 score & accuracy
-cor(data_testing_2M_means$x, data_BLP$L1_L2_diff); # r = -0.21
-plot(data_BLP$L1_L2_diff, data_testing_2M_means$x, xlab="L1-L2 difference", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$L1_L2_diff); # r = 0.09
-plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$L1_L2_diff); # r = -0.28
-plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
-
 
 # CLUSTERING #
 complete_cases <- complete.cases(data_BLP)
@@ -577,6 +610,76 @@ library(tidyverse);
 data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC3_L4,RC1_L3,RC2_use_L1vsL2,RC15_hist_L3));
 data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 
+# corr of variance & accuracy
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.15
+plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2, xlab="Language score variance", ylab="2M accuracy (in %)", pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_var); # r = -0.18
+plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_hits, xlab="Language score variance", ylab="2M hit accuracy (in %)", pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_var); # r = 0.04
+plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_rejs, xlab="Language score variance", ylab="2M rejection accuracy (in %)", pch=19);
+abline(h=0.5, lty=5);
+
+# corr of entropy & accuracy
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_ent); # r = 0.31
+plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2, xlab="Language score entropy", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_ent); # r = 0.24
+plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2_hits, xlab="Language score entropy", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_ent); # r = 0.04
+plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2_rejs, xlab="Language score entropy", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+# corr of multilingual experience & accuracy
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$multi_exp); # r = 0.23
+plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2, xlab="Multilingual experience", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$multi_exp); # r = 0.24
+plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_hits, xlab="Multilingual experience", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
+abline(lm(data_BLP_testing_all$x_2_hits~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$multi_exp); # r = -0.04
+plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_rejs, xlab="Multilingual experience", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="sbj_ID");
+cor(data_BLP_testing_all$x_2_yes, data_BLP_testing_all$multi_exp); # r = 0.16
+plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_yes, xlab="Multilingual experience", ylab='2M "yes" responses', cex.lab=1.5,pch=19);
+abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
+abline(h=50, lty=5);
+
+data_BLP_testing_all <- merge(data_BLP_testing_all, dprimes2M, by="sbj_ID");
+cor(data_BLP_testing_all$c,data_BLP_testing_all$multi_exp); # r = -0.13
+cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.17
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$multi_exp); # r = 0.20
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = -0.19
+
+# corr of L1-L2 score & accuracy
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$L1_L2_diff); # r = -0.21
+plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2, xlab="L1-L2 difference", ylab="2M accuracy", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$L1_L2_diff); # r = -0.28
+plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2_hits, xlab="L1-L2 difference", ylab="Testing hit accuracy", cex.lab=1.5,pch=19);
+abline(lm(data_BLP_testing_all$x_2_hits~data_BLP_testing_all$L1_L2_diff), col = "red",lwd=2);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$L1_L2_diff); # r = 0.09
+plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2_rejs, xlab="L1-L2 difference", ylab="Testing rejection accuracy", cex.lab=1.5,pch=19);
+abline(h=0.5, lty=5);
+
+cor(data_BLP_testing_all$x_2_yes, data_BLP_testing_all$L1_L2_diff); # r = -0.20
+plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2_yes, xlab="L1-L2 difference", ylab='2M "yes" responses', cex.lab=1.5,pch=19);
+abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$L1_L2_diff), col = "red",lwd=2);
+abline(h=50, lty=5);
 
 # dprimes - 2M
 data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
@@ -876,24 +979,99 @@ legend("bottomright",title="Multilingual experience:",c("Low","Average","High"),
        lty=c(1,2,3),lwd=4,col=c(cols[4],cols[3],cols[2],cols[1]),bty = "n",
        cex=1.5,y.intersp=0.75);
 
+# L1-L2 diff
+L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
+L1_L2_diff_predictions <- data.frame(Effect(mod=lm_L1L2diff, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
+L1_L2_diff_predictions <- na.omit(L1_L2_diff_predictions)
+
+# plot 2
+with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
+     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=6, col=cols[4], ylim=c(0.45,0.75), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
+axis(2,at=c(0.45,0.5,0.6,0.7),cex.axis=2)
+axis(1,at=c(1,2,3),labels=c("0M","1M","2M"),cex.axis=2)
+abline(h=0.5, lty=5, lwd=4);
+with(subset(L1_L2_diff_predictions, L1_L2_diff>64&L1_L2_diff<67),
+     lines(as.numeric(testing_condition), fit, type="b", lty=2, lwd=6, col=cols[3]))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[3])/255),alpha=0.5)));
+with(subset(L1_L2_diff_predictions, L1_L2_diff>105&L1_L2_diff<106),
+     lines(as.numeric(testing_condition), fit, type="b", lty=3, lwd=6, col=cols[2]))
+#with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
+#     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
+legend("topleft",title="Bilingual balance:",c("Balanced","Moderately balanced","Unbalanced"),
+       lty=c(1,2,3),lwd=4,col=c(cols[4],cols[3],cols[2]),bty = "n",
+       cex=1.5,y.intersp=0.75);
+
+
 # 2M LMERS
 #multi_exp
 data_BLP_testing_2M_multiexp_means <- merge(data_testing_2M_means, subset(data_BLP,select=c('sbj_ID','multi_exp')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
-plot(data_BLP_testing_2M_multiexp_means$multi_exp,data_BLP_testing_2M_multiexp_means$x_2,xlab="Multilingual experience",ylab="2M scores",ylim=c(0.2,0.7),xlim=c(0,650),pch=19,yaxs="i",xaxs="i",cex.lab=2,cex.axis=1.75);
+plot(data_BLP_testing_2M_multiexp_means$multi_exp,data_BLP_testing_2M_multiexp_means$x_2,xlab="Multilingual experience",ylab="2M scores",ylim=c(0.2,0.7),pch=19,yaxs="i",xaxs="i",cex.lab=2,cex.axis=1.75);
 abline(lm(data_BLP_testing_2M_multiexp_means$x_2~data_BLP_testing_2M_multiexp_means$multi_exp), col = "red",lwd=2);
 abline(h=0.5,lty=5);
 # more multi experience -> higher scores
-cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$multi_exp); # r = 0.24
-# more multi_exp -> more 2M rejs
 
-plot(data_BLP_testing_all$multi_exp,data_BLP_testing_all$x_2_rejs,pch=19,yaxs="i",ylab="Proportion of 2M correct rejections",xlab="Amount of multilingual experience",cex.lab=2,cex.axis=1.75);
-abline(lm(data_BLP_testing_all$x_2_rejs~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$x_2); # r = 0.47
+plot(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$x_2,pch=19); # more rejs --> higher score
+cor(data_BLP_testing_all$x_2,data_BLP_testing_all$multi_exp); # r = 0.23
+plot(data_BLP_testing_all$x_2,data_BLP_testing_all$multi_exp,pch=19); # higher multi_exp --> higher score
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$multi_exp); # r = -0.04
+plot(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$multi_exp,pch=19);
+cor(data_BLP_testing_all$x_2_hits,data_BLP_testing_all$multi_exp); # r = 0.24
+
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$lang_ent); # r = 0.04
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$L1_L2_diff); # r= 0.09
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$RC3_L4); # r = -0.02
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$RC1_L3); # r = 0.04
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$RC2_use_L1vsL2); # r = -0.10
+cor(data_BLP_testing_all$x_2_rejs,data_BLP_testing_all$RC15_hist_L3); # r = -0.14
+
+cor(data_BLP_testing_all$x_2_hits,data_BLP_testing_all$x_2); # r = 0.41
+
+# more multi_exp -> more 2M hits
+plot(data_BLP_testing_all$multi_exp,data_BLP_testing_all$x_2_hits,pch=19,yaxs="i",ylab="Proportion of 2M hits",xlab="Amount of multilingual experience",cex.lab=2,cex.axis=1.75);
+abline(lm(data_BLP_testing_all$x_2_hits~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
 abline(h=0.5,lty=5);
 
-lm_2M_incong_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=subset(data_testing_lm_2M,expected=="1"), family='binomial');
-summary(lm_2M_incong_multiexp); # multi_exp sig (p=0.017)
+lm_2M_cong_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=subset(data_testing_lm_2M,expected=="1"), family='binomial');
+summary(lm_2M_cong_multiexp); # multi_exp sig (p=0.017)
 
+# d' for different levels of multiexp
+plot(data_BLP_testing_all$multi_exp,data_BLP_testing_all$dprime,pch=19,ylab="D Primes",xlab="Amount of multilingual experience");
+abline(lm(data_BLP_testing_all$dprime~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
+abline(h=0,lty=5);
+# more multiexp -> higher d' -> better able to discriminate (in)cong
+
+low_multiexp <- data_BLP_testing_all[data_BLP_testing_all$multi_exp<350,];
+summary(low_multiexp$dprime); # mean = -0.12
+summary(low_multiexp$c); # mean = -0.31
+summary(low_multiexp$hits); # mean = 0.29
+summary(low_multiexp$rejs); # mean = 0.18
+summary(low_multiexp$misses); # mean = 0.21
+summary(low_multiexp$alarms); # mean = 0.32
+plot(mean(low_multiexp$multi_exp),mean(low_multiexp$dprime),pch=19,xlim=c(250,600),ylim=c(-1.7,1));
+
+med_multiexp <- data_BLP_testing_all[data_BLP_testing_all$multi_exp>350&data_BLP_testing_all$multi_exp<400,];
+summary(med_multiexp$dprime); # mean = 0.09
+summary(med_multiexp$c); # mean = -0.37
+summary(med_multiexp$hits); # mean = 0.31
+summary(med_multiexp$rejs); # mean = 0.21
+summary(med_multiexp$misses); # mean = 0.19
+summary(med_multiexp$alarms); # mean = 0.29
+points(mean(med_multiexp$multi_exp),mean(med_multiexp$dprime),pch=19);
+
+high_multiexp <- data_BLP_testing_all[data_BLP_testing_all$multi_exp>400,];
+summary(high_multiexp$dprime); # mean = 0.11
+summary(high_multiexp$c);# mean = -0.57
+summary(high_multiexp$hits); # mean = 0.36
+summary(high_multiexp$rejs); # mean = 0.15
+summary(high_multiexp$misses); # mean = 0.14
+summary(high_multiexp$alarms); # mean = 0.35
+points(mean(high_multiexp$multi_exp),mean(high_multiexp$dprime),pch=19);
+abline(h=0,lty=5);
 
 #L1-L2 diff
 data_BLP_testing_2M_L1L2_means <- merge(data_testing_2M_means, subset(data_BLP,select=c('sbj_ID','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -1034,6 +1212,11 @@ ok3 <- ! is.na(data_BLP$L3Score);
 ok4 <- ! is.na(data_BLP$L4Score);
 
 # plot language scores per participant
+
+# representative - ent
+#Low ent: temp_sbjID 10
+#High ent: temp_sbjID 43
+
 cols2 <- paletteer_d("ggthemes::Classic_20");
 #by temp_sbjID
 plot(data_BLP$L1Score~data_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");

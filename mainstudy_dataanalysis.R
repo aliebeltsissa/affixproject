@@ -6,9 +6,10 @@ participants <- list("5aa787c66219a30001c765f8","5ae5db897edeb000014a85ee","5b21
 library(paletteer);
 cols <- paletteer_d("MetBrewer::Degas");
 
-library(extrafont)
-font_import()
-loadfonts()
+library(extrafont);
+font_import();
+loadfonts();
+par(family="Montserrat");
 
 # d' function
 dPrime <- function(sbj, expectedResp, observedResp)
@@ -168,17 +169,18 @@ data_testing_conditions <- data_testing_conditions %>%
 data_testing_conditions$score <- data_testing_conditions$score/100;
 
 ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
-  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black") +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black",size=2) +
   labs(x = "Condition", y = 'Proportion of "yes" responses') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
-        text=element_text(family="Montserrat",size=20)) +
+        axis.text = element_text(family = "Montserrat", size = 28, color = "black"),
+        text=element_text(family="Montserrat",size=28,color="black")) +
   scale_y_continuous(expand = c(0, 0),breaks=seq(0,1,0.2)) +
-  expand_limits(y = 1) +
-  geom_hline(yintercept=0.5, linetype="dashed", 
-             color = "gray") +
-  stat_summary(geom = "point",fun = "mean",col = "red",size = 3,shape = 19) +
-  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  expand_limits(y = 1.05) +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 4,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.1,col="red",position = position_dodge(width = 0.5)) +
   scale_x_discrete(labels=c("0M", "1M", "2M"));
 
 library(ggplot2);
@@ -197,10 +199,10 @@ ggplot(conditions_dataframe,
 # 2M correct boxplot
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 names(data_testing_2M_means) <- c("sbj_ID","x_2");
-par(mar=c(2,5,2,2))
-boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score",family="Montserrat",cex.lab=2,cex.axis=1.75);
+par(mar=c(2,5,2,2));
+boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score",family="Montserrat",cex.lab=2,cex.axis=2,boxwex=1.25);
 abline(h=0.5, lty=5);
-par(mar=c(5, 4, 4, 2) + 0.1) # back to default
+par(mar=c(5, 4, 4, 2) + 0.1); # back to default
 summary(data_testing_2M_means$x_2);
 #min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.54 max:0.71
 var(data_testing_2M_means$x_2);
@@ -643,6 +645,8 @@ cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC1_L3);
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2);
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC6_use_L4);
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes$RC9_L4);
+######################################
+# also c
 
 # dprimes - all
 data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
@@ -745,7 +749,8 @@ lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_ex
 summary(lm_multiexp); # 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_L1L2diff); # 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
-
+# 1M:scale(L1L2diff) - estimate = -0.09 -> bigger L1L2diff gives smaller scores
+# 2M:scale(L1L2diff) - estimate = -0.11 -> bigger L1L2diff gives smaller scores
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -842,8 +847,7 @@ abline(lm(data_BLP_testing_2M_L1L2_yes$x_2~data_BLP_testing_2M_L1L2_yes$L1_L2_di
 cols3 <- paletteer_d("MetBrewer::Homer2");
 
 library(effects);
-par(mar=c(5,5,2,2))
-par(family="Montserrat")
+par(mar=c(5,5,2,2));
 
 L1_L2_diff_values <- c(0,quantile(data_testing_lm$L1_L2_diff, seq(.25,.75,.25)));
 L1_L2_diff_predictions <- data.frame(Effect(mod=lm_L1L2diff, focal.predictors=c('testing_condition','L1_L2_diff'), xlevels=list(L1_L2_diff=L1_L2_diff_values)));
@@ -868,21 +872,21 @@ legend("topright",title="Condition:",c("0M","1M","2M"),
 
 # plot 2
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
-     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=4, col=cols[4], ylim=c(0.45,0.75), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
+     plot(as.numeric(testing_condition), fit, type="b", lty=1, lwd=6, col=cols[4], ylim=c(0.45,0.75), xlab="Testing condition", ylab='Proportion of "yes" responses',cex.lab=2,xaxt="n",yaxt="n"))
 #with(subset(L1_L2_diff_predictions, L1_L2_diff=="0"),
 #     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[4])/255),alpha=0.5)));
-axis(2,at=c(0.45,0.5,0.6,0.7),cex.axis=1.5)
-axis(1,at=c(1,2,3),labels=c("0M","1M","2M"),cex.axis=1.5)
-abline(h=0.5, lty=5, lwd=2);
+axis(2,at=c(0.45,0.5,0.6,0.7),cex.axis=2)
+axis(1,at=c(1,2,3),labels=c("0M","1M","2M"),cex.axis=2)
+abline(h=0.5, lty=5, lwd=4);
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
-     lines(as.numeric(testing_condition), fit, type="b", lty=2, lwd=4, col=cols[3]))
+     lines(as.numeric(testing_condition), fit, type="b", lty=2, lwd=6, col=cols[3]))
 #with(subset(L1_L2_diff_predictions, L1_L2_diff=="50.95"),
 #     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[3])/255),alpha=0.5)));
 with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
-     lines(as.numeric(testing_condition), fit, type="b", lty=3, lwd=4, col=cols[2]))
+     lines(as.numeric(testing_condition), fit, type="b", lty=3, lwd=6, col=cols[2]))
 #with(subset(L1_L2_diff_predictions, L1_L2_diff=="97.446"),
 #     polygon(c(testing_condition, testing_condition[3:1]), c(upper,lower[3:1]), col=rgb(t(col2rgb(cols[2])/255),alpha=0.5)));
-legend("topleft",title="Language balance:",c("Balanced","Moderately balanced","Unbalanced"),
+legend("topleft",title="Bilingual balance:",c("Balanced","Moderately balanced","Unbalanced"),
        lty=c(1,2,3),lwd=4,col=c(cols[4],cols[3],cols[2]),bty = "n",
        cex=1.5,y.intersp=0.75);
 
