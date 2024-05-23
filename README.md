@@ -60,3 +60,5 @@ This folder contains all of the output files from all of the participants, acros
 
 <h3> Pilot-specific folders </h3>
 These contain the preprocessed data files for the different pilot versions.
+
+<h2> For further information, feel free to contact <a href="mailto:annaliebelt@gmail.com">annaliebelt@gmail.com</a> </h2>
