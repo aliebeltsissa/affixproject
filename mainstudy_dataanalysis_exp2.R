@@ -45,6 +45,7 @@ data_all_testing <- read.csv("exp2_testing_preprocessed.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n =  participants
 data_testing <- data_testing[!data_testing$sbj_ID %in% c('6488afe97766c9083ffc3171'),]; # excluded for RTs
+data_testing$temp_sbjID <- rep(1:91, each=120); # necessary: R doesn't like format of Prolific IDs
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -93,8 +94,8 @@ plot(data_testing$rt[data_testing$sbj_ID=="660c265dce47171c0dd7d359"]);
 #fine to include: very long with the first item (50s!) but others all around 1s afterwards
 
 # 0M yes responses boxplot
-data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
-names(data_testing_0M_yes) <- c("sbj_ID","x_0");
+data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
+names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
 data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/40*100; #transform into percent
 summary(data_testing_0M_yes$x_0);
 #min:0 Q1:41.25 med:52.5 mean:51.59 Q3:62.5 max:100
@@ -104,8 +105,8 @@ boxplot(data_testing_0M_yes$x, ylab = "0M Percent of 'yes' responses",ylim=c(0,1
 abline(h=50, lty=5);
 
 # 0M scores
-data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
-names(data_testing_0M_means) <- c("sbj_ID","x_0");
+data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
+names(data_testing_0M_means) <- c("temp_sbjID","x_0");
 summary(data_testing_0M_means$x_0);
 #min:0 Q1:0.38 med:0.48 mean:0.48 Q3:0.59 max:1
 var(data_testing_0M_means$x_0);
@@ -118,8 +119,8 @@ t.test(data_testing_0M_means$x_0, mu=0.5);
 #t=-0.87 p=0.385 CI=[0.45;0.52] -> 0M scores not sig different from chance
 
 # 1M yes responses boxplot
-data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
-names(data_testing_1M_yes) <- c("sbj_ID","x_1");
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
+names(data_testing_1M_yes) <- c("temp_sbjID","x_1");
 data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/40*100; #transform into percent
 summary(data_testing_1M_yes$x_1);
 #min:0 Q1:48.75 med:57.5 mean:57.31 Q3:66.25 max:100
@@ -129,8 +130,8 @@ boxplot(data_testing_1M_yes$x, ylab = "1M Percent of 'yes' responses",ylim=c(0,1
 abline(h=50, lty=5);
 
 # 1M scores
-data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
-names(data_testing_1M_means) <- c("sbj_ID","x_1");
+data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
+names(data_testing_1M_means) <- c("temp_sbjID","x_1");
 summary(data_testing_1M_means$x_1);
 #min:0 Q1:0.49 med:0.58 mean:0.57 Q3:0.66 max:1
 var(data_testing_1M_means$x_1);
@@ -143,8 +144,8 @@ t.test(data_testing_1M_means$x_1, mu=0.5);
 #t=4.6 p=1.34e-5 CI=[0.54;0.60] -> sig above chance
 
 # 2M yes responses boxplot
-data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
-names(data_testing_2M_yes) <- c("sbj_ID","x_2");
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
+names(data_testing_2M_yes) <- c("temp_sbjID","x_2");
 data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into percent
 summary(data_testing_2M_yes$x_2);
 #min:0 Q1:52.5 med:65 mean:63.2 Q3:72.5 max:100
@@ -155,7 +156,7 @@ abline(h=50, lty=5);
 
 # yes responses across conditions
 library(tidyverse);
-data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_testing_2M_yes) %>% reduce(inner_join, by='sbj_ID');
+data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_testing_2M_yes) %>% reduce(inner_join, by='temp_sbjID');
 par(mar=c(5, 5, 4, 2) + 0.1)
 boxplot(data_testing_conditions$x_0,data_testing_conditions$x_1,data_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'),ylim=c(0,100),yaxs="i",cex.lab=2,cex.axis=1.75);
 abline(h=50, lty=5);
@@ -164,7 +165,7 @@ conditions_table <- table(data_testing$testing_condition, data_testing$observed)
 chisq.test(conditions_table);
 # X-squared=99.5, df=2, p<2.23-16
 data_testing_conditions <- data_testing_conditions %>%
-  gather(condition, score, -sbj_ID);
+  gather(condition, score, -temp_sbjID);
 data_testing_conditions$score <- data_testing_conditions$score/100;
 
 ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
@@ -197,9 +198,9 @@ ggplot(conditions_dataframe,
   scale_fill_manual(values = c("#F1BB7B","#FD6467"), labels=c("No","Yes"));
 
 # 2M correct boxplot
-data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
-names(data_testing_2M_means) <- c("sbj_ID","x_2");
-par(mar=c(2,5,2,2))
+data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
+names(data_testing_2M_means) <- c("temp_sbjID","x_2");
+par(mar=c(2,5,2,2));
 boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score",family="Montserrat",cex.lab=2,cex.axis=1.75);
 abline(h=0.5, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
@@ -216,14 +217,14 @@ t.test(data_testing_2M_means$x_2, mu=0.50);
 
 # scores across conditions
 library(tidyverse);
-data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='sbj_ID');
+data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='temp_sbjID');
 summary(data_testing_conditions_scores);
 boxplot(data_testing_conditions_scores$x_0,data_testing_conditions_scores$x_1,data_testing_conditions_scores$x_2, ylab='Percent of correct responses', xlab="Condition", ylim=c(0,1), names=c('0M','1M','2M'));
 abline(h=0.5, lty=5);
 
 # 2M - hits only
-data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
-names(data_testing_2M_hits_means) <- c("sbj_ID","x_2_hits");
+data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_hits_means) <- c("temp_sbjID","x_2_hits");
 data_testing_2M_hits_means$x_2_hits <- data_testing_2M_hits_means$x_2_hits/20;
 par(mar=c(2,5,2,2))
 boxplot(data_testing_2M_hits_means$x_2_hits, ylab = "Accuracy score - 2M hits",boxwex=1.5,ylim=c(0,1),yaxs="i",cex.lab=2);
@@ -237,8 +238,9 @@ plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Partici
 abline(h=0.5, lty=5);
 
 # 2M - correct rejections only
-data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=mean, na.rm=TRUE);
-names(data_testing_2M_rejs_means) <- c("sbj_ID","x_2_rejs");
+data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_rejs_means) <- c("temp_sbjID","x_2_rejs");
+data_testing_2M_rejs_means$x_2_rejs <- data_testing_2M_rejs_means$x_2_rejs/20;
 boxplot(data_testing_2M_rejs_means$x_2_rejs, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections",boxwex=1.5,yaxs="i",cex.lab=1.5);
 abline(h=0.5, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
@@ -251,8 +253,7 @@ plot(data_testing_2M_rejs_means$x_2_rejs,ylim=c(0,1),ylab = "Correct rejections"
 abline(h=0.5, lty=5);
 
 # 2M - all response types
-data_testing$temp_sbjID <- rep(1:91, each=120); # necessary: R doesn't like format of Prolific IDs
-
+library(tidyverse);
 misses <- list();
 for (i in 1:91) { # calculate misses for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
@@ -321,11 +322,11 @@ abline(h=0.5, lty=5);
 
 #3 - plot connecting hit score to correct rejection score
 library(ggplot2);
-data_testing_2M_bygroup_means <- merge(data_testing_2M_hits_means,data_testing_2M_rejs_means,by="sbj_ID");
-data_testing_2M_bygroup_means <- merge(data_testing_2M_bygroup_means,data_testing_2M_means,by="sbj_ID");
-names(data_testing_2M_bygroup_means) <- c("sbj_ID","hits_mean","rejs_mean","mean");
-data_long <- reshape2::melt(data_testing_2M_bygroup_means, id.vars = "sbj_ID", variable.name = "condition", value.name = "accuracy");
-ggplot(data_long, aes(x = condition, y = accuracy, group = sbj_ID)) +
+data_testing_2M_bygroup_means <- merge(data_testing_2M_hits_means,data_testing_2M_rejs_means,by="temp_sbjID");
+data_testing_2M_bygroup_means <- merge(data_testing_2M_bygroup_means,data_testing_2M_means,by="temp_sbjID");
+names(data_testing_2M_bygroup_means) <- c("temp_sbjID","hits_mean","rejs_mean","mean");
+data_long <- reshape2::melt(data_testing_2M_bygroup_means, id.vars = "temp_sbjID", variable.name = "condition", value.name = "accuracy");
+ggplot(data_long, aes(x = condition, y = accuracy, group = temp_sbjID)) +
   geom_line(linewidth=0.2) +
   geom_point(aes(color = condition), size = 3);
 #the lower the hits_mean is, the higher rejs_mean is
@@ -336,29 +337,29 @@ plot(data_testing_2M_bygroup_means$diff,ylim=c(-1,1),ylab="Accuracy difference",
 abline(h=0, lty=5);
 
 #5 - plot of "yes" responses in 2M & accuracy
-names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
-testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="sbj_ID");
+names(data_testing_2M_yes) <- c("temp_sbjID","x_2_yes");
+testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="temp_sbjID");
 cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.04
 plot(testing_all$x_2_yes,testing_all$x_2,pch=19);
 #more 2M yes doesn't give you a better score
-testing_all <- merge(testing_all,data_testing_2M_hits_means, by="sbj_ID");
+testing_all <- merge(testing_all,data_testing_2M_hits_means, by="temp_sbjID");
 cor(testing_all$x_2_hits,testing_all$x_2_yes); # r = 0.89
 plot(testing_all$x_2_yes,testing_all$x_2_hits,pch=19);
 #more 2M yes means more hits, means higher scores
 
 # testing accuracy*RTs
-cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 
+cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.19
 plot(data_testing_rt_means$x, data_testing_2M_means$x, pch=19);
 
-cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 
+cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 0.19
 plot(data_testing_rt_means$x, data_testing_2M_hits_means$x, pch=19);
 
-cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = 
+cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.02
 plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
 
 # correlation between 1M & 2M
-temp <- merge(data_testing_2M_means, data_testing_1M_means,by.x='sbj_ID',by.y='sbj_ID');
-cor(temp$x_1, temp$x_2); # r=-0.12
+temp <- merge(data_testing_2M_means, data_testing_1M_means,by.x='temp_sbjID',by.y='temp_sbjID');
+cor(temp$x_1, temp$x_2); # r = -0.12
 # no corr between 1M & 2M scores
 
 # testing d'
@@ -367,25 +368,62 @@ names(dprimes) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes);
 
 data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
-dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected, data_testing_2M$observed);
-names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
+dprimes2M <- dPrime(data_testing_2M$temp_sbjID, data_testing_2M$expected, data_testing_2M$observed);
+names(dprimes2M) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes2M);
+#d':-0.04 log_beta:0.03 c:-0.36
 data_testing_2M_means$dprime <- dprimes2M$dprime;
 data_testing_2M_means$c <- dprimes2M$c;
 
 # testing strategy
-library(tidyverse);
-strats <- subset(data_testing, select = c(sbj_ID, strategy));
+strats <- subset(data_testing, select = c(temp_sbjID, strategy));
 strats <- strats[!duplicated(strats),];
 
 # boxplot for accuracy of participants saying they just used intuition
 data_testing$intuition <- FALSE;
-data_testing$intuition[data_testing$sbj_ID=='5d696d1c55742f001af29220'|data_testing$sbj_ID=='5e248b6f0c0b31718a9d3f31'|data_testing$sbj_ID=='5e2b03f0005f2a02c5a64f7b'|data_testing$sbj_ID=='5ebd8f8679146d0a116bc257'|data_testing$sbj_ID=='5f21c29511084913913af654'|data_testing$sbj_ID=='5f8af153e27f001bcc23ffc4'|data_testing$sbj_ID=='5faacca24cd0384c1fa08be1'|data_testing$sbj_ID=='5fade36bdde8092117469a42'|data_testing$sbj_ID=='5ffd4230d96f6b2649d31f72'|data_testing$sbj_ID=='604d5e61486bd0622d2102c0'|data_testing$sbj_ID=='60f9739250a5c6f6e4726336'|data_testing$sbj_ID=='611e00dc377e4fb7a27725e8'|data_testing$sbj_ID=='61242dd5be1a06b174975a1f'|data_testing$sbj_ID=='612cc44439ccefbbd5d4b278'|data_testing$sbj_ID=='613758e7a80409ba7f5affb6'|data_testing$sbj_ID=='613ca0a2040055a4e87c5d71'|data_testing$sbj_ID=='6166ef334de9e433e83bfb79'|data_testing$sbj_ID=='6413799cf7721ee0ce637e09'|data_testing$sbj_ID=='646e0d2370c16a7561ae7dcb'|data_testing$sbj_ID=='6492c23a1a7735dfaab2b095'|data_testing$sbj_ID=='64e8bd55c9089d5bf26c90cd'|data_testing$sbj_ID=='6505a9adbb769aeea736a2f5'|data_testing$sbj_ID=='654632f222cb15acd453c0d3'|data_testing$sbj_ID=='655f5b404a09c686df3b0143'|data_testing$sbj_ID=='655f8b959477c803eb906622'|data_testing$sbj_ID=='6597e935328d41ae3aeef33b'|data_testing$sbj_ID=='65a97afe116a650acc588c5b'|data_testing$sbj_ID=='65cf6d92ac6f7932b1470fb4'|data_testing$sbj_ID=='663e08a82c273a8ea28be4e7'] <- TRUE;
-data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
-colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="sbj_ID";
+intuition_sbjIDs <- list('2','3','4','5','7','10','15','17','18','20','21','26','28','29','30','35','38','40','43','44','47','52','53','62','66','67','68','70','72','74','91');
+data_testing$intuition[data_testing$temp_sbjID %in% intuition_sbjIDs] <- TRUE;
+data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
+colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="temp_sbjID";
 boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
-summary(data_testing_intuition_2M_means$x); # mean:0.49
+summary(data_testing_intuition_2M_means$x); 
+# min:0.30 Q1:0.45 med:0.50 mean:0.49 Q3:0.53 max:0.68
+
+dprimes_intuition <- dPrime(data_testing$temp_sbjID[data_testing$intuition==TRUE], data_testing$expected[data_testing$intuition==TRUE], data_testing$observed[data_testing$intuition==TRUE]);
+names(dprimes_intuition) <- c("temp_sbjID","dprime","log_beta","c");
+summary(dprimes_intuition);
+# dprime:0.02 c:-0.25
+
+intuition_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% intuition_sbjIDs,];
+summary(intuition_2M$hits); # mean = 0.30
+summary(intuition_2M$rejs); # mean = 0.20
+summary(intuition_2M$misses); # mean = 0.20
+summary(intuition_2M$alarms); # mean = 0.30
+
+# participants saying they used previously familiarised chunks
+chunks_sbjIDs <- list('2','6','9','11','12','22','23','25','26','27','30','31','32','33','39','41','42','45','46','49','50','51','54','55','56','57','58','59','60','61','64','69','71','75','77','80','82','83','86','87','88','90');
+data_testing$chunks <- FALSE;
+data_testing$chunks[data_testing$temp_sbjID %in% chunks_sbjIDs] <- TRUE;
+data_testing_chunks_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE]), FUN=mean, na.rm=TRUE);
+colnames(data_testing_chunks_2M_means)[colnames(data_testing_chunks_2M_means)=="Group.1"]="sbj_ID";
+boxplot(data_testing_chunks_2M_means$x, ylab = "Accuracy score (in %)");
+abline(h=0.5, lty=5);
+summary(data_testing_chunks_2M_means$x); 
+# min:0.33 Q1:0.46 med:0.53 mean:0.50 Q3:0.55 max:0.65
+dprimes_chunks <- dPrime(data_testing$temp_sbjID[data_testing$chunks==TRUE], data_testing$expected[data_testing$chunks==TRUE], data_testing$observed[data_testing$chunks==TRUE]);
+names(dprimes_chunks) <- c("temp_sbjID","dprime","log_beta","c");
+summary(dprimes_chunks);
+# dprime:0.14 c:-0.22
+
+chunks_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% chunks_sbjIDs,];
+summary(chunks_2M$hits); # mean = 0.33
+summary(chunks_2M$rejs); # mean = 0.17
+summary(chunks_2M$misses); # mean = 0.17
+summary(chunks_2M$alarms); # mean = 0.33
+
+# So d' of participants saying they used chunks in their testing 
+#strategy higher than participants saying they used intuition!
 
 
 # Familiarity -------------------------------------------------------------
