@@ -477,7 +477,7 @@ cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = 0.06
 
 # BLP ---------------------------------------------------------------------
 data_all_BLP <- read.csv("exp2_BLP_preprocessed.csv",header=T,sep=",");
-data_all_BLP <- subset(data_all_BLP, select = -c(X)) # remove redundant column added by Pavlovia
+data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 92 participants
 data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('6488afe97766c9083ffc3171'),];
 
@@ -645,8 +645,8 @@ funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep
 
 # adding testing scores and BLP metrics together
 library(tidyverse);
-data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC3_L4,RC1_L3,RC2_use_L1vsL2,RC15_hist_L3));
-data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,temp_sbjID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC3_L4,RC1_L3,RC2_use_L1vsL2,RC15_hist_L3));
+data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
 
 # corr of variance & accuracy
 cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.15
@@ -688,13 +688,13 @@ cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$multi_exp); # r = -0.04
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_rejs, xlab="Multilingual experience", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="sbj_ID");
+data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="temp_sbjID");
 cor(data_BLP_testing_all$x_2_yes, data_BLP_testing_all$multi_exp); # r = 0.16
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_yes, xlab="Multilingual experience", ylab='2M "yes" responses', cex.lab=1.5,pch=19);
 abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
 abline(h=50, lty=5);
 
-data_BLP_testing_all <- merge(data_BLP_testing_all, dprimes2M, by="sbj_ID");
+data_BLP_testing_all <- merge(data_BLP_testing_all, dprimes2M, by="temp_sbjID");
 cor(data_BLP_testing_all$c,data_BLP_testing_all$multi_exp); # r = -0.13
 cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.17
 cor(data_BLP_testing_all$dprime,data_BLP_testing_all$multi_exp); # r = 0.20
@@ -720,23 +720,25 @@ abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$L1_L2_diff), col = "
 abline(h=50, lty=5);
 
 # dprimes - 2M
-data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC3_L4); # r=-0.04
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$R1_L3);
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC2_use_L1vsL2); # r=0.02
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC9_L4);
+data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC3_L4); # r = -0.04
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC1_L3); # r = 0.08
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC2_use_L1vsL2); # r = 0.02
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC15_hist_L3); # r = -0.01
 
 # dprimes - all
-data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC3_L4); # r=0.17
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC1_L3); # r=-.17
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2); # r=0.06
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC9_L4);
+data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC3_L4); # r = 0.17
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC1_L3); # r = -0.17
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2); # r = 0.06
+cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC15_hist_L3); #
 
-# correlation plot of testing scores and BLP metrics - TO FIX
+# correlation plot of testing scores and BLP metrics
 png('exp2_corrPlot_BLPtesting.png', width=1500, height=1500);
-corrplot::corrplot(cor(data_BLP_testing_all[,c(2:30)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
+corrplot::corrplot(cor(data_BLP_testing_all[,c(2,14:41)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
 dev.off();
+cor(data_BLP_testing_all$x_2,data_BLP_testing_all$ProficiencyL2Score); # r = 0.34
+cor(data_BLP_testing_all$x_2,data_BLP_testing_all$HistoryL2Score); # r = 0.10
 
 # 1M & 2M clustering
 data_testing_1M2M_means <- merge(data_testing_1M_means,data_testing_2M_means,by.x='sbj_ID',by.y='sbj_ID');

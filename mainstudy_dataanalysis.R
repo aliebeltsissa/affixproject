@@ -415,6 +415,9 @@ summary(chunks_2M$rejs); # mean = 0.13
 summary(chunks_2M$misses); # mean = 0.14
 summary(chunks_2M$alarms); # mean = 0.29
 
+# So d' of participants saying they used chunks in their testing 
+#strategy higher than participants saying they used intuition!
+
 
 # Familiarity -------------------------------------------------------------
 data_all_familiarity <- read.csv("familiarity_preprocessed_clean.csv",header=T,sep=",");
