@@ -26,6 +26,13 @@
       font-family: "BACS";
       src: url('BACS1.otf') format('opentype'); 
     };
+    @font-face {
+      font-family: 'Space';
+      src: url('SpaceOfTime.otf') format('opentype'); 
+    };
+    body {
+      font-family: 'Space', sans-serif;
+    };
   </style>
   <body></body>
   <script>
@@ -51,6 +58,16 @@
       }
     `;
     document.head.appendChild(font);
+
+    var font2 = document.createElement('style');
+    font2.innerHTML = `
+      @font-face {
+        font-family: 'Space';
+        src: url('SpaceOfTime.otf') format('opentype');
+      }
+    `;
+    document.head.appendChild(font2);
+
 
     var timeline = [];
 
@@ -617,7 +634,7 @@
     var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
 
     /* ========== JSPSYCH SCRIPT ========== */
-    document.body.style.backgroundColor = "#808080";
+    document.body.style.backgroundImage = "url('./exp_images/night.jpg')";
 
     // change text colour to white
     function changeTextColor(color) {
@@ -627,55 +644,78 @@
 
     changeTextColor("white");
 
+    // set default font to SpaceOfTime
+    document.body.style.fontFamily = "'Space', sans-serif";
+
     /* Participant ID textbox */
     var sbjIDPrompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p>Prolific ID:</p>',
+      preamble: '<p style="font-size:40px">Prolific ID:</p>',
       html: '<p><input name="ID" type="text" required/></p>',
       button_label: 'Continue'
     };
-    timeline.push(sbjIDPrompt);
+    //timeline.push(sbjIDPrompt);
+
+    var title = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 60px;font-family:Space">WELCOME TO THE EXPERIMENT.</p>
+      <p style="font-size: 60px;font-family:Space">PLEASE PRESS SPACE.</p>`,
+      choices: ' ',
+      css_classes: ['zoom']
+    };
+    //timeline.push(title);
 
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size: 15px;">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
-      <p style="font-size: 15px;"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 25-30 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
-      <p style="font-size: 15px;">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <a href="mailto:dpo@sissa.it">dpo@sissa.it</a> or <a href="mailto:rpd@sissa.it">rpd@sissa.it</a> - PEC: <a href="mailto:protocollo@pec.sissa.it">protocollo@pec.sissa.it</a>.</p>
-      <p style="font-size: 15px;"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<a href="mailto:aliebelt@sissa.it">aliebelt@sissa.it</a>, <a href="mailto:davide.crepaldi@sissa.it">davide.crepaldi@sissa.it</a>). Please feel free to contact the researcher through the Messaging feature on Prolific if you have any questions or issues.</p>
-      <p style="font-size: 15px;">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
-      <p style="font-size: 15px;">We ask that you press the spacebar to proceed to the consent section.</p>`,
+      stimulus: `<p style="font-size: 15px;font-family:Arial">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
+      <p style="font-size: 15px;font-family:Arial"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 25-30 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
+      <p style="font-size: 15px;font-family:Arial">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <u>dpo@sissa.it</u> or <u>rpd@sissa.it</u> - PEC: <u>protocollo@pec.sissa.it</u>.</p>
+      <p style="font-size: 15px;font-family:Arial"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<u>aliebelt@sissa.it</u>, <u>davide.crepaldi@sissa.it</u>). Please feel free to contact the researcher through the Messaging feature on Prolific if you have any questions or issues.</p>
+      <p style="font-size: 15px;font-family:Arial">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
+      <p style="font-size: 15px;font-family:Arial">We ask that you press the spacebar to proceed to the consent section.</p>`,
       choices: ' '
     };
-    timeline.push(instructions);
+    //timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="text-align:left;">I express my consent to participate in the study and further declare (please click on the boxes below):</p>',
-      html: `<p style="text-align:left;"><input name="consent1" type="radio" id="YES1" value="YES" required/><label for="YES1">to have carefully read the explanations relating to this study and to the entirety of the experimental procedure;</label></p>
-      <p style="text-align:left;"><input name="consent2" type="radio" id="YES2" value="YES" required/><label for="YES2">to have been made aware of the goals and objectives of the study in question;</label></p>
-      <p style="text-align:left;"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
-      <p style="text-align:left;"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
-      <p style="text-align:left;"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
-      <p style="text-align:left;"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p>`
+      preamble: '<p style="text-align:left;font-family:Arial;font-size:30px">I express my consent to participate in the study and further declare (please click on the boxes below):</p>',
+      html: `<p style="text-align:left;font-family:Arial"><input name="consent1" type="radio" id="YES1" value="YES" required/><label for="YES1">to have carefully read the explanations relating to this study and to the entirety of the experimental procedure;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent2" type="radio" id="YES2" value="YES" required/><label for="YES2">to have been made aware of the goals and objectives of the study in question;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p>`
     };
-    timeline.push(consent);
+    //timeline.push(consent);
 
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
-      message: `<p>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, or run into any problems, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
-      button_label: 'Enter fullscreen mode'
+      message: `<p style="font-family:Arial";>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, or run into any problems, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
+      button_label: 'Enter fullscreen mode',
     };
-    timeline.push(enter_fullscreen);
+    //timeline.push(enter_fullscreen);
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Welcome, and thank you very much for your time!</p>
-      <p>In this experiment, you'll be a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. Your task, in this first part of the experiment, is to pay close attention to the words you'll be shown; later, world leaders will ask you questions on what you saw. The words will be shown to you quite quickly; it seems that the aliens were in a hurry :-)</p>
-      <p>Press the spacebar to continue.<p>`,
-      choices: ' '
+      stimulus: `<p style="font-size:40px;color:#486DA5">Welcome, and thank you very much for your time!</p>
+      <p style="font-size:40px;color:#71639A">In this experiment, you'll be a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. Your task, in this first part of the experiment, is to pay close attention to the words you'll be shown; later, world leaders will ask you questions on what you saw. The words will be shown to you quite quickly; it seems that the aliens were in a hurry :)</p>
+      <img src="./exp_images/alien1.png" width="200" height="200">
+      <p style="font-size:40px;color:#486DA5";>Press the spacebar to continue.<p>`,
+      choices: ' ',
+      css_classes: ['zoom']
     };
-    timeline.push(welcome);
+    //timeline.push(welcome);
+
+    var goodbye = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-family:Arial"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
+      <img src="./exp_images/aliens_waving.gif" width="300">
+      <p style="font-family:Arial">Please press any key to upload your data.</p>`,
+      css_classes: 'zoom'
+    };
+    timeline.push(goodbye);
 
     // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
     // This trial isn't perceptible, but allowed BACS to be loaded in.
@@ -692,8 +732,11 @@
     /* MORPHEME TRAINING */
     var pre_morpheme_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
-      <p>Please press the spacebar when you're ready.</p>`
+      stimulus: `<p style="font-size:40px;color:#486DA5">From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
+      <img src="./exp_images/alien2.png" width="200">
+      <p style="font-size:40px;color:#71639A">Please press the spacebar when you're ready.</p>`,
+      choices: ' ',
+      css_classes: ['zoom']
     }
     timeline.push(pre_morpheme_training);
 
@@ -703,7 +746,7 @@
     for (let i=0;i<letters.length;i++) {
       var letter = letters[i];
       if (letter != 'BACKSPACE'){ // display in BACS
-        letters_buttons.push('<span style="font-family:BACS;font-size:40px">' + letter + '</span>')
+        letters_buttons.push('<span style="font-family:BACS;font-size:40px;">' + letter + '</span>')
       } else { // display in Latin characters (arial)
         letters_buttons.push('<span style="font-size:20px">' + letter + '</span>')
       }
@@ -712,10 +755,15 @@
     var words = all_morphemes;
     var words = FisherYatesShuffle(words);
     var stimuli = [];
-    for (let i=0; i<words.length; i++) {
+    for (let i=0;i<words.length;i++) {
       var word = words[i];
-      var stimulus = '<p style="font-size: 30px;color:#911857">Please spell this part ('+(i+1)+'/30):</p><p style="font-size: 50px;font-family:BACS;color:#911857">'+word+'</p><p style="font-size: 50px;font-family:BACS"><p style="font-size: 50px;color:#808080">i</p>';
-      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length-44)}) // length of the stimulus string, without the hidden new line
+      if (i<11) {
+        var image_name = 'progress0' + (i+1)
+      } else {
+        var image_name = 'progress' + (i+1)
+      };
+      var stimulus = `<img src='./exp_images/progress_bars/`+image_name+`.png'></img><p style="font-size: 40px;color:#486DA5">Please spell this part:</p><p style="font-size: 50px;font-family:BACS;color:#ffffff">`+word+`</p><p style="font-size: 50px;font-family:BACS"><p style="font-size: 50px;color:black">_</p>`;
+      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length-42)}) // length of the stimulus string, without the hidden new line
     };
         
     var morph_training = {
@@ -727,10 +775,19 @@
         'stimulus': jsPsych.timelineVariable('stimulus'),
         task:'morph_training'
       },
+      css_classes: function() {
+        var last_trial = jsPsych.data.getLastTrialData();
+        var trials = last_trial['trials'];
+        var trials_dict = trials[0];
+
+        if (trials_dict['stimulus'].slice(-5,) == ' </p>' || trials_dict['stimulus'.slice(-5,) == '_</p>'] || trials_dict['input'] == trials_dict['word']) { // if first time displaying that word
+          return 'zoom';
+        }
+      },
       on_finish: function(data){
         var length = jsPsych.timelineVariable('length');
         if (data.stimulus.slice(-2,) == 'p>') { // if first time displaying that word
-           var inter_stim = data.stimulus.slice(0,-46) // delete extra space
+           var inter_stim = data.stimulus.slice(0,-44) // delete extra space
         } else {
           var inter_stim = data.stimulus
         };
@@ -741,14 +798,14 @@
         };
         data.input = data.new_stim.slice(length-2);
         if (data.new_stim.slice(-2,) == '">') { // if do BACKSPACE all the way to the start
-          data.new_stim = data.new_stim + '<p style="font-size: 50px;color:#808080">i</p>'
+          data.new_stim = data.new_stim + '<p style="font-size: 50px;color:black">_</p>'
         };
         for (let i=0; i<words.length; i++) {
           if (words[i] == data.word) {
             var trial = stimuli[i];
             trial['stimulus'] = jsPsych.data.getLastTrialData().select('new_stim').values[0];
             data.stimuli = stimuli;
-          }
+          };
         };
       }
     };
@@ -759,7 +816,7 @@
         var input = jsPsych.data.getLastTrialData().select('input').values[0];
         for (let i = 0; i < words.length; i++) {
           if (input == words[i]) {
-            var progression = false; 
+            var progression = false;
             break; 
           } else {
             var progression = true;
@@ -799,16 +856,16 @@
     /* TRAINING */
     var pre_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly, each round only takes 80 seconds; it seems that the aliens were in a hurry :-)</p>
-      <p>Please presss the spacebar.<p>`
+      stimulus: `<p style="font-size:40px;color:#486DA5">Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly, each round only takes 80 seconds!!</p>
+      <p style="font-size:40px;color:#486DA5">Please presss the spacebar.<p>`
     };
     timeline.push(pre_training);
 
     var example = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Here is an example of the words you'll see:</p>
-      <img src='esempio.png' height='400px'>
-      <p>When you're ready to begin, press the spacebar.</p></div>`,
+      stimulus: `<p style="font-size:40px;color:#486DA5">Here is an example of the words you'll see:</p>
+      <img src='./exp_images/example.png' height='400px'>
+      <p style="font-size:40px;color:#486DA5">When you're ready to begin, press the spacebar.</p></div>`,
       choices: ' '
     };
     timeline.push(example);
@@ -826,12 +883,13 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: jsPsych.timelineVariable('stimulus'),
       choices: 'NO_KEYS',
-      stimulus_duration: 800,
+      stimulus_duration: 1000,
       trial_duration: 1000,
       response_ends_trial: false,
       data:{
         task: 'training'
-      }
+      },
+      css_classes: 'zoom'
     };
 
     var training_procedure1 = {
@@ -842,8 +900,9 @@
 
     var inter_training1 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the first block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 1st block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(inter_training1);
@@ -865,8 +924,9 @@
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the second block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 2nd block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(inter_training2);
@@ -888,8 +948,9 @@
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the third block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 3rd block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training3);
@@ -911,8 +972,9 @@
 
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the fourth block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 4th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(inter_training4);
@@ -934,8 +996,9 @@
 
     var inter_training5 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the fifth block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 5th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(inter_training5);
@@ -957,8 +1020,9 @@
 
     var inter_training6 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the sixth block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 6th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(inter_training6);
@@ -980,8 +1044,9 @@
 
     var inter_training7 = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great, you've seen the seventh block of words. You may now take a short break.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 7th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: [' ']
     };
     timeline.push(inter_training7);
@@ -1003,8 +1068,9 @@
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Great! You've seen all the words that we received from space.</p>
-      <p>Press the spacebar when you're ready to continue.</p>`,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great! You've seen all the words that we received from space.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
       choices: ' '
     };
     timeline.push(post_training);
@@ -1012,9 +1078,10 @@
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
-      <p>This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
-      <p>Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p><p>Press the spacebar when you're ready to begin.</p>`,
+      stimulus: `<p style="font-size:40px;color:#486DA5">In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
+      <p style="font-size:40px;color:#71639A">This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
+      <p style="font-size:40px;color:#486DA5">Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p>
+      <p style="font-size:40px;color:#71639A">Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
     timeline.push(pre_testing);
@@ -1030,10 +1097,10 @@
       var testing_condition = item.slice(-1);
       var java1 = item[0];
       if (i < 3) {
-        var java2 = '<p style="font-size: 30px;">Does this word come from the alien group you studied previously?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+        var java2 = '<p style="font-size: 40px;color:#486DA5">Does this word come from the alien group you studied previously?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
       };
       if (i >= 3) {
-        var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+        var java2 = '<p style="font-size: 40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
       };
       if (morpheme_condition == 0) { // if morphemeXmorpheme word is congruent, participant should say yes
         var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
@@ -1070,8 +1137,10 @@
 
     var if_trial = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size: 30px; color: red">Careful! You were too slow for this word.</p>
-      <p style="font-size: 30px; color: red">Try to be faster.</p><p></p><p>Press the spacebar to continue.</p>`,
+      stimulus: `<p style="font-size: 40px; color: red">Careful! You were too slow for this word.</p>
+      <img src='./exp_images/alien_angry.png' width="200">
+      <p style="font-size: 40px; color: red">Try to be faster.</p>
+      <p style="font-size:30px">Press the spacebar to continue.</p>`,
       choices: ' '
     };
 
@@ -1095,7 +1164,7 @@
 
     var strategy_prompt = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p>What strategy (if any) did you use in the previous task?</b></p>`,
+      preamble: `<p style="font-size:40px;color:#486DA5">What strategy (if any) did you use in the previous task?</b></p>`,
       html: '<input name="testing_strategy" type="text" required/></p>',
       button_label: "Continue"
     };
@@ -1104,9 +1173,9 @@
     /* FAMILIARITY TEST */
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>You've made it to the meeting on time, fantastic! The world leaders want to write a message back to the aliens, and need you to help them recognise which letter combinations you saw in their language. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that wasn't. It's important to be friendly with these aliens, so it's important that you make the right choice!</p>
-      <p>Press <strong>d</strong> if you think that the letter combination on the <strong>left</strong> is the one you saw, or <strong>k</strong> if you think that it's the one on the <strong>right</strong>.</p>
-      <p>Press the spacebar when you're ready to begin.</p>`,
+      stimulus: `<p style="font-size:40px;color:#486DA5;">You've made it to the meeting on time, fantastic! The world leaders want to write a message back to the aliens, and need you to help them recognise which letter combinations you saw in their language. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that wasn't. It's important to be friendly with these aliens, so it's important that you make the right choice!</p>
+      <p style="font-size:40px;color:#71639A;>Press <strong>d</strong> if you think that the letter combination on the <strong>left</strong> is the one you saw, or <strong>k</strong> if you think that it's the one on the <strong>right</strong>.</p>
+      <p style="font-size:40px;color:#486DA5;>Press the spacebar when you're ready to begin.</p>`,
       choices: ' '
     };
     timeline.push(pre_familiarity);
@@ -1126,10 +1195,10 @@
     for (let i = 0; i < familiarity_pairs_sides.length; i++){
       var java1 = String(familiarity_pairs_sides[i][0]+'&emsp;&emsp;&emsp;&emsp;&emsp;'+familiarity_pairs_sides[i][1]);
       if (i < 3) {
-        var java2 = '<p style="font-size: 30px;">Which letter combination have you already seen?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+        var java2 = '<p style="font-size:40px;">Which letter combination have you already seen?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;color:#71639A;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
       };
       if (i >= 3) {
-        var java2 = '<p style="font-size: 30px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 15px">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+        var java2 = '<p style="font-size:40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;color:#71639A;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
       };
       if (familiarity_pairs_sides[i][2] == 'd') {
         var target2 = familiarity_pairs_sides[i][0];
@@ -1165,9 +1234,9 @@
 
     var pre_BLP = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p>Thank you for your help deciphering these alien communications! In this final part, we'd like you to answer the following questions on your history, use, proficiency, and attitudes towards your own languages.</p>
-      <p>The questionnaire contains 19 questions and will take only 10 minutes. Please answer every question honestly: this way we'll be able to guarantee a good outcome for this experiment.</p>
-      <p>Press the spacebar to begin.</p>`,
+      stimulus: `<p style="font-size:40px;color:#486DA5;">Thank you for your help deciphering these alien communications! In this final part, we'd like you to answer the following questions on your history, use, proficiency, and attitudes towards your own languages.</p>
+      <p style="font-size:40px;color:#71639A;">The questionnaire contains 19 questions and will take only 10 minutes. Please answer every question honestly: this way we'll be able to guarantee a good outcome for this experiment.</p>
+      <p style="font-size:40px;color:#486DA5;">Press the spacebar to begin.</p>`,
       choices: ' '
     };
     timeline.push(pre_BLP);
@@ -1175,11 +1244,11 @@
     /* BLP */
     var bio_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p style="font-size: 25px; color: black">BIOGRAPHICAL INFORMATION</b></p>`,
-      html: `<legend>Age</legend><div><input name="Age" type="text" required/></div>
+      preamble: `<p style="font-size:40px;">BIOGRAPHICAL INFORMATION</b></p>`,
+      html: `<legend align="center">Age</legend><div><input name="Age" type="text" required/></div><br>
 
       <div>
-        <legend>Gender</legend>
+        <legend align="center">Gender</legend>
         <div>
           <input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required>
           <label for="Woman">Woman</label>
@@ -1192,10 +1261,10 @@
           <input type="radio" id="Other" name="Gender" value="Other">
           <label for="Other">Other/would prefer not to say</label>
         </div>
-      </div>
+      </div><br>
       
       <div>
-        <legend>Highest level of formal education</legend>
+        <legend align="center">Highest level of formal education</legend>
         <div>
           <input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required>
           <label for="MinusHighSchool">Less than high school</label>
@@ -1224,30 +1293,31 @@
           <input type="radio" id="PhD" name="Education" value="PhD">
           <label for="PhD">PhD/MD/JD</label>
         </div>
-      </div
+      </div><br>
       
       <div>
-        <legend>What language would you consider to be your <strong>FIRST LANGUAGE</strong>? (the language in which you feel most comfortable in).</legend>
+        <legend align="center">What language would you consider to be your FIRST LANGUAGE? (the language in which you feel most comfortable in).</legend>
         <input name="L1" type="text" required/>
-      </div>
+      </div><br>
       <div>
-        <legend>What language would you consider to be your <strong>SECOND LANGUAGE</strong>? If you don't speak a second language, please enter "n/a".</legend>
+        <legend align="center">What language would you consider to be your SECOND LANGUAGE? If you don't speak a second language, please enter "n/a".</legend>
         <input name="L2" type="text" required/>
-      </div>
+      </div><br>
       <div>
-        <legend>What language would you consider to be your <strong>THIRD LANGUAGE</strong>? If you don't speak a third language, please enter "n/a".</legend>
+        <legend align="center">What language would you consider to be your THIRD LANGUAGE? If you don't speak a third language, please enter "n/a".</legend>
         <input name="L3" type="text" required/>
-      </div>
+      </div><br>
       <div>
-        <legend>What language would you consider to be your <strong>FOURTH LANGUAGE</strong>? If you don't speak a fourth language, please enter "n/a".</legend>
+        <legend align="center">What language would you consider to be your FOURTH LANGUAGE? If you don't speak a fourth language, please enter "n/a".</legend>
         <input name="L4" type="text" required/>
-      </div>
+      </div><br>
       <div>
-        <legend>Do you speak any other languages?</legend>
+        <legend align="center">Do you speak any other languages?</legend>
         <input name="otherLs" type="text" required/>
       </div>`,
       button_label: "Continue",
-      data: {name: 'bio_info'}
+      data: {name: 'bio_info'},
+      css_classes: 'zoom'
     };
     timeline.push(bio_info);
 
@@ -1307,7 +1377,7 @@
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `
           <div>
-            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
             <div class="radio-container">`+ extras +`
               <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
               <label for="`+ name +`_1">1</label>
@@ -1380,7 +1450,7 @@
 
     var history_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE HISTORY</p><p style="color: black">In this section, we would like you to answer some factual questions about your language history.</p><p>',
+      preamble: '<p style="font-size: 40px;">LANGUAGE HISTORY</p><p style="font-size:30px">In this section, we would like you to answer some factual questions about your language history.</p><p>',
       html: function(){
         var AoA = years('AoA');
         var AoEase = years('AoEase');
@@ -1388,15 +1458,16 @@
         var yearsCountry = years('yearsCountry');
         var yearsFamily = years('yearsFamily');
         var yearsWork = years('yearsWork');
-        var big_html = `<p style="color: black"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA +
-        `<p style="color: black"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase +
-        `<p style="color: black"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu +
-        `<p style="color: black"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry +
-        `<p style="color: black"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily +
-        `<p style="color: black"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork + `</p>`;
+        var big_html = `<p style="font-size:40px"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA +
+        `<p style="font-size:40px"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase +
+        `<p style="font-size:40px"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu +
+        `<p style="font-size:40px"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry +
+        `<p style="font-size:40px"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily +
+        `<p style="font-size:40px"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork + `</p>`;
         return big_html
       },
-      data: {name: 'history_info'}
+      data: {name: 'history_info'},
+      css_classes: 'zoom'
     };
     timeline.push(history_info);
 
@@ -1435,7 +1506,7 @@
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `
           <div>
-            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
             <div class="radio-container">
               <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/>
               <label for="`+ name +`_0">0%</label>
@@ -1481,27 +1552,28 @@
 
     var use_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: '<p style="font-size: 25px; color: black">LANGUAGE USE</p><p style="color: black">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p><p>',
+      preamble: '<p style="font-size: 40px;">LANGUAGE USE</p><p style="font-size:30px">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p><p>',
       html: function() {
         var PercFriends = percent('PercFriends');
         var PercFamily = percent('PercFamily');
         var PercWork = percent('PercWork');
         var PercSelf = percent('PercSelf');
         var PercCount = percent('PercCount');
-        var big_html = `<p style="color: black"><legend>7. In an average week, what percentage of time do you use the following languages with friends?</legend></p>` + PercFriends + `</p>
-        <p style="color: black"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend></p>` + PercFamily + `</p>
-        <p style="color: black"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend></p>` + PercWork + `</p>
-        <p style="color: black"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
-        <p style="color: black"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount +`</p><p>`;
+        var big_html = `<p style="font-size:40px"><legend>7. In an average week, what percentage of time do you use the following languages with friends?</legend></p>` + PercFriends + `</p>
+        <p style="font-size:40px"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend></p>` + PercFamily + `</p>
+        <p style="font-size:40px"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend></p>` + PercWork + `</p>
+        <p style="font-size:40px"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
+        <p style="font-size:40px"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount +`</p><p>`;
         return big_html
       },
-      data: {name: 'use_info'}
+      data: {name: 'use_info'},
+      css_classes: 'zoom'
     };
 
     var error_screen = {
       type: jsPsychInstructions,
-      pages: [`<p style="font-size: 30px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
-        <p>Please press the button below to try again.</p>`],
+      pages: [`<p style="font-size: 40px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
+        <p style="font-size:40px">Please press the button below to try again.</p>`],
       button_label_next: 'Retry',
       allow_keys: false,
       allow_backward: false,
@@ -1595,7 +1667,7 @@
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `
           <div>
-            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
             <div class="radio-container">
               <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
               <label for="`+ name +`_0">0 (not well at all)</label>
@@ -1629,22 +1701,23 @@
 
     var proficiency_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p style="font-size: 25px; color: black">LANGUAGE PROFICIENCY</p>
-      <p style="color: black">In this section, we would like you to rate your language proficiency by giving marks from 0 to 6.</p>`,
+      preamble: `<p style="font-size: 40px;">LANGUAGE PROFICIENCY</p>
+      <p style="font-size:30px">In this section, we would like you to rate your language proficiency by giving marks from 0 to 6.</p>`,
       html: function() {
         var ProfSpeak = proficiency('ProfSpeak');
         var ProfUnderstand = proficiency('ProfUnderstand');
         var ProfRead = proficiency('ProfRead');
         var Attention = proficiency('Attention');
         var ProfWrite = proficiency('ProfWrite');
-        var big_html = `<p style="color: black"><legend>12. How well do you speak the following languages?</legend></p>` + ProfSpeak + `
-        <p style="color: black"><legend>13. How well do you understand the following languages?</legend></p>` + ProfUnderstand + `
-        <p style="color: black"><legend>14. How well do you read in the following languages?</legend></p>` + ProfRead + `
-        <p style="color: black"><legend>If you're reading this, please answer "2" for all languages.</legend></p>` + Attention + `
-        <p style="color: black"><legend>15. How well do you write in the following languages?</legend></p>` + ProfWrite;
+        var big_html = `<p style="font-size:40px"><legend>12. How well do you speak the following languages?</legend></p>` + ProfSpeak + `
+        <p style="font-size:40px"><legend>13. How well do you understand the following languages?</legend></p>` + ProfUnderstand + `
+        <p style="font-size:40px"><legend>14. How well do you read in the following languages?</legend></p>` + ProfRead + `
+        <p style="font-size:40px"><legend>If you're reading this, please answer "2" for all languages.</legend></p>` + Attention + `
+        <p style="font-size:40px"><legend>15. How well do you write in the following languages?</legend></p>` + ProfWrite;
         return big_html
       },
-      data: {name: 'proficiency_info'}
+      data: {name: 'proficiency_info'},
+      css_classes: 'zoom'
     };
     timeline.push(proficiency_info);
 
@@ -1683,7 +1756,7 @@
         if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO') {var option = ''} else {
           var option = `
           <div>
-            <strong><font color="`+ color +`">`+ tag +`: </strong></font>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
             <div class="radio-container">
               <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
               <label for="`+ name +`_0">0 (disagree)</label>
@@ -1717,27 +1790,30 @@
 
     var attitudes_info = {
       type: jsPsychSurveyHtmlForm,
-      preamble: `<p style="font-size: 25px; color: black">LANGUAGE ATTITUDES</p>
-      <p style="color: black">In this section, we would like you to respond to statements about language attitudes by giving marks from 0-6.</p>`,
+      preamble: `<p style="font-size: 40px;">LANGUAGE ATTITUDES</p>
+      <p style="font-size:30px">In this section, we would like you to respond to statements about language attitudes by giving marks from 0-6.</p>`,
       html: function() {
         var AttSelf = attitudes('AttSelf');
         var AttCulture = attitudes('AttCulture');
         var AttNativeLevel = attitudes('AttNativeLevel');
         var AttMothertongue = attitudes('AttMothertongue');
-        var big_html = `<p style="color: black"><legend>16. I feel like myself when I speak the following languages.</legend></p>` + AttSelf + `
-        <p style="color: black"><legend>17. I identify with a culture that speaks the following languages.</legend></p>` + AttCulture + `
-        <p style="color: black"><legend>18. It is important to me to use (or eventually use) the following languages like a native speaker.</legend></p>` + AttNativeLevel + `
-        <p style="color: black"><legend>19. I want others to think I am a native speaker of the following languages.</legend></p>` + AttMothertongue;
+        var big_html = `<p style="font-size:40px"><legend>16. I feel like myself when I speak the following languages.</legend></p>` + AttSelf + `
+        <p style="font-size:40px"><legend>17. I identify with a culture that speaks the following languages.</legend></p>` + AttCulture + `
+        <p style="font-size:40px"><legend>18. It is important to me to use (or eventually use) the following languages like a native speaker.</legend></p>` + AttNativeLevel + `
+        <p style="font-size:40px"><legend>19. I want others to think I am a native speaker of the following languages.</legend></p>` + AttMothertongue;
         return big_html
       },
-      data: {name: 'attitudes_info'}
+      data: {name: 'attitudes_info'},
+      css_classes: 'zoom'
     };
     timeline.push(attitudes_info);
 
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
-      <p>Please press any key to upload your data.</p>`
+      stimulus: `<p style="font-family:Arial"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
+      <img src="alien_waving.gif">
+      <p style="font-family:Arial">Please press any key to upload your data.</p>`,
+      css_classes: 'zoom'
     };
     timeline.push(goodbye);
 
@@ -1750,7 +1826,7 @@
 
     var redirect = {
       type: jsPsychHtmlButtonResponse,
-      stimulus: `<p>Click the button below to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
+      stimulus: `<p style="font-family:Arial">Click the button below to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
       choices: ['Submit'],
       on_finish: function() {
         window.location = "https://app.prolific.com/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
