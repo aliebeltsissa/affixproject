@@ -619,7 +619,7 @@
 
 
     // list randomisations
-    var trainingn = 8;
+    var trainingn = 12;
     var rand_training1 = training_randomisation(training_list);
     var rand_training2 = training_randomisation(training_list);
     var rand_training3 = training_randomisation(training_list);
@@ -628,6 +628,10 @@
     var rand_training6 = training_randomisation(training_list);
     var rand_training7 = training_randomisation(training_list);
     var rand_training8 = training_randomisation(training_list);
+    var rand_training9 = training_randomisation(training_list);
+    var rand_training10 = training_randomisation(training_list);
+    var rand_training11 = training_randomisation(training_list);
+    var rand_training12 = training_randomisation(training_list);
 
     var rand_testing = testing_randomisation(master_testing_list);
 
@@ -701,21 +705,12 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size:40px;color:#486DA5">Welcome, and thank you very much for your time!</p>
       <p style="font-size:40px;color:#71639A">In this experiment, you'll be a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. Your task, in this first part of the experiment, is to pay close attention to the words you'll be shown; later, world leaders will ask you questions on what you saw. The words will be shown to you quite quickly; it seems that the aliens were in a hurry :)</p>
-      <img src="./exp_images/alien1.png" width="200" height="200">
+      <img src="./exp_images/alien.png" width="200" height="200">
       <p style="font-size:40px;color:#486DA5";>Press the spacebar to continue.<p>`,
       choices: ' ',
       css_classes: ['zoom']
     };
-    //timeline.push(welcome);
-
-    var goodbye = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-family:Arial"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
-      <img src="./exp_images/aliens_waving.gif" width="300">
-      <p style="font-family:Arial">Please press any key to upload your data.</p>`,
-      css_classes: 'zoom'
-    };
-    timeline.push(goodbye);
+    timeline.push(welcome);
 
     // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
     // This trial isn't perceptible, but allowed BACS to be loaded in.
@@ -733,7 +728,7 @@
     var pre_morpheme_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size:40px;color:#486DA5">From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
-      <img src="./exp_images/alien2.png" width="200">
+      <img src="./exp_images/alien_wise.png" width="200">
       <p style="font-size:40px;color:#71639A">Please press the spacebar when you're ready.</p>`,
       choices: ' ',
       css_classes: ['zoom']
@@ -1066,6 +1061,102 @@
     };
     timeline.push(training_procedure8);
 
+    var inter_training8 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 8th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training8);
+
+    // training round 9
+    var training_stimuli9 = [];
+    for (let i = 0; i < rand_training9.length; i++) {
+      var item = rand_training9[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict9 = {stimulus: java, correct_response: ''};
+      training_stimuli9.push(training_stimuli_dict9)
+    };
+
+    var training_procedure9 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli9,
+    };
+    timeline.push(training_procedure9);
+
+    var inter_training9 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 9th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training9);
+
+    // training round 10
+    var training_stimuli10 = [];
+    for (let i = 0; i < rand_training10.length; i++) {
+      var item = rand_training10[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict10 = {stimulus: java, correct_response: ''};
+      training_stimuli10.push(training_stimuli_dict10)
+    };
+
+    var training_procedure10 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli10,
+    };
+    timeline.push(training_procedure10);
+
+    var inter_training10 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 10th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training10);
+
+    // training round 11
+    var training_stimuli11 = [];
+    for (let i = 0; i < rand_training11.length; i++) {
+      var item = rand_training11[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict11 = {stimulus: java, correct_response: ''};
+      training_stimuli11.push(training_stimuli_dict11)
+    };
+
+    var training_procedure11 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli11,
+    };
+    timeline.push(training_procedure11);
+
+    var inter_training11 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 11th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training11);
+
+    // training round 12
+    var training_stimuli12 = [];
+    for (let i = 0; i < rand_training12.length; i++) {
+      var item = rand_training12[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict12 = {stimulus: java, correct_response: ''};
+      training_stimuli12.push(training_stimuli_dict12)
+    };
+
+    var training_procedure12 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli12,
+    };
+    timeline.push(training_procedure12);
+
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
@@ -1078,11 +1169,11 @@
     /* TESTING */
     var pre_testing = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size:40px;color:#486DA5">In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
-      <p style="font-size:40px;color:#71639A">This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
-      <p style="font-size:40px;color:#486DA5">Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p>
-      <p style="font-size:40px;color:#71639A">Press the spacebar when you're ready to begin.</p>`,
-      choices: ' '
+      stimulus: `<p style="font-size:40px;color:#486DA5;">In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
+      <p style="font-size:40px;color:#71639A;">This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
+      <p style="font-size:40px;color:#486DA5;">Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p>
+      <p style="font-size:40px;color:#71639A;">Press the spacebar when you're ready to begin.</p>`,
+      choices: ' ',
     };
     timeline.push(pre_testing);
 
@@ -1097,10 +1188,10 @@
       var testing_condition = item.slice(-1);
       var java1 = item[0];
       if (i < 3) {
-        var java2 = '<p style="font-size: 40px;color:#486DA5">Does this word come from the alien group you studied previously?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+        var java2 = '<p style="font-size: 40px;color:#486DA5">Does this word come from the alien group you studied previously?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A;">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
       };
       if (i >= 3) {
-        var java2 = '<p style="font-size: 40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+        var java2 = '<p style="font-size: 40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A;">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
       };
       if (morpheme_condition == 0) { // if morphemeXmorpheme word is congruent, participant should say yes
         var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
@@ -1171,12 +1262,33 @@
     timeline.push(strategy_prompt);
 
     /* FAMILIARITY TEST */
+    var meeting_welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<div class="split left">
+      <div class="centered">
+        <img src="./exp_images/meeting.png" width="500">
+      </div>
+    </div>
+
+    <div class="split right">
+      <div class="centered">
+        <p style="font-size: 80px; line-height: 1">Welcome to the experts meeting</p>
+        <p style="font-size: 30px;">Press space</p>
+      </div>
+    </div>`,
+    choices: ' '
+    };
+    timeline.push(meeting_welcome);
+    
     var pre_familiarity = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size:40px;color:#486DA5;">You've made it to the meeting on time, fantastic! The world leaders want to write a message back to the aliens, and need you to help them recognise which letter combinations you saw in their language. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that wasn't. It's important to be friendly with these aliens, so it's important that you make the right choice!</p>
-      <p style="font-size:40px;color:#71639A;>Press <strong>d</strong> if you think that the letter combination on the <strong>left</strong> is the one you saw, or <strong>k</strong> if you think that it's the one on the <strong>right</strong>.</p>
-      <p style="font-size:40px;color:#486DA5;>Press the spacebar when you're ready to begin.</p>`,
-      choices: ' '
+      stimulus: `<p style="font-size:40px;">You've made it to the meeting on time, fantastic! The world leaders want to write a message back to the aliens, and need you to help them recognise which letter combinations you saw in their language. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that wasn't. It's important to be friendly with these aliens, so it's important that you make the right choice!</p>
+      <p style="font-size:40px;>Press <strong>d</strong> if you think that the letter combination on the <strong>left</strong> is the one you saw, or <strong>k</strong> if you think that it's the one on the <strong>right</strong>.</p>
+      <p style="font-size:40px;>Press the spacebar when you're ready to begin.</p>`,
+      choices: ' ',
+      on_load: function() {
+        document.body.style.backgroundImage = "url('./exp_images/stainedglass_blurry.png')";
+      }
     };
     timeline.push(pre_familiarity);
 
@@ -1195,10 +1307,10 @@
     for (let i = 0; i < familiarity_pairs_sides.length; i++){
       var java1 = String(familiarity_pairs_sides[i][0]+'&emsp;&emsp;&emsp;&emsp;&emsp;'+familiarity_pairs_sides[i][1]);
       if (i < 3) {
-        var java2 = '<p style="font-size:40px;">Which letter combination have you already seen?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;color:#71639A;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+        var java2 = '<p style="font-size:40px;">Which letter combination have you already seen?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
       };
       if (i >= 3) {
-        var java2 = '<p style="font-size:40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;color:#71639A;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+        var java2 = '<p style="font-size:40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
       };
       if (familiarity_pairs_sides[i][2] == 'd') {
         var target2 = familiarity_pairs_sides[i][0];
@@ -1237,7 +1349,10 @@
       stimulus: `<p style="font-size:40px;color:#486DA5;">Thank you for your help deciphering these alien communications! In this final part, we'd like you to answer the following questions on your history, use, proficiency, and attitudes towards your own languages.</p>
       <p style="font-size:40px;color:#71639A;">The questionnaire contains 19 questions and will take only 10 minutes. Please answer every question honestly: this way we'll be able to guarantee a good outcome for this experiment.</p>
       <p style="font-size:40px;color:#486DA5;">Press the spacebar to begin.</p>`,
-      choices: ' '
+      choices: ' ',
+      on_load: function() {
+        document.body.style.backgroundImage = "url('./exp_images/night.jpg')";
+      }
     };
     timeline.push(pre_BLP);
 
@@ -1811,7 +1926,7 @@
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-family:Arial"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
-      <img src="alien_waving.gif">
+      <img src="./exp_images/alien_goodbye.png" width="300">
       <p style="font-family:Arial">Please press any key to upload your data.</p>`,
       css_classes: 'zoom'
     };
