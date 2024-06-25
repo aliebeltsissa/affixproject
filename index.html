@@ -658,7 +658,7 @@
       html: '<p><input name="ID" type="text" required/></p>',
       button_label: 'Continue'
     };
-    //timeline.push(sbjIDPrompt);
+    timeline.push(sbjIDPrompt);
 
     var title = {
       type: jsPsychHtmlKeyboardResponse,
@@ -667,7 +667,7 @@
       choices: ' ',
       css_classes: ['zoom']
     };
-    //timeline.push(title);
+    timeline.push(title);
 
     var instructions = {
       type: jsPsychHtmlKeyboardResponse,
@@ -679,7 +679,7 @@
       <p style="font-size: 15px;font-family:Arial">We ask that you press the spacebar to proceed to the consent section.</p>`,
       choices: ' '
     };
-    //timeline.push(instructions);
+    timeline.push(instructions);
 
     var consent = {
       type: jsPsychSurveyHtmlForm,
@@ -691,7 +691,7 @@
       <p style="text-align:left;font-family:Arial"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
       <p style="text-align:left;font-family:Arial"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p>`
     };
-    //timeline.push(consent);
+    timeline.push(consent);
 
     var enter_fullscreen = {
       type: jsPsychFullscreen,
@@ -699,7 +699,7 @@
       message: `<p style="font-family:Arial";>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, or run into any problems, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
       button_label: 'Enter fullscreen mode',
     };
-    //timeline.push(enter_fullscreen);
+    timeline.push(enter_fullscreen);
 
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
