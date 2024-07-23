@@ -1,6 +1,9 @@
 setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject");
 
-participants <- list('6488afe97766c9083ffc3171','5c437f6a4fe4f800016e3d52','5c840aedbad8fb000106cb44','5d696d1c55742f001af29220','5e248b6f0c0b31718a9d3f31','5e2b03f0005f2a02c5a64f7b','5e9dad3fd8d8010ac6a18620','5ebd8f8679146d0a116bc257','5ecba4b6ef75d53505406d57','5ed14691e983f5067842fd20','5f21c29511084913913af654','5f316280965ec564c886f978','5f35782429beab53ef93cc2d','5f3d119b77d8ba0009a79558','5f5a5d4618746310515e2828','5f8af153e27f001bcc23ffc4','5f9c2359530d3e067a300bd6','5faacca24cd0384c1fa08be1','5fade36bdde8092117469a42','5ffab69a57132749844b8020','5ffd4230d96f6b2649d31f72','604d5e61486bd0622d2102c0','6057a8fe2d302939fc759940','60a8bd22d03adbe92cbb9a5e','60c4a402716a8f9074fcd92e','60c715c89bb47f3847a690f0','60c873a65a9883b52f70db6c','60db9c9850c39eea109ef1d3','60e586145b73b702a608bace','60f9739250a5c6f6e4726336','6102ee48644f517877d64d2b','6103cbc5310ffddfafa01661','610d45e26c9b141264755d3c','61118c6d3c980e8b5b50e2fa','6117bb7900c0ba81f079a4ee','611e00dc377e4fb7a27725e8','611e125063d1a52330225838','611fd297eb06449f7f0a06b9','61242dd5be1a06b174975a1f','61248a51eefb6797024ecb85','612cc44439ccefbbd5d4b278','612cd9f34adcee82f65685a1','6136a1e1159dc808ad660d89','613758e7a80409ba7f5affb6','613ca0a2040055a4e87c5d71','6148b49d6ac652cefd310332','615c1372e7e639775817487e','6166ef334de9e433e83bfb79','616b567b3e605b7245a9aead','6171946a19f6673fb215c0c7','628ed30ae7ff849e8bc91c86','631a1795de5efe7d3395caa3','6413799cf7721ee0ce637e09','646e0d2370c16a7561ae7dcb','649264e0b601af80c5677791','6492c23a1a7735dfaab2b095','6495a5f76daf70e418baf5f7','6497e970e2621e753513a695','64e8bd55c9089d5bf26c90cd','64e8c14bbe184c20cb9d0583','64f61553b5635b5e00595923','650330fa0cbc534b423f41e9','6505a9adbb769aeea736a2f5','651c59ec0cb6fef4208190f5','651eda4af4a809dbba0bb002','653d2df588326f6f627b8cb5','654632f222cb15acd453c0d3','655f5b404a09c686df3b0143','655f8b959477c803eb906622','65672c69a3737224f1d0bbfa','6597e935328d41ae3aeef33b','6598994f0e7e5db183bfe3ee','65a97afe116a650acc588c5b','65b901451577b2a0f18bc7ab','65cf6d92ac6f7932b1470fb4','65dce7715387badaf80e875d','65fc949678623ac83f926940','66031000461c44484ac359a8','660310c1b1a7ea09dee682e2','6606800e185d326591af6f7a','6606c9d692990fbf223f63bb','660c0d70a8f60acced0c8cc8','660c265dce47171c0dd7d359','66156fd87e14e8a60c007e17','66168e55cb60649609600268','6616a8636a12b432e8d914b5','661c24ab06db7f1ff0146700','661ff04db0e4a8222d5c4dd7','6634f754adfec54a4b1aaed4','66383ecf52e239b6f2ad54f4','663a5bb8f7f79c7e04abc9b3','663e08a82c273a8ea28be4e7')
+# participants list too many characters to be dealt by R in one line
+participants1 <- list('579e18fc4a84da00014c6f4f','5b6aa4aa0d748b0001fb5260','5c1a6bd8f9250d0001b7c589','5c437f6a4fe4f800016e3d52','5c840aedbad8fb000106cb44','5d696d1c55742f001af29220','5db16ce33990ed0014564873','5e248b6f0c0b31718a9d3f31','5e2b03f0005f2a02c5a64f7b','5e6449ae5932461d728d2152','5e8b85a61e16e9057a996e36','5e9dad3fd8d8010ac6a18620','5ebd8f8679146d0a116bc257','5ecba4b6ef75d53505406d57','5ed14691e983f5067842fd20','5eee55e93867d30a7771e616','5ef0b54037a90c618ad9e97f','5eff8b9ad19111064484eff7','5f1165307d03fb0009716b8e','5f21c29511084913913af654','5f316280965ec564c886f978','5f35782429beab53ef93cc2d','5f3d119b77d8ba0009a79558','5f5a5d4618746310515e2828','5f6f3d061214fe49ec2b9619','5f8af153e27f001bcc23ffc4','5f8b724dc36e8c2ac6d5fb6e','5f9c2359530d3e067a300bd6','5faacca24cd0384c1fa08be1','5fade36bdde8092117469a42','5fb2946df797088a8c405c2e','5ff3a2554cfb7d507511d89f','5ffab69a57132749844b8020','5ffd4230d96f6b2649d31f72','60204c263941fb63d9d794bc','602d2adcef81ce6b843da09b','60379326171365000ac6ae93','6046435099c3d00becdb2dfb','604d5e61486bd0622d2102c0','6057a8fe2d302939fc759940','60907b8091341e8724ba80ed','60a18093c5c040498d3addf8','60a8bd22d03adbe92cbb9a5e','60bf28df4926a8b6391df575','60c4a402716a8f9074fcd92e','60c715c89bb47f3847a690f0','60c873a65a9883b52f70db6c','60ca0b60979a23c83652c303','60cef349a1fff159b5d4853e','60d26e7cd9f0761e4d12b9f8','60d9dfd4dcc09cf57dc92cb1','60db9c9850c39eea109ef1d3','60e586145b73b702a608bace','60e5ac4f3d93f294f5fa543b','60f9739250a5c6f6e4726336','6102ee48644f517877d64d2b','6103cbc5310ffddfafa01661','6106ac34408681f3b0d07396','610d45e26c9b141264755d3c','61118c6d3c980e8b5b50e2fa','6117bb7900c0ba81f079a4ee','611d180283c1129def9284e6','611e00dc377e4fb7a27725e8','611e125063d1a52330225838','611fd297eb06449f7f0a06b9','61200d0d71bd5c0f9f9716b2','61242dd5be1a06b174975a1f','61248a51eefb6797024ecb85','612cc44439ccefbbd5d4b278','612cd9f34adcee82f65685a1','613054cf8dffc8bbb1fc9cc4','6134d182408816f4c1284496','6135f6887f5dd1472f7d3d6e','6136a1e1159dc808ad660d89','613758e7a80409ba7f5affb6','613ca0a2040055a4e87c5d71','6148b49d6ac652cefd310332','615c1372e7e639775817487e','6166ef334de9e433e83bfb79','616ad7ac6299f99ce33cdc78','616b567b3e605b7245a9aead','61717173748006894b2b54ff','6171946a19f6673fb215c0c7','6171f219ee27aa0e23d076aa','61758dd4ab7ec0d91a929f3d','628ed30ae7ff849e8bc91c86','631a1795de5efe7d3395caa3','63c5335da2b625ab1ade7e7c','6413799cf7721ee0ce637e09','646e0d2370c16a7561ae7dcb','6488afe97766c9083ffc3171','649264e0b601af80c5677791','6492c23a1a7735dfaab2b095','6495a5f76daf70e418baf5f7','6497e970e2621e753513a695','64e7533f36d388e8b31d3309','64e8bd55c9089d5bf26c90cd','64e8c14bbe184c20cb9d0583','64e9d6f596308448ac67bb95');
+participants2 <- list('64f61553b5635b5e00595923','64f7a35c5f6503caaa59f79f','64fc701b223abd16ad5c940e','650330fa0cbc534b423f41e9','6505a9adbb769aeea736a2f5','650aed9eb9cc2c717ba70c30','6511e688100fd33b378fa688','651c59ec0cb6fef4208190f5','651eda4af4a809dbba0bb002','65352001dbe3e18eae5a8300','65361483b7f9881afa9b4cda','653d2df588326f6f627b8cb5','653fb764c9aed77c01457531','654632f222cb15acd453c0d3','65523123662559399b1aa48a','6557def45fc0ffbd46ad01de','655f5b404a09c686df3b0143','655f8b959477c803eb906622','65672c69a3737224f1d0bbfa','65774d879c53cc867fbe070c','657bfe6e245848c8fef0b389','6597e935328d41ae3aeef33b','6598994f0e7e5db183bfe3ee','659ada2d6df23a57d8e56752','65a97217d4fb858939a16b0f','65a97afe116a650acc588c5b','65abe33e1c79ea32da32ab0f','65ae78fc9cd81e8e26612cb2','65b901451577b2a0f18bc7ab','65b96f3bbecf5e7d0f5853cd','65c23d4dbad7238169292b54','65cba84263ac644fa79702ca','65cf6d92ac6f7932b1470fb4','65dce7715387badaf80e875d','65e7259b24116547c5512668','65f33b94cd6885d54029582d','65f7be6ac59662b24ac0f9b0','65fae6b84fa6b3101d2ca4b1','65fb18ef1c73590e7aaf1d48','65fc949678623ac83f926940','66031000461c44484ac359a8','660310c1b1a7ea09dee682e2','660678406bba1ade08345803','6606800e185d326591af6f7a','6606c9d692990fbf223f63bb','660c0d70a8f60acced0c8cc8','660c265dce47171c0dd7d359','66156fd87e14e8a60c007e17','66168e55cb60649609600268','6616a8636a12b432e8d914b5','6617af3304fe756a213cce24','661c24ab06db7f1ff0146700','661ff04db0e4a8222d5c4dd7','66271b4aaaf60fd058302f09','6634e4d4f1950b4dcd44d4d9','6634f754adfec54a4b1aaed4','66383ecf52e239b6f2ad54f4','663a5bb8f7f79c7e04abc9b3','663e08a82c273a8ea28be4e7','664b550820b57425a150d8e2','664b7cd6b5a772dd1eddca37','664f48afa42c9a4a7ed2bb88','664f70fcf77160132d600e2c','6658f0a58f1ee667f4264a93','6659ca4701d47b95a09ba736','6659ebda18cf5c43dbcc7354','665d94712b964d877bf9f132','665f79d15be62c63a74883d6','6661bf2ef4b2d0892ad7a007','6662d40766c8aa595834461d','666306b0bf2de127943c419f','6666a56ce75a18f29904e527','6666cf176a54945ba62e8ca9','6667488c5f46f3da0c085419','666f0fb7d9900bb03f5d99a1','666fd8b3dc9f2e1de77b5db4','6672ee650699d871b742ca6b','667437b20a6f1d1ebf68714b','667972671949d2e1c0c9ff54','667d631ef036f8ef4ff2f4f3','667dd7126e7a9073e0af73fd','6681625ff9dfa8a95bb0359d','6682b6d8a001b7f57c513ecc','66844cc1407c6afd0e100482','668553fe2efd22c91cf88fb9','6685e1541643171c04ec0e35','668992b2f868cb89829346c2','6692b87aad65e83d4230c307','6693f13e028361f102a9ed86','66951e094b5bd0caf94e844f','669cc52163cce3554e97d184');
+participants <- c(participants1,participants2);
 
 library(paletteer);
 cols <- paletteer_d("MetBrewer::Degas");
@@ -43,9 +46,8 @@ dPrime <- function(sbj, expectedResp, observedResp)
 # import testing data
 data_all_testing <- read.csv("exp2_testing_preprocessed.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
-data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n =  participants
-data_testing <- data_testing[!data_testing$sbj_ID %in% c('6488afe97766c9083ffc3171'),]; # excluded for RTs
-data_testing$temp_sbjID <- rep(1:91, each=120); # necessary: R doesn't like format of Prolific IDs
+data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n = 190 participants
+data_testing$temp_sbjID <- rep(1:189, each=120); # necessary: R doesn't like format of Prolific IDs
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -75,21 +77,39 @@ library(paletteer);
 cols2 <- paletteer_d("palettesForR::Named");
 IDs <- list(data_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.007),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
+plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.01),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
-for (x in 2:92) {
+for (x in 2:189) {
   lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x+26],lwd=1)
 };
-# good, centered around 600ms
+# good, centered around 800ms
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means$x);
-#min:174.5 Q1:797.7 med:955.4 mean:926.4 Q3:1099.4 max:1461.2
+#min:211.6 Q1:732.4 med:922.5 mean:920.2 Q3:1098.7 max:1986.1
 # good med & mean
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
 # looks healthy overall
-plot(data_testing$rt[data_testing$sbj_ID=="6488afe97766c9083ffc3171"],ylim=c(0,1000))
+
+# PARTICIPANT EXCLUSIONS #
+summary(data_testing$rt[data_testing$sbj_ID=="5e6449ae5932461d728d2152"]);
+#min:490 Q1:1102 med:1250 mean:1502 Q3:1567 max:21759
+plot(data_testing$rt[data_testing$sbj_ID=="5e6449ae5932461d728d2152"],ylim=c(2000,22000));
+plot(data_testing$rt[data_testing$sbj_ID=="5e6449ae5932461d728d2152"&data_testing$rt>2000]);
+# include 5e6449ae5932461d728d2152: mean RT of 1502 slow, but only 10 trials too slow
+
+summary(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"]);
+#min:641 Q1:1034 med:1532 mean:1986 Q3:2182 max:21398
+plot(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"],ylim=c(2000,22000));
+plot(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"&data_testing$rt>2000]);
+# exclude 667d631ef036f8ef4ff2f4f3: mean RT of 1986 slow, and 35 trials too slow
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('667d631ef036f8ef4ff2f4f3'),]
+
+summary(data_testing$rt[data_testing$sbj_ID=="6488afe97766c9083ffc3171"]);
 #exclude 6488afe97766c9083ffc3171: mean RT of 175ms too fast
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('6488afe97766c9083ffc3171'),];
 data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('6488afe97766c9083ffc3171'),]
+
 plot(data_testing$rt[data_testing$sbj_ID=="660c265dce47171c0dd7d359"]);
 #fine to include: very long with the first item (50s!) but others all around 1s afterwards
 
@@ -98,9 +118,9 @@ data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_cond
 names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
 data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/40*100; #transform into percent
 summary(data_testing_0M_yes$x_0);
-#min:0 Q1:41.25 med:52.5 mean:51.59 Q3:62.5 max:100
+#min:0 Q1:42.5 med:52.5 mean:52.63 Q3:62.5 max:100
 t.test(data_testing_0M_yes$x_0, mu=50);
-#t=0.87 p=0.385 CI=[47.97;55.22] -> 0M "yes" not sig difference from chance
+#t=2.12 p=0.035 CI=[50.2;55.08] -> 0M "yes" sig above chance
 boxplot(data_testing_0M_yes$x, ylab = "0M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 
@@ -108,7 +128,7 @@ abline(h=50, lty=5);
 data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
 names(data_testing_0M_means) <- c("temp_sbjID","x_0");
 summary(data_testing_0M_means$x_0);
-#min:0 Q1:0.38 med:0.48 mean:0.48 Q3:0.59 max:1
+#min:0 Q1:0.38 med:0.48 mean:0.47 Q3:0.58 max:1
 var(data_testing_0M_means$x_0);
 #var=0.03
 plot(data_testing_0M_means$x_0,pch=3,ylim=c(0,1),yaxs="i");
@@ -116,16 +136,16 @@ abline(h=0.5, lty=5); # clustered around 50%
 
 hist(data_testing_0M_means$x_0); # normally distributed
 t.test(data_testing_0M_means$x_0, mu=0.5);
-#t=-0.87 p=0.385 CI=[0.45;0.52] -> 0M scores not sig different from chance
+#t=-2.1 p=0.04 CI=[0.45;0.49] -> 0M scores sig below from chance
 
 # 1M yes responses boxplot
 data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
 names(data_testing_1M_yes) <- c("temp_sbjID","x_1");
 data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/40*100; #transform into percent
 summary(data_testing_1M_yes$x_1);
-#min:0 Q1:48.75 med:57.5 mean:57.31 Q3:66.25 max:100
+#min:0 Q1:50 med:57.5 mean:58.41 Q3:67.5 max:100
 t.test(data_testing_1M_yes$x_1, mu=50);
-#t=4.6 p=1.34e-5 CI=[54.16;60.46] -> sig above chance
+#t=7.7 p=6.1e-13 CI=[56.27;60.56] -> sig above chance
 boxplot(data_testing_1M_yes$x, ylab = "1M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 
@@ -133,7 +153,7 @@ abline(h=50, lty=5);
 data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
 names(data_testing_1M_means) <- c("temp_sbjID","x_1");
 summary(data_testing_1M_means$x_1);
-#min:0 Q1:0.49 med:0.58 mean:0.57 Q3:0.66 max:1
+#min:0 Q1:0.50 med:0.58 mean:0.58 Q3:0.68 max:1
 var(data_testing_1M_means$x_1);
 #var=0.02
 plot(data_testing_1M_means$x_1,pch=3,ylim=c(0,1),yaxs="i");
@@ -141,16 +161,16 @@ abline(h=0.5, lty=5);
 # clustered slightly above chance
 hist(data_testing_1M_means$x_1); # normally distributed
 t.test(data_testing_1M_means$x_1, mu=0.5);
-#t=4.6 p=1.34e-5 CI=[0.54;0.60] -> sig above chance
+#t=7.7 p=6.1e-13 CI=[0.56;0.61] -> sig above chance
 
 # 2M yes responses boxplot
 data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
 names(data_testing_2M_yes) <- c("temp_sbjID","x_2");
 data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into percent
 summary(data_testing_2M_yes$x_2);
-#min:0 Q1:52.5 med:65 mean:63.2 Q3:72.5 max:100
+#min:0 Q1:52.5 med:62.5 mean:63.3 Q3:72.5 max:100
 t.test(data_testing_2M_yes$x_2, mu=50);
-#t=7.78 p=1.15e-11 CI=[59.80;66.52] -> sig above chance
+#t=11.7 p<2.2-16 CI=[61.09;65.59] -> sig above chance
 boxplot(data_testing_2M_yes$x, ylab = "2M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 
@@ -163,7 +183,7 @@ abline(h=50, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 conditions_table <- table(data_testing$testing_condition, data_testing$observed);
 chisq.test(conditions_table);
-# X-squared=99.5, df=2, p<2.23-16
+# X-squared=178, df=2, p<2.2e-16
 data_testing_conditions <- data_testing_conditions %>%
   gather(condition, score, -temp_sbjID);
 data_testing_conditions$score <- data_testing_conditions$score/100;
@@ -213,7 +233,7 @@ abline(h=0.5, lty=5);
 # clustered around chance
 hist(data_testing_2M_means$x_2); # normally distributed
 t.test(data_testing_2M_means$x_2, mu=0.50);
-#t=-0.56 p=0.58 CI=[0.48;0.51] -> not sig different from chance
+#t=-0.86 p=0.39 CI=[0.48;0.51] -> not sig different from chance
 
 # scores across conditions
 library(tidyverse);
@@ -233,7 +253,7 @@ summary(data_testing_2M_hits_means$x_2_hits);
 # min:0 Q1:0.5 med:0.65 mean:0.63 Q3:0.75 max:1
 hist(data_testing_2M_hits_means$x_2_hits); # normally distributed
 t.test(data_testing_2M_hits_means$x_2_hits, mu=0.50);
-# t=6.8, p=9.3e-10, CI=[0.59;0.66] -> sig above chance
+# t=10.3, p<2.2e-16, CI=[0.60;0.65] -> sig above chance
 plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
 abline(h=0.5, lty=5);
 
@@ -248,14 +268,14 @@ summary(data_testing_2M_rejs_means$x_2_rejs);
 # min:0 Q1:0.25 med:0.35 mean:0.36 Q3:0.5 max:1
 hist(data_testing_2M_rejs_means$x_2_rejs); # normally distributed
 t.test(data_testing_2M_rejs_means$x_2_rejs, mu=0.50);
-# t=-7.12, p=2.7e-10, CI=[0.33;0.4] -> sig below chance
+# t=-10.67, p<2.2e-16, CI=[0.34;0.39] -> sig below chance
 plot(data_testing_2M_rejs_means$x_2_rejs,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
 abline(h=0.5, lty=5);
 
 # 2M - all response types
 library(tidyverse);
 misses <- list();
-for (i in 1:91) { # calculate misses for each participant
+for (i in 1:188) { # calculate misses for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   miss <- temp %>%
     summarize(count = sum(expected == 1 & observed == 0));
@@ -268,7 +288,7 @@ summary(data_testing_2M_means$misses);
 # min:0 Q1:0.13 med:0.18 mean:0.19 Q3:0.25 max:0.50
 
 hits <- list();
-for (i in 1:91) { # calculate hits for each participant
+for (i in 1:187) { # calculate hits for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   hit <- temp %>%
     summarize(count = sum(expected == 1 & observed == 1));
@@ -281,7 +301,7 @@ summary(data_testing_2M_means$hits);
 # min:0 Q1:0.25 med:0.33 mean:0.31 Q3:0.38 max:0.5
 
 rejs <- list();
-for (i in 1:91) { # calculate correct rejections for each participant
+for (i in 1:187) { # calculate correct rejections for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   rej <- temp %>%
     summarize(count = sum(expected == 0 & observed == 0));
@@ -294,7 +314,7 @@ summary(data_testing_2M_means$rejs);
 # min:0 Q1:0.13 med:0.18 mean:0.18 Q3:0.25 max:0.5
 
 alarms <- list();
-for (i in 1:91) { # calculate false alarms for each participant
+for (i in 1:187) { # calculate false alarms for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   alarm <- temp %>%
     summarize(count = sum(expected == 0 & observed == 1));
@@ -322,24 +342,22 @@ abline(h=0.5, lty=5);
 
 #3 - plot connecting hit score to correct rejection score
 library(ggplot2);
-data_testing_2M_bygroup_means <- merge(data_testing_2M_hits_means,data_testing_2M_rejs_means,by="temp_sbjID");
-data_testing_2M_bygroup_means <- merge(data_testing_2M_bygroup_means,data_testing_2M_means,by="temp_sbjID");
-names(data_testing_2M_bygroup_means) <- c("temp_sbjID","hits_mean","rejs_mean","mean");
-data_long <- reshape2::melt(data_testing_2M_bygroup_means, id.vars = "temp_sbjID", variable.name = "condition", value.name = "accuracy");
+data_long <- reshape2::melt(subset(data_testing_2M_means, select = c(temp_sbjID,hits,rejs)), id.vars = "temp_sbjID", variable.name = "condition", value.name = "accuracy");
 ggplot(data_long, aes(x = condition, y = accuracy, group = temp_sbjID)) +
   geom_line(linewidth=0.2) +
   geom_point(aes(color = condition), size = 3);
 #the lower the hits_mean is, the higher rejs_mean is
 
 #4 - plot of difference between hit & correct rejection accuracy
-data_testing_2M_bygroup_means$diff <- data_testing_2M_bygroup_means$hits_mean-data_testing_2M_bygroup_means$rejs_mean;
+data_testing_2M_bygroup_means <- data_testing_2M_means;
+data_testing_2M_bygroup_means$diff <- data_testing_2M_bygroup_means$hits-data_testing_2M_bygroup_means$rejs;
 plot(data_testing_2M_bygroup_means$diff,ylim=c(-1,1),ylab="Accuracy difference",main="Difference between hits & correct rejection accuracy",xlab="Participants",pch=19,yaxs="i",col="#0B775E",cex=1.5);
 abline(h=0, lty=5);
 
 #5 - plot of "yes" responses in 2M & accuracy
 names(data_testing_2M_yes) <- c("temp_sbjID","x_2_yes");
 testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="temp_sbjID");
-cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.04
+cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.05
 plot(testing_all$x_2_yes,testing_all$x_2,pch=19);
 #more 2M yes doesn't give you a better score
 testing_all <- merge(testing_all,data_testing_2M_hits_means, by="temp_sbjID");
@@ -348,13 +366,13 @@ plot(testing_all$x_2_yes,testing_all$x_2_hits,pch=19);
 #more 2M yes means more hits, means higher scores
 
 # testing accuracy*RTs
-cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.19
+cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.09
 plot(data_testing_rt_means$x, data_testing_2M_means$x, pch=19);
 
-cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 0.19
+cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 0.09
 plot(data_testing_rt_means$x, data_testing_2M_hits_means$x, pch=19);
 
-cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.02
+cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.01
 plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
 
 # correlation between 1M & 2M
@@ -371,7 +389,7 @@ data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
 dprimes2M <- dPrime(data_testing_2M$temp_sbjID, data_testing_2M$expected, data_testing_2M$observed);
 names(dprimes2M) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes2M);
-#d':-0.04 log_beta:0.03 c:-0.36
+#d':-0.03 log_beta:0.01 c:-0.37
 data_testing_2M_means$dprime <- dprimes2M$dprime;
 data_testing_2M_means$c <- dprimes2M$c;
 
@@ -379,30 +397,34 @@ data_testing_2M_means$c <- dprimes2M$c;
 strats <- subset(data_testing, select = c(temp_sbjID, strategy));
 strats <- strats[!duplicated(strats),];
 
+# excluding participant having taken a video of training
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('666f0fb7d9900bb03f5d99a1'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('666f0fb7d9900bb03f5d99a1'),]
+
 # boxplot for accuracy of participants saying they just used intuition
 data_testing$intuition <- FALSE;
-intuition_sbjIDs <- list('2','3','4','5','7','10','15','17','18','20','21','26','28','29','30','35','38','40','43','44','47','52','53','62','66','67','68','70','72','74','91');
+intuition_sbjIDs <- list('1','5','6','8','9','13','16','20','22','25','26','27','29','30','34','37','39','47','48','51','53','54','55','56','58','63','67','68','69','75','76','79','89','90','103','108','111','112','115','116','120','122','124','131','134','135','143','157','160','163','166','171','172','175','178','179','187');
 data_testing$intuition[data_testing$temp_sbjID %in% intuition_sbjIDs] <- TRUE;
 data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
 colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="temp_sbjID";
 boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_intuition_2M_means$x); 
-# min:0.30 Q1:0.45 med:0.50 mean:0.49 Q3:0.53 max:0.68
+# min:0.30 Q1:0.45 med:0.50 mean:0.49 Q3:0.55 max:0.68
 
 dprimes_intuition <- dPrime(data_testing$temp_sbjID[data_testing$intuition==TRUE], data_testing$expected[data_testing$intuition==TRUE], data_testing$observed[data_testing$intuition==TRUE]);
 names(dprimes_intuition) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes_intuition);
-# dprime:0.02 c:-0.25
+# dprime:0.04 c:-0.27
 
 intuition_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% intuition_sbjIDs,];
 summary(intuition_2M$hits); # mean = 0.30
-summary(intuition_2M$rejs); # mean = 0.20
-summary(intuition_2M$misses); # mean = 0.20
-summary(intuition_2M$alarms); # mean = 0.30
+summary(intuition_2M$rejs); # mean = 0.18
+summary(intuition_2M$misses); # mean = 0.19
+summary(intuition_2M$alarms); # mean = 0.31
 
 # participants saying they used previously familiarised chunks
-chunks_sbjIDs <- list('2','6','9','11','12','22','23','25','26','27','30','31','32','33','39','41','42','45','46','49','50','51','54','55','56','57','58','59','60','61','64','69','71','75','77','80','82','83','86','87','88','90');
+chunks_sbjIDs <- list('2','5','7','12','15','17','19','24','36','38','40','41','44','47','50','52','56','59','60','70','74','77','78','80','82','83','85','86','87','88','92','93','94','96','97','98','107','109','117','119','121','123','129','132','133','139','141','145','146','150','151','161','162','167','169','177','184','185');
 data_testing$chunks <- FALSE;
 data_testing$chunks[data_testing$temp_sbjID %in% chunks_sbjIDs] <- TRUE;
 data_testing_chunks_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE]), FUN=mean, na.rm=TRUE);
@@ -410,17 +432,17 @@ colnames(data_testing_chunks_2M_means)[colnames(data_testing_chunks_2M_means)=="
 boxplot(data_testing_chunks_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_chunks_2M_means$x); 
-# min:0.33 Q1:0.46 med:0.53 mean:0.50 Q3:0.55 max:0.65
+# min:0.35 Q1:0.45 med:0.53 mean:0.51 Q3:0.55 max:0.65
 dprimes_chunks <- dPrime(data_testing$temp_sbjID[data_testing$chunks==TRUE], data_testing$expected[data_testing$chunks==TRUE], data_testing$observed[data_testing$chunks==TRUE]);
 names(dprimes_chunks) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes_chunks);
-# dprime:0.14 c:-0.22
+# dprime:0.19 c:-0.21
 
 chunks_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% chunks_sbjIDs,];
-summary(chunks_2M$hits); # mean = 0.33
-summary(chunks_2M$rejs); # mean = 0.17
-summary(chunks_2M$misses); # mean = 0.17
-summary(chunks_2M$alarms); # mean = 0.33
+summary(chunks_2M$hits); # mean = 0.325
+summary(chunks_2M$rejs); # mean = 0.175
+summary(chunks_2M$misses); # mean = 0.175
+summary(chunks_2M$alarms); # mean = 0.325
 
 # So d' of participants saying they used chunks in their testing 
 #strategy higher than participants saying they used intuition!
