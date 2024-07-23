@@ -48,6 +48,8 @@ data_all_testing <- read.csv("exp2_testing_preprocessed.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n = 190 participants
 data_testing$temp_sbjID <- rep(1:189, each=120); # necessary: R doesn't like format of Prolific IDs
+# all participants to be excluded:
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1'),];
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -451,8 +453,8 @@ summary(chunks_2M$alarms); # mean = 0.325
 # Familiarity -------------------------------------------------------------
 data_all_familiarity <- read.csv("exp2_familiarity_preprocessed.csv",header=T,sep=",");
 data_all_familiarity <- subset(data_all_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
-data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 196 participants
-data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c('6488afe97766c9083ffc3171'),];
+data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 187 participants
+data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1'),];
 
 # make some variables factors
 data_familiarity$sbj_ID <- as.factor(data_familiarity$sbj_ID);
@@ -470,38 +472,38 @@ boxplot(data_familiarity_means$x, ylab = "Familiarity score",ylim=c(0,1),cex.lab
 abline(h=0.5, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 summary(data_familiarity_means$x);
-# min:0.4 Q1:0.5 med:0.57 mean:0.56 Q3:0.6 max:0.83
+# min:0.37 Q1:0.5 med:0.57 mean:0.57 Q3:0.63 max:0.93
 hist(data_familiarity_means$x); # mostly normally distributed
 t.test(data_familiarity_means$x, mu=0.50);
-# t=6.22, p=1.5e-8, CI = [0.54;0.58] -> sig above chance
+# t=10.25, p,2.2e-16, CI = [0.56;0.59] -> sig above chance
 
 # familiarity RTs
 IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.003),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],lwd=2,yaxs="i");
+plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.01),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
-for (x in 2:91) {
-  lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols[x],lwd=2)
+for (x in 2:187) {
+  lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols2[x],lwd=2)
 };
 data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
-summary(data_familiarity_rt_means);
-#min:218 Q1:1249 med:1595 mean:1582 Q3:1914 max:3391
+summary(data_familiarity_rt_means$x);
+#min:154 Q1:1208 med:1646 mean:1700 Q3:1994 max:6243
 
 # familiarity accuracy*RTs
-cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.31
+cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.30
 plot(data_familiarity_rt_means$x, data_familiarity_means$x, xlab="Mean participant RT (in ms)", ylab="Mean participant familiarity score (in %)", pch=19, cex=2, cex.lab=1.45);
 
 # familiarity accuracy*testing accuracy
-cor(data_familiarity_means$x, data_testing_2M_means$x); # r = 0.06
-cor(data_familiarity_means$x, data_testing_2M_hits_means$x); # r = -0.003
-cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = 0.06
+cor(data_familiarity_means$x, data_testing_2M_means$x); # r = 0.02
+cor(data_familiarity_means$x, data_testing_2M_hits_means$x); # r = 0.07
+cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.06
 
 
 # BLP ---------------------------------------------------------------------
 data_all_BLP <- read.csv("exp2_BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 92 participants
-data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('6488afe97766c9083ffc3171'),];
+data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1'),];
 
 # standardise language responses
 data_BLP[data_BLP == "polish"] <- "Polish";
