@@ -1,7 +1,7 @@
 ### IMPORTING ###
 from os import listdir, chdir
 from os.path import isfile
-chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\data\\exp2") # set working directory to responses folder
+chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\data\\BASLv2") # set working directory to responses folder
 allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
@@ -263,28 +263,12 @@ for x in range(len(BLP_data)): # for each participant datafile
     history = pd.DataFrame.from_dict(participant[2], orient='index')
     history = history.transpose()
     
-    if len(participant) == 6:
-        use = pd.DataFrame.from_dict(participant[3], orient='index')
-    elif len(participant) == 7:
-        use = pd.DataFrame.from_dict(participant[4], orient='index')
-    elif len(participant) == 8:
-        use = pd.DataFrame.from_dict(participant[5], orient='index')
-    use = use.transpose()
+    use = pd.DataFrame.from_dict(participant[-3], orient='index')
+    proficiency = pd.DataFrame.from_dict(participant[-2], orient='index')
+    attitude = pd.DataFrame.from_dict(participant[-1], orient='index')
         
-    if len(participant) == 6:
-        proficiency = pd.DataFrame.from_dict(participant[4], orient='index')
-    elif len(participant) == 7:
-        proficiency = pd.DataFrame.from_dict(participant[5], orient='index')
-    elif len(participant) == 8:
-        proficiency = pd.DataFrame.from_dict(participant[6], orient='index')
+    use = use.transpose()    
     proficiency = proficiency.transpose()
-    
-    if len(participant) == 6:
-        attitude = pd.DataFrame.from_dict(participant[5], orient='index')
-    elif len(participant) == 7:
-        attitude = pd.DataFrame.from_dict(participant[6], orient='index')
-    elif len(participant) == 8:
-        attitude = pd.DataFrame.from_dict(participant[7], orient='index')
     attitude = attitude.transpose()
 
     # combine section dataframes into a BLP dataframe
