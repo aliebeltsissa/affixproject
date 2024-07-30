@@ -2,7 +2,7 @@ setwd("C:/Users/annal/OneDrive/Documents/GitHub/affixproject");
 
 # participants list too many characters to be dealt by R in one line
 participants1 <- list('579e18fc4a84da00014c6f4f','5b6aa4aa0d748b0001fb5260','5c1a6bd8f9250d0001b7c589','5c437f6a4fe4f800016e3d52','5c840aedbad8fb000106cb44','5d696d1c55742f001af29220','5db16ce33990ed0014564873','5e248b6f0c0b31718a9d3f31','5e2b03f0005f2a02c5a64f7b','5e6449ae5932461d728d2152','5e8b85a61e16e9057a996e36','5e9dad3fd8d8010ac6a18620','5ebd8f8679146d0a116bc257','5ecba4b6ef75d53505406d57','5ed14691e983f5067842fd20','5eee55e93867d30a7771e616','5ef0b54037a90c618ad9e97f','5eff8b9ad19111064484eff7','5f1165307d03fb0009716b8e','5f21c29511084913913af654','5f316280965ec564c886f978','5f35782429beab53ef93cc2d','5f3d119b77d8ba0009a79558','5f5a5d4618746310515e2828','5f6f3d061214fe49ec2b9619','5f8af153e27f001bcc23ffc4','5f8b724dc36e8c2ac6d5fb6e','5f9c2359530d3e067a300bd6','5faacca24cd0384c1fa08be1','5fade36bdde8092117469a42','5fb2946df797088a8c405c2e','5ff3a2554cfb7d507511d89f','5ffab69a57132749844b8020','5ffd4230d96f6b2649d31f72','60204c263941fb63d9d794bc','602d2adcef81ce6b843da09b','60379326171365000ac6ae93','6046435099c3d00becdb2dfb','604d5e61486bd0622d2102c0','6057a8fe2d302939fc759940','60907b8091341e8724ba80ed','60a18093c5c040498d3addf8','60a8bd22d03adbe92cbb9a5e','60bf28df4926a8b6391df575','60c4a402716a8f9074fcd92e','60c715c89bb47f3847a690f0','60c873a65a9883b52f70db6c','60ca0b60979a23c83652c303','60cef349a1fff159b5d4853e','60d26e7cd9f0761e4d12b9f8','60d9dfd4dcc09cf57dc92cb1','60db9c9850c39eea109ef1d3','60e586145b73b702a608bace','60e5ac4f3d93f294f5fa543b','60f9739250a5c6f6e4726336','6102ee48644f517877d64d2b','6103cbc5310ffddfafa01661','6106ac34408681f3b0d07396','610d45e26c9b141264755d3c','61118c6d3c980e8b5b50e2fa','6117bb7900c0ba81f079a4ee','611d180283c1129def9284e6','611e00dc377e4fb7a27725e8','611e125063d1a52330225838','611fd297eb06449f7f0a06b9','61200d0d71bd5c0f9f9716b2','61242dd5be1a06b174975a1f','61248a51eefb6797024ecb85','612cc44439ccefbbd5d4b278','612cd9f34adcee82f65685a1','613054cf8dffc8bbb1fc9cc4','6134d182408816f4c1284496','6135f6887f5dd1472f7d3d6e','6136a1e1159dc808ad660d89','613758e7a80409ba7f5affb6','613ca0a2040055a4e87c5d71','6148b49d6ac652cefd310332','615c1372e7e639775817487e','6166ef334de9e433e83bfb79','616ad7ac6299f99ce33cdc78','616b567b3e605b7245a9aead','61717173748006894b2b54ff','6171946a19f6673fb215c0c7','6171f219ee27aa0e23d076aa','61758dd4ab7ec0d91a929f3d','628ed30ae7ff849e8bc91c86','631a1795de5efe7d3395caa3','63c5335da2b625ab1ade7e7c','6413799cf7721ee0ce637e09','646e0d2370c16a7561ae7dcb','6488afe97766c9083ffc3171','649264e0b601af80c5677791','6492c23a1a7735dfaab2b095','6495a5f76daf70e418baf5f7','6497e970e2621e753513a695','64e7533f36d388e8b31d3309','64e8bd55c9089d5bf26c90cd','64e8c14bbe184c20cb9d0583','64e9d6f596308448ac67bb95');
-participants2 <- list('64f61553b5635b5e00595923','64f7a35c5f6503caaa59f79f','64fc701b223abd16ad5c940e','650330fa0cbc534b423f41e9','6505a9adbb769aeea736a2f5','650aed9eb9cc2c717ba70c30','6511e688100fd33b378fa688','651c59ec0cb6fef4208190f5','651eda4af4a809dbba0bb002','65352001dbe3e18eae5a8300','65361483b7f9881afa9b4cda','653d2df588326f6f627b8cb5','653fb764c9aed77c01457531','654632f222cb15acd453c0d3','65523123662559399b1aa48a','6557def45fc0ffbd46ad01de','655f5b404a09c686df3b0143','655f8b959477c803eb906622','65672c69a3737224f1d0bbfa','65774d879c53cc867fbe070c','657bfe6e245848c8fef0b389','6597e935328d41ae3aeef33b','6598994f0e7e5db183bfe3ee','659ada2d6df23a57d8e56752','65a97217d4fb858939a16b0f','65a97afe116a650acc588c5b','65abe33e1c79ea32da32ab0f','65ae78fc9cd81e8e26612cb2','65b901451577b2a0f18bc7ab','65b96f3bbecf5e7d0f5853cd','65c23d4dbad7238169292b54','65cba84263ac644fa79702ca','65cf6d92ac6f7932b1470fb4','65dce7715387badaf80e875d','65e7259b24116547c5512668','65f33b94cd6885d54029582d','65f7be6ac59662b24ac0f9b0','65fae6b84fa6b3101d2ca4b1','65fb18ef1c73590e7aaf1d48','65fc949678623ac83f926940','66031000461c44484ac359a8','660310c1b1a7ea09dee682e2','660678406bba1ade08345803','6606800e185d326591af6f7a','6606c9d692990fbf223f63bb','660c0d70a8f60acced0c8cc8','660c265dce47171c0dd7d359','66156fd87e14e8a60c007e17','66168e55cb60649609600268','6616a8636a12b432e8d914b5','6617af3304fe756a213cce24','661c24ab06db7f1ff0146700','661ff04db0e4a8222d5c4dd7','66271b4aaaf60fd058302f09','6634e4d4f1950b4dcd44d4d9','6634f754adfec54a4b1aaed4','66383ecf52e239b6f2ad54f4','663a5bb8f7f79c7e04abc9b3','663e08a82c273a8ea28be4e7','664b550820b57425a150d8e2','664b7cd6b5a772dd1eddca37','664f48afa42c9a4a7ed2bb88','664f70fcf77160132d600e2c','6658f0a58f1ee667f4264a93','6659ca4701d47b95a09ba736','6659ebda18cf5c43dbcc7354','665d94712b964d877bf9f132','665f79d15be62c63a74883d6','6661bf2ef4b2d0892ad7a007','6662d40766c8aa595834461d','666306b0bf2de127943c419f','6666a56ce75a18f29904e527','6666cf176a54945ba62e8ca9','6667488c5f46f3da0c085419','666f0fb7d9900bb03f5d99a1','666fd8b3dc9f2e1de77b5db4','6672ee650699d871b742ca6b','667437b20a6f1d1ebf68714b','667972671949d2e1c0c9ff54','667d631ef036f8ef4ff2f4f3','667dd7126e7a9073e0af73fd','6681625ff9dfa8a95bb0359d','6682b6d8a001b7f57c513ecc','66844cc1407c6afd0e100482','668553fe2efd22c91cf88fb9','6685e1541643171c04ec0e35','668992b2f868cb89829346c2','6692b87aad65e83d4230c307','6693f13e028361f102a9ed86','66951e094b5bd0caf94e844f','669cc52163cce3554e97d184');
+participants2 <- list('64f61553b5635b5e00595923','64f7a35c5f6503caaa59f79f','64fc701b223abd16ad5c940e','650330fa0cbc534b423f41e9','6505a9adbb769aeea736a2f5','650aed9eb9cc2c717ba70c30','6511e688100fd33b378fa688','651c59ec0cb6fef4208190f5','651eda4af4a809dbba0bb002','65352001dbe3e18eae5a8300','65361483b7f9881afa9b4cda','653d2df588326f6f627b8cb5','653fb764c9aed77c01457531','654632f222cb15acd453c0d3','65523123662559399b1aa48a','6557def45fc0ffbd46ad01de','655f5b404a09c686df3b0143','655f8b959477c803eb906622','65672c69a3737224f1d0bbfa','65774d879c53cc867fbe070c','657bfe6e245848c8fef0b389','6597e935328d41ae3aeef33b','6598994f0e7e5db183bfe3ee','659ada2d6df23a57d8e56752','65a97217d4fb858939a16b0f','65a97afe116a650acc588c5b','65abe33e1c79ea32da32ab0f','65ae78fc9cd81e8e26612cb2','65b901451577b2a0f18bc7ab','65b96f3bbecf5e7d0f5853cd','65c23d4dbad7238169292b54','65cba84263ac644fa79702ca','65cf6d92ac6f7932b1470fb4','65dce7715387badaf80e875d','65e7259b24116547c5512668','65f33b94cd6885d54029582d','65f7be6ac59662b24ac0f9b0','65fae6b84fa6b3101d2ca4b1','65fb18ef1c73590e7aaf1d48','65fc949678623ac83f926940','66031000461c44484ac359a8','660310c1b1a7ea09dee682e2','660678406bba1ade08345803','6606800e185d326591af6f7a','6606c9d692990fbf223f63bb','660c0d70a8f60acced0c8cc8','660c265dce47171c0dd7d359','66156fd87e14e8a60c007e17','66168e55cb60649609600268','6616a8636a12b432e8d914b5','6617af3304fe756a213cce24','661c24ab06db7f1ff0146700','661ff04db0e4a8222d5c4dd7','66271b4aaaf60fd058302f09','6634e4d4f1950b4dcd44d4d9','6634f754adfec54a4b1aaed4','66383ecf52e239b6f2ad54f4','663a5bb8f7f79c7e04abc9b3','663e08a82c273a8ea28be4e7','664b550820b57425a150d8e2','664b7cd6b5a772dd1eddca37','664f48afa42c9a4a7ed2bb88','664f70fcf77160132d600e2c','6658f0a58f1ee667f4264a93','6659ca4701d47b95a09ba736','6659ebda18cf5c43dbcc7354','665d94712b964d877bf9f132','665f79d15be62c63a74883d6','6661bf2ef4b2d0892ad7a007','6662d40766c8aa595834461d','666306b0bf2de127943c419f','6666a56ce75a18f29904e527','6666cf176a54945ba62e8ca9','6667488c5f46f3da0c085419','666f0fb7d9900bb03f5d99a1','666fd8b3dc9f2e1de77b5db4','6672ee650699d871b742ca6b','667437b20a6f1d1ebf68714b','667972671949d2e1c0c9ff54','667d631ef036f8ef4ff2f4f3','667dd7126e7a9073e0af73fd','6681625ff9dfa8a95bb0359d','6682b6d8a001b7f57c513ecc','66844cc1407c6afd0e100482','668553fe2efd22c91cf88fb9','6685e1541643171c04ec0e35','668992b2f868cb89829346c2','6692b87aad65e83d4230c307','6693f13e028361f102a9ed86','66951e094b5bd0caf94e844f','669cc52163cce3554e97d184','615c47639c04e360b0a76f58');
 participants <- c(participants1,participants2);
 
 library(paletteer);
@@ -49,7 +49,7 @@ data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant 
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n = 190 participants
 # all participants to be excluded:
 data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1','660310c1b1a7ea09dee682e2','5faacca24cd0384c1fa08be1', '65f7be6ac59662b24ac0f9b0', '664b7cd6b5a772dd1eddca37'),];
-data_testing$temp_sbjID <- rep(1:183, each=120); # necessary: R doesn't like format of Prolific IDs
+data_testing$temp_sbjID <- rep(1:184, each=120); # necessary: R doesn't like format of Prolific IDs
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -81,13 +81,13 @@ IDs <- list(data_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
 plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.01),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
-for (x in 2:183) {
+for (x in 2:184) {
   lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x+26],lwd=1)
 };
 # good, centered around 800ms
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means$x);
-#min:212 Q1:728 med:923 mean:916 Q3:1093 max:1534
+#min:212 Q1:730 med:922 mean:915 Q3:1093 max:1534
 # good med & mean
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
 # looks healthy overall
@@ -128,7 +128,7 @@ data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_cond
 names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
 data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/40*100; #transform into percent
 summary(data_testing_0M_yes$x_0);
-#min:7.5 Q1:42.5 med:52.5 mean:52.1 Q3:62.5 max:87.5
+#min:7.5 Q1:42.5 med:52.5 mean:52.3 Q3:62.5 max:87.5
 t.test(data_testing_0M_yes$x_0, mu=50);
 #t=1.83 p=0.07 CI=[49.8;54.4] -> 0M "yes" not sig above chance
 boxplot(data_testing_0M_yes$x, ylab = "0M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
@@ -146,7 +146,7 @@ abline(h=0.5, lty=5); # clustered around 50%
 
 hist(data_testing_0M_means$x_0); # normally distributed
 t.test(data_testing_0M_means$x_0, mu=0.5);
-#t=-1.8 p=0.07 CI=[0.46;0.50] -> 0M scores not sig below chance
+#t=-1.9 p=0.053 CI=[0.46;0.50] -> 0M scores not sig below chance
 
 # 1M yes responses boxplot
 data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
@@ -155,7 +155,7 @@ data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/40*100; #transform into perce
 summary(data_testing_1M_yes$x_1);
 #min:18 Q1:50 med:57.5 mean:58.0 Q3:67.5 max:90
 t.test(data_testing_1M_yes$x_1, mu=50);
-#t=8.2 p=5.5e-14 CI=[56.10;60.00] -> sig above chance
+#t=8.1 p=5.7e-14 CI=[56.10;60.00] -> sig above chance
 boxplot(data_testing_1M_yes$x, ylab = "1M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 
@@ -171,7 +171,7 @@ abline(h=0.5, lty=5);
 # clustered slightly above chance
 hist(data_testing_1M_means$x_1); # normally distributed
 t.test(data_testing_1M_means$x_1, mu=0.5);
-#t=8.2 p=5.5e-14 CI=[0.56;0.60] -> sig above chance
+#t=8.1 p=5.7e-14 CI=[0.56;0.60] -> sig above chance
 
 # 2M yes responses boxplot
 data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
@@ -180,7 +180,7 @@ data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into perce
 summary(data_testing_2M_yes$x_2);
 #min:30 Q1:52.5 med:62.5 mean:63.1 Q3:72.5 max:95
 t.test(data_testing_2M_yes$x_2, mu=50);
-#t=12.4 p<2.2-16 CI=[61.00;65.17] -> sig above chance
+#t=12.4 p<2.2-16 CI=[61.00;65.14] -> sig above chance
 boxplot(data_testing_2M_yes$x, ylab = "2M Percent of 'yes' responses",ylim=c(0,100),yaxs="i");
 abline(h=50, lty=5);
 
@@ -193,7 +193,7 @@ abline(h=50, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 conditions_table <- table(data_testing$testing_condition, data_testing$observed);
 chisq.test(conditions_table);
-# X-squared=181, df=2, p<2.2e-16
+# X-squared=177, df=2, p<2.2e-16
 data_testing_conditions <- data_testing_conditions %>%
   gather(condition, score, -temp_sbjID);
 data_testing_conditions$score <- data_testing_conditions$score/100;
@@ -243,7 +243,7 @@ abline(h=0.5, lty=5);
 # clustered around chance
 hist(data_testing_2M_means$x_2); # normally distributed
 t.test(data_testing_2M_means$x_2, mu=0.50);
-#t=-0.86 p=0.39 CI=[0.48;0.51] -> not sig different from chance
+#t=-0.81 p=0.42 CI=[0.48;0.51] -> not sig different from chance
 
 # scores across conditions
 library(tidyverse);
@@ -263,7 +263,7 @@ summary(data_testing_2M_hits_means$x_2_hits);
 # min:0.2 Q1:0.5 med:0.65 mean:0.63 Q3:0.75 max:1
 hist(data_testing_2M_hits_means$x_2_hits); # normally distributed
 t.test(data_testing_2M_hits_means$x_2_hits, mu=0.50);
-# t=10.7, p<2.2e-16, CI=[0.60;0.65] -> sig above chance
+# t=10.8, p<2.2e-16, CI=[0.60;0.65] -> sig above chance
 plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Participants",main="2M testing accuracy",pch=3,yaxs="i",col="#3B9AB2");
 abline(h=0.5, lty=5);
 
@@ -278,14 +278,14 @@ summary(data_testing_2M_rejs_means$x_2_rejs);
 # min:0.1 Q1:0.25 med:0.35 mean:0.36 Q3:0.50 max:0.80
 hist(data_testing_2M_rejs_means$x_2_rejs); # normally distributed
 t.test(data_testing_2M_rejs_means$x_2_rejs, mu=0.50);
-# t=-11.05, p<2.2e-16, CI=[0.34;0.39] -> sig below chance
+# t=-11.06, p<2.2e-16, CI=[0.34;0.39] -> sig below chance
 plot(data_testing_2M_rejs_means$x_2_rejs,ylim=c(0,1),ylab = "Correct rejections",xlab="Participants",pch=3,yaxs="i",col="#E1AF00");
 abline(h=0.5, lty=5);
 
 # 2M - all response types
 library(tidyverse);
 misses <- list();
-for (i in 1:183) { # calculate misses for each participant
+for (i in 1:184) { # calculate misses for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   miss <- temp %>%
     summarize(count = sum(expected == 1 & observed == 0));
@@ -298,7 +298,7 @@ summary(data_testing_2M_means$misses);
 # min:0 Q1:0.13 med:0.18 mean:0.19 Q3:0.25 max:0.40
 
 hits <- list();
-for (i in 1:183) { # calculate hits for each participant
+for (i in 1:184) { # calculate hits for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   hit <- temp %>%
     summarize(count = sum(expected == 1 & observed == 1));
@@ -311,7 +311,7 @@ summary(data_testing_2M_means$hits);
 # min:0.10 Q1:0.25 med:0.33 mean:0.31 Q3:0.38 max:0.5
 
 rejs <- list();
-for (i in 1:183) { # calculate correct rejections for each participant
+for (i in 1:184) { # calculate correct rejections for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   rej <- temp %>%
     summarize(count = sum(expected == 0 & observed == 0));
@@ -324,7 +324,7 @@ summary(data_testing_2M_means$rejs);
 # min:0.03 Q1:0.13 med:0.18 mean:0.18 Q3:0.25 max:0.40
 
 alarms <- list();
-for (i in 1:183) { # calculate false alarms for each participant
+for (i in 1:184) { # calculate false alarms for each participant
   temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
   alarm <- temp %>%
     summarize(count = sum(expected == 0 & observed == 1));
@@ -376,7 +376,7 @@ plot(testing_all$x_2_yes,testing_all$x_2_hits,pch=19);
 #more 2M yes means more hits, means higher scores
 
 # testing accuracy*RTs
-cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.10
+cor(data_testing_2M_means$x, data_testing_rt_means$x); # r = 0.09
 plot(data_testing_rt_means$x, data_testing_2M_means$x, pch=19);
 
 cor(data_testing_2M_hits_means$x, data_testing_rt_means$x); # r = 0.18
@@ -405,7 +405,7 @@ data_testing_2M_means$c <- dprimes2M$c;
 
 #people with d' > 0
 good_participants <- data_testing_2M_means[data_testing_2M_means$dprime>0,];
-# n = 81
+# n = 82
 summary(good_participants$x_2);
 #min:0.53 Q1:0.53 med:0.55 mean:0.56 Q3:0.58 max:0.70
 #hits: mean = 0.34
@@ -413,9 +413,9 @@ summary(good_participants$x_2);
 #rejs: mean = 0.22
 #alarms: mean = 0.28
 summary(good_participants$dprime);
-#min:0.12 Q1:0.15 med:0.29 mean:0.35 Q3:0.48 max:0.99
+#min:0.12 Q1:0.15 med:0.29 mean:0.35 Q3:0.47 max:0.99
 summary(good_participants$c);
-#min:-1.58 Q1:-0.57 med:-0.30 mean:-0.33 Q3:0 max:0.50
+#min:-1.58 Q1:-0.57 med:-0.30 mean:-0.33 Q3:-0.02 max:0.50
 
 # testing strategy
 strats <- subset(data_testing, select = c(temp_sbjID, strategy));
@@ -497,28 +497,28 @@ summary(data_familiarity_means$x);
 # min:0.37 Q1:0.5 med:0.57 mean:0.57 Q3:0.63 max:0.93
 hist(data_familiarity_means$x); # mostly normally distributed
 t.test(data_familiarity_means$x, mu=0.50);
-# t=10.1, p<2.2e-16, CI = [0.56;0.59] -> sig above chance
+# t=10.2, p<2.2e-16, CI = [0.56;0.59] -> sig above chance
 
 # familiarity RTs
 IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
 plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.01),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
-for (x in 2:187) {
+for (x in 2:184) {
   lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols2[x],lwd=2)
 };
 data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_familiarity_rt_means$x);
-#min:154 Q1:1208 med:1646 mean:1681 Q3:1984 max:4519
+#min:154 Q1:1213 med:1655 mean:1681 Q3:1982 max:4519
 
 # familiarity accuracy*RTs
-cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.31
+cor(data_familiarity_means$x, data_familiarity_rt_means$x); # r = 0.30
 plot(data_familiarity_rt_means$x, data_familiarity_means$x, xlab="Mean participant RT (in ms)", ylab="Mean participant familiarity score (in %)", pch=19, cex=2, cex.lab=1.45);
 
 # familiarity accuracy*testing accuracy
 cor(data_familiarity_means$x, data_testing_2M_means$x); # r = 0.02
 cor(data_familiarity_means$x, data_testing_2M_hits_means$x); # r = 0.04
-cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.03
+cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 
 
 # BLP ---------------------------------------------------------------------
@@ -610,16 +610,16 @@ data_BLP$AttentionL2 <- as.factor(data_BLP$AttentionL2);
 data_BLP$AttentionL3 <- as.factor(data_BLP$AttentionL3);
 data_BLP$AttentionL4 <- as.factor(data_BLP$AttentionL4);
 summary(data_BLP);
-# 93/90 M/F split
+# 93/91 M/F split
 # Eng top L1 & L2 lang, by far most popular L2
 
 library(toolbox);
 scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
-data_BLP$temp_sbjID <- c(1:183); # necessary: R doesn't like format of Prolific IDs
+data_BLP$temp_sbjID <- c(1:184); # necessary: R doesn't like format of Prolific IDs
 
 # multilingual balance: variance
 vars <- list();
-for (i in 1:183) { # calculate variance for each participant
+for (i in 1:184) { # calculate variance for each participant
   temp <- unlist(scores_list[i]);
   var <- var(temp,na.rm=TRUE);
   vars <- append(vars, var)
@@ -642,7 +642,7 @@ test_ent <- Entropy(test2);
 #100, 99, 99 -> 1.58
 # Entropy: maybe need something that doesn't penalise an NA? exclude monos?
 library(DescTools);
-for (i in 1:183) { # calculate entropy for each participant
+for (i in 1:184) { # calculate entropy for each participant
   temp <- unlist(scores_list[i]);
   entropy <- Entropy(temp,na.rm=TRUE);
   entropies <- append(entropies, entropy)
@@ -654,7 +654,7 @@ plot(data_BLP$temp_sbjID,data_BLP$lang_ent,pch=19,xlab="Subject number",ylab="La
 
 # multilingual balance: entropy - Gullifer & Titone (2018)
 library(languageEntropy);
-for (i in 1:183) { # transfrom 0-10 scores into 0-1
+for (i in 1:184) { # transfrom 0-10 scores into 0-1
   temp <- unlist(scores_list[i]);
   total <- sum(temp)
   for (j in 1:4) {
@@ -740,37 +740,37 @@ data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,temp_sbjID,Gender,Age
 data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
 
 # corr of variance & accuracy
-cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.06
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.05
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2, xlab="Language score variance", ylab="2M accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_var); # r = -0.14
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_var); # r = -0.13
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_hits, xlab="Language score variance", ylab="2M hit accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_var); # r = 0.07
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_var); # r = 0.08
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_rejs, xlab="Language score variance", ylab="2M rejection accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
 # corr of entropy & accuracy
-cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_ent); # r = 0.15
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_ent); # r = 0.14
 plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2, xlab="Language score entropy", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_ent); # r = 0.19
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_ent); # r = 0.18
 plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2_hits, xlab="Language score entropy", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_ent); # r = -0.04
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_ent); # r = -0.05
 plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2_rejs, xlab="Language score entropy", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
 # corr of multilingual experience & accuracy
-cor(data_BLP_testing_all$x_2, data_BLP_testing_all$multi_exp); # r = 0.11
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$multi_exp); # r = 0.10
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2, xlab="Multilingual experience", ylab="2M accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$multi_exp); # r = 0.19
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$multi_exp); # r = 0.18
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_hits, xlab="Multilingual experience", ylab="2M hit accuracy (in %)", cex.lab=1.5,pch=19);
 abline(lm(data_BLP_testing_all$x_2_hits~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
 abline(h=0.5, lty=5);
@@ -788,9 +788,9 @@ abline(h=50, lty=5);
 
 #data_BLP_testing_all <- merge(data_BLP_testing_all, dprimes2M, by="temp_sbjID");
 cor(data_BLP_testing_all$c,data_BLP_testing_all$multi_exp); # r = -0.14
-cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.20
+cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.21
 cor(data_BLP_testing_all$dprime,data_BLP_testing_all$multi_exp); # r = 0.09
-cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = -0.04
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = -0.03
 
 # corr of L1-L2 score & accuracy
 cor(data_BLP_testing_all$x_2, data_BLP_testing_all$L1_L2_diff); # r = -0.04
@@ -816,8 +816,8 @@ data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC1_L4); # r = -0.01
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC3_L3); # r = 0.04
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC2_use_L1vsL2); # r = -0.01
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC7_hist_L2); # r = -0.02
-cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC9_use_L4); # r = -0.04
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC7_hist_L2); # r = -0.03
+cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC9_use_L4); # r = 0.04
 
 # dprimes - all
 data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
@@ -970,78 +970,78 @@ data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','sbj_ID','Gender','A
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_TestingConditions); # all conditions sig
 emmeans(lm_TestingConditions, pairwise ~ testing_condition, adjust = "tukey");
-# 0M-1M: estimate=-0.260, p<0.0001
-# 0M-2M: estimate=-0.554, p<0.0001
-# 1M-2M: estimate=-0.294, p<0.0001
+# 0M-1M: estimate=-0.252, p<0.0001
+# 0M-2M: estimate=-0.546, p<0.0001
+# 1M-2M: estimate=-0.295, p<0.0001
 lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_Gender); # Gender non sig as main effect (p=0.88); 1M:Woman sig (0.03)
 lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_Age); # Age non sig as main effect (0.95); 2M:Age sig (p=0.03)
+summary(lm_Age); # Age non sig as main effect (0.78); 2M:Age sig (p=0.048)
 lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC1); # RC1 marg. sig as main effect (p=0.07), non sig 1M:RC1 (p=0.50), non sig 2M*RC1 (0.31)
+summary(lm_RC1); # RC1 marg. sig as main effect (p=0.07), non sig 1M:RC1 (p=0.51), non sig 2M*RC1 (0.31)
 lm_RC3 <- glmer(observed ~ scale(trialn) + testing_condition*RC3_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC3); # RC3 non sig as main effect (p=0.22); marg. sig 1M:RC3 (p=0.06); non sig 2M:RC3 (p=0.67)
+summary(lm_RC3); # RC3 non sig as main effect (p=0.25); marg. sig 1M:RC3 (p=0.08); non sig 2M:RC3 (p=0.72)
 lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC2); # RC2 non sig as main effect (p=0.81); non sig 1M:RC2 (p=0.21); sig 2M:RC2 (p=0.048)
+summary(lm_RC2); # RC2 non sig as main effect (p=0.85); non sig 1M:RC2 (p=0.19); sig 2M:RC2 (p=0.043)
 lm_RC7 <- glmer(observed ~ scale(trialn) + testing_condition*RC7_hist_L2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC7); # RC7 sig as main effect (p=0.02); non sig 1M:RC7 (p=0.79); non sig 2M:RC7 (p=0.82)
+summary(lm_RC7); # RC7 sig as main effect (p=0.03); non sig 1M:RC7 (p=0.87); non sig 2M:RC7 (p=0.87)
 lm_RC9 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC9); # RC9 non sig as main effect (p=0.83); 1M:RC9 non sig (p=0.55); 2M:RC9 non sig (0.75)
+summary(lm_RC9); # RC9 non sig as main effect (p=0.81); 1M:RC9 non sig (p=0.58); 2M:RC9 non sig (0.74)
 lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_ent); # lang_ent sig as main effect (p=0.04); 1M:ent sig (p=0.02); 2M:ent non sig (p=0.98)
+summary(lm_ent); # lang_ent marg. sig as main effect (p=0.07); 1M:ent marg. sig (p=0.07); 2M:ent non sig (p=0.75)
 lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_multiexp); # multi_exp sig (p=0.004); 1M:multiexp sig (p=0.009); 2M:multiexp non sig (p=0.35)
+summary(lm_multiexp); # multi_exp sig (p=0.0008); 1M:multiexp sig (p=0.02); 2M:multiexp non sig (p=0.52)
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_L1L2diff); # L1L2diff sig (p=0.04); 1M:L1L2 non sig (p=0.36); 2M:L1L2 non sig (p=0.26)
+summary(lm_L1L2diff); # L1L2diff marg. sig (p=0.08); 1M:L1L2 non sig (p=0.62); 2M:L1L2 non sig (p=0.16)
 
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
 lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_Gender); # Gender non sig (p=0.29); expected:Gender non sig (p=0.62)
+summary(lm_2M_Gender); # Gender non sig (p=0.31); expected:Gender non sig (p=0.58)
 lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_Age); # Age non sig (p=0.12); expected:Age non sig (p=0.78)
+summary(lm_2M_Age); # Age non sig (p=0.13); expected:Age non sig (p=0.74)
 lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_RC1); # RC1 non sig (p=0.73); expected:RC1 non sig (p=0.87)
+summary(lm_2M_RC1); # RC1 non sig (p=0.73); expected:RC1 non sig (p=0.88)
 lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_L3 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_RC3); # RC3 non sig (p=0.83); expected:RC3 non sig (p=0.40)
+summary(lm_2M_RC3); # RC3 non sig (p=0.81); expected:RC3 non sig (p=0.41)
 lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_RC2); # RC2 marg. sig (p=0.06); expected:RC2 non sig (p=0.94)
 lm_2M_RC7 <- glmer(observed ~ scale(trialn) + expected*RC7_hist_L2 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_RC7); # RC7 marg. sig (p=0.06); expected:RC7 non sig (p=0.64)
+summary(lm_2M_RC7); # RC7 marg. sig (p=0.06); expected:RC7 non sig (p=0.93)
 lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_use_L4 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_RC9); # R9 non sig (p=0.18); expected:RC9 non sig (p=0.38)
 lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_ent); # lang_ent non sig (p=0.53); expected:ent marg. sig(p=0.052)
+summary(lm_2M_ent); # lang_ent non sig (p=0.48); expected:ent marg. sig(p=0.07)
 # without monos: lang_ent non sig (p=0.32); expected:ent non sig (p=0.64)
 lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_multiexp); # multi_exp non sig (p=0.30); expected:multiexp non sig (p=0.14)
+summary(lm_2M_multiexp); # multi_exp non sig (p=0.27); expected:multiexp non sig (p=0.16)
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.03); expected:L1L2diff (p=0.60)
+summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.02); expected:L1L2diff (p=0.68)
 
 
 # FAMILIARITY #
 data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_Gender); # Gender non sig (p=0.71)
+summary(lm_fam_Gender); # Gender non sig (p=0.66)
 lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_Age); # Age non sig (p=0.15)
+summary(lm_fam_Age); # Age non sig (p=0.13)
 lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC1); # RC1_L4 non sig (p=0.96)
 lm_fam_RC3 <- glmer(correct ~ scale(trialn) + RC3_L3 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_RC3); # RC3_L3 non sig (p=0.21)
+summary(lm_fam_RC3); # RC3_L3 non sig (p=0.19)
 lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_RC2); # RC2_use_L1vsL2 non sig (p=0.68)
+summary(lm_fam_RC2); # RC2_use_L1vsL2 non sig (p=0.71)
 lm_fam_RC7 <- glmer(correct ~ scale(trialn) + RC7_hist_L2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_RC7); # RC7_hist_L2 non sig (p=0.68)
+summary(lm_fam_RC7); # RC7_hist_L2 non sig (p=0.70)
 lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_use_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_R9); # PROBLEM
 lm_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_ent); # lang_ent non sig (p=0.12)
+summary(lm_fam_ent); # lang_ent marg. sig (p=0.09)
 lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_multiexp); # multi_exp non sig (p=0.29)
+summary(lm_fam_multiexp); # multi_exp non sig (p=0.25)
 lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.66)
+summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.56)
 
 
 # "YES" LMERS
