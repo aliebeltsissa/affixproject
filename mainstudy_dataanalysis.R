@@ -383,10 +383,10 @@ boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_intuition_2M_means); # mean: 49%
 
-dprimes_intuition <- dPrime(data_testing$temp_sbjID[data_testing$intuition==TRUE], data_testing$expected[data_testing$intuition==TRUE], data_testing$observed[data_testing$intuition==TRUE]);
+dprimes_intuition <- dPrime(data_testing$temp_sbjID[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$intuition==TRUE&data_testing$testing_condition=='2M']);
 names(dprimes_intuition) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes_intuition);
-# dprime:0.03 c:-0.07
+# dprime:-0.05 c:-0.22
 
 intuition_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% intuition_sbjIDs,];
 summary(intuition_2M$hits); # mean = 0.25
@@ -404,10 +404,10 @@ boxplot(data_testing_chunks_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_chunks_2M_means$x); 
 # min:0.32 Q1:0.47 med:0.50 mean:0.49 Q3:0.53 max:0.71
-dprimes_chunks <- dPrime(data_testing$temp_sbjID[data_testing$chunks==TRUE], data_testing$expected[data_testing$chunks==TRUE], data_testing$observed[data_testing$chunks==TRUE]);
+dprimes_chunks <- dPrime(data_testing$temp_sbjID[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$chunks==TRUE&data_testing$testing_condition=='2M']);
 names(dprimes_chunks) <- c("temp_sbjID","dprime","log_beta","c");
 summary(dprimes_chunks);
-# dprime:0.17 c:-0.02
+# dprime:-0.03 c:-0.48
 
 chunks_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% chunks_sbjIDs,];
 summary(chunks_2M$hits); # mean = 0.29
@@ -415,8 +415,6 @@ summary(chunks_2M$rejs); # mean = 0.13
 summary(chunks_2M$misses); # mean = 0.14
 summary(chunks_2M$alarms); # mean = 0.29
 
-# So d' of participants saying they used chunks in their testing 
-#strategy higher than participants saying they used intuition!
 
 
 # Familiarity -------------------------------------------------------------
