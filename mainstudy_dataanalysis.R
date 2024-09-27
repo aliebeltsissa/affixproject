@@ -94,6 +94,12 @@ summary(data_testing_rt_means);
 #min:158 Q1:815 med:961 mean:955 Q3:1147 max:1694
 plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
 
+# yes responses globally
+mean_yes <- aggregate(data_testing$observed,by=list(data_testing$sbj_ID), FUN=function(x) sum(x == 1));
+names(mean_yes) <- c("sbj_ID", "yes");
+summary(mean_yes$yes);
+# no one responding only "yes" or no "yes"
+
 # 0M yes responses boxplot
 data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
 names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
@@ -367,6 +373,8 @@ data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
 dprimes2M <- dPrime(data_testing_2M$temp_sbjID, data_testing_2M$expected, data_testing_2M$observed);
 summary(dprimes2M);
 # d':-0.02 c:-0.37
+data_testing_2M_means$dprime <- dprimes2M$dprime;
+data_testing_2M_means$c <- dprimes2M$c;
 
 # testing strategy
 library(tidyverse)
@@ -625,45 +633,16 @@ plot(data_BLP$temp_sbjID,data_BLP$multi_exp,pch=19,xlab="Subject number",ylab="A
 data_BLP$L1_L2_diff <- data_BLP$L1Score - data_BLP$L2Score;
 plot(data_BLP$temp_sbjID,data_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",cex.lab=1.5,ylim=c(0,218),yaxs="i");
 
-# corr of variance & accuracy
-cor(data_testing_2M_means$x, data_BLP$lang_var); # r = -0.06
-plot(data_BLP$lang_var, data_testing_2M_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
+# vector distances
+distances <- read.csv("distances_exp1.csv",header=T,sep=",");
+distances <- subset(distances, select = -c(X)); # remove redundant column added by Python
+names(distances) <- c('sbj_ID','vector_distance');
+data_BLP <- merge(data_BLP,distances,by="sbj_ID");
+cor(data_BLP$lang_ent,data_BLP$vector_distance); # r = -0.20
+summary(data_BLP$vector_distance);
+#min:0.63 Q1:0.90 med:0.93 mean:0.93 Q3:0.97 max:1
+plot(data_BLP$temp_sbjID,data_BLP$vector_distance,pch=19,xlab="Subject number",ylab="Vector distance (multilingual balance)",cex.lab=1.5,yaxs="i");
 
-cor(data_testing_2M_hits_means$x, data_BLP$lang_var); # r = -0.08
-plot(data_BLP$lang_var, data_testing_2M_hits_means$x, xlab="Language score variance", ylab="Testing hit accuracy (in %)", pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$lang_var); # r = 0.03
-plot(data_BLP$lang_var, data_testing_2M_rejs_means$x, xlab="Language score variance", ylab="Testing rejection accuracy (in %)", pch=19);
-
-# corr of entropy & accuracy
-cor(data_testing_2M_means$x, data_BLP$lang_ent); # r = 0.007
-plot(data_BLP$lang_ent, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$lang_ent); # r = 0.12
-plot(data_BLP$lang_ent, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$lang_ent); # r = -0.11
-plot(data_BLP$lang_ent, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
-
-# corr of multilingual experience & accuracy
-cor(data_testing_2M_means$x, data_BLP$multi_exp); # r = 0.02
-plot(data_BLP$multi_exp, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$multi_exp); # r = 0.12
-plot(data_BLP$multi_exp, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$multi_exp); # r = -0.10
-plot(data_BLP$multi_exp, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
-
-# corr of L1-L2 score & accuracy
-cor(data_testing_2M_means$x, data_BLP$L1_L2_diff); # r = -0.008
-plot(data_BLP$L1_L2_diff, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_hits_means$x, data_BLP$L1_L2_diff); # r = -0.17
-plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
-
-cor(data_testing_2M_rejs_means$x, data_BLP$L1_L2_diff); # r = 0.15
-plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
 
 
 # CLUSTERING #
@@ -706,7 +685,7 @@ names(data_BLP)[116:121] <- c('RC12_L3','RC1_L4','RC2_use_L1vsL2','RC7_hist_L2',
 #without language dominance scores
 pca_varimax2 <- psych::principal(data_BLP[,19:34], nfactors=16, rotate='varimax');
 data_BLP <- cbind(data_BLP, pca_varimax2$scores[,c('RC1','RC9','RC2','RC6')]);
-names(data_BLP)[116:119] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
+names(data_BLP)[117:120] <- c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4');
 
 complete_cases <- complete.cases(data_BLP)
 data_filtered <- data_BLP[complete_cases, ]
@@ -725,9 +704,68 @@ funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:192,5), itemId=rep
 
 # adding testing scores and BLP metrics together
 library(tidyverse);
-data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC9_L4,RC2_use_L1vsL2,RC6_use_L4));
-data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,temp_sbjID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,vector_distance));
+data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
 
+# corr of variance & accuracy
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$lang_var); # r = -0.02
+
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.02
+plot(data_BLP$lang_var, data_testing_2M_means$x, xlab="Language score variance", ylab="Testing accuracy (in %)", pch=19);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_var); # r = -0.02
+plot(data_BLP$lang_var, data_testing_2M_hits_means$x, xlab="Language score variance", ylab="Testing hit accuracy (in %)", pch=19);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_var); # r = 0.01
+plot(data_BLP$lang_var, data_testing_2M_rejs_means$x, xlab="Language score variance", ylab="Testing rejection accuracy (in %)", pch=19);
+
+# corr of entropy & accuracy
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$lang_ent); # r = 0.01
+
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_ent); # r = 0.01
+plot(data_BLP$lang_ent, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$lang_ent); # r = 0.04
+plot(data_BLP$lang_ent, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_ent); # r = -0.03
+plot(data_BLP$lang_ent, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
+
+# corr of multilingual experience & accuracy
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$multi_exp); # r = 0.08
+
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$multi_exp); # r = 0.08
+plot(data_BLP$multi_exp, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$multi_exp); # r = 0.08
+plot(data_BLP$multi_exp, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$multi_exp); # r = -0.01
+plot(data_BLP$multi_exp, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
+
+# corr of L1-L2 score & accuracy
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = 0.02
+
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$L1_L2_diff); # r = 0.01
+plot(data_BLP$L1_L2_diff, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$L1_L2_diff); # r = 0.01
+plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$L1_L2_diff); # r = 0.01
+plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
+
+# corr of vector distance score & accuracy
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$vector_distance); # r = 0.03
+
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$vector_distance); # r = 0.03
+plot(data_BLP$L1_L2_diff, data_testing_2M_means$x, xlab="Language score entropy", ylab="Testing accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$vector_distance); # r = 0.05
+plot(data_BLP$L1_L2_diff, data_testing_2M_hits_means$x, xlab="Language score entropy", ylab="Testing hit accuracy (in %)", cex.lab=1.5,pch=19);
+
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$vector_distance); # r = -0.02
+plot(data_BLP$L1_L2_diff, data_testing_2M_rejs_means$x, xlab="Language score entropy", ylab="Testing rejection accuracy (in %)", cex.lab=1.5,pch=19);
 
 # dprimes - 2M
 data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
@@ -812,7 +850,7 @@ library(lme4);
 library(emmeans)
 
 # TESTING #
-data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
@@ -822,30 +860,33 @@ emmeans(lm_TestingConditions, pairwise ~ testing_condition, adjust = "tukey");
 # 0M-2M: estimate=0.675, p<0.001
 # 1M-2M: estimate=0.400, p<0.001
 lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_Gender); # Gender non significant as main effect and interaction
+summary(lm_Gender); # Gender non sig as main effect (p=0.83 for O,p=0.27 for F); 1M:O p=0.10; 2M:O p=0.09; 1M:F p=0.83; 2M:F p=0.52
 lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_Age); # Age significant as main effect (p=0.03) and interaction (Age*1M p=0.05. Age*2M p=0.006)
+summary(lm_Age); # Age sig as main effect (p=0.03); 1M:Age p=0.054; 2M:Age p=0.006
 lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC1); # RC1 non significant as main effect (p=0.165) and interaction
+summary(lm_RC1); # RC1 non sig as main effect (p=0.17); 1M:RC1 p=0.37; 2M:RC1 p=0.36
 lm_RC9 <- glmer(observed ~ scale(trialn) + testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC9); # RC9 non significant as main effect (p=0.19) and interaction
+summary(lm_RC9); # RC9 non sig as main effect (p=0.19); 1M:RC9 p=0.45; 2M:RC9 p=0.54
 lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC2); # RC2 non significant as main effect (p=0.22) and interaction
+summary(lm_RC2); # RC2 non sig as main effect (p=0.22); 1M:RC2 p=0.56; 2M:RC2 p=0.66
 lm_RC6 <- glmer(observed ~ scale(trialn) + testing_condition*RC6_use_L4 + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_RC6); # RC9 non significant as main effect (p=0.11) and interaction
+summary(lm_RC6); # RC9 non sig as main effect (p=0.11); 1M:RC6 p=0.59; 2M:RC6 p=0.52
 lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_ent); # 2M sig (p=0.003), lang_ent non-sig (p=0.67)
+summary(lm_ent); # lang_ent non sig (p=0.67); 1M:ent p=0.26; 2M:ent p=0.23
 lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_multiexp); # 1M sig (p=4e-15), 2M sig (p<2e-16), multi_exp non-sig (p=0.42)
+summary(lm_multiexp); # multi_exp non-sig (p=0.42); 1M:multiexp p=0.21; 2M:multiexp p=0.19
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_L1L2diff); # 1M sig (p=3e-13) 2M sig (p<2e-16), L1_L2_diff non sig (p=0.62), 1M*L1_L2_diff (p=0.02) & 2M*L1_L2_diff (p=0.03) sig
+summary(lm_L1L2diff); # L1_L2_diff non sig (p=0.62); 1M:L1_L2_diff (p=0.02); 2M:L1_L2_diff (p=0.03)
 # 1M:scale(L1L2diff) - estimate = -0.09 -> bigger L1L2diff gives smaller scores
 # 2M:scale(L1L2diff) - estimate = -0.11 -> bigger L1L2diff gives smaller scores
+lm_vdist <- glmer(observed ~ scale(trialn) + testing_condition*vector_distance + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000,L2Score>0), family='binomial');
+summary(lm_vdist); # w/ monos: vdist non sig (p=0.23); 1M:vdist sig (p=0.0.07); 2M:vdist sig (p=0.03)
+# w/out monos: vdist non sig (p=0.23); 1M:vdist sig (p=0.007); 2M:vdist sig (0.03)
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
 lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_Gender); # Gender non sig (p=0.13 for Other, p=0.15 for Woman)
+summary(lm_2M_Gender); # Gender non sig (p=0.13 for O, p=0.15 for F); exp:O p=0.054; exp:F 0.54
 lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_Age); # Age non sig (p=0.62), also for interaction (p=0.16)
 lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
@@ -862,10 +903,14 @@ lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (
 summary(lm_2M_multiexp); # multi_exp sig (p=0.04), marginally sig for interaction (p=0.08)
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
-
+lm_2M_vdist <- glmer(observed ~ scale(trialn) + expected*vector_distance + (1+expected|sbj_ID), data=data_testing_lm_2M[data_testing_lm_2M$L2Score>0,], family='binomial');
+summary(lm_2M_vdist); # w/ monos: vdist non sig (p=0.57); expected:vdist marg. sig (p=0.097)
+# w/out monos: vdist non sig (p=0.58); expected:vdist marg. sig (p=0.08)
 
 # FAMILIARITY #
-data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+#data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','L2Score','lang_ent','vector_distance','multi_exp','L1_L2_diff','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all, by="sbj_ID",all.x=T);
+data_BLP_familiarity <- merge(data_BLP_familiarity, subset(data_BLP,select=c('RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')),by="sbj_ID",all.x=T);
 lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Gender); # Gender(Other) marginally sig (p=0.06); Woman non sig (p=0.82)
 lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
@@ -884,6 +929,9 @@ lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID)
 summary(lm_fam_multiexp); # multi_exp non sig (p=0.63)
 lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.40)
+lm_fam_vdist <- glmer(correct ~ scale(trialn) + vector_distance + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
+summary(lm_fam_vdist); # w/ monos: vdist non sig (p=0.46)
+# w/out monos: vdist non sig (p=0.53)
 
 
 # exploration of main effects & directionality of interactions #
