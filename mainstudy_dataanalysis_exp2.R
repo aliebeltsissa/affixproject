@@ -42,7 +42,6 @@ data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant 
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n = 190 participants
 # all participants to be excluded:
 data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1','660310c1b1a7ea09dee682e2','5faacca24cd0384c1fa08be1', '65f7be6ac59662b24ac0f9b0', '664b7cd6b5a772dd1eddca37'),];
-data_testing$temp_sbjID <- rep(1:184, each=120); # necessary: R doesn't like format of Prolific IDs
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -68,29 +67,29 @@ data_testing$observed <- as.numeric(data_testing$observed);
 
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
 
-data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
-names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
+data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
+names(data_testing_0M_yes) <- c("sbj_ID","x_0");
 data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/40*100; #transform into percent
-data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
-names(data_testing_0M_means) <- c("temp_sbjID","x_0");
+data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
+names(data_testing_0M_means) <- c("sbj_ID","x_0");
 
-data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
-names(data_testing_1M_yes) <- c("temp_sbjID","x_1");
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
+names(data_testing_1M_yes) <- c("sbj_ID","x_1");
 data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/40*100; #transform into percent
-data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
-names(data_testing_1M_means) <- c("temp_sbjID","x_1");
+data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
+names(data_testing_1M_means) <- c("sbj_ID","x_1");
 
-data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
-names(data_testing_2M_yes) <- c("temp_sbjID","x_2");
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
+names(data_testing_2M_yes) <- c("sbj_ID","x_2");
 data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into percent
-data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
-names(data_testing_2M_means) <- c("temp_sbjID","x_2");
+data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
+names(data_testing_2M_means) <- c("sbj_ID","x_2");
 
 # 2M - all response types
 library(tidyverse);
 misses <- list();
 for (i in 1:184) { # calculate misses for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==i&data_testing$testing_condition=='2M',];
   miss <- temp %>%
     summarize(count = sum(expected == 1 & observed == 0));
   miss <- miss/40;
@@ -101,7 +100,7 @@ data_testing_2M_means$misses <- as.numeric(data_testing_2M_means$misses);
 
 hits <- list();
 for (i in 1:184) { # calculate hits for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==i&data_testing$testing_condition=='2M',];
   hit <- temp %>%
     summarize(count = sum(expected == 1 & observed == 1));
   hit <- hit/40
@@ -112,7 +111,7 @@ data_testing_2M_means$hits <- as.numeric(data_testing_2M_means$hits);
 
 rejs <- list();
 for (i in 1:184) { # calculate correct rejections for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==i&data_testing$testing_condition=='2M',];
   rej <- temp %>%
     summarize(count = sum(expected == 0 & observed == 0));
   rej <- rej/40
@@ -123,7 +122,7 @@ data_testing_2M_means$rejs <- as.numeric(data_testing_2M_means$rejs);
 
 alarms <- list();
 for (i in 1:184) { # calculate false alarms for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==i&data_testing$testing_condition=='2M',];
   alarm <- temp %>%
     summarize(count = sum(expected == 0 & observed == 1));
   alarm <- alarm/40
@@ -133,8 +132,8 @@ data_testing_2M_means$alarms <- alarms;
 data_testing_2M_means$alarms <- as.numeric(data_testing_2M_means$alarms);
 
 data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
-dprimes2M <- dPrime(data_testing_2M$temp_sbjID, data_testing_2M$expected, data_testing_2M$observed);
-names(dprimes2M) <- c("temp_sbjID","dprime","log_beta","c");
+dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected, data_testing_2M$observed);
+names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
 data_testing_2M_means$dprime <- dprimes2M$dprime;
 data_testing_2M_means$c <- dprimes2M$c;
 
@@ -232,10 +231,25 @@ BLP_correction <- function(data_BLP)
 };
 data_BLP <- BLP_correction(data_BLP);
 
+# make some variables factors
+data_BLP$task <- as.factor(data_BLP$task)
+data_BLP$sbj_ID <- as.factor(data_BLP$sbj_ID);
+data_BLP$Age <- as.numeric(data_BLP$Age);
+data_BLP$Gender <- as.factor(data_BLP$Gender);
+data_BLP$Education <- as.factor(data_BLP$Education);
+data_BLP$L1 <- as.factor(data_BLP$L1);
+data_BLP$L2 <- as.factor(data_BLP$L2);
+data_BLP$L3 <- as.factor(data_BLP$L3);
+data_BLP$L4 <- as.factor(data_BLP$L4);
+data_BLP$otherLs <- as.factor(data_BLP$otherLs);
+data_BLP$AttentionL1 <- as.factor(data_BLP$AttentionL1);
+data_BLP$AttentionL2 <- as.factor(data_BLP$AttentionL2);
+data_BLP$AttentionL3 <- as.factor(data_BLP$AttentionL3);
+data_BLP$AttentionL4 <- as.factor(data_BLP$AttentionL4);
+
 library(toolbox);
 scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
 use_scores_list <- combineCols(data_BLP, cols=c('UseL1Score','UseL2Score','UseL3Score','UseL4Score'),by_name=TRUE); # combine use scores into 1 list
-data_BLP$temp_sbjID <- c(1:184); # necessary: R doesn't like format of Prolific IDs
 
 # multilingual balance: variance
 vars <- list();
@@ -267,28 +281,28 @@ data_BLP$multi_exp <- data_BLP$L1Score + data_BLP$L2Score + data_BLP$L3Score + d
 # L1 - L2 score
 data_BLP$L1_L2_diff <- data_BLP$L1Score - data_BLP$L2Score;
 
-# vector distances
-distances <- read.csv("distances_exp2.csv",header=T,sep=",");
-distances <- subset(distances, select = -c(X)); # remove redundant column added by Python
-names(distances) <- c('sbj_ID','vector_distance');
-data_BLP <- merge(data_BLP,distances,by="sbj_ID");
+# cosine similarity
+cossims <- read.csv("distances_exp2.csv",header=T,sep=",");
+cossims <- subset(cossims, select = -c(X)); # remove redundant column added by Python
+names(cossims) <- c('sbj_ID','cosine_similarity');
+data_BLP <- merge(data_BLP,cossims,by="sbj_ID");
 
 pca_varimax <- psych::principal(data_BLP[,31:46], nfactors=16, rotate='varimax');
 data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC1','RC3','RC2','RC7','RC9')]);
-names(data_BLP)[117:121] <- c('RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4');
+names(data_BLP)[116:120] <- c('RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4');
 
-data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,temp_sbjID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
-data_BLP_testing_all <- list(data_testing_2M_means,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
-names(data_testing_2M_yes) <- c("temp_sbjID","x_2_yes");
-data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="temp_sbjID");
-data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,cosine_similarity,multi_exp,L1_L2_diff,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
+data_BLP_testing_all <- list(data_testing_2M_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
+names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
+data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="sbj_ID");
+data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 
 # LMERS
 library(lme4);
 library(emmeans);
 
 # TESTING #
-data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
@@ -304,7 +318,7 @@ lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testi
 lm_use_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_use_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-lm_vdist <- glmer(observed ~ scale(trialn) + testing_condition*vector_distance + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
+lm_cossim <- glmer(observed ~ scale(trialn) + testing_condition*cosine_similarity + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -318,10 +332,10 @@ lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_use_L4 + (1+expected|
 lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-lm_2M_vdist <- glmer(observed ~ scale(trialn) + expected*vector_distance + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*cosine_similarity + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 
 # FAMILIARITY #
-data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','lang_use_ent','use_vector_distance','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
@@ -332,11 +346,11 @@ lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_use_L4 + (1|sbj_ID), data=data
 lm_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-lm_fam_vdist <- glmer(correct ~ scale(trialn) + vector_distance + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
+lm_fam_cossim <- glmer(correct ~ scale(trialn) + cosine_similarity + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
 
-data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
-data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
-data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 
 
@@ -396,7 +410,7 @@ dPrime <- function(sbj, expectedResp, observedResp)
 data_all_testing <- read.csv("exp2_testing_preprocessed.csv",header=T,sep=",");
 data_all_testing <- subset(data_all_testing, select = -c(X)) # remove redundant column added by Pavlovia
 data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; # n = 190 participants
-data_testing$temp_sbjID <- rep(1:191, each=120); # necessary: R doesn't like format of Prolific IDs
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1','660310c1b1a7ea09dee682e2','5faacca24cd0384c1fa08be1', '65f7be6ac59662b24ac0f9b0', '664b7cd6b5a772dd1eddca37'),];
 
 # make some variables factors
 data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
@@ -471,8 +485,8 @@ summary(mean_yes$yes);
 #always said "yes": 5faacca24cd0384c1fa08be1, 65f7be6ac59662b24ac0f9b0, 664b7cd6b5a772dd1eddca37
 
 # 0M yes responses boxplot
-data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
-names(data_testing_0M_yes) <- c("temp_sbjID","x_0");
+data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 1));
+names(data_testing_0M_yes) <- c("sbj_ID","x_0");
 data_testing_0M_yes$x_0 <- data_testing_0M_yes$x_0/40*100; #transform into percent
 summary(data_testing_0M_yes$x_0);
 #min:7.5 Q1:42.5 med:52.5 mean:52.3 Q3:62.5 max:87.5
@@ -482,8 +496,8 @@ boxplot(data_testing_0M_yes$x, ylab = "0M Percent of 'yes' responses",ylim=c(0,1
 abline(h=50, lty=5);
 
 # 0M scores
-data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
-names(data_testing_0M_means) <- c("temp_sbjID","x_0");
+data_testing_0M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='0M'], list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN=mean, na.rm=TRUE);
+names(data_testing_0M_means) <- c("sbj_ID","x_0");
 summary(data_testing_0M_means$x_0);
 #min:0.13 Q1:0.38 med:0.48 mean:0.48 Q3:0.58 max:0.93
 var(data_testing_0M_means$x_0);
@@ -496,8 +510,8 @@ t.test(data_testing_0M_means$x_0, mu=0.5);
 #t=-1.9 p=0.053 CI=[0.46;0.50] -> 0M scores not sig below chance
 
 # 1M yes responses boxplot
-data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
-names(data_testing_1M_yes) <- c("temp_sbjID","x_1");
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 1));
+names(data_testing_1M_yes) <- c("sbj_ID","x_1");
 data_testing_1M_yes$x_1 <- data_testing_1M_yes$x_1/40*100; #transform into percent
 summary(data_testing_1M_yes$x_1);
 #min:18 Q1:50 med:57.5 mean:58.0 Q3:67.5 max:90
@@ -507,8 +521,8 @@ boxplot(data_testing_1M_yes$x, ylab = "1M Percent of 'yes' responses",ylim=c(0,1
 abline(h=50, lty=5);
 
 # 1M scores
-data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
-names(data_testing_1M_means) <- c("temp_sbjID","x_1");
+data_testing_1M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='1M'], list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN=mean, na.rm=TRUE);
+names(data_testing_1M_means) <- c("sbj_ID","x_1");
 summary(data_testing_1M_means$x_1);
 #min:0.18 Q1:0.50 med:0.58 mean:0.58 Q3:0.68 max:0.90
 var(data_testing_1M_means$x_1);
@@ -521,8 +535,8 @@ t.test(data_testing_1M_means$x_1, mu=0.5);
 #t=8.1 p=5.7e-14 CI=[0.56;0.60] -> sig above chance
 
 # 2M yes responses boxplot
-data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
-names(data_testing_2M_yes) <- c("temp_sbjID","x_2");
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 1));
+names(data_testing_2M_yes) <- c("sbj_ID","x_2");
 data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into percent
 summary(data_testing_2M_yes$x_2);
 #min:30 Q1:52.5 med:62.5 mean:63.1 Q3:72.5 max:95
@@ -533,7 +547,7 @@ abline(h=50, lty=5);
 
 # yes responses across conditions
 library(tidyverse);
-data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_testing_2M_yes) %>% reduce(inner_join, by='temp_sbjID');
+data_testing_conditions <- list(data_testing_0M_yes,data_testing_1M_yes,data_testing_2M_yes) %>% reduce(inner_join, by='sbj_ID');
 par(mar=c(5, 5, 4, 2) + 0.1)
 boxplot(data_testing_conditions$x_0,data_testing_conditions$x_1,data_testing_conditions$x_2, ylab='Percent of "yes" responses', xlab="Condition", names=c('0M','1M','2M'),ylim=c(0,100),yaxs="i",cex.lab=2,cex.axis=1.75);
 abline(h=50, lty=5);
@@ -542,7 +556,7 @@ conditions_table <- table(data_testing$testing_condition, data_testing$observed)
 chisq.test(conditions_table);
 # X-squared=177, df=2, p<2.2e-16
 data_testing_conditions <- data_testing_conditions %>%
-  gather(condition, score, -temp_sbjID);
+  gather(condition, score, -sbj_ID);
 data_testing_conditions$score <- data_testing_conditions$score/100;
 
 ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
@@ -575,8 +589,8 @@ ggplot(conditions_dataframe,
   scale_fill_manual(values = c("#F1BB7B","#FD6467"), labels=c("No","Yes"));
 
 # 2M correct boxplot
-data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
-names(data_testing_2M_means) <- c("temp_sbjID","x_2");
+data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
+names(data_testing_2M_means) <- c("sbj_ID","x_2");
 par(mar=c(2,5,2,2));
 boxplot(data_testing_2M_means$x_2, ylab = "2M accuracy score",family="Montserrat",cex.lab=2,cex.axis=1.75);
 abline(h=0.5, lty=5);
@@ -594,14 +608,14 @@ t.test(data_testing_2M_means$x_2, mu=0.50);
 
 # scores across conditions
 library(tidyverse);
-data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='temp_sbjID');
+data_testing_conditions_scores <- list(data_testing_0M_means,data_testing_1M_means,data_testing_2M_means) %>% reduce(inner_join, by='sbj_ID');
 summary(data_testing_conditions_scores);
 boxplot(data_testing_conditions_scores$x_0,data_testing_conditions_scores$x_1,data_testing_conditions_scores$x_2, ylab='Percent of correct responses', xlab="Condition", ylim=c(0,1), names=c('0M','1M','2M'));
 abline(h=0.5, lty=5);
 
 # 2M - hits only
-data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
-names(data_testing_2M_hits_means) <- c("temp_sbjID","x_2_hits");
+data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_hits_means) <- c("sbj_ID","x_2_hits");
 data_testing_2M_hits_means$x_2_hits <- data_testing_2M_hits_means$x_2_hits/20;
 par(mar=c(2,5,2,2))
 boxplot(data_testing_2M_hits_means$x_2_hits, ylab = "Accuracy score - 2M hits",boxwex=1.5,ylim=c(0,1),yaxs="i",cex.lab=2);
@@ -615,8 +629,8 @@ plot(data_testing_2M_hits_means$x_2_hits,ylim=c(0,1),ylab = "Hits",xlab="Partici
 abline(h=0.5, lty=5);
 
 # 2M - correct rejections only
-data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=sum, na.rm=TRUE);
-names(data_testing_2M_rejs_means) <- c("temp_sbjID","x_2_rejs");
+data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_rejs_means) <- c("sbj_ID","x_2_rejs");
 data_testing_2M_rejs_means$x_2_rejs <- data_testing_2M_rejs_means$x_2_rejs/20;
 boxplot(data_testing_2M_rejs_means$x_2_rejs, ylim=c(0,1), ylab = "Accuracy score - 2M correct rejections",boxwex=1.5,yaxs="i",cex.lab=1.5);
 abline(h=0.5, lty=5);
@@ -631,54 +645,58 @@ abline(h=0.5, lty=5);
 
 # 2M - all response types
 library(tidyverse);
-misses <- list();
+misses <- data.frame();
 for (i in 1:184) { # calculate misses for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==participants[i]&data_testing$testing_condition=='2M',];
   miss <- temp %>%
     summarize(count = sum(expected == 1 & observed == 0));
   miss <- miss/40;
-  misses <- append(misses, miss)
+  miss <- data.frame(sbj_ID=participants[[i]], misses=miss[[1]])
+  misses <- rbind(misses, miss)
 };
-data_testing_2M_means$misses <- misses;
+data_testing_2M_means <- merge(data_testing_2M_means,misses,by="sbj_ID");
 data_testing_2M_means$misses <- as.numeric(data_testing_2M_means$misses);
 summary(data_testing_2M_means$misses);
 # min:0 Q1:0.13 med:0.18 mean:0.19 Q3:0.25 max:0.40
 
-hits <- list();
+hits <- data.frame();
 for (i in 1:184) { # calculate hits for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==participants[i]&data_testing$testing_condition=='2M',];
   hit <- temp %>%
     summarize(count = sum(expected == 1 & observed == 1));
   hit <- hit/40
-  hits <- append(hits, hit)
+  hit <- data.frame(sbj_ID=participants[[i]], hits=hit[[1]])
+  hits <- rbind(hits, hit)
 };
-data_testing_2M_means$hits <- hits;
+data_testing_2M_means <- merge(data_testing_2M_means,hits,by="sbj_ID");
 data_testing_2M_means$hits <- as.numeric(data_testing_2M_means$hits);
 summary(data_testing_2M_means$hits);
 # min:0.10 Q1:0.25 med:0.33 mean:0.31 Q3:0.38 max:0.5
 
-rejs <- list();
+rejs <- data.frame();
 for (i in 1:184) { # calculate correct rejections for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==participants[i]&data_testing$testing_condition=='2M',];
   rej <- temp %>%
     summarize(count = sum(expected == 0 & observed == 0));
   rej <- rej/40
-  rejs <- append(rejs, rej)
+  rej <- data.frame(sbj_ID=participants[[i]], rejs=rej[[1]])
+  rejs <- rbind(rejs, rej)
 };
-data_testing_2M_means$rejs <- rejs;
+data_testing_2M_means <- merge(data_testing_2M_means,rejs,by="sbj_ID");
 data_testing_2M_means$rejs <- as.numeric(data_testing_2M_means$rejs);
 summary(data_testing_2M_means$rejs);
 # min:0.03 Q1:0.13 med:0.18 mean:0.18 Q3:0.25 max:0.40
 
-alarms <- list();
+alarms <- data.frame();
 for (i in 1:184) { # calculate false alarms for each participant
-  temp <- data_testing[data_testing$temp_sbjID==i&data_testing$testing_condition=='2M',];
+  temp <- data_testing[data_testing$sbj_ID==participants[i]&data_testing$testing_condition=='2M',];
   alarm <- temp %>%
     summarize(count = sum(expected == 0 & observed == 1));
   alarm <- alarm/40
-  alarms <- append(alarms, alarm)
+  alarm <- data.frame(sbj_ID=participants[[i]], alarms=alarm[[1]])
+  alarms <- rbind(alarms, alarm)
 };
-data_testing_2M_means$alarms <- alarms;
+data_testing_2M_means <- merge(data_testing_2M_means,alarms,by="sbj_ID");
 data_testing_2M_means$alarms <- as.numeric(data_testing_2M_means$alarms);
 summary(data_testing_2M_means$alarms);
 # min:0.1 Q1:0.25 med:0.33 mean:0.32 Q3:0.38 max:0.48
@@ -699,8 +717,8 @@ abline(h=0.5, lty=5);
 
 #3 - plot connecting hit score to correct rejection score
 library(ggplot2);
-data_long <- reshape2::melt(subset(data_testing_2M_means, select = c(temp_sbjID,hits,rejs)), id.vars = "temp_sbjID", variable.name = "condition", value.name = "accuracy");
-ggplot(data_long, aes(x = condition, y = accuracy, group = temp_sbjID)) +
+data_long <- reshape2::melt(subset(data_testing_2M_means, select = c(sbj_ID,hits,rejs)), id.vars = "sbj_ID", variable.name = "condition", value.name = "accuracy");
+ggplot(data_long, aes(x = condition, y = accuracy, group = sbj_ID)) +
   geom_line(linewidth=0.2) +
   geom_point(aes(color = condition), size = 3);
 #the lower the hits_mean is, the higher rejs_mean is
@@ -712,7 +730,7 @@ plot(data_testing_2M_bygroup_means$diff,ylim=c(-1,1),ylab="Accuracy difference",
 abline(h=0, lty=5);
 
 #5 - plot of "yes" responses in 2M & accuracy
-names(data_testing_2M_yes) <- c("temp_sbjID","x_2_yes");
+names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
 testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="temp_sbjID");
 cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.05
 plot(testing_all$x_2_yes,testing_all$x_2,pch=19);
