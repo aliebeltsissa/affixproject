@@ -84,6 +84,12 @@ names(data_testing_2M_yes) <- c("sbj_ID","x_2");
 data_testing_2M_yes$x_2 <- data_testing_2M_yes$x_2/40*100; #transform into percent
 data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
 names(data_testing_2M_means) <- c("sbj_ID","x_2");
+data_testing_2M_hits_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='1'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='1']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_hits_means) <- c("sbj_ID","x_2_hits");
+data_testing_2M_hits_means$x_2_hits <- data_testing_2M_hits_means$x_2_hits/20;
+data_testing_2M_rejs_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'&data_testing$expected=='0'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'&data_testing$expected=='0']), FUN=sum, na.rm=TRUE);
+names(data_testing_2M_rejs_means) <- c("sbj_ID","x_2_rejs");
+data_testing_2M_rejs_means$x_2_rejs <- data_testing_2M_rejs_means$x_2_rejs/20;
 
 # 2M - all response types
 library(tidyverse);
@@ -159,73 +165,132 @@ data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column 
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 92 participants
 data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1','660310c1b1a7ea09dee682e2','5faacca24cd0384c1fa08be1', '65f7be6ac59662b24ac0f9b0', '664b7cd6b5a772dd1eddca37'),];
 
+correction_general <- function(database,wrong,right)
+{
+  database[database == wrong] <- right;
+  return (database)
+}
+
+correction_specific <- function(database,sbj_ID,variable,right)
+{
+  database[variable][database["sbj_ID"]==sbj_ID] <- right;
+  return (database)
+}
+
 BLP_correction <- function(data_BLP)
 {
-  data_BLP[data_BLP == "polish"] <- "Polish";
-  data_BLP[data_BLP == "english"|data_BLP=="ENGLISH"|data_BLP=="Englsih"|data_BLP=="Englsh"|data_BLP=="British"|data_BLP=="Engllish"|data_BLP=="ENGLISH "] <- "English";
-  data_BLP[data_BLP == "portuguese"|data_BLP=="Potuguese"] <- "Portuguese";
-  data_BLP[data_BLP =="SPANISH"|data_BLP=="Spnsh"|data_BLP=="spanish"] <- "Spanish";
-  data_BLP[data_BLP == "ITALIAN"|data_BLP=="italian"] <- "Italian";
-  data_BLP[data_BLP == "sotho"] <- "Sotho";
-  data_BLP[data_BLP == "Gree"|data_BLP=="GREEK"] <- "Greek";
-  data_BLP[data_BLP == "tshivenda"] <- "Tshivenda";
-  data_BLP[data_BLP == "Gujrau"] <- "Gujarati"; # to check
-  data_BLP[data_BLP == "ukrainian"|data_BLP=="ukranian"] <- "Ukrainian";
-  data_BLP[data_BLP == "SETSWANA"] <- "Setswana";
-  data_BLP[data_BLP == "afrikaans"] <- "Afrikaans";
-  data_BLP[data_BLP == "punjabi"] <- "Punjabi";
-  data_BLP[data_BLP == "siswati"] <- "Siswati";
-  data_BLP[data_BLP == "Germany"|data_BLP=="german"|data_BLP=="germany"|data_BLP=="GERMANY"] <- "German";
-  data_BLP[data_BLP == "russian"] <- "Russian";
-  data_BLP[data_BLP == "Isiulu"] <- "IsiZulu";
-  data_BLP[data_BLP == "ZULU"|data_BLP=="zulu"] <- "Zulu";
-  data_BLP[data_BLP == "northern sotho"] <- "Northern Sotho";
-  data_BLP[data_BLP == "chinese"] <- "Chinese";
-  data_BLP[data_BLP == "sesotho"] <- "Sesotho";
-  data_BLP[data_BLP == "sepedi"] <- "Sepedi";
-  data_BLP[data_BLP == "TSHIVENDA"] <- "Tshivenda";
-  data_BLP[data_BLP == "XHOSA"] <- "Xhosa";
-  data_BLP[data_BLP == "french"] <- "French";
-  data_BLP[data_BLP == "hungarian"] <- "Hungarian";
-  data_BLP[data_BLP == "POLISH"] <- "Polish";
-  data_BLP[data_BLP == "croatian"] <- "Croatian";
-  data_BLP[data_BLP == "bosnian"] <- "Bosnian";
-  data_BLP[data_BLP == "madarin"] <- "Mandarin";
-  data_BLP[data_BLP == "Icelandic and German"] <- "Icelandic";
-  data_BLP[data_BLP == "a little bit of russian"] <- "Russian";
-  data_BLP[data_BLP == "NDEBELE"] <- "Ndebele";
-  data_BLP[data_BLP == "urdu"] <- "Urdu";
-  data_BLP[data_BLP == "latvian"] <- "Latvian";
-  data_BLP[data_BLP == "Malayam"] <- "Malayan";
-  data_BLP[data_BLP == "swahili"] <- "Swahili";
-  data_BLP[data_BLP == "serbian"] <- "Serbian";
-  data_BLP[data_BLP == "SEPEDI"] <- "Sepedi";
-  data_BLP[data_BLP == "japanese"] <- "Japanese";
-  data_BLP[data_BLP == "N/A"|data_BLP=="---"] <- "n/a";
+  data_BLP <- correction_general(data_BLP,"polish","Polish");
+  data_BLP <- correction_general(data_BLP,"english","English");
+  data_BLP <- correction_general(data_BLP,"ENGLISH","English");
+  data_BLP <- correction_general(data_BLP,"Englsih","English");
+  data_BLP <- correction_general(data_BLP,"Englsh","English");
+  data_BLP <- correction_general(data_BLP,"British","English");
+  data_BLP <- correction_general(data_BLP,"Englsh","English");
+  data_BLP <- correction_general(data_BLP,"ENGLISH","English");
+  data_BLP <- correction_general(data_BLP,"portuguese","Portuguese");
+  data_BLP <- correction_general(data_BLP,"Potuguese","Portuguese");
+  data_BLP <- correction_general(data_BLP,"SPANISH","Spanish");
+  data_BLP <- correction_general(data_BLP,"Spnsh","Spanish");
+  data_BLP <- correction_general(data_BLP,"spanish","Spanish");
+  data_BLP <- correction_general(data_BLP,"ITALIAN","Italian");
+  data_BLP <- correction_general(data_BLP,"italian","Italian");
+  data_BLP <- correction_general(data_BLP,"sotho","Sotho");
+  data_BLP <- correction_general(data_BLP,"Gree","Greek");
+  data_BLP <- correction_general(data_BLP,"GREEK","Greek");
+  data_BLP <- correction_general(data_BLP,"tshivenda","Tshivenda");
+  data_BLP <- correction_general(data_BLP,"Gujrau","Gujarati");
+  data_BLP <- correction_general(data_BLP,"ukrainian","Ukrainian");
+  data_BLP <- correction_general(data_BLP,"ukranian","Ukrainian");
+  data_BLP <- correction_general(data_BLP,"SETSWANA","Setswana");
+  data_BLP <- correction_general(data_BLP,"afrikaans","Afrikaans");
+  data_BLP <- correction_general(data_BLP,"punjabi","Punjabi");
+  data_BLP <- correction_general(data_BLP,"siswati","Siswati");
+  data_BLP <- correction_general(data_BLP,"Germany","German");
+  data_BLP <- correction_general(data_BLP,"german","German");
+  data_BLP <- correction_general(data_BLP,"germany","German");
+  data_BLP <- correction_general(data_BLP,"GERMANY","German");
+  data_BLP <- correction_general(data_BLP,"GERMAN","German");
+  data_BLP <- correction_general(data_BLP,"russian","Russian");
+  data_BLP <- correction_general(data_BLP,"Isiulu","IsiZulu");
+  data_BLP <- correction_general(data_BLP,"ZULU","Zulu");
+  data_BLP <- correction_general(data_BLP,"zulu","Zulu");
+  data_BLP <- correction_general(data_BLP,"northern sotho","Northern Sotho");
+  data_BLP <- correction_general(data_BLP,"chinese","Chinese");
+  data_BLP <- correction_general(data_BLP,"sesotho","Sesotho");
+  data_BLP <- correction_general(data_BLP,"sepedi","Sepedi");
+  data_BLP <- correction_general(data_BLP,"TSHIVENDA","Tshivenda");
+  data_BLP <- correction_general(data_BLP,"XHOSA","Xhosa");
+  data_BLP <- correction_general(data_BLP,"french","French");
+  data_BLP <- correction_general(data_BLP,"cantonese","Cantonese");
+  data_BLP <- correction_general(data_BLP,"hungarian","Hungarian");
+  data_BLP <- correction_general(data_BLP,"POLISH","Polish");
+  data_BLP <- correction_general(data_BLP,"croatian","Croatian");
+  data_BLP <- correction_general(data_BLP,"bosnian","Bosnian");
+  data_BLP <- correction_general(data_BLP,"madarin","Mandarin");
+  data_BLP <- correction_general(data_BLP,"Icelandic and German","Icelandic");
+  data_BLP <- correction_general(data_BLP,"a little bit of russian","Russian");
+  data_BLP <- correction_general(data_BLP,"NDEBELE","Ndebele");
+  data_BLP <- correction_general(data_BLP,"urdu","Urdu");
+  data_BLP <- correction_general(data_BLP,"latvian","Latvian");
+  data_BLP <- correction_general(data_BLP,"Malayam","Malayan");
+  data_BLP <- correction_general(data_BLP,"swahili","Swahili");
+  data_BLP <- correction_general(data_BLP,"serbian","Serbian");
+  data_BLP <- correction_general(data_BLP,"SEPEDI","Sepedi");
+  data_BLP <- correction_general(data_BLP,"japanese","Japanese");
+  data_BLP <- correction_general(data_BLP,"N/A","n/a");
+  data_BLP <- correction_general(data_BLP,"---","n/a");
+  data_BLP <- correction_general(data_BLP,"n.a","n/a");
+  data_BLP <- correction_general(data_BLP,"na","n/a");
   data_BLP["L1"][is.na(data_BLP["L1"])] <- "n/a";
   data_BLP["L2"][is.na(data_BLP["L2"])] <- "n/a";
   data_BLP["L3"][is.na(data_BLP["L3"])] <- "n/a";
   data_BLP["L4"][is.na(data_BLP["L4"])] <- "n/a";
   
   # correcting some participants' demographic information - correction based off of Prolific's information
-  data_BLP["Age"][data_BLP["sbj_ID"] == "60c4a402716a8f9074fcd92e"] <- "21";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6103cbc5310ffddfafa01661"] <- "25";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6598994f0e7e5db183bfe3ee"] <- "23";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "66168e55cb60649609600268"] <- "22";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "579e18fc4a84da00014c6f4f"] <- "23";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "5c1a6bd8f9250d0001b7c589"] <- "24";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "5f6f3d061214fe49ec2b9619"] <- "22";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "60ca0b60979a23c83652c303"] <- "24";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "653fb764c9aed77c01457531"] <- "20";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6557def45fc0ffbd46ad01de"] <- "18";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "657bfe6e245848c8fef0b389"] <- "20";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "65abe33e1c79ea32da32ab0f"] <- "19";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "65f33b94cd6885d54029582d"] <- "23";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6634e4d4f1950b4dcd44d4d9"] <- "19";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "664b7cd6b5a772dd1eddca37"] <- "25";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6659ca4701d47b95a09ba736"] <- "19";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "667dd7126e7a9073e0af73fd"] <- "23";
-  data_BLP["Age"][data_BLP["sbj_ID"] == "6681625ff9dfa8a95bb0359d"] <- "21";
+  data_BLP <- correction_specific(data_BLP,"60c4a402716a8f9074fcd92e","Age","21");
+  data_BLP <- correction_specific(data_BLP,"6103cbc5310ffddfafa01661","Age","25");
+  data_BLP <- correction_specific(data_BLP,"6598994f0e7e5db183bfe3ee","Age","23");
+  data_BLP <- correction_specific(data_BLP,"66168e55cb60649609600268","Age","22");
+  data_BLP <- correction_specific(data_BLP,"579e18fc4a84da00014c6f4f","Age","23");
+  data_BLP <- correction_specific(data_BLP,"5c1a6bd8f9250d0001b7c589","Age","24");
+  data_BLP <- correction_specific(data_BLP,"5f6f3d061214fe49ec2b9619","Age","22");
+  data_BLP <- correction_specific(data_BLP,"60ca0b60979a23c83652c303","Age","24");
+  data_BLP <- correction_specific(data_BLP,"653fb764c9aed77c01457531","Age","20");
+  data_BLP <- correction_specific(data_BLP,"6557def45fc0ffbd46ad01de","Age","18");
+  data_BLP <- correction_specific(data_BLP,"657bfe6e245848c8fef0b389","Age","20");
+  data_BLP <- correction_specific(data_BLP,"65abe33e1c79ea32da32ab0f","Age","19");
+  data_BLP <- correction_specific(data_BLP,"65f33b94cd6885d54029582d","Age","23");
+  data_BLP <- correction_specific(data_BLP,"6634e4d4f1950b4dcd44d4d9","Age","19");
+  data_BLP <- correction_specific(data_BLP,"664b7cd6b5a772dd1eddca37","Age","25");
+  data_BLP <- correction_specific(data_BLP,"6659ca4701d47b95a09ba736","Age","19");
+  data_BLP <- correction_specific(data_BLP,"667dd7126e7a9073e0af73fd","Age","23");
+  data_BLP <- correction_specific(data_BLP,"6681625ff9dfa8a95bb0359d","Age","21");
+  
+  # one participant entered data for an n/a
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","HistoryL3Score",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","UseL3Score",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttitudeL3Score",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","L3Score",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AoAL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AoEaseL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","yearsEduL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","yearsCountryL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","yearsFamilyL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","yearsWorkL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","PercFriendsL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","PercFamilyL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","PercWorkL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","PercSelfL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","PercCountL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","ProfSpeakL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","ProfUnderstandL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","ProfReadL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttentionL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","ProfWriteL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttSelfL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttCultureL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttNativeLevelL3",0);
+  data_BLP <- correction_specific(data_BLP,"60379326171365000ac6ae93","AttMothertongueL3",0);
   
   return (data_BLP)
 };
@@ -279,7 +344,7 @@ data_BLP["L4Score"][is.na(data_BLP["L4Score"])] <- 0;
 data_BLP$multi_exp <- data_BLP$L1Score + data_BLP$L2Score + data_BLP$L3Score + data_BLP$L4Score;
 
 # L1 - L2 score
-data_BLP$L1_L2_diff <- data_BLP$L1Score - data_BLP$L2Score;
+data_BLP$L1_L2_diff <- abs(data_BLP$L1Score - data_BLP$L2Score);
 
 # cosine similarity
 cossims <- read.csv("distances_exp2.csv",header=T,sep=",");
@@ -731,11 +796,11 @@ abline(h=0, lty=5);
 
 #5 - plot of "yes" responses in 2M & accuracy
 names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
-testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="temp_sbjID");
+testing_all <- merge(data_testing_2M_means,data_testing_2M_yes, by="sbj_ID");
 cor(testing_all$x_2,testing_all$x_2_yes); # r = -0.05
 plot(testing_all$x_2_yes,testing_all$x_2,pch=19);
 #more 2M yes doesn't give you a better score
-testing_all <- merge(testing_all,data_testing_2M_hits_means, by="temp_sbjID");
+testing_all <- merge(testing_all,data_testing_2M_hits_means, by="sbj_ID");
 cor(testing_all$x_2_hits,testing_all$x_2_yes); # r = 0.89
 plot(testing_all$x_2_yes,testing_all$x_2_hits,pch=19);
 #more 2M yes means more hits, means higher scores
@@ -751,7 +816,7 @@ cor(data_testing_2M_rejs_means$x, data_testing_rt_means$x); # r = -0.08
 plot(data_testing_rt_means$x, data_testing_2M_rejs_means$x, pch=19);
 
 # correlation between 1M & 2M
-temp <- merge(data_testing_2M_means, data_testing_1M_means,by.x='temp_sbjID',by.y='temp_sbjID');
+temp <- merge(data_testing_2M_means, data_testing_1M_means,by.x='sbj_ID',by.y='sbj_ID');
 cor(temp$x_1, temp$x_2); # r = -0.13
 # no corr between 1M & 2M scores
 
@@ -761,29 +826,28 @@ names(dprimes) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes);
 
 data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
-dprimes2M <- dPrime(data_testing_2M$temp_sbjID, data_testing_2M$expected, data_testing_2M$observed);
-names(dprimes2M) <- c("temp_sbjID","dprime","log_beta","c");
+dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected, data_testing_2M$observed);
+names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes2M);
 #d':-0.03 c:-0.35
-data_testing_2M_means$dprime <- dprimes2M$dprime;
-data_testing_2M_means$c <- dprimes2M$c;
+data_testing_2M_means <- merge(data_testing_2M_means,subset(dprimes2M,select=c(sbj_ID,dprime,c)),by="sbj_ID");
 
 #people with d' > 0
 good_participants <- data_testing_2M_means[data_testing_2M_means$dprime>0,];
-# n = 82
+# n = 79
 summary(good_participants$x_2);
 #min:0.53 Q1:0.53 med:0.55 mean:0.56 Q3:0.58 max:0.70
-#hits: mean = 0.34
-#misses: mean = 0.16
+#hits: mean = 0.35
+#misses: mean = 0.15
 #rejs: mean = 0.22
 #alarms: mean = 0.28
 summary(good_participants$dprime);
-#min:0.12 Q1:0.15 med:0.29 mean:0.35 Q3:0.47 max:0.99
+#min:0.12 Q1:0.15 med:0.29 mean:0.35 Q3:0.48 max:0.99
 summary(good_participants$c);
-#min:-1.58 Q1:-0.57 med:-0.30 mean:-0.33 Q3:-0.02 max:0.50
+#min:-1.58 Q1:-0.57 med:-0.30 mean:-0.35 Q3:-0.06 max:0.50
 
 # testing strategy
-strats <- subset(data_testing, select = c(temp_sbjID, strategy));
+strats <- subset(data_testing, select = c(sbj_ID, strategy));
 strats <- strats[!duplicated(strats),];
 
 # excluding participant having taken a video of training
@@ -791,53 +855,51 @@ data_testing <- data_testing[!data_testing$sbj_ID %in% c('666f0fb7d9900bb03f5d99
 data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('666f0fb7d9900bb03f5d99a1'),]
 
 # boxplot for accuracy of participants saying they just used intuition
-intuition_sbjIDs <- list('1','6','8','9','13','16','20','22','25','26','27','29','33','36','38','40','47','50','52','53','54','57','62','66','67','68','74','75','78','88','89','102','107','110','111','114','115','119','121','123','130','133','154','156','159','162','167','168','170','173','174','182');
+intuition_sbjIDs <- list('579e18fc4a84da00014c6f4f','5c840aedbad8fb000106cb44','5d696d1c55742f001af29220','5e248b6f0c0b31718a9d3f31','5e2b03f0005f2a02c5a64f7b','5ebd8f8679146d0a116bc257','5eee55e93867d30a7771e616','5f1165307d03fb0009716b8e','5f21c29511084913913af654','5f35782429beab53ef93cc2d','5f6f3d061214fe49ec2b9619','5f8af153e27f001bcc23ffc4','5f8b724dc36e8c2ac6d5fb6e','5fade36bdde8092117469a42','5ffd4230d96f6b2649d31f72','60379326171365000ac6ae93','604d5e61486bd0622d2102c0','60907b8091341e8724ba80ed','60a18093c5c040498d3addf8','60c873a65a9883b52f70db6c','60ca0b60979a23c83652c303','60d9dfd4dcc09cf57dc92cb1','60db9c9850c39eea109ef1d3','60e586145b73b702a608bace','60e5ac4f3d93f294f5fa543b','60f9739250a5c6f6e4726336','6102ee48644f517877d64d2b','6106ac34408681f3b0d07396','610d45e26c9b141264755d3c','611e00dc377e4fb7a27725e8','61242dd5be1a06b174975a1f','61248a51eefb6797024ecb85','612cc44439ccefbbd5d4b278','612cd9f34adcee82f65685a1','613758e7a80409ba7f5affb6','613ca0a2040055a4e87c5d71','6166ef334de9e433e83bfb79','61717173748006894b2b54ff','6413799cf7721ee0ce637e09','646e0d2370c16a7561ae7dcb','6492c23a1a7735dfaab2b095','6497e970e2621e753513a695','64e8bd55c9089d5bf26c90cd','6505a9adbb769aeea736a2f5','650aed9eb9cc2c717ba70c30','65352001dbe3e18eae5a8300','653fb764c9aed77c01457531','654632f222cb15acd453c0d3','65523123662559399b1aa48a','6557def45fc0ffbd46ad01de','655f5b404a09c686df3b0143','655f8b959477c803eb906622','657bfe6e245848c8fef0b389','6597e935328d41ae3aeef33b','6598994f0e7e5db183bfe3ee','659ada2d6df23a57d8e56752','65a97afe116a650acc588c5b','65b96f3bbecf5e7d0f5853cd','65cf6d92ac6f7932b1470fb4','65f33b94cd6885d54029582d','66031000461c44484ac359a8','6606c9d692990fbf223f63bb','66168e55cb60649609600268','661ff04db0e4a8222d5c4dd7','663e08a82c273a8ea28be4e7','664f48afa42c9a4a7ed2bb88','6659ca4701d47b95a09ba736','665f79d15be62c63a74883d6','6662d40766c8aa595834461d','6666cf176a54945ba62e8ca9','6667488c5f46f3da0c085419','6672ee650699d871b742ca6b','667dd7126e7a9073e0af73fd','6681625ff9dfa8a95bb0359d','66844cc1407c6afd0e100482','6693f13e028361f102a9ed86','66951e094b5bd0caf94e844f','669cc52163cce3554e97d184');
 data_testing$intuition <- FALSE;
-data_testing$intuition[data_testing$temp_sbjID %in% intuition_sbjIDs] <- TRUE;
-data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$temp_sbjID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
-colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="temp_sbjID";
+data_testing$intuition[data_testing$sbj_ID %in% intuition_sbjIDs] <- TRUE;
+data_testing_intuition_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$intuition==TRUE]), FUN=mean, na.rm=TRUE);
+colnames(data_testing_intuition_2M_means)[colnames(data_testing_intuition_2M_means)=="Group.1"]="sbj_ID";
 boxplot(data_testing_intuition_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_intuition_2M_means$x);
-# min:0.30 Q1:0.45 med:0.49 mean:0.48 Q3:0.53 max:0.68
+# min:0.30 Q1:0.45 med:0.50 mean:0.49 Q3:0.53 max:0.68
 
-dprimes_intuition <- dPrime(data_testing$temp_sbjID[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$intuition==TRUE&data_testing$testing_condition=='2M']);
-names(dprimes_intuition) <- c("temp_sbjID","dprime","log_beta","c");
+dprimes_intuition <- dPrime(data_testing$sbj_ID[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$intuition==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$intuition==TRUE&data_testing$testing_condition=='2M']);
+names(dprimes_intuition) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes_intuition);
-# dprime:-0.09 c:-0.30
+# dprime:-0.07 c:-0.31
 
-intuition_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% intuition_sbjIDs,];
+intuition_2M <- data_testing_2M_means[data_testing_2M_means$sbj_ID %in% intuition_sbjIDs,];
 summary(intuition_2M$hits); # mean = 0.30
 summary(intuition_2M$rejs); # mean = 0.18
-summary(intuition_2M$misses); # mean = 0.19
-summary(intuition_2M$alarms); # mean = 0.31
+summary(intuition_2M$misses); # mean = 0.20
+summary(intuition_2M$alarms); # mean = 0.32
 
 # participants saying they used previously familiarised chunks
-chunks_sbjIDs <- list('7','12','15','17','19','24','35','37','39','43','46','49','51','55','58','59','69','73','76','77','79','81','82','84','85','86','89','91','92','93','95','96','97','106','108','116','118','120','122','128','131','132','134','137','140','142','145','147','148','157','158','163','165','172','179','180','183');
+chunks_sbjIDs <- list('5e9dad3fd8d8010ac6a18620','5ed14691e983f5067842fd20','5ef0b54037a90c618ad9e97f','5f316280965ec564c886f978','602d2adcef81ce6b843da09b','6046435099c3d00becdb2dfb','6057a8fe2d302939fc759940','60bf28df4926a8b6391df575','60d26e7cd9f0761e4d12b9f8','6136a1e1159dc808ad660d89','6148b49d6ac652cefd310332','615c1372e7e639775817487e','616ad7ac6299f99ce33cdc78','6171946a19f6673fb215c0c7','61758dd4ab7ec0d91a929f3d','628ed30ae7ff849e8bc91c86','6495a5f76daf70e418baf5f7','64e8c14bbe184c20cb9d0583','64e9d6f596308448ac67bb95','64f7a35c5f6503caaa59f79f','65361483b7f9881afa9b4cda','65672c69a3737224f1d0bbfa','65b96f3bbecf5e7d0f5853cd','65c23d4dbad7238169292b54','65dce7715387badaf80e875d','65e7259b24116547c5512668','65fae6b84fa6b3101d2ca4b1','660678406bba1ade08345803','660c265dce47171c0dd7d359','66156fd87e14e8a60c007e17','661c24ab06db7f1ff0146700','6634f754adfec54a4b1aaed4','664f70fcf77160132d600e2c','6661bf2ef4b2d0892ad7a007','666306b0bf2de127943c419f','668992b2f868cb89829346c2','6692b87aad65e83d4230c307');
 data_testing$chunks <- FALSE;
-data_testing$chunks[data_testing$temp_sbjID %in% chunks_sbjIDs] <- TRUE;
+data_testing$chunks[data_testing$sbj_ID %in% chunks_sbjIDs] <- TRUE;
 data_testing_chunks_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE], list(data_testing$sbj_ID[data_testing$testing_condition=='2M'& data_testing$chunks==TRUE]), FUN=mean, na.rm=TRUE);
 colnames(data_testing_chunks_2M_means)[colnames(data_testing_chunks_2M_means)=="Group.1"]="sbj_ID";
 boxplot(data_testing_chunks_2M_means$x, ylab = "Accuracy score (in %)");
 abline(h=0.5, lty=5);
 summary(data_testing_chunks_2M_means$x); 
-# min:0.33 Q1:0.45 med:0.53 mean:0.50 Q3:0.55 max:0.65
-dprimes_chunks <- dPrime(data_testing$temp_sbjID[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$chunks==TRUE&data_testing$testing_condition=='2M']);
-names(dprimes_chunks) <- c("temp_sbjID","dprime","log_beta","c");
+# min:0.33 Q1:0.43 med:0.53 mean:0.50 Q3:0.55 max:0.65
+dprimes_chunks <- dPrime(data_testing$sbj_ID[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$expected[data_testing$chunks==TRUE&data_testing$testing_condition=='2M'], data_testing$observed[data_testing$chunks==TRUE&data_testing$testing_condition=='2M']);
+names(dprimes_chunks) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes_chunks);
-# dprime:0.03 c:-0.43
+# dprime:0.03 c:-0.41
 
-chunks_2M <- data_testing_2M_means[data_testing_2M_means$temp_sbjID %in% chunks_sbjIDs,];
+chunks_2M <- data_testing_2M_means[data_testing_2M_means$sbj_ID %in% chunks_sbjIDs,];
 summary(chunks_2M$hits); # mean = 0.33
-summary(chunks_2M$rejs); # mean = 0.17
+summary(chunks_2M$rejs); # mean = 0.18
 summary(chunks_2M$misses); # mean = 0.17
-summary(chunks_2M$alarms); # mean = 0.33
+summary(chunks_2M$alarms); # mean = 0.32
 
 # So d' of participants saying they used chunks in their testing 
 #strategy higher than participants saying they used intuition!
 
-# replacing sbj_IDs with new ones without having gaps for the excluded participants
-data_testing$temp_sbjID <- rep(1:184, each=120);
 
 
 # Familiarity -------------------------------------------------------------
@@ -892,7 +954,7 @@ cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 # BLP ---------------------------------------------------------------------
 data_all_BLP <- read.csv("exp2_BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column added by Pavlovia
-data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 92 participants
+data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 190 participants
 data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3','6488afe97766c9083ffc3171','666f0fb7d9900bb03f5d99a1','660310c1b1a7ea09dee682e2','5faacca24cd0384c1fa08be1', '65f7be6ac59662b24ac0f9b0', '664b7cd6b5a772dd1eddca37'),];
 
 BLP_correction <- function(data_BLP)
@@ -991,7 +1053,6 @@ summary(data_BLP);
 library(toolbox);
 scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
 use_scores_list <- combineCols(data_BLP, cols=c('UseL1Score','UseL2Score','UseL3Score','UseL4Score'),by_name=TRUE); # combine use scores into 1 list
-data_BLP$temp_sbjID <- c(1:184); # necessary: R doesn't like format of Prolific IDs
 
 # multilingual balance: variance
 vars <- list();
@@ -1002,7 +1063,7 @@ for (i in 1:184) { # calculate variance for each participant
 };
 data_BLP$lang_var <- vars;
 data_BLP$lang_var <- as.numeric(data_BLP$lang_var);
-plot(data_BLP$temp_sbjID,data_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,15000),cex.lab=1.5,yaxs="i");
+plot(data_BLP$sbj_ID,data_BLP$lang_var,pch=19,xlab="Subject number",ylab="Language score variance",ylim=c(0,15000),cex.lab=1.5,yaxs="i");
 
 # multilingual balance: entropy
 entropies <- list();
@@ -1026,7 +1087,7 @@ for (i in 1:184) { # calculate entropy for each participant
 };
 data_BLP$lang_ent <- entropies;
 data_BLP$lang_ent <- as.numeric(data_BLP$lang_ent);
-plot(data_BLP$temp_sbjID,data_BLP$lang_ent,pch=19,xlab="Subject number",ylab="Language score entropy",cex.lab=1.5,ylim=c(0,2.5),yaxs="i");
+plot(data_BLP$sbj_ID,data_BLP$lang_ent,pch=19,xlab="Subject number",ylab="Language score entropy",cex.lab=1.5,ylim=c(0,2.5),yaxs="i");
 # looks like 3 groups: at 0 (monos), around 1, around 1.5, around 2
 
 # multilingual balance: USE entropy
@@ -1039,7 +1100,7 @@ for (i in 1:184) { # calculate entropy for each participant
 data_BLP$lang_use_ent <- use_entropies;
 data_BLP$lang_use_ent <- as.numeric(data_BLP$lang_use_ent);
 summary(data_BLP$lang_use_ent);
-plot(data_BLP$temp_sbjID,data_BLP$lang_use_ent,pch=19,xlab="Subject number",ylab="Language use score entropy",cex.lab=1.5,ylim=c(0,2),yaxs="i");
+plot(data_BLP$sbj_ID,data_BLP$lang_use_ent,pch=19,xlab="Subject number",ylab="Language use score entropy",cex.lab=1.5,ylim=c(0,2),yaxs="i");
 
 # multilingual balance: entropy - Gullifer & Titone (2018)
 library(languageEntropy);
@@ -1071,30 +1132,30 @@ data_BLP["L2Score"][is.na(data_BLP["L2Score"])] <- 0;
 data_BLP["L3Score"][is.na(data_BLP["L3Score"])] <- 0;
 data_BLP["L4Score"][is.na(data_BLP["L4Score"])] <- 0;
 data_BLP$multi_exp <- data_BLP$L1Score + data_BLP$L2Score + data_BLP$L3Score + data_BLP$L4Score;
-plot(data_BLP$temp_sbjID,data_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),cex.lab=1.5,yaxs="i");
+plot(data_BLP$sbj_ID,data_BLP$multi_exp,pch=19,xlab="Subject number",ylab="Amount of total multilingual experience (out of 872)",ylim=c(0,872),cex.lab=1.5,yaxs="i");
 # clustered around 400
 
 # L1 - L2 score
-data_BLP$L1_L2_diff <- data_BLP$L1Score - data_BLP$L2Score;
-plot(data_BLP$temp_sbjID,data_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",cex.lab=1.5,ylim=c(0,218),yaxs="i");
+data_BLP$L1_L2_diff <- abs(data_BLP$L1Score - data_BLP$L2Score);
+plot(data_BLP$sbj_ID,data_BLP$L1_L2_diff,pch=19,xlab="Subject number",ylab="Score difference of L1 and L2",cex.lab=1.5,ylim=c(0,218),yaxs="i");
 # very varied
 
-# vector distances
-distances <- read.csv("distances_exp2.csv",header=T,sep=",");
-distances <- subset(distances, select = -c(X)); # remove redundant column added by Python
-names(distances) <- c('sbj_ID','vector_distance');
-data_BLP <- merge(data_BLP,distances,by="sbj_ID");
-cor(data_BLP$lang_ent,data_BLP$vector_distance); # r = -0.41
-summary(data_BLP$vector_distance);
+# cosine similarity
+cossim <- read.csv("distances_exp2.csv",header=T,sep=",");
+cossim <- subset(cossim, select = -c(X)); # remove redundant column added by Python
+names(cossim) <- c('sbj_ID','cosine_similarity');
+data_BLP <- merge(data_BLP,cossim,by="sbj_ID");
+cor(data_BLP$lang_ent,data_BLP$cosine_similarity); # r = -0.41
+summary(data_BLP$cossine_similarity);
 #min:0.72 Q1:0.91 med:0.96 mean:0.94 Q3:0.99 max:1
-plot(data_BLP$temp_sbjID,data_BLP$vector_distance,pch=19,xlab="Subject number",ylab="Vector distance (multilingual balance)",cex.lab=1.5,yaxs="i");
+plot(data_BLP$sbj_ID,data_BLP$cosine_similarity,pch=19,xlab="Subject number",ylab="Cosine similarity (multilingual balance)",cex.lab=1.5,yaxs="i");
 
 #use
-distances <- read.csv("distances_use_exp2.csv",header=T,sep=",");
-distances <- subset(distances, select = -c(X)); # remove redundant column added by Python
-names(distances) <- c('sbj_ID','use_vector_distance');
-data_BLP <- merge(data_BLP,distances,by="sbj_ID");
-cor(data_BLP$lang_use_ent,data_BLP$use_vector_distance); # r = -0.10
+cossim_use <- read.csv("distances_use_exp2.csv",header=T,sep=",");
+cossim_use <- subset(cossim_use, select = -c(X)); # remove redundant column added by Python
+names(distances) <- c('sbj_ID','use_cosine_similarity');
+data_BLP <- merge(data_BLP,cossim_use,by="sbj_ID");
+cor(data_BLP$lang_use_ent,data_BLP$use_cosine_similarity); # r = -0.10
 
 
 # CLUSTERING #
@@ -1123,7 +1184,7 @@ Hmisc::varclus(data_BLP[,19:38]); # Error: x matrix must be numeric
 #without language dominance scores
 pca_varimax <- psych::principal(data_BLP[,31:46], nfactors=16, rotate='varimax');
 data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC1','RC3','RC2','RC7','RC9')]);
-names(data_BLP)[117:121] <- c('RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4');
+names(data_BLP)[116:120] <- c('RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4');
 
 complete_cases <- complete.cases(data_BLP)
 data_filtered <- data_BLP[complete_cases, ]
@@ -1142,8 +1203,8 @@ funnyPeople(scores=as.vector(ppt_in_pca_space_5), sbjId=rep(1:184,5), itemId=rep
 
 # adding testing scores and BLP metrics together
 library(tidyverse);
-data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,temp_sbjID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,lang_use_ent,multi_exp,L1_L2_diff,use_vector_distance,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
-data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
+data_BLP_extracted_all <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,cosine_similarity,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
+data_BLP_testing_all <- list(data_testing_2M_means,data_testing_2M_hits_means,data_testing_2M_rejs_means,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 
 # corr of variance & accuracy
 cor(data_BLP_testing_all$x_2, data_BLP_testing_all$lang_var); # r = -0.05
@@ -1171,16 +1232,16 @@ cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$lang_ent); # r = -0.05
 plot(data_BLP_testing_all$lang_ent, data_BLP_testing_all$x_2_rejs, xlab="Language score entropy", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-# corr of vector distance & accuracy
-cor(data_BLP_testing_all$x_2, data_BLP_testing_all$vector_distance); # r = -0.19
+# corr of cosine similarity & accuracy
+cor(data_BLP_testing_all$x_2, data_BLP_testing_all$cosine_similarity); # r = -0.19
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2, xlab="Language score variance", ylab="2M accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$vector_distance); # r = 0.01
+cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$cosine_similarity); # r = 0.01
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_hits, xlab="Language score variance", ylab="2M hit accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$vector_distance); # r = -0.19
+cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$cosine_similarity); # r = -0.19
 plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_rejs, xlab="Language score variance", ylab="2M rejection accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
@@ -1198,8 +1259,8 @@ cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$multi_exp); # r = -0.08
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_rejs, xlab="Multilingual experience", ylab="2M rejection accuracy (in %)", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-names(data_testing_2M_yes) <- c("temp_sbjID","x_2_yes");
-data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="temp_sbjID");
+names(data_testing_2M_yes) <- c("sbj_ID","x_2_yes");
+data_BLP_testing_all <- merge(data_BLP_testing_all, data_testing_2M_yes,by="sbj_ID");
 cor(data_BLP_testing_all$x_2_yes, data_BLP_testing_all$multi_exp); # r = 0.15
 plot(data_BLP_testing_all$multi_exp, data_BLP_testing_all$x_2_yes, xlab="Multilingual experience", ylab='2M "yes" responses', cex.lab=1.5,pch=19);
 abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$multi_exp), col = "red",lwd=2);
@@ -1219,36 +1280,22 @@ cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$L1_L2_diff); # r = 0.16
 plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2_rejs, xlab="L1-L2 difference", ylab="Testing rejection accuracy", cex.lab=1.5,pch=19);
 abline(h=0.5, lty=5);
 
-cor(data_BLP_testing_all$x_2_yes, data_BLP_testing_all$L1_L2_diff); # r = -0.21
-plot(data_BLP_testing_all$L1_L2_diff, data_BLP_testing_all$x_2_yes, xlab="L1-L2 difference", ylab='2M "yes" responses', cex.lab=1.5,pch=19);
-abline(lm(data_BLP_testing_all$x_2_yes~data_BLP_testing_all$L1_L2_diff), col = "red",lwd=2);
-abline(h=50, lty=5);
-
 # dprimes - 2M
-#data_BLP_testing_all <- merge(data_BLP_testing_all, dprimes2M, by="temp_sbjID");
 cor(data_BLP_testing_all$c,data_BLP_testing_all$multi_exp); # r = -0.14
-cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.21
+cor(data_BLP_testing_all$c,data_BLP_testing_all$L1_L2_diff); # r = 0.20
 cor(data_BLP_testing_all$c,data_BLP_testing_all$lang_ent); # r = -0.13
-cor(data_BLP_testing_all$c,data_BLP_testing_all$vector_distance); # r = -0.11
+cor(data_BLP_testing_all$c,data_BLP_testing_all$cosine_similarity); # r = -0.11
 cor(data_BLP_testing_all$dprime,data_BLP_testing_all$multi_exp); # r = 0.09
-cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = -0.03
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$L1_L2_diff); # r = -0.04
 cor(data_BLP_testing_all$dprime,data_BLP_testing_all$lang_ent); # r = 0.12
-cor(data_BLP_testing_all$dprime,data_BLP_testing_all$vector_distance); # r = -0.19
+cor(data_BLP_testing_all$dprime,data_BLP_testing_all$cosine_similarity); # r = -0.19
 
-data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='temp_sbjID');
+data_BLP_testing_dprimes2M <- list(dprimes2M,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC1_L4); # r = -0.01
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC3_L3); # r = 0.04
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC2_use_L1vsL2); # r = -0.01
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC7_hist_L2); # r = -0.03
 cor(data_BLP_testing_dprimes2M$dprime,data_BLP_testing_dprimes2M$RC9_use_L4); # r = 0.04
-
-# dprimes - all
-data_BLP_testing_dprimes <- list(dprimes,data_BLP_extracted_all) %>% reduce(inner_join, by='sbj_ID');
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC1_L4); # r = -0.03
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC3_L3); # r = -0.08
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC2_use_L1vsL2); # r = 0.06
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC7_hist_L2); # r = -0.02
-cor(data_BLP_testing_dprimes$dprime,data_BLP_testing_dprimes$RC9_use_L4); # r = -0.02
 
 # correlation plot of testing scores and BLP metrics
 png('exp2_corrPlot_BLPtesting.png', width=1500, height=1500);
@@ -1256,8 +1303,8 @@ corrplot::corrplot(cor(data_BLP_testing_all[,c(2,12:43)]), type="lower", order="
 dev.off();
 
 # 1M & 2M clustering - weird stuff
-data_testing_1M2M_means <- merge(data_testing_1M_means,data_testing_2M_means,by.x='temp_sbjID',by.y='temp_sbjID');
-data_BLP_testing_1M2M_means <- merge(data_testing_1M2M_means, data_BLP_extracted_all[,c('temp_sbjID','lang_ent','multi_exp','L1_L2_diff','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_testing_1M2M_means <- merge(data_testing_1M_means,data_testing_2M_means,by.x='sbj_ID',by.y='sbj_ID');
+data_BLP_testing_1M2M_means <- merge(data_testing_1M2M_means, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 png('exp2_corrPlot_1M2Mmeans.png', width=1000, height=1000);
 corrplot::corrplot(cor(data_BLP_testing_1M2M_means[,c(2:14)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
 dev.off();
@@ -1268,8 +1315,8 @@ dev.off();
 # no corrs with x_1 and x_2
 
 # more weird stuff
-data_testing_1M2M_yes <- merge(data_testing_1M_yes,data_testing_2M_yes,by.x='temp_sbjID',by.y='temp_sbjID');
-data_BLP_testing_1M2M_yes <- merge(data_testing_1M2M_yes, data_BLP_extracted_all[,c('temp_sbjID','lang_ent','multi_exp','L1_L2_diff','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_testing_1M2M_yes <- merge(data_testing_1M_yes,data_testing_2M_yes,by.x='sbj_ID',by.y='sbj_ID');
+data_BLP_testing_1M2M_yes <- merge(data_testing_1M2M_yes, data_BLP_extracted_all[,c('sbj_ID','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 png('exp2_corrPlot_1M2Myes.png', width=1000, height=1000);
 corrplot::corrplot(cor(data_BLP_testing_1M2M_yes[,c(2:10)]), type="lower", order="original", diag=T, method="circle", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=0.5);
 dev.off();
@@ -1279,7 +1326,7 @@ corrplot::corrplot(cor(data_BLP_testing_1M2M_yes[,c(2:10)]), type="lower", order
 dev.off();
 
 # gender difference
-data_BLP_testing_gender <- list(data_testing_2M_means,subset(data_BLP, select=c(temp_sbjID,Gender))) %>% reduce(inner_join, by='temp_sbjID');
+data_BLP_testing_gender <- list(data_testing_2M_means,subset(data_BLP, select=c(sbj_ID,Gender))) %>% reduce(inner_join, by='sbj_ID');
 boxplot(data_BLP_testing_gender$x_2~data_BLP_testing_gender$Gender, ylim=c(0,1), ylab = "Accuracy score - 2M",xlab="Gender");
 abline(h=0.5, lty=5);
 #no gender difference
@@ -1296,7 +1343,7 @@ dev.off();
 # mean familiarity accuracy not correlated with any BLP variables
 
 # analysis of good best participant characteristics
-good_participants_BLP <- merge(good_participants, data_BLP[data_BLP$temp_sbjID %in% good_participants$temp_sbjID,], by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+good_participants_BLP <- merge(good_participants, data_BLP[data_BLP$sbj_ID %in% good_participants$sbj_ID,], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP);
 summary(good_participants_BLP);
 
@@ -1388,9 +1435,10 @@ hist(good_participants_BLP$RC9_use_L4,add = TRUE,col = rgb(0.25, 0.54, 0.47, 0.7
 ################
 library(lme4);
 library(emmeans);
+library(BayesFactor);
 
 # TESTING #
-data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','sbj_ID','Gender','Age','L2Score','lang_ent','lang_use_ent','multi_exp','L1_L2_diff','use_vector_distance','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_testing_lm <- merge(data_testing, data_BLP[,c('sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
@@ -1420,11 +1468,9 @@ summary(lm_use_ent); # lang_use_ent marg. sig as main effect (p=0.06); 1M:use_en
 lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_multiexp); # multi_exp sig (p=0.0008); 1M:multiexp sig (p=0.02); 2M:multiexp non sig (p=0.52)
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-summary(lm_L1L2diff); # L1L2diff marg. sig (p=0.08); 1M:L1L2 non sig (p=0.62); 2M:L1L2 non sig (p=0.16)
-lm_vdist <- glmer(observed ~ scale(trialn) + testing_condition*vector_distance + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
-summary(lm_vdist); # vdist non sig (p=0.23); 1M:vdist non sig (p=0.14); 2M:vdist non sig (p=0.64)
-lm_usevdist <- glmer(observed ~ scale(trialn) + testing_condition*use_vector_distance + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
-summary(lm_usevdist); # usevdist non sig (p=0.56); 1M:use_vdist non sig (p=0.96); 2M:vdist non sig (p=0.48)
+summary(lm_L1L2diff); # L1L2diff sig (p=0.04); 1M:L1L2 non sig (p=0.36); 2M:L1L2 non sig (p=0.23)
+lm_cossim <- glmer(observed ~ scale(trialn) + testing_condition*cosine_similarity + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
+summary(lm_cossim); # cossim non sig (p=0.23); 1M:cossim non sig (p=0.14); 2M:cossim non sig (p=0.64)
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -1445,20 +1491,17 @@ summary(lm_2M_RC9); # R9 non sig (p=0.18); expected:RC9 non sig (p=0.38)
 lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_ent); # lang_ent non sig (p=0.48); expected:ent marg. sig(p=0.07)
 # without monos: lang_ent non sig (p=0.32); expected:ent non sig (p=0.64)
-lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*lang_use_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_use_ent); # use_ent non sig (p=0.24); expected:use_ent non sig (0.33)
 lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_multiexp); # multi_exp non sig (p=0.27); expected:multiexp non sig (p=0.16)
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.02); expected:L1L2diff (p=0.68)
-lm_2M_vdist <- glmer(observed ~ scale(trialn) + expected*vector_distance + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_vdist); # w/ monos: vdist sig as main effect (p=0.01); expected:vdist sig (p=0.008)
-# w/out monos: vdist sig as main effect (p=0.007); expected:vdist sig (p=0.038)
-lm_2M_usevdist <- glmer(observed ~ scale(trialn) + expected*use_vector_distance + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_usevdist); # usevdist non sig as main effect (p=0.64); expected:usevdist non sig (p=0.12)
+summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.02); expected:L1L2diff non sig (p=0.67)
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*cosine_similarity + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_cossim); # w/ monos: cossim sig as main effect (p=0.01); expected:cossim sig (p=0.008)
+# w/out monos: cossim sig as main effect (p=0.007); expected:cossim sig (p=0.038)
 
 # FAMILIARITY #
-data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','lang_use_ent','use_vector_distance','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_familiarity$correct_numerical <- as.numeric(data_BLP_familiarity$correct);
 lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Gender); # Gender non sig (p=0.66)
 lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
@@ -1480,20 +1523,28 @@ summary(lm_fam_use_ent); # use_ent non sig (p=0.13)
 lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_multiexp); # multi_exp non sig (p=0.25)
 lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.56)
-lm_fam_vdist <- glmer(correct ~ scale(trialn) + vector_distance + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
-summary(lm_fam_vdist); # vdist non sig (p=0.11 w/ monos, p=0.18 w/out)
-lm_fam_usevdist <- glmer(correct ~ scale(trialn) + use_vector_distance + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
-summary(lm_fam_usevdist); # usevdist non sig (p=0.41)
+summary(lm_fam_L1L2diff); # L1_L2_diff non sig (p=0.62)
+
+##### FIND OUT HOW TO RUN
+library(BayesRS);
+dat.str <- data.frame(iv = c("trialn","L1_L2_diff"),
+                      type = c("cont"),
+                      sbj_ID = c(1));
+modelrun(data_BLP_familiarity,dv='correct',dat.str=dat.str)[[1]];
+
+
+
+lm_fam_cossim <- glmer(correct ~ scale(trialn) + cosine_similarity + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
+summary(lm_fam_cossim); # cossim non sig (p=0.11 w/ monos, p=0.18 w/out)
 
 # "YES" LMERS
-data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_0M_yes$x_0);
 #min:0 Q1:42.5 med:52.5 mean:52.63 Q3:62.5 max:100
-data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_1M_yes$x_1);
 #min:0 Q1:50 med:57.5 mean:58.41 Q3:67.5 max:100
-data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('temp_sbjID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_2M_yes$x_2);
 #min:0 Q1:52.5 med:62.5 mean:63.34 Q3:72.5 max:100
 
@@ -1627,7 +1678,7 @@ legend("bottomright",title="L1-L2 difference",c("More L2","Balanced","More L1","
 
 # 2M LMERS
 #ent
-data_BLP_testing_2M_ent_means <- merge(data_testing_2M_means, subset(data_BLP,select=c('temp_sbjID','lang_ent')), by.x='temp_sbjID',by.y='temp_sbjID', all.x=T);
+data_BLP_testing_2M_ent_means <- merge(data_testing_2M_means, subset(data_BLP,select=c('sbj_ID','lang_ent')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 plot(data_BLP_testing_2M_ent_means$lang_ent,data_BLP_testing_2M_ent_means$x_2,xlab="Language entropy",ylab="2M scores",ylim=c(0.2,0.7),pch=19,yaxs="i",xaxs="i",cex.lab=2,cex.axis=1.75);
 abline(lm(data_BLP_testing_2M_ent_means$x_2~data_BLP_testing_2M_ent_means$lang_ent), col = "red",lwd=2);
@@ -1775,17 +1826,17 @@ density_peak_clustering <- function(scores,
   return(result)
 };
 
-data_BLP_clustering <- subset(data_BLP, select=c(temp_sbjID,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
+data_BLP_clustering <- subset(data_BLP, select=c(sbj_ID,RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4));
 data_clustering <- data.frame();
-sbj_ID <- as.character(data_BLP_clustering$temp_sbjID);
+sbj_ID <- as.character(data_BLP_clustering$sbj_ID);
 for (x in 1:187) {
-  temp_sbj_ID = sbj_ID[x]
+  sbj_ID = sbj_ID[x]
   RC1_L4 = data_BLP_clustering[x,2]
   RC3_L3 = data_BLP_clustering[x,3]
   RC2_use_L1vsL2 = data_BLP_clustering[x,4]
   RC7_hist_L2 = data_BLP_clustering[x,5]
   RC9_use_L4 = data_BLP_clustering[x,6]
-  temp <- data.frame('sbj_ID'=rep(temp_sbj_ID,5),
+  temp <- data.frame('sbj_ID'=rep(sbj_ID,5),
                      'scores'=c(RC1_L4,RC3_L3,RC2_use_L1vsL2,RC7_hist_L2,RC9_use_L4),
                      'dimensions'=c('RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4'))
   data_clustering <- rbind(data_clustering,temp)
@@ -1806,7 +1857,7 @@ result <- density_peak_clustering(data_clustering$scores,data_clustering$sbj_ID,
 # CLUSTERING TREE #
 ###################
 library(Hmisc);
-data_BLP_short <- subset(data_BLP, select=-c(sbj_ID,Age,Gender,Education,L1,L2,L3,L4,otherLs,task,AttentionL1,AttentionL2,AttentionL3,AttentionL4,temp_sbjID));
+data_BLP_short <- subset(data_BLP, select=-c(sbj_ID,Age,Gender,Education,L1,L2,L3,L4,otherLs,task,AttentionL1,AttentionL2,AttentionL3,AttentionL4,sbj_ID));
 temp <- subset(data_BLP_short, select=c(HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,UseL1Score,UseL2Score,UseL3Score,UseL4Score,ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,L1Score,L2Score,L3Score,L4Score,lang_var,lang_ent,multi_exp,L1_L2_diff,RC1_L3,RC3_L4,RC2_use_L1vsL2,RC15_hist_L3));
 plot(varclus(as.matrix(temp)));
 
@@ -1834,42 +1885,42 @@ ok4 <- ! is.na(data_BLP$L4Score);
 #High ent: temp_sbjID 43
 
 cols2 <- paletteer_d("ggthemes::Classic_20");
-#by temp_sbjID
-plot(data_BLP$L1Score~data_BLP$temp_sbjID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
+#by sbj_ID
+plot(data_BLP$L1Score~data_BLP$sbj_ID,ylab="Language Score",ylim=c(0,230),xlab="Participant",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
 axis(1, at = c(1:188));
-points(data_BLP$L2Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[2]);
-points(data_BLP$L3Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[3]);
-points(data_BLP$L4Score~data_BLP$temp_sbjID,subset=ok2,pch=19,col=cols2[4]);
+points(data_BLP$L2Score~data_BLP$sbj_ID,subset=ok2,pch=19,col=cols2[2]);
+points(data_BLP$L3Score~data_BLP$sbj_ID,subset=ok2,pch=19,col=cols2[3]);
+points(data_BLP$L4Score~data_BLP$sbj_ID,subset=ok2,pch=19,col=cols2[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
 abline(h=218, lty=5);
 
 #by lang_ent
 sorted_order1 <- order(data_BLP$lang_ent);
-plot(data_BLP$L1Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing lang_ent",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
-points(data_BLP$L2Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],subset=ok2,pch=19,col=cols2[2]);
-points(data_BLP$L3Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],subset=ok2,pch=19,col=cols2[3]);
-points(data_BLP$L4Score[sorted_order1]~data_BLP$temp_sbjID[sorted_order1],subset=ok2,pch=19,col=cols2[4]);
+plot(data_BLP$L1Score[sorted_order1]~data_BLP$sbj_ID[sorted_order1],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing lang_ent",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
+points(data_BLP$L2Score[sorted_order1]~data_BLP$sbj_ID[sorted_order1],subset=ok2,pch=19,col=cols2[2]);
+points(data_BLP$L3Score[sorted_order1]~data_BLP$sbj_ID[sorted_order1],subset=ok2,pch=19,col=cols2[3]);
+points(data_BLP$L4Score[sorted_order1]~data_BLP$sbj_ID[sorted_order1],subset=ok2,pch=19,col=cols2[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
 abline(h=218, lty=5);
 
 #by multi_exp
 sorted_order2 <- order(data_BLP$multi_exp);
-plot(data_BLP$L1Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing multi_exp",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
-points(data_BLP$L2Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],subset=ok2,pch=19,col=cols2[2]);
-points(data_BLP$L3Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],subset=ok2,pch=19,col=cols2[3]);
-points(data_BLP$L4Score[sorted_order2]~data_BLP$temp_sbjID[sorted_order2],subset=ok2,pch=19,col=cols2[4]);
+plot(data_BLP$L1Score[sorted_order2]~data_BLP$sbj_ID[sorted_order2],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing multi_exp",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
+points(data_BLP$L2Score[sorted_order2]~data_BLP$sbj_ID[sorted_order2],subset=ok2,pch=19,col=cols2[2]);
+points(data_BLP$L3Score[sorted_order2]~data_BLP$sbj_ID[sorted_order2],subset=ok2,pch=19,col=cols2[3]);
+points(data_BLP$L4Score[sorted_order2]~data_BLP$sbj_ID[sorted_order2],subset=ok2,pch=19,col=cols2[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
 abline(h=218, lty=5);
 
 #by L1_L2_diff - doesn't seem to work well
 sorted_order3 <- order(data_BLP$L1_L2_diff);
-plot(data_BLP$L1Score[sorted_order3]~data_BLP$temp_sbjID[sorted_order3],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing L1_L2_diff",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
-points(data_BLP$L2Score[sorted_order3]~data_BLP$temp_sbjID[sorted_order3],subset=ok2,pch=19,col=cols2[2]);
-points(data_BLP$L3Score[sorted_order3]~data_BLP$temp_sbjID[sorted_order3],subset=ok2,pch=19,col=cols2[3]);
-points(data_BLP$L4Score[sorted_order3]~data_BLP$temp_sbjID[sorted_order3],subset=ok2,pch=19,col=cols2[4]);
+plot(data_BLP$L1Score[sorted_order3]~data_BLP$sbj_ID[sorted_order3],ylab="Language Score",ylim=c(0,230),xlab="Participants, by increasing L1_L2_diff",main="",pch=19,cex.lab=1.5,col=cols2[1],xaxt="n",yaxs="i");
+points(data_BLP$L2Score[sorted_order3]~data_BLP$sbj_ID[sorted_order3],subset=ok2,pch=19,col=cols2[2]);
+points(data_BLP$L3Score[sorted_order3]~data_BLP$sbj_ID[sorted_order3],subset=ok2,pch=19,col=cols2[3]);
+points(data_BLP$L4Score[sorted_order3]~data_BLP$sbj_ID[sorted_order3],subset=ok2,pch=19,col=cols2[4]);
 legend("bottomright",title="Language:",c("L1","L2","L3","L4"),fill=c(cols2[1],cols2[2],cols2[3],cols2[4]),bty = "n",
        cex=1,y.intersp=0.5);
 abline(h=218, lty=5)

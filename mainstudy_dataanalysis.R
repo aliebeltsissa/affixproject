@@ -377,7 +377,7 @@ data_testing_2M_means$dprime <- dprimes2M$dprime;
 data_testing_2M_means$c <- dprimes2M$c;
 
 # testing strategy
-library(tidyverse)
+library(tidyverse);
 strats <- subset(data_testing, select = c(temp_sbjID, strategy));
 strats <- strats[!duplicated(strats),];
 
