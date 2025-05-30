@@ -313,28 +313,36 @@ data_BLP$AttentionL3 <- as.factor(data_BLP$AttentionL3);
 data_BLP$AttentionL4 <- as.factor(data_BLP$AttentionL4);
 
 library(toolbox);
-scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
-use_scores_list <- combineCols(data_BLP, cols=c('UseL1Score','UseL2Score','UseL3Score','UseL4Score'),by_name=TRUE); # combine use scores into 1 list
+scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score','L4Score')); # combine scores into 1 list
+write.csv(scores_list,file='BASLv2_scores.csv', row.names=FALSE);
+use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score','UseL3Score','UseL4Score')); # combine use scores into 1 list
+write.csv(use_scores_list,file='BASLv2_usescores.csv', row.names=FALSE)
 
 # multilingual balance: variance
-vars <- list();
+vars <- data.frame();
 for (i in 1:184) { # calculate variance for each participant
-  temp <- unlist(scores_list[i]);
+  id <- scores_list$sbj_ID[[i]]
+  temp <- c(scores_list$L1Score[[i]],scores_list$L2Score[[i]],scores_list$L3Score[[i]],scores_list$L4Score[[i]]);
   var <- var(temp,na.rm=TRUE);
-  vars <- append(vars, var)
+  temp_df <- data.frame(id,var);
+  names(temp_df) <- c("sbj_ID","lang_var");
+  vars <- rbind(vars,temp_df);
 };
-data_BLP$lang_var <- vars;
+data_BLP <- merge(data_BLP,vars,by="sbj_ID");
 data_BLP$lang_var <- as.numeric(data_BLP$lang_var);
 
 # multilingual balance: entropy
-entropies <- list();
+entropies <- data.frame();
 library(DescTools);
 for (i in 1:184) { # calculate entropy for each participant
-  temp <- unlist(scores_list[i]);
+  id <- scores_list$sbj_ID[[i]]
+  temp <- c(scores_list$L1Score[[i]]/217.94,scores_list$L2Score[[i]]/217.94,scores_list$L3Score[[i]]/217.94,scores_list$L4Score[[i]]/217.94);
   entropy <- Entropy(temp,na.rm=TRUE);
-  entropies <- append(entropies, entropy)
+  temp_df <- data.frame(id,entropy);
+  names(temp_df) <- c("sbj_ID","lang_ent");
+  entropies <- rbind(entropies,temp_df);
 };
-data_BLP$lang_ent <- entropies;
+data_BLP <- merge(data_BLP,entropies,by="sbj_ID");
 data_BLP$lang_ent <- as.numeric(data_BLP$lang_ent);
 
 # multilingual experience: summing all language scores
@@ -383,7 +391,7 @@ lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent + (1+testi
 lm_use_ent <- glmer(observed ~ scale(trialn) + testing_condition*lang_use_ent + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multi_exp) + (1|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
-lm_cossim <- glmer(observed ~ scale(trialn) + testing_condition*cosine_similarity + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
+lm_cossim <- glmer(observed ~ scale(trialn) + testing_condition*scale(cosine_similarity) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -397,7 +405,7 @@ lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_use_L4 + (1+expected|
 lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*lang_ent + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*cosine_similarity + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cosine_similarity) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 
 # FAMILIARITY #
 data_BLP_familiarity <- merge(data_familiarity, data_BLP_extracted_all[,c('sbj_ID','Gender','Age','lang_ent','multi_exp','L1_L2_diff','cosine_similarity','RC1_L4','RC3_L3','RC2_use_L1vsL2','RC7_hist_L2','RC9_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -1234,15 +1242,15 @@ abline(h=0.5, lty=5);
 
 # corr of cosine similarity & accuracy
 cor(data_BLP_testing_all$x_2, data_BLP_testing_all$cosine_similarity); # r = -0.19
-plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2, xlab="Language score variance", ylab="2M accuracy (in %)", pch=19);
+plot(data_BLP_testing_all$cosine_similarity, data_BLP_testing_all$x_2, xlab="Cosine similarity score", ylab="2M accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
 cor(data_BLP_testing_all$x_2_hits, data_BLP_testing_all$cosine_similarity); # r = 0.01
-plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_hits, xlab="Language score variance", ylab="2M hit accuracy (in %)", pch=19);
+plot(data_BLP_testing_all$cosine_similarity, data_BLP_testing_all$x_2_hits, xlab="Cosine similarity score", ylab="2M hit accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
 cor(data_BLP_testing_all$x_2_rejs, data_BLP_testing_all$cosine_similarity); # r = -0.19
-plot(data_BLP_testing_all$lang_var, data_BLP_testing_all$x_2_rejs, xlab="Language score variance", ylab="2M rejection accuracy (in %)", pch=19);
+plot(data_BLP_testing_all$cosine_similarity, data_BLP_testing_all$x_2_rejs, xlab="Cosine similarity score", ylab="2M rejection accuracy (in %)", pch=19);
 abline(h=0.5, lty=5);
 
 # corr of multilingual experience & accuracy
@@ -1470,7 +1478,7 @@ summary(lm_multiexp); # multi_exp sig (p=0.0008); 1M:multiexp sig (p=0.02); 2M:m
 lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
 summary(lm_L1L2diff); # L1L2diff sig (p=0.04); 1M:L1L2 non sig (p=0.36); 2M:L1L2 non sig (p=0.23)
 lm_cossim <- glmer(observed ~ scale(trialn) + testing_condition*cosine_similarity + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000, L2Score>0), family='binomial');
-summary(lm_cossim); # cossim non sig (p=0.23); 1M:cossim non sig (p=0.14); 2M:cossim non sig (p=0.64)
+summary(lm_cossim); # cossim non sig (p=0.27); 1M:cossim non sig (p=0.14); 2M:cossim non sig (p=0.59)
 
 #2M - accuracy
 data_testing_lm_2M <- subset(data_testing_lm[data_testing$testing_condition=='2M',]);
@@ -1495,8 +1503,8 @@ lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multi_exp) + (
 summary(lm_2M_multiexp); # multi_exp non sig (p=0.27); expected:multiexp non sig (p=0.16)
 lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
 summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.02); expected:L1L2diff non sig (p=0.67)
-lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*cosine_similarity + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
-summary(lm_2M_cossim); # w/ monos: cossim sig as main effect (p=0.01); expected:cossim sig (p=0.008)
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cosine_similarity) + (1+expected|sbj_ID), data=data_testing_lm_2M, family='binomial');
+summary(lm_2M_cossim); # w/ monos: cossim sig as main effect (p=0.01); expected:cossim sig (p=0.006)
 # w/out monos: cossim sig as main effect (p=0.007); expected:cossim sig (p=0.038)
 
 # FAMILIARITY #
@@ -1515,7 +1523,7 @@ summary(lm_fam_RC2); # RC2_use_L1vsL2 non sig (p=0.71)
 lm_fam_RC7 <- glmer(correct ~ scale(trialn) + RC7_hist_L2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC7); # RC7_hist_L2 non sig (p=0.70)
 lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_use_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-summary(lm_fam_R9); # PROBLEM
+summary(lm_fam_RC9); # RC9_use_L4 sig (p=0.02)
 lm_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_ent); # lang_ent marg. sig (p=0.09)
 lm_fam_use_ent <- glmer(correct ~ scale(trialn) + lang_use_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
@@ -1544,9 +1552,19 @@ summary(data_BLP_testing_0M_yes$x_0);
 data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_1M_yes$x_1);
 #min:0 Q1:50 med:57.5 mean:58.41 Q3:67.5 max:100
-data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_BLP_testing_2M_yes <- merge(data_testing_2M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff','RC2_use_L1vsL2')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 summary(data_BLP_testing_2M_yes$x_2);
 #min:0 Q1:52.5 med:62.5 mean:63.34 Q3:72.5 max:100
+
+# RC2
+data_BLP_testing_2M_yes_RC2 <- aggregate(data_BLP_testing_2M_yes$x_2, by=list(data_BLP_testing_2M_yes$RC2_use_L1vsL2), FUN = mean);
+names(data_BLP_testing_2M_yes_RC2) <- c('RC2_use_L1vsL2','mean_2M_yes');
+
+plot(data_BLP_testing_2M_yes_RC2$RC2_use_L1vsL2,data_BLP_testing_2M_yes_RC2$x_2,xlab="RC2_use_L1vsL2",ylab="2M 'yes' responses (in %)",pch=19,yaxs="i");
+abline(lm(data_BLP_testing_0M_yes_RC7$mean_0M_yes~data_BLP_testing_0M_yes_RC7$RC7_hist_L2), col = "red",lwd=2);
+abline(h=50,lty=5);
+# higher L2 hist (younger bi) -> more 0M "yes"
+# later bis better at "no" to 0M
 
 # RC7
 data_BLP_testing_0M_yes_RC7 <- aggregate(data_BLP_testing_0M_yes$x_0, by=list(data_BLP_testing_0M_yes$RC7_hist_L2), FUN = mean);
@@ -1680,7 +1698,7 @@ legend("bottomright",title="L1-L2 difference",c("More L2","Balanced","More L1","
 #ent
 data_BLP_testing_2M_ent_means <- merge(data_testing_2M_means, subset(data_BLP,select=c('sbj_ID','lang_ent')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
-plot(data_BLP_testing_2M_ent_means$lang_ent,data_BLP_testing_2M_ent_means$x_2,xlab="Language entropy",ylab="2M scores",ylim=c(0.2,0.7),pch=19,yaxs="i",xaxs="i",cex.lab=2,cex.axis=1.75);
+plot(data_BLP_testing_2M_ent_means$lang_ent,data_BLP_testing_2M_ent_means$x_2,xlab="Language entropy",ylab="2M scores",ylim=c(0.25,0.75),xlim=c(-0.1,2.1),pch=19,yaxs="i",xaxs="i",cex.lab=2,cex.axis=1.75);
 abline(lm(data_BLP_testing_2M_ent_means$x_2~data_BLP_testing_2M_ent_means$lang_ent), col = "red",lwd=2);
 abline(h=0.5,lty=5);
 
@@ -1727,21 +1745,26 @@ summary(high_ent$alarms); # mean = 0.32
 points(mean(high_ent$lang_ent),mean(high_ent$dprime),pch=19);
 abline(h=0,lty=5);
 
-#vector distance
-plot(data_BLP_testing_all$vector_distance,data_BLP_testing_all$x_2,pch=19,xlab="Cosine similarity",ylab="2M score",cex.lab=2,cex.axis=1.75);
-abline(lm(data_BLP_testing_all$x_2~data_BLP_testing_all$vector_distance), col = "red",lwd=2);
+#cosine similarity
+par(mar=c(5, 5, 4, 2) + 0.1);
+plot(data_BLP_testing_all$cosine_similarity,data_BLP_testing_all$x_2,pch=19,xlab="Cosine similarity",ylab="2M score",cex.lab=2,cex.axis=1.75);
+abline(lm(data_BLP_testing_all$x_2~data_BLP_testing_all$cosine_similarity), col = "red",lwd=2);
 abline(h=0.5,lty=5);
-cor(data_BLP_testing_all$vector_distance,data_BLP_testing_all$multi_exp); # r = -0.15
-legend("bottomleft","Pearson's r = -0.15",bty="n");
+cor(data_BLP_testing_all$cosine_similarity,data_BLP_testing_all$x_2); # r = -0.20
+legend("bottomleft","Pearson's r = -0.20",bty="n");
+par(mar=c(5, 4, 4, 2) + 0.1) # back to default
 
-plot(data_BLP_testing_all$vector_distance[data_BLP_testing_all$L2Score>0],data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0],pch=19);
-abline(lm(data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0]~data_BLP_testing_all$vector_distance[data_BLP_testing_all$L2Score>0]), col = "red",lwd=2);
+# without monos
+plot(data_BLP_testing_all$cosine_similarity[data_BLP_testing_all$L2Score>0],data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0],,xlab="Cosine similarity (without monolinguals)",ylab="2M score",pch=19);
+abline(lm(data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0]~data_BLP_testing_all$cosine_similarity[data_BLP_testing_all$L2Score>0]), col = "red",lwd=2);
 abline(h=0.5,lty=5);
+cor(data_BLP_testing_all$cosine_similarity[data_BLP_testing_all$L2Score>0],data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0]); # r = -0.17
+legend("bottomleft","Pearson's r = -0.17",bty="n");
 
-plot(data_BLP_testing_all$vector_distance,data_BLP_testing_all$dprime,pch=19,xlab="Cosine similarity",ylab="D prime in the 2M condition",cex.lab=2,cex.axis=1.75);
-abline(lm(data_BLP_testing_all$dprime~data_BLP_testing_all$vector_distance), col = "red",lwd=2);
+plot(data_BLP_testing_all$cosine_similarity,data_BLP_testing_all$dprime,pch=19,xlab="Cosine similarity",ylab="D prime in the 2M condition",cex.lab=2,cex.axis=1.75);
+abline(lm(data_BLP_testing_all$dprime~data_BLP_testing_all$cosine_similarity), col = "red",lwd=2);
 abline(h=0,lty=5);
-cor(data_BLP_testing_all$vector_distance,data_BLP_testing_all$dprime); # r = -0.19
+cor(data_BLP_testing_all$cosine,data_BLP_testing_all$dprime); # r = -0.19
 legend("bottomleft","Pearson's r = -0.19",bty="n");
 
 

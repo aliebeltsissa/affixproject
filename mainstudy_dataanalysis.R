@@ -847,10 +847,10 @@ dev.off();
 # LINEAR MODEL #
 ################
 library(lme4);
-library(emmeans)
+library(emmeans);
 
 # TESTING #
-data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4','x_2')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
@@ -905,6 +905,9 @@ lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + 
 summary(lm_2M_L1L2diff); # L1_L2_diff sig (p=0.03), interaction non sig (p=0.26)
 lm_2M_vdist <- glmer(observed ~ scale(trialn) + expected*vector_distance + (1+expected|sbj_ID), data=data_testing_lm_2M[data_testing_lm_2M$L2Score>0,], family='binomial');
 summary(lm_2M_vdist); # w/ monos: vdist non sig (p=0.57); expected:vdist marg. sig (p=0.097)
+# w/out monos: vdist non sig (p=0.58); expected:vdist marg. sig (p=0.08)
+lm_2M_vdist2 <- glmer(observed ~ scale(trialn) + expected*vector_distance + (1|sbj_ID), data=data_testing_lm_2M[data_testing_lm_2M$L2Score>0,], family='binomial');
+summary(lm_2M_vdist2); # w/ monos: vdist non sig (p=0.57); expected:vdist marg. sig (p=0.097)
 # w/out monos: vdist non sig (p=0.58); expected:vdist marg. sig (p=0.08)
 
 # FAMILIARITY #
@@ -1054,6 +1057,12 @@ data_ent_lm <- merge(data_testing, data_BLP[,c('sbj_ID','lang_ent_just3')], by.x
 m26 <- glmer(observed ~ scale(trialn) + testing_condition*lang_ent_just3 + (1+testing_condition|sbj_ID), data=subset(data_ent_lm, rt>300 & rt<3000), family='binomial');
 summary(m26); # lang_ent_just3 non sig (p=0.55), interaction non sig
 # so this effect only visible at bilingual level, not including trilingual data
+
+# vdist
+cor(data_BLP_testing_all$x_2,data_BLP_testing_all$vector_distance); # r=0.03
+plot(data_BLP_testing_all$vector_distance,data_BLP_testing_all$x_2,pch=19);
+abline(h=0.5, lty=5);
+abline(lm(x_2~vector_distance,data=data_BLP_testing_all),col='red');
 
 
 ######################
