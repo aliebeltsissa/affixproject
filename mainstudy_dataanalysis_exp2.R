@@ -316,7 +316,7 @@ library(toolbox);
 scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score','L4Score')); # combine scores into 1 list
 write.csv(scores_list,file='BASLv2_scores.csv', row.names=FALSE);
 use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score','UseL3Score','UseL4Score')); # combine use scores into 1 list
-write.csv(use_scores_list,file='BASLv2_usescores.csv', row.names=FALSE)
+write.csv(use_scores_list,file='BASLv2_usescores.csv', row.names=FALSE);
 
 # multilingual balance: variance
 vars <- data.frame();
@@ -355,7 +355,7 @@ data_BLP$multi_exp <- data_BLP$L1Score + data_BLP$L2Score + data_BLP$L3Score + d
 data_BLP$L1_L2_diff <- abs(data_BLP$L1Score - data_BLP$L2Score);
 
 # cosine similarity
-cossims <- read.csv("distances_exp2.csv",header=T,sep=",");
+cossims <- read.csv("distances_exp2_NOLOWSCORES.csv",header=T,sep=",");
 cossims <- subset(cossims, select = -c(X)); # remove redundant column added by Python
 names(cossims) <- c('sbj_ID','cosine_similarity');
 data_BLP <- merge(data_BLP,cossims,by="sbj_ID");
@@ -419,7 +419,7 @@ lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_use_L4 + (1|sbj_ID), data=data
 lm_fam_ent <- glmer(correct ~ scale(trialn) + lang_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multi_exp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
-lm_fam_cossim <- glmer(correct ~ scale(trialn) + cosine_similarity + (1|sbj_ID), data=data_BLP_familiarity[data_BLP_familiarity$L2Score>0,], family='binomial');
+lm_fam_cossim <- glmer(correct ~ scale(trialn) + cosine_similarity + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
 
 data_BLP_testing_0M_yes <- merge(data_testing_0M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 data_BLP_testing_1M_yes <- merge(data_testing_1M_yes, subset(data_BLP,select=c('sbj_ID','RC7_hist_L2','multi_exp','L1_L2_diff')), by.x='sbj_ID',by.y='sbj_ID', all.x=T);
@@ -444,10 +444,10 @@ participants <- c(participants1,participants2);
 library(paletteer);
 cols <- paletteer_d("MetBrewer::Degas");
 
-library(extrafont)
-font_import()
-loadfonts()
-par(family="Montserrat")
+library(extrafont);
+font_import();
+loadfonts();
+par(family="Montserrat");
 
 # d' function
 dPrime <- function(sbj, expectedResp, observedResp)
@@ -537,6 +537,7 @@ summary(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"]);
 #min:641 Q1:1034 med:1532 mean:1986 Q3:2182 max:21398
 plot(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"],ylim=c(2000,22000));
 plot(data_testing$rt[data_testing$sbj_ID=="667d631ef036f8ef4ff2f4f3"&data_testing$rt>2000]);
+
 # exclude 667d631ef036f8ef4ff2f4f3: mean RT of 1986 slow, and 35 trials too slow
 data_testing <- data_testing[!data_testing$sbj_ID %in% c('667d631ef036f8ef4ff2f4f3'),];
 data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('667d631ef036f8ef4ff2f4f3'),]
@@ -1753,6 +1754,9 @@ abline(h=0.5,lty=5);
 cor(data_BLP_testing_all$cosine_similarity,data_BLP_testing_all$x_2); # r = -0.20
 legend("bottomleft","Pearson's r = -0.20",bty="n");
 par(mar=c(5, 4, 4, 2) + 0.1) # back to default
+
+plot(data_BLP_testing_all$cosine_similarity,data_BLP_testing_all$dprime,pch=19,xlab="Cosine similarity",ylab="2M score",cex.lab=2,cex.axis=1.75);
+abline(lm(data_BLP_testing_all$dprime~data_BLP_testing_all$cosine_similarity), col = "red",lwd=2);
 
 # without monos
 plot(data_BLP_testing_all$cosine_similarity[data_BLP_testing_all$L2Score>0],data_BLP_testing_all$x_2[data_BLP_testing_all$L2Score>0],,xlab="Cosine similarity (without monolinguals)",ylab="2M score",pch=19);

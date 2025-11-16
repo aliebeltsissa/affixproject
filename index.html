@@ -465,7 +465,7 @@
         if (lengths[1] == 4) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
         if (lengths[1] == 5) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
         var morcode = morcode_stem + morcode_affix;
-        if (morcodeXmorcode_words_list.includes(morcode) == false) {
+        if (morcodeXmorcode_words_list.includes(morcode) == false & morcode_stem[-1] != morcode_affix[0]) {
           morcodeXmorcode_words_list.push(morcode);
           morcodeXmorcode_words_dict[morcode] = [morcode_stem, 'morcode', morcode_affix, 'morcode']
         }
@@ -538,15 +538,32 @@
           var stem = morcode_fours.shift();
           var stem_nature = 'morcode';
           var affix_nature = 'morpheme';
-          if (affix_length == 3) {var affix = testing_affixes_3s.shift()};
-          if (affix_length == 4) {var affix = testing_affixes_4s.shift()}
+          if (affix_length == 3) {
+            if(testing_affixes_3s[0][0] != stem[-1]) { // if 1st letter would be repeating
+              var affix = testing_affixes_3s.shift()}
+            else { // get 2nd morph in array
+              var affix = testing_affixes_3s.splice(1,1)}}
+          if (affix_length == 4) {
+            if (testing_affixes_4s[0][0] != stem[-1]) {
+              var affix = testing_affixes_4s.shift()}
+            else {
+              var affix = testing_affixes_4s.splice(1,1)}}
         }
         if (testing_stems_4s.length != 0) { // if still some 4-character stems in morpheme list
           var stem = testing_stems_4s.shift();
           var stem_nature = 'morpheme';
           var affix_nature = 'morcode';
-          if (affix_length == 3) {var affix = morcode_threes.shift()};
-          if (affix_length == 4) {var affix = morcode_fours.shift()};
+          if (affix_length == 3) {
+            if(morcode_threes[0][0] != stem[-1]) {
+              var affix = morcode_threes.shift()}
+            else {
+              var affix = morcode_threes.splice(1,1)
+            }}
+          if (affix_length == 4) {
+            if(morcode_fours[0][0] != stem[-1]) {
+              var affix = morcode_fours.shift()}
+            else {
+              var affix = morcode_fours.splice(1,1)}}
         }; 
       };
       if (stem_length == 5) { // if the stem length is supposed to be 5
@@ -554,15 +571,33 @@
           var stem = morcode_fives.shift();
           var stem_nature = 'morcode';
           var affix_nature = 'morpheme';
-          if (affix_length == 3) {var affix = testing_affixes_3s.shift()};
-          if (affix_length == 4) {var affix = testing_affixes_4s.shift()}
+          if (affix_length == 3) {
+            if(testing_affixes_3s[0][0] != stem[-1]) {
+              var affix = testing_affixes_3s.shift()}
+            else {
+              var affix = testing_affixes_3s.splice(1,1)}}
+            
+          if (affix_length == 4) {
+            if(testing_affixes_4s[0][0] != stem[-1]) {
+              var affix = testing_affixes_4s.shift()}
+            else {
+              var affix = testing_affixes_4s.splice(1,1)}}
         }
         if (testing_stems_5s.length != 0) {
           var stem = testing_stems_5s.shift();
           var stem_nature = 'morpheme';
           var affix_nature = 'morcode';
-          if (affix_length == 3) {var affix = morcode_threes.shift()};
-          if (affix_length == 4) {var affix = morcode_fours.shift()}
+          if (affix_length == 3) {
+            if(morcode_threes[0][0] != stem[-1]) {
+              var affix = morcode_threes.shift()}
+            else {
+              var affix = morcode_threes.splice(1,1)}}
+            
+          if (affix_length == 4) {
+            if(morcode_fours[0][0] != stem[-1]) {
+              var affix = morcode_fours.shift()}
+            else {
+              var affix = morcode_fours.splice(1,1)}}
         };     
       };
       var morcodeXmorpheme = stem + affix;
@@ -845,7 +880,7 @@
       timeline: [morph_training,check,repeat],
       timeline_variables: stimuli,
     };
-    timeline.push(training_procedure);
+    //timeline.push(training_procedure);
 
 
     /* TRAINING */
@@ -891,7 +926,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli1,
     };
-    timeline.push(training_procedure1);
+    //timeline.push(training_procedure1);
 
     var inter_training1 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -915,7 +950,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli2,
     };
-    timeline.push(training_procedure2);
+    //timeline.push(training_procedure2);
 
     var inter_training2 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -939,7 +974,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli3,
     };
-    timeline.push(training_procedure3);
+    //timeline.push(training_procedure3);
 
     var inter_training3 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -963,7 +998,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli4,
     };
-    timeline.push(training_procedure4);
+    //timeline.push(training_procedure4);
 
     var inter_training4 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -987,7 +1022,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli5,
     };
-    timeline.push(training_procedure5);
+    //timeline.push(training_procedure5);
 
     var inter_training5 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1011,7 +1046,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli6,
     };
-    timeline.push(training_procedure6);
+    //timeline.push(training_procedure6);
 
     var inter_training6 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1035,7 +1070,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli7,
     };
-    timeline.push(training_procedure7);
+    //timeline.push(training_procedure7);
 
     var inter_training7 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1059,7 +1094,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli8,
     };
-    timeline.push(training_procedure8);
+    //timeline.push(training_procedure8);
 
     var inter_training8 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1083,7 +1118,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli9,
     };
-    timeline.push(training_procedure9);
+    //timeline.push(training_procedure9);
 
     var inter_training9 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1107,7 +1142,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli10,
     };
-    timeline.push(training_procedure10);
+    //timeline.push(training_procedure10);
 
     var inter_training10 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1131,7 +1166,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli11,
     };
-    timeline.push(training_procedure11);
+    //timeline.push(training_procedure11);
 
     var inter_training11 = {
       type: jsPsychHtmlKeyboardResponse,
@@ -1155,7 +1190,7 @@
       timeline: [training_trial],
       timeline_variables: training_stimuli12,
     };
-    timeline.push(training_procedure12);
+    //timeline.push(training_procedure12);
 
     var post_training = {
       type: jsPsychHtmlKeyboardResponse,

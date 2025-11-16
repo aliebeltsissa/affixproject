@@ -86,7 +86,7 @@ IDs <- list(data_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
 plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.007),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[1],yaxs="i",lwd=1,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
-for (x in 2:195) {
+for (x in 2:193) {
   lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x],lwd=1)
 };
 data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
@@ -426,10 +426,10 @@ summary(chunks_2M$alarms); # mean = 0.29
 
 
 # Familiarity -------------------------------------------------------------
-data_all_familiarity <- read.csv("familiarity_preprocessed_clean.csv",header=T,sep=",");
+data_all_familiarity <- read.csv("exp1_familiarity_preprocessed.csv",header=T,sep=",");
 data_all_familiarity <- subset(data_all_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
 data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 196 participants
-data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c('615b41767003d4ece749ed9d', '5e8b66490d48450346bf2755','615b042301e3a24311563ee4'),] # same participants excluded as for testing
+data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c('615b41767003d4ece749ed9d', '5e8b66490d48450346bf2755','615b042301e3a24311563ee4','6156a440279fdf408ee663ae'),] # same participants excluded as for testing + one saying mono IT
 
 familiarity_missing <- data_familiarity[data_familiarity$sbj_ID=='6156b68cc77b48d6693b361c',];
 # this participant only has 27 datapoints instead of 28 somehow
@@ -462,7 +462,7 @@ IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
 plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.007),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
-for (x in 2:193) {
+for (x in 2:192) {
   lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols[x],lwd=2)
 };
 data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
@@ -481,10 +481,10 @@ cor(data_familiarity_means$x, data_testing_2M_rejs_means$x); # r = -0.02
 
 
 # BLP ---------------------------------------------------------------------
-data_all_BLP <- read.csv("BLP_preprocessed.csv",header=T,sep=",");
+data_all_BLP <- read.csv("exp1_BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)) # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 196 participants
-data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('615b41767003d4ece749ed9d','5e8b66490d48450346bf2755','615b042301e3a24311563ee4'),] # same participants excluded as for testing
+data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('615b41767003d4ece749ed9d','5e8b66490d48450346bf2755','615b042301e3a24311563ee4','6156a440279fdf408ee663ae'),] # same participants excluded as for testing + one saying mono IT
 data_BLP <- subset(data_BLP, select = -c(AoAgioL1, AoAgioL2, AoAgioL3, AoAgioL4, anniInstrL1, anniInstrL2, anniInstrL3, anniInstrL4, anniPaeseL1, anniPaeseL2, anniPaeseL3, anniPaeseL4, anniFamigliaL1, anniFamigliaL2, anniFamigliaL3, anniFamigliaL4, anniLavoroL1, anniLavoroL2, anniLavoroL3, anniLavoroL4, PercAmiciL1, PercAmiciL2, PercAmiciL3, PercAmiciL4, PercFamigliaL1, PercFamigliaL2, PercFamigliaL3, PercFamigliaL4, PercLavoroL1, PercLavoroL2, PercLavoroL3, PercLavoroL4, PercStessoL1, PercStessoL2, PercStessoL3, PercStessoL4, PercCalcoliL1, PercCalcoliL2, PercCalcoliL3, PercCalcoliL4, ProfParlaL1, ProfParlaL2, ProfParlaL3, ProfParlaL4, ProfCapisceL1, ProfCapisceL2, ProfCapisceL3, ProfCapisceL4, ProfLeggeL1, ProfLeggeL2, ProfLeggeL3, ProfLeggeL4, ProfScriveL1, ProfScriveL2, ProfScriveL3, ProfScriveL4, AttMiStessoL1, AttMiStessoL2, AttMiStessoL3, AttMiStessoL4, AttCulturaL1, AttCulturaL2, AttCulturaL3, AttCulturaL4, AttLivNativoL1, AttLivNativoL2, AttLivNativoL3, AttLivNativoL4, AttMadrelinguaL1, AttMadrelinguaL2, AttMadrelinguaL3, AttMadrelinguaL4));
 
 # standardise language responses
@@ -507,7 +507,6 @@ data_BLP[data_BLP == "hungarian"] <- "Hungarian";
 data_BLP[data_BLP == "afrikaans"|data_BLP=="AFRIKAANS"] <- "Afrikaans";
 data_BLP[data_BLP == "german"|data_BLP=="GERMAN"|data_BLP=="germany"|data_BLP=="Deustch"] <- "German";
 data_BLP[data_BLP == "sweedish"] <- "Swedish";
-data_BLP[data_BLP == "Deutch"] <- "Dutch"; # probably - maybe Deutsch?
 data_BLP[data_BLP == "SESOTHO"] <- "Sesotho";
 data_BLP[data_BLP == "RUSSIAN"|data_BLP=="russian"] <- "Russian";
 data_BLP[data_BLP == "tswana"] <- "Tswana";
@@ -517,16 +516,12 @@ data_BLP[data_BLP == "N/A"] <- "n/a";
 
 # correcting some participants' demographic information - correction based off of Prolific's information
 data_BLP["Age"][data_BLP["sbj_ID"] == "5aa787c66219a30001c765f8"] <- "24";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "5aa787c66219a30001c765f8"] <- "Man";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "5bcd11401662020001fe82c1"] <- "Man";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "5e3ff59bf2160b23942ada93"] <- "Man";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5e577e79ce30ae13226e61ae"] <- "24";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5e8c57d9b4483e012006e7aa"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5ecbb4c00bc62403dae2df59"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5ee942381a22491bbb7170f8"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5f219602670e5a0af2cf5237"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5f47e34858dd331165bf9f00"] <- "21";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "5f5a713d37f71112463ab4d9"] <- "Woman";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5f99cee5a2a7d109a1624e10"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5fa4725a186c050edc3bcc20"] <- "23";
 data_BLP["Age"][data_BLP["sbj_ID"] == "5fc2d2d79da439201ab6addc"] <- "24";
@@ -536,14 +531,18 @@ data_BLP["Age"][data_BLP["sbj_ID"] == "6065d7d47409810344f7e6bb"] <- "24";
 data_BLP["Age"][data_BLP["sbj_ID"] == "60883a7e91c0be66dbb96fc8"] <- "23";
 data_BLP["Age"][data_BLP["sbj_ID"] == "608c2e566d92c2aa3543e2d2"] <- "22";
 data_BLP["Age"][data_BLP["sbj_ID"] == "60e3b18d3d4205b4c52ada56"] <- "24";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "60e9ea97d19e613e60a994da"] <- "Man";
 data_BLP["Age"][data_BLP["sbj_ID"] == "611eafa6011b0423f7d7230f"] <- "20";
 data_BLP["Age"][data_BLP["sbj_ID"] == "612a98181f4b6d1cf01f926c"] <- "21";
 data_BLP["Age"][data_BLP["sbj_ID"] == "61301fcb49db2f170cb02b93"] <- "25";
 data_BLP["Age"][data_BLP["sbj_ID"] == "6156b68cc77b48d6693b361c"] <- "21";
 data_BLP["Age"][data_BLP["sbj_ID"] == "616891e25a026e1f7262116c"] <- "22";
-data_BLP["Gender"][data_BLP["sbj_ID"] == "616eb493bb7e4ab4fa1de8d4"] <- "Woman";
 data_BLP["Age"][data_BLP["sbj_ID"] == "6171d922c871ba795b6a4827"] <- "23";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "5aa787c66219a30001c765f8"] <- "Man";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "5bcd11401662020001fe82c1"] <- "Man";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "5e3ff59bf2160b23942ada93"] <- "Man";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "5f5a713d37f71112463ab4d9"] <- "Woman";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "60e9ea97d19e613e60a994da"] <- "Man";
+data_BLP["Gender"][data_BLP["sbj_ID"] == "616eb493bb7e4ab4fa1de8d4"] <- "Woman";
 
 # participants having declared they speak a load of languages to Prolific:
 #60ec51c51a3158a50ded8a3e
@@ -571,11 +570,11 @@ summary(data_BLP);
 
 library(toolbox);
 scores_list <- combineCols(data_BLP, cols=c('L1Score','L2Score','L3Score','L4Score'),by_name=TRUE); # combine scores into 1 list
-data_BLP$temp_sbjID <- c(1:193); # necessary: R doesn't like format of Prolific IDs
+data_BLP$temp_sbjID <- c(1:192); # necessary: R doesn't like format of Prolific IDs
 
 # multilingual balance: variance
 vars <- list();
-for (i in 1:193) { # calculate variance for each participant
+for (i in 1:192) { # calculate variance for each participant
   temp <- unlist(scores_list[i]);
   var <- var(temp,na.rm=TRUE);
   vars <- append(vars, var)
@@ -587,7 +586,7 @@ plot(data_BLP$temp_sbjID,data_BLP$lang_var,pch=19,xlab="Subject number",ylab="La
 # multilingual balance: entropy
 entropies <- list();
 library(DescTools);
-for (i in 1:193) { # calculate entropy for each participant
+for (i in 1:192) { # calculate entropy for each participant
   temp <- unlist(scores_list[i]);
   entropy <- Entropy(temp,na.rm=TRUE);
   entropies <- append(entropies, entropy)
@@ -599,7 +598,7 @@ plot(data_BLP$temp_sbjID,data_BLP$lang_ent,pch=19,xlab="Subject number",ylab="La
 
 # multilingual balance: entropy - Gullifer & Titone (2018)
 library(languageEntropy);
-for (i in 1:193) { # transfrom 0-10 scores into 0-1
+for (i in 1:192) { # transfrom 0-10 scores into 0-1
   temp <- unlist(scores_list[i]);
   total <- sum(temp)
   for (j in 1:4) {
@@ -609,7 +608,7 @@ for (i in 1:193) { # transfrom 0-10 scores into 0-1
 }
 entropies_gul <- data.frame(t(sapply(scores_list,c)))
 colnames(entropies_gul) <- c('L1Score','L2Score','L3Score','L4Score');
-sbj_ID <- seq.int(193);
+sbj_ID <- seq.int(192);
 entropies_gul <- data.frame(sbj_ID, entropies_gul);
 entropies_gul$L2Score[entropies_gul$L2Score==0] <- NA;
 entropies_gul$L3Score[entropies_gul$L3Score==0] <- NA;
@@ -850,7 +849,7 @@ library(lme4);
 library(emmeans);
 
 # TESTING #
-data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4','x_2')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
+data_testing_lm <- merge(data_testing, data_BLP[,c('temp_sbjID','sbj_ID','Gender','Age','L2Score','lang_ent','multi_exp','L1_L2_diff','vector_distance','RC1_L3','RC9_L4','RC2_use_L1vsL2','RC6_use_L4')], by.x='sbj_ID',by.y='sbj_ID', all.x=T);
 
 #all testing conditions - 'yes' responses
 lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1+testing_condition|sbj_ID), data=subset(data_testing_lm, rt>300 & rt<3000), family='binomial');
