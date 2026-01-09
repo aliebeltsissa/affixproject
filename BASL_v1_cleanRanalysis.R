@@ -21,15 +21,25 @@ library(paletteer);
 library(BayesFactor);
 library(RColorBrewer);
 library(xtable);
+library(dplyr);
+library(phytools);
+library(tidytree);
+library(treeio);
+library(ggtree);
+library(data.tree);
+library(ape);
+library(ggtreeExtra);
+library(ggrepel);
 
 # set global font
 par(family="CMU Serif");
-font_add("CMU Serif", "C:/Users/annal/Downloads/computer-modern/cmunrm.ttf");
+font_add("CMU Serif", "C:/Users/annal/Downloads/cmu/cmunrm.ttf");
 showtext_auto();
 
 # set colour scheme
 cols <- paletteer_d("MetBrewer::Degas");
 cols2 <- paletteer_d("palettesForR::Named");
+cols3 <- c(paletteer_d("ggthemes::Tableau_20"));
 
 # define functions
 dPrime <- function(sbj, expectedResp, observedResp)
@@ -769,6 +779,115 @@ summary(data_BLP);
 # Portuguese top L1
 # English top L2
 
+lang_cols <- cols3;
+names(lang_cols) <- c('Afro-Asiatic','Austro-Asiatic','Austronesian',
+                      'Dravidian','Indo-European','Japonic','Kra-Dai',
+                      'Niger-Congo','Sino-Tibetan','Turkic','Uralic',
+                      '12','13','14','15','16','17','18','19','20');
+
+# languages visualisation
+df <- read.csv("BASL_exp1_langs_summary.csv",header=T,sep=",");
+
+df <- df %>% mutate(pathString = paste(family, branch, language, sep="/"));
+
+tree_dt <- as.Node(df, pathName = "pathString");
+tree_phylo <- as.phylo(tree_dt);
+
+get_descendant_tips <- function(tree, node) {
+  children_edges <- which(tree$edge[,1] == node)
+  tips <- c()
+  for (i in children_edges) {
+    child <- tree$edge[i,2]
+    if (child <= length(tree$tip.label)) {
+      tips <- c(tips, child)
+    } else {
+      tips <- c(tips, get_descendant_tips(tree, child))
+    }
+  }
+  return(tips)
+};
+
+family_vec <- setNames(df$family, df$language);
+branch_vec <- setNames(df$branch, df$language);
+count_vec <- setNames(df$count, df$language);
+
+edge_df <- ggtree::fortify(tree_phylo);
+
+edge_df <- edge_df %>%
+  rowwise() %>%
+  mutate(
+    edge_width = if (isTip) {
+      cnt <- count_vec[label]
+      if(length(cnt) == 0) 0 else cnt
+    } else {
+      tips <- get_descendant_tips(tree_phylo, node)
+      sum(count_vec[tree_phylo$tip.label[tips]])
+    }
+  ) %>% ungroup();
+
+edge_df <- edge_df %>%
+  mutate(
+    node_family = ifelse(
+      isTip, family_vec[label],
+      NA_character_
+    ),
+    node_branch = ifelse(
+      isTip, branch_vec[label],
+      NA_character_
+    )
+  );
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    languages <- tree_phylo$tip.label[tips]
+    
+    fams <- unique(family_vec[languages])
+    brs  <- unique(branch_vec[languages])
+    
+    if (length(fams) == 1)
+      edge_df$node_family[edge_df$node == n] <- fams
+    
+    if (length(brs) == 1)
+      edge_df$node_branch[edge_df$node == n] <- brs
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+edge_df$node_family <- ifelse(edge_df$isTip,
+                              family_vec[edge_df$label],
+                              NA);
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    langs <- tree_phylo$tip.label[tips]
+    
+    fams <- family_vec[langs]
+    edge_df$node_family[edge_df$node == n] <- names(sort(table(fams), decreasing = TRUE))[1]
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+language_tree <- ggtree(tree_phylo, layout="circular") %<+% edge_df +
+  geom_tree(aes(linewidth=edge_width, color=edge_family)) +
+  geom_tiplab(aes(label=gsub("_", " ", label), color=edge_family), size=15, 
+              align=TRUE, show.legend=FALSE, family="CMU Serif") +
+  geom_text2(aes(subset = !isTip & !is.na(node_branch), label=node_branch, 
+                 color=edge_family, angle=angle), size=10, hjust=1.1, vjust=2, 
+             show.legend=FALSE, family="CMU Serif") +
+  scale_color_manual(values=lang_cols, guide=guide_legend(order=1, 
+                     override.aes=list(linewidth=6))) +
+  scale_linewidth(breaks=c(1, 50, 100, 150), range=c(0.5, 10), 
+                  guide=guide_legend(order = 2)) +
+  theme_tree() +
+  theme(text = element_text(family = "CMU Serif",size=40)) +
+  labs(color="Family", linewidth="Count");
+ggsave("exp1_languages.png", width=10, height=9.5, language_tree,
+       path=output_folder, device="png");
+
 scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score','L4Score')); # combine scores into 1 list
 write.csv(scores_list,"BASL_exp1_scores.csv", row.names = FALSE);
 use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score','UseL3Score','UseL4Score')); # combine use scores into 1 list
@@ -781,11 +900,16 @@ BLP_scores <- subset(data_BLP,select=c(HistoryL1Score,HistoryL2Score,HistoryL3Sc
                                        AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score));
 
 png('exp1_corrPlot_BLP.png', width=1000, height=1000);
-corrplot::corrplot(cor(BLP_scores),type="lower", order="original", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black',number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(cor(BLP_scores),type="lower",order="original",diag=T,
+                   method="color",outline=F,addgrid.col=F,tl.col='black',
+                   tl.pos='ld',addCoef.col='black',tl.cex=1.5,
+                   family="CMU Serif");
 dev.off();
 
 png('exp1_corrPlot_BLP_hclust.png', width=1000, height=1000);
-corrplot::corrplot(cor(BLP_scores),type="lower", order="hclust", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(cor(BLP_scores),type="lower",order="hclust",diag=T,
+                   method="color",outline=F,addgrid.col=F,tl.col='black',
+                   tl.pos='ld', addCoef.col='black',tl.cex=1.5);
 dev.off();
 
 # BLP scores PCA
@@ -796,6 +920,132 @@ colnames(data_BLP)[which(names(data_BLP) == "RC9")] <- "RC9_L4";
 colnames(data_BLP)[which(names(data_BLP) == "RC2")] <- "RC2_use_L1vsL2";
 colnames(data_BLP)[which(names(data_BLP) == "RC8")] <- "RC8_hist_L2"
 colnames(data_BLP)[which(names(data_BLP) == "RC3")] <- "RC3_prof_L2"
+
+# scree plot
+scree_data <- data.frame(pca_varimax$Vaccounted)["Proportion Var",];
+scree_data <- scree_data %>% pivot_longer(cols=colnames(scree_data), names_to = "PC", values_to = "PropVar");
+scree_data <- scree_data[order(scree_data$PropVar,decreasing=TRUE),];
+scree_data$PC <- c("PC1","PC9","PC2","PC6","PC10","PC7","PC5","PC4","PC8","PC3","PC11","PC14","PC13","PC12","PC16","PC15");
+
+BLPscreeplt <- ggplot(scree_data, aes(x = reorder(PC,-PropVar), y = PropVar, group=1)) +
+  geom_point(size=4) +
+  geom_line(linewidth=1) +
+  geom_hline(yintercept=0.05,colour="red",linetype="dashed",lwd=1.25) +
+  labs(title = "Scree Plot", x = "Principal Components", y = "Variance Explained") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_screeplt.png",BLPscreeplt,path=output_folder,
+       width=10,height=7,device="png");
+
+# biplot of 1st 2 PCs
+biplot(pca_varimax, main="Biplot of First Two Principal Components");
+
+# loadings plot for 1st 2 PCs
+loadings_data <- as.data.frame(pca_varimax$loadings[1:16, ]);
+loadings_data$BLP_var <- c("L1 History","L2 History", "L3 History", "L4 History",
+                           "L1 Use","L2 Use","L3 Use","L4 Use",
+                           "L1 Proficiency","L2 Proficiency","L3 Proficiency","L4 Proficiency",
+                           "L1 Attitude","L2 Attitude","L3 Attitude","L4 Attitude");
+loadings_data$lang <- c(rep(c("L1","L2","L3","L4"),times=4));
+loadingsPC1PC9_plt <- ggplot(loadings_data, aes(x=RC1, y=RC9)) +
+  geom_point(size=4,colour=c(rep(c(cols2[100],cols2[310],cols2[200],cols2[285]),times=4))) +
+  geom_text_repel(aes(label=rownames(loadings_data)),vjust=2,family="CMU Serif",
+                  position=position_dodge(width=0.01),force=2,size=20,
+                  colour=c(rep(c(cols2[100],cols2[310],cols2[200],cols2[285]),times=4))) +
+  labs(title="PCA Loadings Plot (PC1 vs PC9)",x="PC1 (L3)",y="PC9 (L4)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),legend.position="none",
+        legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsplt.png",loadingsPC1PC9_plt,path=output_folder,
+       width=10,height=7,device="png");
+
+# PC1
+loadings_PC1  <- ggplot(loadings_data, aes(x=BLP_var, y=RC1, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC1 - L3)",y="PC1 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsPC1.png",loadings_PC1,path=output_folder,
+       width=10,height=7,device="png");
+
+# PC9
+loadings_PC9  <- ggplot(loadings_data, aes(x=BLP_var, y=RC9, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC9 - L4)",y="PC9 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsPC9.png",loadings_PC9,path=output_folder,
+       width=10,height=7,device="png");
+
+# PC2
+loadings_PC2  <- ggplot(loadings_data, aes(x=BLP_var, y=RC2, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC2 - L1 Use vs L2 Use)",y="PC2 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsPC2.png",loadings_PC2,path=output_folder,
+       width=10,height=7,device="png");
+
+# PC8
+loadings_PC8  <- ggplot(loadings_data, aes(x=BLP_var, y=RC8, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC8 - L2 History)",y="PC8 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsPC8.png",loadings_PC8,path=output_folder,
+       width=10,height=7,device="png");
+
+# PC3
+loadings_PC3  <- ggplot(loadings_data, aes(x=BLP_var, y=RC3, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC3 - L2 Proficiency)",y="PC3 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_loadingsPC3.png",loadings_PC3,path=output_folder,
+       width=10,height=7,device="png");
+
+# Cluster plot of 1st 2 PCs
+cluster_data <- data.frame(pca_varimax$scores[, 1:2]);
+colnames(cluster_data) <- c("PC1", "PC9");
+ggplot(cluster_data, aes(x = PC1, y = PC9)) +
+  geom_point() +
+  labs(title = "PCA Cluster Plot (First Two PCs)", x = "Principal Component 1", y = "Principal Component 9") +
+  theme_minimal();
 
 
 ## Multilingual scores ===============================================
@@ -823,7 +1073,11 @@ for (i in 1:193) {
   multiexp <- sum(temp_scores);
   
   # L1 - L2 score
-  L1L2 <- abs(temp_scores[[1]]-temp_scores[[2]]);
+  if (temp_scores[[2]] > 0) {
+    L1L2 <- abs(temp_scores[[1]]-temp_scores[[2]]);
+  } else {
+    L1L2 <- NA;
+  };
   
   multilingual_metrics <- rbind(multilingual_metrics, 
                                 list(sbj_ID,variance,entropy,use_entropy,multiexp,L1L2));
@@ -899,9 +1153,9 @@ var(data_BLP$multiexp);
 
 #L1_L2_diff
 summary(data_BLP$L1_L2_diff);
-#min=0.09, Q1=52, med=78, mean=76, Q3=97, Q4=208
-var(data_BLP$L1_L2_diff);
-#var = 1724
+#min=0.09, Q1=51, med=78, mean=74, Q3=97, Q4=169, NA:4
+var(data_BLP$L1_L2_diff[!is.na(data_BLP$L1_L2_diff)]);
+#var = 1429
 
 #cossim
 summary(data_BLP$cossim);
@@ -1112,7 +1366,7 @@ export_output(model=lm_category,name="Exp. 1 `Yes' responses - Category",
 
 
 ## 2M accuracy LMERs =================================================
-lm_2M <- glmer(observed ~ scale(trialn) + expected + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M <- glmer(observed ~ scale(trialn) + expected + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M);
 effect_2M <- as.data.frame(effect('expected',lm_2M,confint=list(alpha=.95)),
                            xlevels = list(expected=c(0,1)));
@@ -1121,7 +1375,7 @@ export_output(model=lm_2M,name="Exp. 1 2M",
               pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_Gender); 
 # Gender non sig as main effect (Other p=0.37; Woman p=0.44); 
 # expected:Gender non sig (Other p=0.25; Womanp=0.37)
@@ -1129,7 +1383,7 @@ export_output(model=lm_2M_Gender,name="Exp. 1 2M - Gender",
               pred_levels=c('Man','Other','Woman'),pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_Age); 
 # Age non sig as main effect (p=0.43)
 # expected:Age non sig (p=0.50)
@@ -1137,7 +1391,7 @@ export_output(model=lm_2M_Age,name="Exp. 1 2M - Age",
               pred_levels=c('scale(Age)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_RC1); 
 # RC1 non sig as main effect (p=0.64)
 # expected:RC1 non sig (p=0.73)
@@ -1145,7 +1399,7 @@ export_output(model=lm_2M_RC1,name="Exp. 1 2M - PC1 (L3)",
               pred_levels=c('PC1_L3'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_RC9); 
 # RC9 non sig as main effect (p=0.51)
 # expected:RC9 non sig (p=0.51)
@@ -1153,7 +1407,7 @@ export_output(model=lm_2M_RC9,name="Exp. 1 2M - PC9 (L4)",
               pred_levels=c('PC9_L4'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_RC2); 
 # RC2 non sig as main effect (p=0.16)
 # expected:RC2 non sig (p=0.96)
@@ -1161,7 +1415,7 @@ export_output(model=lm_2M_RC2,name="Exp. 1 2M - PC2 (L1 vs L2 Use)",
               pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC8 <- glmer(observed ~ scale(trialn) + expected*RC8_hist_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_RC8 <- glmer(observed ~ scale(trialn) + expected*RC8_hist_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_RC8); 
 # RC8 sig as main effect (p=0.049)
 # expected:RC8 non sig (p=0.83)
@@ -1169,7 +1423,7 @@ export_output(model=lm_2M_RC8,name="Exp. 1 2M - PC8 (L2 History)",
               pred_levels=c('PC8_L2_History'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_prof_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_prof_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_RC3); 
 # RC3 sig as main effect (p=0.02)
 # expected:RC3 marg. sig (p=0.08)
@@ -1177,7 +1431,7 @@ export_output(model=lm_2M_RC3,name="Exp. 1 2M - PC3 (L2 Proficiency)",
               pred_levels=c('PC3_L2_Proficiency'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*ent + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*ent + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_ent); 
 # ent non sig as main effect (p=0.15)
 # expected:ent non sig(p=0.92)
@@ -1185,12 +1439,12 @@ export_output(model=lm_2M_ent,name="Exp. 1 2M - Multilingual balance (Entropy)",
               pred_levels=c('Entropy'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*use_ent + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*use_ent + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_use_ent); 
 # use_ent non sig as main effect (p=0.17)
 # expected:use_ent non sig (p=0.64)
 
-lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multiexp) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multiexp) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_multiexp); 
 # multiexp non sig as main effect (p=0.17)
 # expected:multiexp non sig (p=0.79)
@@ -1198,7 +1452,7 @@ export_output(model=lm_2M_multiexp,name="Exp. 1 2M - Multilingual experience",
               pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_L1L2diff); 
 # L1L2diff sig as main effect (p=0.03)
 # expected:L1L2diff non sig (p=0.66)
@@ -1206,7 +1460,7 @@ export_output(model=lm_2M_L1L2diff,name="Exp. 1 2M - Bilingual Balance (L1-L2 di
               pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_cossim); 
 # cossim non sig as main effect (p=0.62)
 # expected:cossim non sig (0.19)
@@ -1214,12 +1468,12 @@ export_output(model=lm_2M_cossim,name="Exp. 1 2M - Multilingual balance (cosine 
               pred_levels=c('scale(Cosine similarity)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_use_cossim <- glmer(observed ~ scale(trialn) + expected*scale(use_cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_use_cossim <- glmer(observed ~ scale(trialn) + expected*scale(use_cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_use_cossim); 
 # use_cossim non sig as main effect (p=0.84)
 # expected:use_cossim non sig (p=0.54)
 
-lm_2M_script <- glmer(observed ~ scale(trialn) + expected*script + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_script <- glmer(observed ~ scale(trialn) + expected*script + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_script); 
 # script non sig as main effect (p=25)
 # expected:script marg. sig (p=0.59)
@@ -1227,7 +1481,7 @@ export_output(model=lm_2M_script,name="Exp. 1 2M - Script",
               pred_levels=c('Same script','Different script'),pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_category <- glmer(observed ~ expected*category + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M',], family='binomial');
+lm_2M_category <- glmer(observed ~ expected*category + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
 summary(lm_2M_category); 
 # category sig as main effect (bi p=0.02;tri p=0.03; quadri p=0.03)
 # expected:category non sig (expected:bi p=0.66;expected:tri p=0.53; expected:quadri p=0.83)

@@ -1,21 +1,21 @@
-% latex table generated in R 4.4.1 by xtable 1.8-4 package
-% Wed Nov 12 12:18:47 2025
+% latex table generated in R 4.5.2 by xtable 1.8-4 package
+% Tue Dec 16 09:08:25 2025
 \begin{tabularx}{\linewidth}{{@{} >{\RaggedRight}X*{5}{c}@{}}}
    \midrule
 \multicolumn{5}{c}{\textbf{Exp. 2 2M - Bilingual Balance (L1-L2 difference)}} \\ 
-  \multicolumn{5}{C{15cm}}{observed$\sim$scale(trialn)+expected*scale(L1_L2_diff)+(1+expected\textbar sbj_ID)} \\ 
+  \multicolumn{5}{C{15cm}}{participant response$\sim$scale(trialn)+string nature*scale(L1_L2_diff)+(1+string nature\textbar sbj_ID)} \\ 
    \midrule
 \textbf{Random effects} &  & \textbf{Variance} & \textbf{SD} & \textbf{Corr} \\ 
    \midrule
- & (Intercept) & 0.36 & 0.6 &  \\ 
-   & within_language & 0.04 & 0.2 & -0.49 \\ 
+ & (Intercept) & 0.32 & 0.56 &  \\ 
+   & within_language & 0 & 0.01 & -1 \\ 
    \midrule
 \textbf{Fixed effects} & $\boldsymbol\beta$ & \textbf{SE} & \textbf{z-value} & \textbf{p-value} \\ 
    \midrule
-(Intercept) & 0.61 & 0.06 & 10.62 & 2.3e-26  (***) \\ 
-  scale(trialn) & -0.12 & 0.03 & -4.86 & 1.2e-06  (***) \\ 
-  within_language & -0.05 & 0.05 & -0.93 & 0.35  \\ 
-  scale(L1-L2 difference) & -0.13 & 0.06 & -2.25 & 0.02  (*) \\ 
-  within_language*scale(L1-L2 difference) & -0.02 & 0.05 & -0.44 & 0.66  \\ 
+(Intercept) & 0.66 & 0.06 & 10.94 & 7.1e-28  (***) \\ 
+  scale(trialn) & -0.12 & 0.03 & -4.24 & 2.2e-05  (***) \\ 
+  within_language & -0.01 & 0.06 & -0.26 & 0.79  \\ 
+  scale(L1-L2 difference) & -0.22 & 0.06 & -3.72 & 2.0e-04  (***) \\ 
+  within_language*scale(L1-L2 difference) & 0.1 & 0.06 & 1.76 & 0.08  (.) \\ 
    \midrule
 \end{tabularx}

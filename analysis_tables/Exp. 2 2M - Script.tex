@@ -1,21 +1,16 @@
-% latex table generated in R 4.4.1 by xtable 1.8-4 package
-% Wed Nov 12 12:19:16 2025
+% latex table generated in R 4.5.2 by xtable 1.8-4 package
+% Thu Nov 27 11:26:50 2025
 \begin{tabularx}{\linewidth}{{@{} >{\RaggedRight}X*{5}{c}@{}}}
    \midrule
 \multicolumn{5}{c}{\textbf{Exp. 2 2M - Script}} \\ 
-  \multicolumn{5}{C{15cm}}{observed$\sim$scale(trialn)+expected*script+(1+expected\textbar sbj_ID)} \\ 
-   \midrule
-\textbf{Random effects} &  & \textbf{Variance} & \textbf{SD} & \textbf{Corr} \\ 
-   \midrule
- & (Intercept) & 0.37 & 0.61 &  \\ 
-   & within_language & 0.02 & 0.15 & -0.58 \\ 
+  \multicolumn{5}{C{15cm}}{participant response$\sim$scale(trialn)+string nature*script+(1\textbar sbj_ID)} \\ 
    \midrule
 \textbf{Fixed effects} & $\boldsymbol\beta$ & \textbf{SE} & \textbf{z-value} & \textbf{p-value} \\ 
    \midrule
-(Intercept) & 0.61 & 0.06 & 9.71 & 2.9e-22  (***) \\ 
-  scale(trialn) & -0.12 & 0.03 & -4.84 & 1.3e-06  (***) \\ 
-  within_language & -0.1 & 0.06 & -1.85 & 0.06  (.) \\ 
-  Different script & -0.02 & 0.16 & -0.14 & 0.89  \\ 
-  within_language*Different script & 0.36 & 0.14 & 2.47 & 0.01  (*) \\ 
+(Intercept) & 0.64 & 0.06 & 10.47 & 1.1e-25  (***) \\ 
+  scale(trialn) & -0.11 & 0.03 & -4.23 & 2.3e-05  (***) \\ 
+  within_language & -0.1 & 0.06 & -1.68 & 0.09  (.) \\ 
+  Different script & 0.06 & 0.16 & 0.39 & 0.7  \\ 
+  within_language*Different script & 0.32 & 0.15 & 2.12 & 0.03  (*) \\ 
    \midrule
 \end{tabularx}
