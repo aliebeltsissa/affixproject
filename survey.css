@@ -67,8 +67,9 @@ label:hover {
 }
 
 input[type="radio"]:checked + label {
-  background-color: #486DA5;
-  font-size: 40px
+  background-color: #286e41;
+  color: #ffffff;
+  font-size: 30px
 }
 
 input[type="radio"]:invalid + label {
