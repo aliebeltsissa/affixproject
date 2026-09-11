@@ -30,6 +30,7 @@ library(data.tree);
 library(ape);
 library(ggtreeExtra);
 library(ggrepel);
+library(pheatmap);
 
 # set global font
 par(family="CMU Serif");
@@ -61,8 +62,19 @@ dPrime <- function(sbj, expectedResp, observedResp)
     z_hits <- qnorm(prop_of_hits);
     z_fa <- qnorm(prop_of_fa); 
     dprimes[counter] <- round(z_hits - z_fa, digits = 3);
-    log_beta[counter] <- round((z_fa^2 - z_hits^2)/2, digits = 3); #this is taken from Stanislaw and Todorov, PBR 1999. Log_beta=0 indicates no bias; negative values is bias for YES; positive values is bias for NO
-    c[counter] <- round( -(z_hits + z_fa)/2, digits = 3); # this is taken again from Stanislaw and Todorov, PBR 1999, who note that c "...assumes that subjects respond yes when the decision variable exceeds the criterion and no otherwise; responses are based directly on the decision variable, which some researchers regard as more plausible than assuming that responses are based on a likelihood ratio [which the assumption behind beta] (Richardson, 1994). Another advantage of c is that it is unaffected by changes in d', whereas Beta is (Ingham, 1970; Macmil- lan, 1993; McNicol, 1972, pp. 63--64)". Similarly to log_beta, c=0 is no bias, negative c is bias for YES, negative c is bias for NO.
+    log_beta[counter] <- round((z_fa^2 - z_hits^2)/2, digits = 3); 
+    #this is taken from Stanislaw and Todorov, PBR 1999. Log_beta=0 indicates no bias; 
+    # negative values is bias for YES; positive values is bias for NO
+    c[counter] <- round( -(z_hits + z_fa)/2, digits = 3); 
+    # this is taken again from Stanislaw and Todorov, PBR 1999, who note that c 
+    # "...assumes that subjects respond yes when the decision variable exceeds 
+    # the criterion and no otherwise; responses are based directly on the decision 
+    # variable, which some researchers regard as more plausible than assuming 
+    # that responses are based on a likelihood ratio [which the assumption behind 
+    # beta] (Richardson, 1994). Another advantage of c is that it is unaffected 
+    # by changes in d', whereas Beta is (Ingham, 1970; Macmil- lan, 1993; 
+    # McNicol, 1972, pp. 63--64)". Similarly to log_beta, c=0 is no bias, 
+    # negative c is bias for YES, negative c is bias for NO.
     subjects[counter] <- s;
     counter <- counter + 1;
   };
@@ -81,7 +93,8 @@ round2 = function(x, digits) {
 export_output = function(model,name,pred_levels,
                          pred_type=c("categorical","continuous"),outcome_levels,
                          interaction=TRUE) {
-  if (is.null(pred_type) || !length(pred_type) || !all(pred_type %in% c("categorical","continuous"))) {
+  if (is.null(pred_type) || !length(pred_type) || 
+      !all(pred_type %in% c("categorical","continuous"))) {
     stop("'Predictor type' argument must be one of: 'categorical','continuous'")
   }
   
@@ -268,8 +281,104 @@ setwd("C:/Users/annal/Documents/GitHub/affixproject");
 output_folder <- "C:/Users/annal/Documents/Me/SISSA/BASL/BASL analysis/exp1";
 
 # set participant IDs
-participants <- list("5aa787c66219a30001c765f8","5ae5db897edeb000014a85ee","5b212164cfbf200001cfb3ad","5b213220809d160001a2c36d","5bcd11401662020001fe82c1","5c19254b0b9f6b00014769ee","5c1bfabab0fcc900019d9ff4","5caccaed2f93d700157b4782","5cbe02ab39447e0001745a5e","5cefe8856e0eec00015971dd","5d9a125f1714540016a40a27","5dab6e7d80e1780016d5bc9b","5dcb33ab0550ef819f508abf","5e12048c7605fe8839180a14","5e283f8ad48ecf000ddd0724","5e2c6968e97bec29709a53c6","5e3ff59bf2160b23942ada93","5e42b6421f44d3143440b25c","5e42f03607b468000d8eb912","5e433ed3393e971e19f4735d","5e577e79ce30ae13226e61ae","5e6d3324f14d262fced5bbfe","5e87b28549538b0fdf96b318","5e89e89bf025be000c01eead","5e8b66490d48450346bf2755","5e8c57d9b4483e012006e7aa","5e8e55509422bb10abed1f54","5e9bd025eb6b380e1d66d04c","5ea171c1a8782801263e7540","5ea9611edec14d052ada0bae","5ea9cd383b32cf15448a86ac","5eaae42f19a24d05cbd6ccb4","5eaf1c50f3540c614eb973a5","5eb35dff41a381156be161c2","5eb71c59c55b3b0ce571ae7c","5ebc0c153f8b2e04d3833423","5ec12ed7a66dbf01c7d740c1","5ec1c01a8ccaaa5ec0080c91","5ec6d06c67b0da0fb6f85e83","5ecbb4c00bc62403dae2df59","5ecd21dec04cca02c9032485","5ed013f88fce6e0d858b732e","5ee623674afa60375e30eec3","5ee83da8817af0000d47448f","5ee942381a22491bbb7170f8","5eef3de3fb4e031bf546d887","5efd2964d36f63162f263795","5f0471a92ec97b6d1aec7739","5f09d989eff16b266fba44c0","5f0d65ef2ad0c60009209f0f","5f0f93938935de000855898b","5f11c9f84078cd0888177499","5f18a80367ef6b0bbc5f3720","5f19fa0f3e85b20d0336258c","5f1e8dc7e2161c86cdcd220a","5f219602670e5a0af2cf5237","5f33289c1fe9181376ee67d9","5f33c58329beab1f63c0dfaa","5f350f459bf003464a03ea5e","5f47e34858dd331165bf9f00","5f5a713d37f71112463ab4d9","5f5e7de4c81d3672642cd612","5f6cd5ce1758e90f12ae1123","5f708f5f0d32bb66960d4473","5f784f5b98f4963cdf902340","5f7bd801486f5e1ce581980f","5f858743256d25036d9fa693","5f91dc284909fe0b08f9e2e1","5f99cee5a2a7d109a1624e10","5fa4258658811d03fbc6ce8b","5fa4725a186c050edc3bcc20","5fa5793490f10705755818c0","5fa59d4d5a29c90da975efe9","5fc2d2d79da439201ab6addc","5fc44d83862e3e79b02e0438","5fc781689771f106330abf6a","5fd2416e5061f30735e202e9","5fd69a0014c3b25ee539f66b","5fd9c5c67fa7c74ec42bb318","5fdbf74c5474cd11e39eeaf3","5fe2308a91773957e88b89be","600e0dadada7da69afc5b3de","600f0f9c3bfcdc077c924e51","60123adc24c9f126819861b6","601705a0246e51313e8ed38e","601951245f481e000980504f","601b5c79e845ac360826c9df","601ffb441dc6d959b855eea5","602bb123612bfe330818d4ef","6042a56575ab0c1ccffc3152","60491025dd8eb31e48a0ca8d","60536ffae4f98513b671f482","605aa0bb5fb71bbcf0808892","60645fe61129208791535d15","6065d7d47409810344f7e6bb","60664619eac28843177fee96","60670ac0fc7e169231369ab1","606dc21c1ce7dc64af9d81fb","6074768dc48e0753011d3d72","607ea5504e74d104da5a108a","60883a7e91c0be66dbb96fc8","608858869a591bd129fbbc6c","608c2e566d92c2aa3543e2d2","608c64e14968cdd8dcbe1be4","6092e2aac56871319199b6a5","6093cacf9a39751eedd55916","60957b300f08087b0af0031c","60a3fe2d888e7a090d6d8f82","60a68725b2b424dc0d7ce793","60b7b8126c0c4524e913236e","60bbe0da43325dadf2b1b6a9","60c49e68081928c86ba7b98a","60d478e72e8251287b641b2d","60d7605d7af8d66774061717","60db4aed5dd7b87124f51341","60dee3200c7c3355c62326d9","60e12640be1b69b66053d55b","60e3b18d3d4205b4c52ada56","60e9ea97d19e613e60a994da","60eb26fb8db6845a14fe5a91","60ec51c51a3158a50ded8a3e","60edd136d544e7c8f5fac8a7","60f030dca19a06db1b50d16a","60f56f0103876eae7c0d870f","60f579085ebf24f9c80f223e","60f6b8f8e574e14634ead43e","60f88d7fef1959734061e5a7","60fd0f49858465796afd5da9","6100174f92a7a0e5141b195e","61001b6892ebd05a24fe82e1","61055020201a7da5a704f7dd","6107d788163252e3b5c348e3","610834993bac40f050062896","610958b8473c7b96e4bd207d","610a52647a452dee7ca89360","610d2275ba5f1ee0fdcee3e8","610f2eabb45be8717fc155e0","61125e23136464bd2cbbefc9","61143bd22a1649da3b52ae32","611bdb0fed7c9df6dce28c3f","611cebb780fbae98c5bcc84d","611dc53f0098557586e89b17","611e7d1295185bf6f56fd951","611e9c16e90a0d4c6f0d8df5","611eafa6011b0423f7d7230f",
-                     "611eeafa283a2d1f57537fea","6120211d8e1eab16fcb7ad69","6122966a93af160af481836c","6124a4ba3df07e768bd9c90b","61275a3158c67415afb971ff","612a98181f4b6d1cf01f926c","61301fcb49db2f170cb02b93","6131f7010e926c9103558040","613867f34e206e4f573bc6ef","613a73d06cf1fcfef304d3fa","613ab1e64acd61ebd0a7116d","613f57084e80f056c78f9b7b","6140f1c4ead758f1b72bbe2f","6140ff9c5750f0081ca8d71f","6144742e57a61e489cc9e978","6147aed5b2a4f748dc2b6ba4","614b323022fcd8b7408005a6","614c80483d06dcf7ad552679","614c8e5469405530dc27b9d5","614dd6473c74b217ad73cc9c","61520b079436973e05f72d33","61548fa2b637194e04c9bc09","6155e204cc071b306458dfff","6156a440279fdf408ee663ae","6156b68cc77b48d6693b361c","615b042301e3a24311563ee4","615b1ab789b14c9996251fb4","615b41767003d4ece749ed9d","615da9ee365ab7d547b98979","615f371e6688c87e53e7acf5","61616ce2bb94584e11c911af","6163faf9d9ac4586fe776568","616494f1ae4537c01914c758","616631efeeac0979c1ba85a9","616891e25a026e1f7262116c","616eb493bb7e4ab4fa1de8d4","6170821d1e8ffb9c893b28a4","6171349b89a54d4823f9eca1","617142c2a843eef6f8f148b6","6171d922c871ba795b6a4827","6172078b966225960be2a7b5","617679054948369cb824d837","63ee5d8aaee278de46b7d4cc","6455490f7c5f35e4221a810a","64764d56699f097a96ec6e5c","64973d83e4fc64d6ae59c370","64a288758b7c82ff2d18da75","64ef422a4789bd6b6b9042ce","65032a60861e9a17bc1a7444","65089e7ce53888b0b3840c62","650aee87054446f772acdfcc");
+participants <- list("5aa787c66219a30001c765f8","5ae5db897edeb000014a85ee",
+                     "5b212164cfbf200001cfb3ad","5b213220809d160001a2c36d",
+                     "5bcd11401662020001fe82c1","5c19254b0b9f6b00014769ee",
+                     "5c1bfabab0fcc900019d9ff4","5caccaed2f93d700157b4782",
+                     "5cbe02ab39447e0001745a5e","5cefe8856e0eec00015971dd",
+                     "5d9a125f1714540016a40a27","5dab6e7d80e1780016d5bc9b",
+                     "5dcb33ab0550ef819f508abf","5e12048c7605fe8839180a14",
+                     "5e283f8ad48ecf000ddd0724","5e2c6968e97bec29709a53c6",
+                     "5e3ff59bf2160b23942ada93","5e42b6421f44d3143440b25c",
+                     "5e42f03607b468000d8eb912","5e433ed3393e971e19f4735d",
+                     "5e577e79ce30ae13226e61ae","5e6d3324f14d262fced5bbfe",
+                     "5e87b28549538b0fdf96b318","5e89e89bf025be000c01eead",
+                     "5e8b66490d48450346bf2755","5e8c57d9b4483e012006e7aa",
+                     "5e8e55509422bb10abed1f54","5e9bd025eb6b380e1d66d04c",
+                     "5ea171c1a8782801263e7540","5ea9611edec14d052ada0bae",
+                     "5ea9cd383b32cf15448a86ac","5eaae42f19a24d05cbd6ccb4",
+                     "5eaf1c50f3540c614eb973a5","5eb35dff41a381156be161c2",
+                     "5eb71c59c55b3b0ce571ae7c","5ebc0c153f8b2e04d3833423",
+                     "5ec12ed7a66dbf01c7d740c1","5ec1c01a8ccaaa5ec0080c91",
+                     "5ec6d06c67b0da0fb6f85e83","5ecbb4c00bc62403dae2df59",
+                     "5ecd21dec04cca02c9032485","5ed013f88fce6e0d858b732e",
+                     "5ee623674afa60375e30eec3","5ee83da8817af0000d47448f",
+                     "5ee942381a22491bbb7170f8","5eef3de3fb4e031bf546d887",
+                     "5efd2964d36f63162f263795","5f0471a92ec97b6d1aec7739",
+                     "5f09d989eff16b266fba44c0","5f0d65ef2ad0c60009209f0f",
+                     "5f0f93938935de000855898b","5f11c9f84078cd0888177499",
+                     "5f18a80367ef6b0bbc5f3720","5f19fa0f3e85b20d0336258c",
+                     "5f1e8dc7e2161c86cdcd220a","5f219602670e5a0af2cf5237",
+                     "5f33289c1fe9181376ee67d9","5f33c58329beab1f63c0dfaa",
+                     "5f350f459bf003464a03ea5e","5f47e34858dd331165bf9f00",
+                     "5f5a713d37f71112463ab4d9","5f5e7de4c81d3672642cd612",
+                     "5f6cd5ce1758e90f12ae1123","5f708f5f0d32bb66960d4473",
+                     "5f784f5b98f4963cdf902340","5f7bd801486f5e1ce581980f",
+                     "5f858743256d25036d9fa693","5f91dc284909fe0b08f9e2e1",
+                     "5f99cee5a2a7d109a1624e10","5fa4258658811d03fbc6ce8b",
+                     "5fa4725a186c050edc3bcc20","5fa5793490f10705755818c0",
+                     "5fa59d4d5a29c90da975efe9","5fc2d2d79da439201ab6addc",
+                     "5fc44d83862e3e79b02e0438","5fc781689771f106330abf6a",
+                     "5fd2416e5061f30735e202e9","5fd69a0014c3b25ee539f66b",
+                     "5fd9c5c67fa7c74ec42bb318","5fdbf74c5474cd11e39eeaf3",
+                     "5fe2308a91773957e88b89be","600e0dadada7da69afc5b3de",
+                     "600f0f9c3bfcdc077c924e51","60123adc24c9f126819861b6",
+                     "601705a0246e51313e8ed38e","601951245f481e000980504f",
+                     "601b5c79e845ac360826c9df","601ffb441dc6d959b855eea5",
+                     "602bb123612bfe330818d4ef","6042a56575ab0c1ccffc3152",
+                     "60491025dd8eb31e48a0ca8d","60536ffae4f98513b671f482",
+                     "605aa0bb5fb71bbcf0808892","60645fe61129208791535d15",
+                     "6065d7d47409810344f7e6bb","60664619eac28843177fee96",
+                     "60670ac0fc7e169231369ab1","606dc21c1ce7dc64af9d81fb",
+                     "6074768dc48e0753011d3d72","607ea5504e74d104da5a108a",
+                     "60883a7e91c0be66dbb96fc8","608858869a591bd129fbbc6c",
+                     "608c2e566d92c2aa3543e2d2","608c64e14968cdd8dcbe1be4",
+                     "6092e2aac56871319199b6a5","6093cacf9a39751eedd55916",
+                     "60957b300f08087b0af0031c","60a3fe2d888e7a090d6d8f82",
+                     "60a68725b2b424dc0d7ce793","60b7b8126c0c4524e913236e",
+                     "60bbe0da43325dadf2b1b6a9","60c49e68081928c86ba7b98a",
+                     "60d478e72e8251287b641b2d","60d7605d7af8d66774061717",
+                     "60db4aed5dd7b87124f51341","60dee3200c7c3355c62326d9",
+                     "60e12640be1b69b66053d55b","60e3b18d3d4205b4c52ada56",
+                     "60e9ea97d19e613e60a994da","60eb26fb8db6845a14fe5a91",
+                     "60ec51c51a3158a50ded8a3e","60edd136d544e7c8f5fac8a7",
+                     "60f030dca19a06db1b50d16a","60f56f0103876eae7c0d870f",
+                     "60f579085ebf24f9c80f223e","60f6b8f8e574e14634ead43e",
+                     "60f88d7fef1959734061e5a7","60fd0f49858465796afd5da9",
+                     "6100174f92a7a0e5141b195e","61001b6892ebd05a24fe82e1",
+                     "61055020201a7da5a704f7dd","6107d788163252e3b5c348e3",
+                     "610834993bac40f050062896","610958b8473c7b96e4bd207d",
+                     "610a52647a452dee7ca89360","610d2275ba5f1ee0fdcee3e8",
+                     "610f2eabb45be8717fc155e0","61125e23136464bd2cbbefc9",
+                     "61143bd22a1649da3b52ae32","611bdb0fed7c9df6dce28c3f",
+                     "611cebb780fbae98c5bcc84d","611dc53f0098557586e89b17",
+                     "611e7d1295185bf6f56fd951","611e9c16e90a0d4c6f0d8df5",
+                     "611eafa6011b0423f7d7230f","611eeafa283a2d1f57537fea",
+                     "6120211d8e1eab16fcb7ad69","6122966a93af160af481836c",
+                     "6124a4ba3df07e768bd9c90b","61275a3158c67415afb971ff",
+                     "612a98181f4b6d1cf01f926c","61301fcb49db2f170cb02b93",
+                     "6131f7010e926c9103558040","613867f34e206e4f573bc6ef",
+                     "613a73d06cf1fcfef304d3fa","613ab1e64acd61ebd0a7116d",
+                     "613f57084e80f056c78f9b7b","6140f1c4ead758f1b72bbe2f",
+                     "6140ff9c5750f0081ca8d71f","6144742e57a61e489cc9e978",
+                     "6147aed5b2a4f748dc2b6ba4","614b323022fcd8b7408005a6",
+                     "614c80483d06dcf7ad552679","614c8e5469405530dc27b9d5",
+                     "614dd6473c74b217ad73cc9c","61520b079436973e05f72d33",
+                     "61548fa2b637194e04c9bc09","6155e204cc071b306458dfff",
+                     "6156a440279fdf408ee663ae","6156b68cc77b48d6693b361c",
+                     "615b042301e3a24311563ee4","615b1ab789b14c9996251fb4",
+                     "615b41767003d4ece749ed9d","615da9ee365ab7d547b98979",
+                     "615f371e6688c87e53e7acf5","61616ce2bb94584e11c911af",
+                     "6163faf9d9ac4586fe776568","616494f1ae4537c01914c758",
+                     "616631efeeac0979c1ba85a9","616891e25a026e1f7262116c",
+                     "616eb493bb7e4ab4fa1de8d4","6170821d1e8ffb9c893b28a4",
+                     "6171349b89a54d4823f9eca1","617142c2a843eef6f8f148b6",
+                     "6171d922c871ba795b6a4827","6172078b966225960be2a7b5",
+                     "617679054948369cb824d837","63ee5d8aaee278de46b7d4cc",
+                     "6455490f7c5f35e4221a810a","64764d56699f097a96ec6e5c",
+                     "64973d83e4fc64d6ae59c370","64a288758b7c82ff2d18da75",
+                     "64ef422a4789bd6b6b9042ce","65032a60861e9a17bc1a7444",
+                     "65089e7ce53888b0b3840c62","650aee87054446f772acdfcc");
 
 
 # TESTING ------------------------------------------------------------
@@ -284,6 +393,7 @@ data_testing$task <- as.factor(data_testing$task);
 data_testing$item <- as.factor(data_testing$item);
 data_testing$testing_condition <- as.factor(data_testing$testing_condition);
 data_testing$correct <- as.logical(data_testing$correct);
+data_testing$familiar_morph <- as.factor(data_testing$familiar_morph);
 
 # change coding: 0 into 'within_lang' and 1 into 'between_lang'
 data_expected <- replace(data_testing$expected, data_testing$expected == 0, 'within_lang');
@@ -303,14 +413,19 @@ data_testing <- data_testing[!data_testing$sbj_ID %in% c('615b41767003d4ece749ed
 ## testing RTs =======================================================
 IDs <- list(data_testing$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),xlim=c(0,2200),ylim=c(0,0.01),xlab="RTs (ms)",main="",xaxt = "n",col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
+plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),
+     xlim=c(0,2200),ylim=c(0,0.01),xlab="RTs (ms)",main="",xaxt = "n",
+     col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
 axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
 for (x in 2:195) {
-  lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x+26],lwd=1)
+  lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),
+        col=cols2[x+26],lwd=1)
 }; # good, centered around 800ms
-data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
+data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), 
+                                   FUN=mean, na.rm=TRUE);
 summary(data_testing_rt_means$x); # good med & mean
-plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750))
+plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",
+     xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750));
 # looks healthy overall
 
 ## problematic participant RTs ##
@@ -335,6 +450,8 @@ summary(data_testing_rt_means$x);
 # due to technical issue: n(0M)=40, n(1M)=37, n(2M)=34
 total_0M <- 40;
 total_1M <- 37;
+total_1M_affixes <- 18;
+total_1M_stems <- 19;
 total_2M <- 34;
 
 # yes responses globally
@@ -346,7 +463,10 @@ summary(mean_yes$yes);
 
 ### 0M responses #####################################################
 # 0M "YES" boxplot
-data_testing_0M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='0M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), FUN = function(x) sum(x == 'within_lang'));
+data_testing_0M_yes <- aggregate(data_testing$observed[
+  data_testing$testing_condition=='0M'], 
+  by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), 
+  FUN = function(x) sum(x == 'within_lang'));
 names(data_testing_0M_yes) <- c("sbj_ID","yes_0M");
 data_testing_0M_yes$yes_0M <- data_testing_0M_yes$yes_0M/total_0M*100; #transform into percent
 summary(data_testing_0M_yes$yes_0M);
@@ -358,7 +478,9 @@ data_testing <- merge(data_testing,data_testing_0M_yes,by="sbj_ID");
 
 ### 1M responses #####################################################
 # 1M "YES" boxplot
-data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), FUN = function(x) sum(x == 'within_lang'));
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], 
+                                 by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), 
+                                 FUN = function(x) sum(x == 'within_lang'));
 names(data_testing_1M_yes) <- c("sbj_ID","yes_1M");
 data_testing_1M_yes$yes_1M <- data_testing_1M_yes$yes_1M/total_1M*100; #transform into percent
 summary(data_testing_1M_yes$yes_1M);
@@ -367,10 +489,52 @@ t.test(data_testing_1M_yes$yes_1M, mu=50);
 #t=4.94 p=1.69e-6 CI=[53.01;57.01] -> sig above chance
 data_testing <- merge(data_testing,data_testing_1M_yes,by="sbj_ID");
 
+# 1M "YES" BY FAMILIAR MORPHEME
+data_testing_1M_yes_bytype <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], 
+                                        by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M'],
+                                                data_testing$familiar_morph[data_testing$testing_condition=='1M']), 
+                                        FUN = function(x) sum(x == 'within_lang'));
+names(data_testing_1M_yes_bytype) <- c("sbj_ID","familiar_morph","yes_1M");
+
+data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='affix'] <- 
+  data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='affix']/
+  total_1M_affixes*100;
+
+data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='stem'] <- 
+  data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='stem']/
+  total_1M_stems*100;
+
+summary(data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='stem']);
+# min:5.26 Q1:47.37 med:57.90 mean:57.57 Q3:68.42 max:100 
+summary(data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='affix']);
+# min:11.11 Q1:44.44 med:50 mean:52.30 Q3:61.11 max:100
+
+fam_morph_plt <- ggplot(data_testing_1M_yes_bytype, aes(x=familiar_morph, y=yes_1M, color=familiar_morph)) +
+  geom_hline(yintercept=50, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black",size=2) +
+  labs(x = "1M test item", y = 'Percent of 1M "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80)) +
+  ylim(0,101) +
+  stat_summary(geom="point",fun="mean",col="red",size = 4,shape = 19) +
+  stat_summary(geom="errorbar",fun.data="mean_se",width=0.05,col="red",position=position_dodge(width=0.5)) +
+  scale_x_discrete(labels=c("string + affix", "stem + string"));
+ggsave("exp1_1M_fammorph.png",width=10,height=7,fam_morph_plt,path=output_folder,device="png");
+
+t.test(data_testing_1M_yes_bytype[data_testing_1M_yes_bytype$familiar_morph=='affix',]$yes_1M, mu=50);
+# t=1.86 df=192 p=0.06 CI=[49.86;54.74] est=52.30 (.)
+t.test(data_testing_1M_yes_bytype[data_testing_1M_yes_bytype$familiar_morph=='stem',]$yes_1M, mu=50);
+# t=6.13 df=192 p=4.92e-9 CI=[55.13;60.00] est=57.57 (***)
+
 
 ### 2M responses #####################################################
 # 2M "YES" boxplot
-data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN = function(x) sum(x == 'within_lang'));
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], 
+                                 by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), 
+                                 FUN = function(x) sum(x == 'within_lang'));
 names(data_testing_2M_yes) <- c("sbj_ID","yes_2M");
 data_testing_2M_yes$yes_2M <- data_testing_2M_yes$yes_2M/total_2M*100; #transform into percent
 summary(data_testing_2M_yes$yes_2M);
@@ -399,7 +563,8 @@ data_testing_2M_aggr <- data_testing_2M_aggr %>%
 
 data_testing_2M_aggr$response <- as.factor(data_testing_2M_aggr$response);
 
-plt_2M <- ggplot(data_testing_2M_aggr[ which(data_testing_2M_aggr$response=='meanYes'),], aes(x=expected, y=meanValue, fill=expected)) +
+plt_2M <- ggplot(data_testing_2M_aggr[ which(data_testing_2M_aggr$response=='meanYes'),], 
+                 aes(x=expected, y=meanValue, fill=expected)) +
   geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
   geom_violin(alpha=0.75,width=1) +
   geom_boxplot(width=0.1,position=position_dodge(width=1)) +
@@ -416,7 +581,9 @@ plt_2M <- ggplot(data_testing_2M_aggr[ which(data_testing_2M_aggr$response=='mea
 ggsave("exp1_2M_responses.png",width=10,height=7,plt_2M,path=output_folder,device="png");
 
 # 2M scores
-data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), FUN=mean, na.rm=TRUE);
+data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], 
+                                   list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), 
+                                   FUN=mean, na.rm=TRUE);
 names(data_testing_2M_means) <- c("sbj_ID","score_2M");
 par(mar=c(2,5,2,2));
 
@@ -437,12 +604,12 @@ ggsave("exp1_2Mscores.png",width=6,height=7,scores_2Mplt,path=output_folder,devi
  
 summary(data_testing_2M_means$score_2M);
 #min:0.26 Q1:0.44 med:0.50 mean:0.50 Q3:0.56 max:0.71
-var(data_testing_2M_means$score_2M); #var=0.006
+var(data_testing_2M_means$score_2M); #var=0.005
 plot(data_testing_2M_means$score_2M,pch=3,ylim=c(0,1));
 abline(h=0.5, lty=5); # clustered around chance
 hist(data_testing_2M_means$score_2M); # normally distributed
 t.test(data_testing_2M_means$score_2M, mu=0.50);
-#t=-0.83 p=0.41 CI=[0.48;0.51] df = 192 -> not sig different from chance
+#t=-0.64 p=0.53 df=192 CI=[0.49 ; 0.51] est=0.50 -> not sig different from chance
 data_testing <- merge(data_testing,data_testing_2M_means,by="sbj_ID");
 
 # d' computations
@@ -458,8 +625,8 @@ names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes2M);
 # mean(d') = -0.02, mean(c) = -0.37
 data_testing <- merge(data_testing,dprimes2M,by="sbj_ID");
-cor.test(data_testing$dprime,data_testing$c,method="pearson"); 
-# t = 21.60, df = 21421, p-value < 2.2e-16, CI=[0.13;0.16], est=0.15
+cor.test(dprimes2M$dprime,dprimes2M$c,method="pearson"); 
+# t=2.04 p=0.04 df=191 CI=[0.01 ; 0.28] est=0.15
 # significant positive moderate correlation
 # more "YES" responses helps you respond more accurately
 
@@ -491,8 +658,22 @@ yes_jitter <- ggplot(data_testing_conditions, aes(x = condition, y = score, colo
   scale_x_discrete(labels=c("0M", "1M", "2M"));
 ggsave("exp1_yes_allconditions_scatterplot.png",width=10,height=7,yes_jitter,path=output_folder,device="png");
 
+yes_violin <- ggplot(data_testing_conditions, aes(x=condition, y=score)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_violin(alpha=0.75,fill="lightgrey") +
+  geom_boxplot(width=0.1,fill="grey") +
+  scale_x_discrete(labels=c("0M", "1M", "2M")) +
+  labs(x="Condition",y='Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60));
+ggsave("exp1_yes_allconditions_violinplot.png",width=10,height=7,yes_violin,path=output_folder,device="png");
+
 # 2M accuracy*RTs
-cor.test(data_testing_2M_means$score_2M, data_testing_rt_means$x, method="pearson"); # r = 0.04 ()
+cor.test(data_testing_2M_means$score_2M, data_testing_rt_means$x, method="pearson");
+# t=0.55 df=191 p=0.58 CI=[-0.10;0.18] est=0.04
 
 # strategies used
 strats <- subset(data_testing, select = c(sbj_ID, strategy));
@@ -500,7 +681,19 @@ strats <- strats[!duplicated(strats),];
 write.csv(strats,"BASL_exp1_strats.csv", row.names = FALSE)
 
 # those having used chunks
-chunkID_strategists <- list('5caccaed2f93d700157b4782','5e577e79ce30ae13226e61ae','5e8c57d9b4483e012006e7aa','5eaae42f19a24d05cbd6ccb4','5ecbb4c00bc62403dae2df59','5ee942381a22491bbb7170f8','5f18a80367ef6b0bbc5f3720','5f5a713d37f71112463ab4d9','5fc2d2d79da439201ab6addc','600f0f9c3bfcdc077c924e51','60123adc24c9f126819861b6','601705a0246e51313e8ed38e','601ffb441dc6d959b855eea5','60491025dd8eb31e48a0ca8d','60664619eac28843177fee96','60db4aed5dd7b87124f51341','60f6b8f8e574e14634ead43e','60fd0f49858465796afd5da9','6144742e57a61e489cc9e978','61520b079436973e05f72d33','615b1ab789b14c9996251fb4','615da9ee365ab7d547b98979','616891e25a026e1f7262116c','63ee5d8aaee278de46b7d4cc','6455490f7c5f35e4221a810a');
+chunkID_strategists <- list('5caccaed2f93d700157b4782','5e577e79ce30ae13226e61ae',
+                            '5e8c57d9b4483e012006e7aa','5eaae42f19a24d05cbd6ccb4',
+                            '5ecbb4c00bc62403dae2df59','5ee942381a22491bbb7170f8',
+                            '5f18a80367ef6b0bbc5f3720','5f5a713d37f71112463ab4d9',
+                            '5fc2d2d79da439201ab6addc','600f0f9c3bfcdc077c924e51',
+                            '60123adc24c9f126819861b6','601705a0246e51313e8ed38e',
+                            '601ffb441dc6d959b855eea5','60491025dd8eb31e48a0ca8d',
+                            '60664619eac28843177fee96','60db4aed5dd7b87124f51341',
+                            '60f6b8f8e574e14634ead43e','60fd0f49858465796afd5da9',
+                            '6144742e57a61e489cc9e978','61520b079436973e05f72d33',
+                            '615b1ab789b14c9996251fb4','615da9ee365ab7d547b98979',
+                            '616891e25a026e1f7262116c','63ee5d8aaee278de46b7d4cc',
+                            '6455490f7c5f35e4221a810a');
 data_chunkIDstrategists <- data_testing[data_testing$sbj_ID %in% chunkID_strategists,];
 data_chunkIDstrategists <- data_chunkIDstrategists[data_chunkIDstrategists$testing_condition=='2M',];
 data_chunkIDstrategists <- data_chunkIDstrategists[!duplicated(data_chunkIDstrategists$sbj_ID), ];
@@ -511,7 +704,7 @@ t.test(data_chunkIDstrategists$score_2M, mu=0.50);
 #t=1.01 df=24 p=0.32 CI=[0.48;0.55] est=0.52 -> not sig different from chance
 summary(data_chunkIDstrategists$dprime);
 summary(data_chunkIDstrategists$c);
-# dprime:0.10 c:-0.34
+# dprime:0.10 c:-0.43
 
 scores_chunksplt <- ggplot(data_chunkIDstrategists, aes(x="", y=score_2M)) +
   geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
@@ -530,7 +723,46 @@ scores_chunksplt <- ggplot(data_chunkIDstrategists, aes(x="", y=score_2M)) +
 ggsave("exp1_2Mscores_chunks.png",width=6,height=7,scores_chunksplt,path=output_folder,device="png");
 
 # those having used their intuition
-intuition_strategists <- list('5aa787c66219a30001c765f8','5ae5db897edeb000014a85ee','5b213220809d160001a2c36d','5bcd11401662020001fe82c1','5c1bfabab0fcc900019d9ff4','5dab6e7d80e1780016d5bc9b','5dcb33ab0550ef819f508abf','5e12048c7605fe8839180a14','5e3ff59bf2160b23942ada93','5e89e89bf025be000c01eead','5e8e55509422bb10abed1f54','5e9bd025eb6b380e1d66d04c','5ea9611edec14d052ada0bae','5ea9cd383b32cf15448a86ac','5eaf1c50f3540c614eb973a5','5eb35dff41a381156be161c2','5ec6d06c67b0da0fb6f85e83','5ecd21dec04cca02c9032485','5ed013f88fce6e0d858b732e','5ee623674afa60375e30eec3','5ee83da8817af0000d47448f','5f0471a92ec97b6d1aec7739','5f0d65ef2ad0c60009209f0f','5f11c9f84078cd0888177499','5f18a80367ef6b0bbc5f3720','5f19fa0f3e85b20d0336258c','5f1e8dc7e2161c86cdcd220a','5f219602670e5a0af2cf5237','5f47e34858dd331165bf9f00','5f5e7de4c81d3672642cd612','5f708f5f0d32bb66960d4473','5f858743256d25036d9fa693','5f91dc284909fe0b08f9e2e1','5fa5793490f10705755818c0','5fa59d4d5a29c90da975efe9','5fc44d83862e3e79b02e0438','5fc781689771f106330abf6a','5fd2416e5061f30735e202e9','5fd9c5c67fa7c74ec42bb318','5fe2308a91773957e88b89be','600e0dadada7da69afc5b3de','6042a56575ab0c1ccffc3152','605aa0bb5fb71bbcf0808892','60645fe61129208791535d15','606dc21c1ce7dc64af9d81fb','608858869a591bd129fbbc6c','60957b300f08087b0af0031c','60a3fe2d888e7a090d6d8f82','60a68725b2b424dc0d7ce793','60bbe0da43325dadf2b1b6a9','60d7605d7af8d66774061717','60dee3200c7c3355c62326d9','60ec51c51a3158a50ded8a3e','60f030dca19a06db1b50d16a','6100174f92a7a0e5141b195e','61001b6892ebd05a24fe82e1','610f2eabb45be8717fc155e0','61125e23136464bd2cbbefc9','611bdb0fed7c9df6dce28c3f','611cebb780fbae98c5bcc84d','611e9c16e90a0d4c6f0d8df5','611eeafa283a2d1f57537fea','6131f7010e926c9103558040','613867f34e206e4f573bc6ef','613a73d06cf1fcfef304d3fa','6140ff9c5750f0081ca8d71f','614c80483d06dcf7ad552679','614c8e5469405530dc27b9d5','614dd6473c74b217ad73cc9c','6155e204cc071b306458dfff','6156a440279fdf408ee663ae','6156b68cc77b48d6693b361c','61616ce2bb94584e11c911af','6170821d1e8ffb9c893b28a4','6171349b89a54d4823f9eca1','617142c2a843eef6f8f148b6','6171d922c871ba795b6a4827','6172078b966225960be2a7b5','65032a60861e9a17bc1a7444','65089e7ce53888b0b3840c62');
+intuition_strategists <- list('5aa787c66219a30001c765f8','5ae5db897edeb000014a85ee',
+                              '5b213220809d160001a2c36d','5bcd11401662020001fe82c1',
+                              '5c1bfabab0fcc900019d9ff4','5dab6e7d80e1780016d5bc9b',
+                              '5dcb33ab0550ef819f508abf','5e12048c7605fe8839180a14',
+                              '5e3ff59bf2160b23942ada93','5e89e89bf025be000c01eead',
+                              '5e8e55509422bb10abed1f54','5e9bd025eb6b380e1d66d04c',
+                              '5ea9611edec14d052ada0bae','5ea9cd383b32cf15448a86ac',
+                              '5eaf1c50f3540c614eb973a5','5eb35dff41a381156be161c2',
+                              '5ec6d06c67b0da0fb6f85e83','5ecd21dec04cca02c9032485',
+                              '5ed013f88fce6e0d858b732e','5ee623674afa60375e30eec3',
+                              '5ee83da8817af0000d47448f','5f0471a92ec97b6d1aec7739',
+                              '5f0d65ef2ad0c60009209f0f','5f11c9f84078cd0888177499',
+                              '5f18a80367ef6b0bbc5f3720','5f19fa0f3e85b20d0336258c',
+                              '5f1e8dc7e2161c86cdcd220a','5f219602670e5a0af2cf5237',
+                              '5f47e34858dd331165bf9f00','5f5e7de4c81d3672642cd612',
+                              '5f708f5f0d32bb66960d4473','5f858743256d25036d9fa693',
+                              '5f91dc284909fe0b08f9e2e1','5fa5793490f10705755818c0',
+                              '5fa59d4d5a29c90da975efe9','5fc44d83862e3e79b02e0438',
+                              '5fc781689771f106330abf6a','5fd2416e5061f30735e202e9',
+                              '5fd9c5c67fa7c74ec42bb318','5fe2308a91773957e88b89be',
+                              '600e0dadada7da69afc5b3de','6042a56575ab0c1ccffc3152',
+                              '605aa0bb5fb71bbcf0808892','60645fe61129208791535d15',
+                              '606dc21c1ce7dc64af9d81fb','608858869a591bd129fbbc6c',
+                              '60957b300f08087b0af0031c','60a3fe2d888e7a090d6d8f82',
+                              '60a68725b2b424dc0d7ce793','60bbe0da43325dadf2b1b6a9',
+                              '60d7605d7af8d66774061717','60dee3200c7c3355c62326d9',
+                              '60ec51c51a3158a50ded8a3e','60f030dca19a06db1b50d16a',
+                              '6100174f92a7a0e5141b195e','61001b6892ebd05a24fe82e1',
+                              '610f2eabb45be8717fc155e0','61125e23136464bd2cbbefc9',
+                              '611bdb0fed7c9df6dce28c3f','611cebb780fbae98c5bcc84d',
+                              '611e9c16e90a0d4c6f0d8df5','611eeafa283a2d1f57537fea',
+                              '6131f7010e926c9103558040','613867f34e206e4f573bc6ef',
+                              '613a73d06cf1fcfef304d3fa','6140ff9c5750f0081ca8d71f',
+                              '614c80483d06dcf7ad552679','614c8e5469405530dc27b9d5',
+                              '614dd6473c74b217ad73cc9c','6155e204cc071b306458dfff',
+                              '6156a440279fdf408ee663ae','6156b68cc77b48d6693b361c',
+                              '61616ce2bb94584e11c911af','6170821d1e8ffb9c893b28a4',
+                              '6171349b89a54d4823f9eca1','617142c2a843eef6f8f148b6',
+                              '6171d922c871ba795b6a4827','6172078b966225960be2a7b5',
+                              '65032a60861e9a17bc1a7444','65089e7ce53888b0b3840c62');
 data_intuitionstrategists <- data_testing[data_testing$sbj_ID %in% intuition_strategists,];
 data_intuitionstrategists <- data_intuitionstrategists[data_intuitionstrategists$testing_condition=='2M',];
 data_intuitionstrategists <- data_intuitionstrategists[!duplicated(data_intuitionstrategists$sbj_ID), ];
@@ -583,7 +815,8 @@ ggsave("exp1_2Mscores_strats.png",width=6,height=7,scores_strategiesplt,path=out
 data_all_familiarity <- read.csv("exp1_familiarity_preprocessed.csv",header=T,sep=",");
 data_all_familiarity <- subset(data_all_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
 data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 187 participants
-data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c('615b042301e3a24311563ee4','5e8b66490d48450346bf2755','615b41767003d4ece749ed9d'),];
+data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% c(
+  '615b042301e3a24311563ee4','5e8b66490d48450346bf2755','615b41767003d4ece749ed9d'),];
 
 # make some variables factors
 data_familiarity$sbj_ID <- as.factor(data_familiarity$sbj_ID);
@@ -595,15 +828,16 @@ data_familiarity$confound <- as.factor(data_familiarity$confound);
 # familiarity accuracy
 data_familiarity_means <- aggregate(data_familiarity$correct, list(data_familiarity$sbj_ID), FUN=mean);
 colnames(data_familiarity_means)[colnames(data_familiarity_means)=="Group.1"]="sbj_ID";
-summary(data_familiarity_means$x);
+colnames(data_familiarity_means)[colnames(data_familiarity_means)=="x"]="fam_mean";
+summary(data_familiarity_means$fam_mean);
 # min:0.29 Q1:0.50 med:0.57 mean:0.57 Q3:0.64 max:0.86
-hist(data_familiarity_means$x); # mostly normally distributed
-t.test(data_familiarity_means$x, mu=0.50);
+hist(data_familiarity_means$fam_mean); # mostly normally distributed
+t.test(data_familiarity_means$fam_mean, mu=0.50);
 # t=9.16, p<2.2e-16, CI = [0.55;0.58] -> sig above chance
-var(data_familiarity_means$x); #var = 0.01
+var(data_familiarity_means$fam_mean); #var = 0.01
 
 # familiarity accuracy violin plot
-fam_violin <- ggplot(data_familiarity_means, aes(x="score", y=x)) +
+fam_violin <- ggplot(data_familiarity_means, aes(y=fam_mean, x=x)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
   geom_violin(alpha=0.75,fill="orchid4") +
@@ -623,21 +857,26 @@ ggsave("exp1_familiarity_violinplt.png",fam_violin,path=output_folder,
 # familiarity RTs
 IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
-plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),xlim=c(0,4000),ylim=c(0,0.01),xlab="Familiarity RTs (ms)",main="",xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
+plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),
+     xlim=c(0,4000),ylim=c(0,0.01),xlab="Familiarity RTs (ms)",main="",
+     xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
 for (x in 2:193) {
   lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols2[x],lwd=2)
 };
-data_familiarity_rt_means <- aggregate(data_familiarity$rt, list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
+data_familiarity_rt_means <- aggregate(data_familiarity$rt, 
+                                       list(data_familiarity$sbj_ID), FUN=mean, na.rm=TRUE);
 summary(data_familiarity_rt_means$x);
 #min:223 Q1:1275 med:1671 mean:1892 Q3:2140 max:9185
 
 # familiarity accuracy*RTs
-cor.test(data_familiarity_means$x, data_familiarity_rt_means$x, method="pearson") # r = 0.20
+cor.test(data_familiarity_means$fam_mean, data_familiarity_rt_means$x, method="pearson")
+# t=2.82 df=191 p=0.005 CI=[0.06;0.33] est=0.20
 # slower at responding = better accuracy
 
 # familiarity accuracy*testing accuracy
-cor.test(data_familiarity_means$x, data_testing_2M_means$score_2M, method="pearson"); # r = 0.11
+cor.test(data_familiarity_means$fam_mean, data_testing_2M_means$score_2M, method="pearson"); 
+# t=1.51 df=191 p=0.13 CI=[-0.03;0.25] est=0.11
 # higher familiarity = better 2M scores
 
 # familiarity accuracy by testing strategy
@@ -647,18 +886,20 @@ data_strategistsfam$strat[data_strategistsfam$sbj_ID %in% chunkID_strategists] <
 data_strategistsfam$strat[data_strategistsfam$sbj_ID %in% chunkID_strategists] <- 'chunks';
 data_strategistsfam$strat <- data_strategistsfam$strat %>% replace_na('other');
 
-summary(data_strategistsfam$x[data_strategistsfam$strat=='chunks']);
+summary(data_strategistsfam$fam_mean[data_strategistsfam$strat=='chunks']);
 # min:0.46 Q1:0.54 med:0.57 mean:0.58 Q3:0.61 max:0.75
-t.test(data_strategistsfam$x[data_strategistsfam$strat=='chunks'],mu=0.50);
+t.test(data_strategistsfam$fam_mean[data_strategistsfam$strat=='chunks'],mu=0.50);
 #t=5.23 p=2.3e-5 CI=[0.55;0.61] df=24 -> sig above chance
 
-summary(data_strategistsfam$x[data_strategistsfam$strat=='intuition']);
+summary(data_strategistsfam$fam_mean[data_strategistsfam$strat=='intuition']);
 # min:0.29 Q1:0.50 med:0.57 mean:0.55 Q3:0.64 max:0.79
-t.test(data_strategistsfam$x[data_strategistsfam$strat=='intuition'],mu=0.50);
+t.test(data_strategistsfam$fam_mean[data_strategistsfam$strat=='intuition'],mu=0.50);
 #t=4.07 p=0.0001 CI=[0.53;0.57] df=78 -> sig above chance
 
 par(mar=c(5,5,2,2));
-boxplot(data_strategistsfam$x~data_strategistsfam$strat,ylab = "Familiarity score",xlab="Testing strategy",ylim=c(0.28,0.9),cex.lab=2,cex.axis=1.75,yaxs="i");
+boxplot(data_strategistsfam$fam_mean~data_strategistsfam$strat,
+        ylab = "Familiarity score",xlab="Testing strategy",ylim=c(0.28,0.9),
+        cex.lab=2,cex.axis=1.75,yaxs="i");
 abline(h=0.5, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1); # back to default
 
@@ -667,14 +908,49 @@ par(mar=c(5, 4, 4, 2) + 0.1); # back to default
 data_all_BLP <- read.csv("exp1_BLP_preprocessed.csv",header=T,sep=",");
 data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column added by Pavlovia
 data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 190 participants
-data_BLP <- subset(data_BLP, select = -c(AoAgioL1, AoAgioL2, AoAgioL3, AoAgioL4, anniInstrL1, anniInstrL2, anniInstrL3, anniInstrL4, anniPaeseL1, anniPaeseL2, anniPaeseL3, anniPaeseL4, anniFamigliaL1, anniFamigliaL2, anniFamigliaL3, anniFamigliaL4, anniLavoroL1, anniLavoroL2, anniLavoroL3, anniLavoroL4, PercAmiciL1, PercAmiciL2, PercAmiciL3, PercAmiciL4, PercFamigliaL1, PercFamigliaL2, PercFamigliaL3, PercFamigliaL4, PercLavoroL1, PercLavoroL2, PercLavoroL3, PercLavoroL4, PercStessoL1, PercStessoL2, PercStessoL3, PercStessoL4, PercCalcoliL1, PercCalcoliL2, PercCalcoliL3, PercCalcoliL4, ProfParlaL1, ProfParlaL2, ProfParlaL3, ProfParlaL4, ProfCapisceL1, ProfCapisceL2, ProfCapisceL3, ProfCapisceL4, ProfLeggeL1, ProfLeggeL2, ProfLeggeL3, ProfLeggeL4, ProfScriveL1, ProfScriveL2, ProfScriveL3, ProfScriveL4, AttMiStessoL1, AttMiStessoL2, AttMiStessoL3, AttMiStessoL4, AttCulturaL1, AttCulturaL2, AttCulturaL3, AttCulturaL4, AttLivNativoL1, AttLivNativoL2, AttLivNativoL3, AttLivNativoL4, AttMadrelinguaL1, AttMadrelinguaL2, AttMadrelinguaL3, AttMadrelinguaL4));
-data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('615b042301e3a24311563ee4','5e8b66490d48450346bf2755','615b41767003d4ece749ed9d'),];
+data_BLP <- subset(data_BLP, select = -c(AoAgioL1, AoAgioL2, AoAgioL3, AoAgioL4, 
+                                         anniInstrL1, anniInstrL2, anniInstrL3, 
+                                         anniInstrL4, anniPaeseL1, anniPaeseL2, 
+                                         anniPaeseL3, anniPaeseL4, anniFamigliaL1, 
+                                         anniFamigliaL2, anniFamigliaL3, 
+                                         anniFamigliaL4, anniLavoroL1,
+                                         anniLavoroL2, anniLavoroL3, anniLavoroL4, 
+                                         PercAmiciL1, PercAmiciL2, PercAmiciL3, 
+                                         PercAmiciL4, PercFamigliaL1, 
+                                         PercFamigliaL2, PercFamigliaL3, 
+                                         PercFamigliaL4, PercLavoroL1, 
+                                         PercLavoroL2, PercLavoroL3, PercLavoroL4, 
+                                         PercStessoL1, PercStessoL2, PercStessoL3, 
+                                         PercStessoL4, PercCalcoliL1, 
+                                         PercCalcoliL2, PercCalcoliL3, 
+                                         PercCalcoliL4, ProfParlaL1, ProfParlaL2, 
+                                         ProfParlaL3, ProfParlaL4, ProfCapisceL1, 
+                                         ProfCapisceL2, ProfCapisceL3, 
+                                         ProfCapisceL4, ProfLeggeL1, ProfLeggeL2, 
+                                         ProfLeggeL3, ProfLeggeL4, ProfScriveL1, 
+                                         ProfScriveL2, ProfScriveL3, ProfScriveL4, 
+                                         AttMiStessoL1, AttMiStessoL2, 
+                                         AttMiStessoL3, AttMiStessoL4, 
+                                         AttCulturaL1, AttCulturaL2, AttCulturaL3, 
+                                         AttCulturaL4, AttLivNativoL1, 
+                                         AttLivNativoL2, AttLivNativoL3, 
+                                         AttLivNativoL4, AttMadrelinguaL1, 
+                                         AttMadrelinguaL2, AttMadrelinguaL3, 
+                                         AttMadrelinguaL4));
+data_BLP <- data_BLP[!data_BLP$sbj_ID %in% c('615b042301e3a24311563ee4',
+                                             '5e8b66490d48450346bf2755',
+                                             '615b41767003d4ece749ed9d'),];
 
 BLP_correction <- function(data_BLP)
 {
   data_BLP[data_BLP == "polish"|data_BLP == "POLISH"] <- "Polish";
-  data_BLP[data_BLP == "english"|data_BLP=="ENGLISH"|data_BLP=="Englsih"|data_BLP=="Englsh"|data_BLP=="British"|data_BLP=="Engllish"|data_BLP=="ENGLISH "|data_BLP=="English "|data_BLP=="ENGLISH"|data_BLP=="english"|data_BLP=="english "|data_BLP=="englis"|data_BLP=="eanglish"|data_BLP=="Enlish"] <- "English";
-  data_BLP[data_BLP == "portuguese"|data_BLP == "portuguese"|data_BLP == "Portugal"|data_BLP=="Potuguese"] <- "Portuguese";
+  data_BLP[data_BLP == "english"|data_BLP=="ENGLISH"|data_BLP=="Englsih"|
+             data_BLP=="Englsh"|data_BLP=="British"|data_BLP=="Engllish"|
+             data_BLP=="ENGLISH "|data_BLP=="English "|data_BLP=="ENGLISH"|
+             data_BLP=="english"|data_BLP=="english "|data_BLP=="englis"|
+             data_BLP=="eanglish"|data_BLP=="Enlish"] <- "English";
+  data_BLP[data_BLP == "portuguese"|data_BLP == "portuguese"|
+             data_BLP == "Portugal"|data_BLP=="Potuguese"] <- "Portuguese";
   data_BLP[data_BLP =="SPANISH"|data_BLP=="Spnsh"|data_BLP=="spanish"] <- "Spanish";
   data_BLP[data_BLP == "ITALIAN"|data_BLP=="italian"] <- "Italian";
   data_BLP[data_BLP == "sotho"] <- "Sotho";
@@ -686,7 +962,9 @@ BLP_correction <- function(data_BLP)
   data_BLP[data_BLP == "afrikaans"] <- "Afrikaans";
   data_BLP[data_BLP == "punjabi"] <- "Punjabi";
   data_BLP[data_BLP == "siswati"] <- "Siswati";
-  data_BLP[data_BLP == "Germany"|data_BLP=="german"|data_BLP=="germany"|data_BLP=="GERMANY"|data_BLP=="GERMAN"|data_BLP=="Deustch"|data_BLP == "Deutch"] <- "German";
+  data_BLP[data_BLP == "Germany"|data_BLP=="german"|data_BLP=="germany"|
+             data_BLP=="GERMANY"|data_BLP=="GERMAN"|data_BLP=="Deustch"|
+             data_BLP == "Deutch"] <- "German";
   data_BLP[data_BLP == "russian"] <- "Russian";
   data_BLP[data_BLP == "Isiulu"] <- "IsiZulu";
   data_BLP[data_BLP == "ZULU"|data_BLP=="zulu"] <- "Zulu";
@@ -704,7 +982,8 @@ BLP_correction <- function(data_BLP)
   data_BLP[data_BLP == "bosnian"] <- "Bosnian";
   data_BLP[data_BLP == "madarin"] <- "Mandarin";
   data_BLP[data_BLP == "Icelandic and German"] <- "Icelandic";
-  data_BLP[data_BLP == "a little bit of russian"|data_BLP=="RUSSIAN"|data_BLP=="russian"] <- "Russian";
+  data_BLP[data_BLP == "a little bit of russian"|data_BLP=="RUSSIAN"|
+             data_BLP=="russian"] <- "Russian";
   data_BLP[data_BLP == "NDEBELE"] <- "Ndebele";
   data_BLP[data_BLP == "urdu"] <- "Urdu";
   data_BLP[data_BLP == "latvian"] <- "Latvian";
@@ -865,7 +1144,8 @@ for (n in unique(edge_df$node)) {
     langs <- tree_phylo$tip.label[tips]
     
     fams <- family_vec[langs]
-    edge_df$node_family[edge_df$node == n] <- names(sort(table(fams), decreasing = TRUE))[1]
+    edge_df$node_family[edge_df$node == n] <- names(sort(table(fams), 
+                                                         decreasing = TRUE))[1]
   }
 };
 
@@ -888,16 +1168,25 @@ language_tree <- ggtree(tree_phylo, layout="circular") %<+% edge_df +
 ggsave("exp1_languages.png", width=10, height=9.5, language_tree,
        path=output_folder, device="png");
 
-scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score','L4Score')); # combine scores into 1 list
+
+
+# combine scores into 1 list
+scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score',
+                                         'L4Score')); # combine scores into 1 list
 write.csv(scores_list,"BASL_exp1_scores.csv", row.names = FALSE);
-use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score','UseL3Score','UseL4Score')); # combine use scores into 1 list
+# combine use scores into 1 list
+use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score',
+                                             'UseL3Score','UseL4Score')); 
 write.csv(use_scores_list,"BASL_exp1_usescores.csv", row.names = FALSE);
 
 # correlations of BLP scores
-BLP_scores <- subset(data_BLP,select=c(HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,
-                                       UseL1Score,UseL2Score,UseL3Score,UseL4Score,
-                                       ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,
-                                       AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score));
+BLP_scores <- subset(data_BLP,select=c(HistoryL1Score,HistoryL2Score,HistoryL3Score,
+                                       HistoryL4Score,UseL1Score,UseL2Score,
+                                       UseL3Score,UseL4Score,ProficiencyL1Score,
+                                       ProficiencyL2Score,ProficiencyL3Score,
+                                       ProficiencyL4Score,AttitudeL1Score,
+                                       AttitudeL2Score,AttitudeL3Score,
+                                       AttitudeL4Score));
 
 png('exp1_corrPlot_BLP.png', width=1000, height=1000);
 corrplot::corrplot(cor(BLP_scores),type="lower",order="original",diag=T,
@@ -909,7 +1198,8 @@ dev.off();
 png('exp1_corrPlot_BLP_hclust.png', width=1000, height=1000);
 corrplot::corrplot(cor(BLP_scores),type="lower",order="hclust",diag=T,
                    method="color",outline=F,addgrid.col=F,tl.col='black',
-                   tl.pos='ld', addCoef.col='black',tl.cex=1.5);
+                   tl.pos='ld', addCoef.col='black',tl.cex=1.5,
+                   family="CMU Serif");
 dev.off();
 
 # BLP scores PCA
@@ -923,11 +1213,13 @@ colnames(data_BLP)[which(names(data_BLP) == "RC3")] <- "RC3_prof_L2"
 
 # scree plot
 scree_data <- data.frame(pca_varimax$Vaccounted)["Proportion Var",];
-scree_data <- scree_data %>% pivot_longer(cols=colnames(scree_data), names_to = "PC", values_to = "PropVar");
+scree_data <- scree_data %>% pivot_longer(cols=colnames(scree_data), 
+                                          names_to = "PC", values_to = "PropVar");
 scree_data <- scree_data[order(scree_data$PropVar,decreasing=TRUE),];
-scree_data$PC <- c("PC1","PC9","PC2","PC6","PC10","PC7","PC5","PC4","PC8","PC3","PC11","PC14","PC13","PC12","PC16","PC15");
+scree_data$PC <- c("PC1","PC9","PC2","PC6","PC10","PC7","PC5","PC4","PC8","PC3",
+                   "PC11","PC14","PC13","PC12","PC16","PC15");
 
-BLPscreeplt <- ggplot(scree_data, aes(x = reorder(PC,-PropVar), y = PropVar, group=1)) +
+BLPscreeplt <- ggplot(scree_data, aes(x=reorder(PC,-PropVar), y=PropVar,group=1)) +
   geom_point(size=4) +
   geom_line(linewidth=1) +
   geom_hline(yintercept=0.05,colour="red",linetype="dashed",lwd=1.25) +
@@ -935,7 +1227,8 @@ BLPscreeplt <- ggplot(scree_data, aes(x = reorder(PC,-PropVar), y = PropVar, gro
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_screeplt.png",BLPscreeplt,path=output_folder,
        width=10,height=7,device="png");
@@ -974,7 +1267,8 @@ loadings_PC1  <- ggplot(loadings_data, aes(x=BLP_var, y=RC1, fill=lang)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
         legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_loadingsPC1.png",loadings_PC1,path=output_folder,
        width=10,height=7,device="png");
@@ -989,7 +1283,8 @@ loadings_PC9  <- ggplot(loadings_data, aes(x=BLP_var, y=RC9, fill=lang)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
         legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_loadingsPC9.png",loadings_PC9,path=output_folder,
        width=10,height=7,device="png");
@@ -1004,7 +1299,8 @@ loadings_PC2  <- ggplot(loadings_data, aes(x=BLP_var, y=RC2, fill=lang)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
         legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_loadingsPC2.png",loadings_PC2,path=output_folder,
        width=10,height=7,device="png");
@@ -1019,7 +1315,8 @@ loadings_PC8  <- ggplot(loadings_data, aes(x=BLP_var, y=RC8, fill=lang)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
         legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_loadingsPC8.png",loadings_PC8,path=output_folder,
        width=10,height=7,device="png");
@@ -1034,7 +1331,8 @@ loadings_PC3  <- ggplot(loadings_data, aes(x=BLP_var, y=RC3, fill=lang)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
-        text=element_text(family="CMU Serif",size=60),axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
         legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
 ggsave("exp1_BLP_loadingsPC3.png",loadings_PC3,path=output_folder,
        width=10,height=7,device="png");
@@ -1044,13 +1342,30 @@ cluster_data <- data.frame(pca_varimax$scores[, 1:2]);
 colnames(cluster_data) <- c("PC1", "PC9");
 ggplot(cluster_data, aes(x = PC1, y = PC9)) +
   geom_point() +
-  labs(title = "PCA Cluster Plot (First Two PCs)", x = "Principal Component 1", y = "Principal Component 9") +
+  labs(title = "PCA Cluster Plot (First Two PCs)", x = "Principal Component 1", 
+       y = "Principal Component 9") +
   theme_minimal();
+
+# PCA heatmap
+heatmap_data <- subset(loadings_data,select=c(RC1,RC9,RC2,RC8,RC3));
+colnames(heatmap_data) <- c("PC1","PC9","PC2","PC8","PC3");
+pheatmap(heatmap_data,
+         cluster_rows=FALSE,
+         cluster_cols=FALSE,
+         color=colorRampPalette(c("#2E7E8C","#F5F1E8","#E08864"))(50),
+         clustering_distance_rows = "correlation",
+         show_rownames=TRUE,
+         fontfamily="CMU Serif",
+         fontsize=20,
+         display_numbers=TRUE,
+         angle_col=0,
+         fontsize_number=20,
+         number_color="black");
 
 
 ## Multilingual scores ===============================================
 multilingual_metrics <- data.frame();
-for (i in 1:193) {
+for (i in 1:length(scores_list$sbj_ID==unique(scores_list$sbj_ID))) {
   temp <- scores_list[which(scores_list$sbj_ID==unique(scores_list$sbj_ID)[i]),];
   sbj_ID <- temp$sbj_ID[1];
   temp_scores <- as.list(temp);
@@ -1073,11 +1388,7 @@ for (i in 1:193) {
   multiexp <- sum(temp_scores);
   
   # L1 - L2 score
-  if (temp_scores[[2]] > 0) {
-    L1L2 <- abs(temp_scores[[1]]-temp_scores[[2]]);
-  } else {
-    L1L2 <- NA;
-  };
+  L1L2 <- abs(temp_scores[[1]]-temp_scores[[2]]);
   
   multilingual_metrics <- rbind(multilingual_metrics, 
                                 list(sbj_ID,variance,entropy,use_entropy,multiexp,L1L2));
@@ -1109,9 +1420,18 @@ summary(data_BLP);
 # n(quadri) = 51
 
 # same-script vs different-script multilinguals
-diff_script_sbjID <- c('5cbe02ab39447e0001745a5e','5e3ff59bf2160b23942ada93','6147aed5b2a4f748dc2b6ba4');
+diff_script_sbjID <- c('5cbe02ab39447e0001745a5e','5e3ff59bf2160b23942ada93',
+                       '6147aed5b2a4f748dc2b6ba4');
 # n=3
-mixed_script_sbjID <- c('5ea171c1a8782801263e7540','5ea9611edec14d052ada0bae','5eb35dff41a381156be161c2','5f0f93938935de000855898b','5f7bd801486f5e1ce581980f','5fc2d2d79da439201ab6addc','5fc44d83862e3e79b02e0438','5fd9c5c67fa7c74ec42bb318','600f0f9c3bfcdc077c924e51','602bb123612bfe330818d4ef','6093cacf9a39751eedd55916','61055020201a7da5a704f7dd','611bdb0fed7c9df6dce28c3f','6163faf9d9ac4586fe776568','616eb493bb7e4ab4fa1de8d4','63ee5d8aaee278de46b7d4cc','64ef422a4789bd6b6b9042ce');
+mixed_script_sbjID <- c('5ea171c1a8782801263e7540','5ea9611edec14d052ada0bae',
+                        '5eb35dff41a381156be161c2','5f0f93938935de000855898b',
+                        '5f7bd801486f5e1ce581980f','5fc2d2d79da439201ab6addc',
+                        '5fc44d83862e3e79b02e0438','5fd9c5c67fa7c74ec42bb318',
+                        '600f0f9c3bfcdc077c924e51','602bb123612bfe330818d4ef',
+                        '6093cacf9a39751eedd55916','61055020201a7da5a704f7dd',
+                        '611bdb0fed7c9df6dce28c3f','6163faf9d9ac4586fe776568',
+                        '616eb493bb7e4ab4fa1de8d4','63ee5d8aaee278de46b7d4cc',
+                        '64ef422a4789bd6b6b9042ce');
 # n=17
 sbj_IDs_included <- list(unique(data_BLP$sbj_ID))[[1]];
 sbj_IDs_included <- as.character(sbj_IDs_included);
@@ -1122,6 +1442,60 @@ data_BLP$script[data_BLP$sbj_ID %in% same_script_sbjID] <- 'same';
 data_BLP$script[data_BLP$sbj_ID %in% mixed_script_sbjID] <- 'mixed/diff';
 data_BLP$script[data_BLP$sbj_ID %in% diff_script_sbjID] <- 'mixed/diff';
 data_BLP$script <- factor(data_BLP$script,levels=c("same","mixed/diff"));
+
+# participant information
+# barplot of category
+category_plt <- ggplot(data_BLP, aes(x=category)) +
+  geom_bar() +
+  labs(x="Multilingual category") +
+  scale_x_discrete(labels=c('Monolinguals','Bilinguals','Trilinguals','Quadrilinguals')) +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_category.png",category_plt,path=output_folder,
+       width=7,height=10,device="png");
+
+# L1 barplot
+L1s <- data_BLP %>% group_by(L1) %>% tally;
+L1s <- L1s[order(-L1s$n), ];
+L1s <- L1s %>% slice_head(n = 8); # just keep top 8 languages
+L1s$L1 <- factor(L1s$L1, levels = L1s$L1);
+
+L1_plt <- ggplot(L1s, aes(x=L1, y=n)) +
+  geom_col() +
+  labs(y="count") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_L1.png",L1_plt,path=output_folder,width=7,height=10,device="png");
+
+# L2 barplot
+L2s <- data_BLP %>% group_by(L2) %>% tally;
+L2s <- L2s[order(-L2s$n), ];
+L2s <- subset(L2s, L2!='n/a');
+L2s <- L2s %>% slice_head(n = 8); # just keep top 8 languages
+L2s$L2 <- factor(L2s$L2, levels = L2s$L2);
+
+L2_plt <- ggplot(L2s, aes(x=L2, y=n)) +
+  geom_col() +
+  labs(y="count") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp1_BLP_L2.png",L2_plt,path=output_folder,width=7,height=10,device="png");
+
 
 # looking at each metric individually
 #var
@@ -1153,9 +1527,9 @@ var(data_BLP$multiexp);
 
 #L1_L2_diff
 summary(data_BLP$L1_L2_diff);
-#min=0.09, Q1=51, med=78, mean=74, Q3=97, Q4=169, NA:4
+#min=0.09, Q1=52.13, med=77.92, mean=76.36, Q3=97.45, Q4=208
 var(data_BLP$L1_L2_diff[!is.na(data_BLP$L1_L2_diff)]);
-#var = 1429
+#var = 1724
 
 #cossim
 summary(data_BLP$cossim);
@@ -1186,6 +1560,10 @@ cor.test(data_BLP$cossim,data_BLP$multiexp,method="pearson");
 # t = -1.6814, df = 191, p-value = 0.09432, CI=[-0.26;0.02], est=-0.12 ()
 text(0.87,550,"r = -0.12",cex=1.5);
 
+#cossim & ent
+cor.test(data_BLP$cossim,data_BLP$ent,method="pearson"); 
+# t=-3.60 p=0.0004 df=191 CI=[-0.40; -0.12] est=-0.25 (***)
+
 #ent & use_ent
 plot(data_BLP$ent,data_BLP$use_ent,pch=19,
      ylab="Use entropy",xlab="Entropy",cex.lab=1.5);
@@ -1195,13 +1573,41 @@ cor.test(data_BLP$ent,data_BLP$use_ent,method="pearson");
 text(0.25,1.75,"r = 0.74",cex=1.5);
 
 # correlations of multilingual metrics
-M <- cor(subset(data_BLP,select=c('var','ent','use_ent','multiexp','L1_L2_diff','cossim','use_cossim')));
+M <- subset(data_BLP,select=c('ent','multiexp','L1_L2_diff','cossim'));
+colnames(M) <- c("Entropy","Multilingual experience", "L1-L2 difference", 
+                 "Cosine similarity");
 png('exp1_corrPlot_multimetrics.png', width=1000, height=1000);
-corrplot::corrplot(M,type="lower", order="original", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black',number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(cor(M),type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',number.cex=1.5, tl.cex=1.5,
+                   family="CMU Serif");
 dev.off();
 
 png('exp1_corrPlot_multimetrics_hclust.png', width=1000, height=1000);
-corrplot::corrplot(M,type="lower", order="hclust", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(cor(M),type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black', number.cex=1.5, tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+
+N <- subset(data_BLP,select=c('ent','multiexp','L1_L2_diff','cossim',
+                              'RC1_L3','RC9_L4','RC2_use_L1vsL2','RC8_hist_L2',
+                              'RC3_prof_L2'));
+colnames(N) <- c("Entropy","Multilingual experience","L1-L2 difference",
+                 "Cosine similarity","PC1 (L3)","PC9 (L9)","PC2 (L1vsL2 Use)",
+                 "PC8 (L2 History)","PC3 (L2 Proficiency)");
+png('exp1_corrPlot_multimetricsPCA.png', width=1000, height=1000);
+corrplot::corrplot(cor(N),type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',number.cex=1.5, tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+
+png('exp1_corrPlot_multimetricsPCA_hclust.png', width=1000, height=1000);
+corrplot::corrplot(cor(N),type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black', number.cex=1.5, tl.cex=1.5,
+                   family="CMU Serif");
 dev.off();
 
 # export BLP dataframe
@@ -1209,27 +1615,42 @@ write.csv(data_BLP,"BASL_exp1_BLP.csv", row.names = FALSE);
 
 
 ## COMBINING BLP & TESTING SCORES ====================================
-data_BLP_shortened <- subset(data_BLP, select=c(sbj_ID,Gender,Age,
-                                                HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,
-                                                UseL1Score,UseL2Score,UseL3Score,UseL4Score,
-                                                ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,
-                                                AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,
-                                                L1Score,L2Score,L3Score,L4Score,category,script,
-                                                var,ent,use_ent,multiexp,L1_L2_diff,cossim,use_cossim,
-                                                RC1_L3,RC9_L4,RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2));
-data_BLP_testing <- list(data_testing,data_BLP_shortened) %>% reduce(inner_join, by='sbj_ID');
-data_BLP_familiarity <- list(data_familiarity,data_BLP_shortened) %>% reduce(inner_join, by='sbj_ID');
+data_BLP_shortened <- subset(data_BLP,select=c(sbj_ID,Gender,Age,
+                                               HistoryL1Score,HistoryL2Score,
+                                               HistoryL3Score,HistoryL4Score,
+                                               UseL1Score,UseL2Score,UseL3Score,
+                                               UseL4Score,ProficiencyL1Score,
+                                               ProficiencyL2Score,
+                                               ProficiencyL3Score,
+                                               ProficiencyL4Score,
+                                               AttitudeL1Score,AttitudeL2Score,
+                                               AttitudeL3Score,AttitudeL4Score,
+                                               L1Score,L2Score,L3Score,L4Score,
+                                               category,script,var,ent,use_ent,
+                                               multiexp,L1_L2_diff,cossim,
+                                               use_cossim,RC1_L3,RC9_L4,
+                                               RC2_use_L1vsL2,RC8_hist_L2,
+                                               RC3_prof_L2));
+data_BLP_testing <- list(data_testing,data_BLP_shortened) %>% 
+  reduce(inner_join, by='sbj_ID');
+data_BLP_familiarity <- list(data_familiarity,data_BLP_shortened) %>% 
+  reduce(inner_join, by='sbj_ID');
 
 # correlations of BLP metrics with testing scores
 M <- cor(subset(data_BLP_testing,select=c(score_2M,dprime,c,
-                                          var,ent,use_ent,multiexp,L1_L2_diff,cossim,use_cossim,
-                                          RC1_L3,RC9_L4,RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2)));
+                                          var,ent,use_ent,multiexp,L1_L2_diff,
+                                          cossim,use_cossim,RC1_L3,RC9_L4,
+                                          RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2)));
 png('exp1_corrPlot_BLP_testing.png', width=1000, height=1000);
-corrplot::corrplot(M,type="lower", order="original", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black',number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(M,type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',number.cex=1.5,tl.cex=1.5);
 dev.off();
 
 png('exp1_corrPlot_BLP_testing_hclust.png', width=1000, height=1000);
-corrplot::corrplot(M,type="lower", order="hclust", diag=T, method="color", outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', addCoef.col='black', number.cex=1.5,tl.cex=1.5);
+corrplot::corrplot(M,type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black', number.cex=1.5,tl.cex=1.5);
 dev.off();
 
 # export BLP testing dataframe
@@ -1238,7 +1659,8 @@ write.csv(data_BLP_testing,"BASL_exp1_BLPtesting.csv", row.names = FALSE);
 
 # LINEAR MODELLING ---------------------------------------------------
 ## "YES" responses LMERs =============================================
-lm_TestingConditions <- glmer(observed ~ testing_condition + (1+testing_condition|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_TestingConditions <- glmer(observed ~ testing_condition + (1+testing_condition|sbj_ID), 
+                              data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_TestingConditions); # all conditions sig
 effect_conditions <- as.data.frame(effect('testing_condition',
                                           lm_TestingConditions, confint=list(alpha=.95)),
@@ -1247,7 +1669,8 @@ export_output(model=lm_TestingConditions,name="Exp. 1 `Yes' responses - Conditio
               pred_levels=c('0M','1M','2M'),pred_type='categorical',
               outcome_levels=c('0M','1M','2M'));
 
-lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_Gender); 
 # Gender non sig as main effect (Other p=0.80; Woman p=0.23)
 # 1M:Other marg. sig (0.09); 2M:Other sig (p=0.02)
@@ -1255,7 +1678,8 @@ export_output(model=lm_Gender,name="Exp. 1 `Yes' responses - Gender",
               pred_levels=c('Man','Other','Woman'),pred_type='categorical',
               outcome_levels=c('0M','1M','2M'));
 
-lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1+testing_condition|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_Age); 
 # Age sig as main effect (0.03); 
 # 1M:Age marg. sig (p=0.05); 2M:Age sig (p=0.01)
@@ -1263,7 +1687,8 @@ export_output(model=lm_Age,name="Exp. 1 `Yes' responses - Age",
               pred_levels=c('scale(Age)'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L3 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_RC1); 
 # RC1 non sig as main effect (p=0.15)
 # 1M:RC1 non sig (p=0.34), 2M*RC1 non sig (0.19)
@@ -1271,7 +1696,8 @@ export_output(model=lm_RC1,name="Exp. 1 `Yes' responses - PC1 (L3)",
               pred_levels=c('PC1_L3'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_RC9 <- glmer(observed ~ testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_RC9 <- glmer(observed ~ testing_condition*RC9_L4 + (1+testing_condition|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_RC9); 
 # RC9 non sig as main effect (p=0.18)
 # 1M:RC9 non sig (p=0.44); 2M:RC9 non sig (p=0.54)
@@ -1279,7 +1705,8 @@ export_output(model=lm_RC9,name="Exp. 1 `Yes' responses - PC9 (L4)",
               pred_levels=c('PC9_L4'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_RC2); 
 # RC2 non sig as main effect (p=0.21)
 # 1M:RC2 non sig (p=0.55); 2M:RC2 non sig (p=0.51)
@@ -1287,7 +1714,8 @@ export_output(model=lm_RC2,name="Exp. 1 `Yes' responses - PC2 (L1 vs L2 Use)",
               pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_RC8 <- glmer(observed ~ scale(trialn) + testing_condition*RC8_hist_L2 + (1+testing_condition|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_RC8 <- glmer(observed ~ scale(trialn) + testing_condition*RC8_hist_L2 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_RC8); 
 # RC8 sig as main effect (p=0.02)
 # 1M:RC8 non sig (p=0.33); 2M:RC8 non sig (p=0.86)
@@ -1295,7 +1723,8 @@ export_output(model=lm_RC8,name="Exp. 1 `Yes' responses - PC8 (L2 History)",
               pred_levels=c('PC8_L2_History'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_RC3 <- glmer(observed ~ scale(trialn) + testing_condition*RC3_prof_L2 + (1+testing_condition|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_RC3 <- glmer(observed ~ scale(trialn) + testing_condition*RC3_prof_L2 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_RC3); 
 # RC3 non sig as main effect (p=0.12)
 # 1M:RC3 sig (p=0.03); 2M:RC3 sig (0.004)
@@ -1303,7 +1732,8 @@ export_output(model=lm_RC3,name="Exp. 1 `Yes' responses - PC3 (L2 Proficiency)",
               pred_levels=c('PC3_L2_Proficiency'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_ent <- glmer(observed ~ testing_condition*ent + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_ent <- glmer(observed ~ testing_condition*ent + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_ent); 
 # ent non sig as main effect (p=0.66)
 # 1M:ent non sig (p=0.22); 2M:ent marg. sig (p=0.07)
@@ -1311,12 +1741,14 @@ export_output(model=lm_ent,name="Exp. 1 `Yes' responses - Multilingual balance (
               pred_levels=c('Entropy'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_use_ent <- glmer(observed ~ testing_condition*use_ent + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_use_ent <- glmer(observed ~ testing_condition*use_ent + (1|sbj_ID), 
+                    data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_use_ent); 
 # use_ent non sig as main effect (p=0.34)
 # 1M:use_ent non sig (p=0.22); 2M:use_ent non sig (p=0.17)
 
-lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multiexp) + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multiexp) + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_multiexp); 
 # multiexp non sig as main effect (p=0.42)
 # 1M:multiexp non sig (p=0.21); 2M:multiexp non sig (p=0.19)
@@ -1324,7 +1756,8 @@ export_output(model=lm_multiexp,name="Exp. 1 `Yes' responses - Multilingual expe
               pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_L1L2diff <- glmer(observed ~ testing_condition*scale(L1_L2_diff) + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_L1L2diff <- glmer(observed ~ testing_condition*scale(L1_L2_diff) + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_L1L2diff); 
 # L1L2diff non sig as main effect (p=0.99)
 # 1M:L1L2 sig (p=0.01); 2M:L1L2 sig (p=0.0003)
@@ -1332,7 +1765,8 @@ export_output(model=lm_L1L2diff,name="Exp. 1 `Yes' responses - Bilingual balance
               pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_cossim <- glmer(observed ~ testing_condition*cossim + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_cossim <- glmer(observed ~ testing_condition*cossim + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_cossim); 
 # cossim non sig as main effect (p=0.95)
 # 1M:cossim non sig (p=0.90); 2M:cossim non sig (p=0.71)
@@ -1340,12 +1774,16 @@ export_output(model=lm_cossim,name="Exp. 1 `Yes' responses - Multilingual balanc
               pred_levels=c('Cosine similarity'),pred_type='continuous',
               outcome_levels=c('0M','1M','2M'));
 
-lm_use_cossim <- glmer(observed ~ testing_condition*use_cossim + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial',control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
+lm_use_cossim <- glmer(observed ~ testing_condition*use_cossim + (1|sbj_ID), 
+                       data=subset(data_BLP_testing, rt>300 & rt<3000), 
+                       family='binomial',
+                       control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
 summary(lm_use_cossim); 
 # use_cossim non sig as main effect (p=0.34)
 # 1M:use_cossim non sig (p=0.26); 2M:use_cossim non sig (p=0.21)
 
-lm_script <- glmer(observed ~ scale(trialn) + testing_condition*script + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+lm_script <- glmer(observed ~ scale(trialn) + testing_condition*script + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
 summary(lm_script); 
 # script non sig as main effect (p=0.49)
 # 1M:script non sig (p=0.99)
@@ -1354,7 +1792,10 @@ export_output(model=lm_script,name="Exp. 1 `Yes' responses - Script",
               pred_levels=c('Same script','Different script'),pred_type='categorical',
               outcome_levels=c('0M','1M','2M'));
 
-lm_category <- glmer(observed ~ testing_condition*category + (1|sbj_ID), data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial',control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
+lm_category <- glmer(observed ~ testing_condition*category + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), 
+                     family='binomial',
+                     control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
 summary(lm_category); 
 # category non sig as main effect (bi p=0.42; tri p=0.82; quadri p=0.63)
 # 1M:category sig (bi p=0.004; tri p=0.02; quadri p=0.01)
@@ -1366,7 +1807,10 @@ export_output(model=lm_category,name="Exp. 1 `Yes' responses - Category",
 
 
 ## 2M accuracy LMERs =================================================
-lm_2M <- glmer(observed ~ scale(trialn) + expected + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M <- glmer(observed ~ scale(trialn) + expected + (1|sbj_ID), 
+               data=data_BLP_testing[
+                 data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+               family='binomial');
 summary(lm_2M);
 effect_2M <- as.data.frame(effect('expected',lm_2M,confint=list(alpha=.95)),
                            xlevels = list(expected=c(0,1)));
@@ -1375,7 +1819,10 @@ export_output(model=lm_2M,name="Exp. 1 2M",
               pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
 summary(lm_2M_Gender); 
 # Gender non sig as main effect (Other p=0.37; Woman p=0.44); 
 # expected:Gender non sig (Other p=0.25; Womanp=0.37)
@@ -1383,7 +1830,10 @@ export_output(model=lm_2M_Gender,name="Exp. 1 2M - Gender",
               pred_levels=c('Man','Other','Woman'),pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_Age); 
 # Age non sig as main effect (p=0.43)
 # expected:Age non sig (p=0.50)
@@ -1391,7 +1841,10 @@ export_output(model=lm_2M_Age,name="Exp. 1 2M - Age",
               pred_levels=c('scale(Age)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L3 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_RC1); 
 # RC1 non sig as main effect (p=0.64)
 # expected:RC1 non sig (p=0.73)
@@ -1399,7 +1852,10 @@ export_output(model=lm_2M_RC1,name="Exp. 1 2M - PC1 (L3)",
               pred_levels=c('PC1_L3'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_RC9 <- glmer(observed ~ scale(trialn) + expected*RC9_L4 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_RC9); 
 # RC9 non sig as main effect (p=0.51)
 # expected:RC9 non sig (p=0.51)
@@ -1407,7 +1863,10 @@ export_output(model=lm_2M_RC9,name="Exp. 1 2M - PC9 (L4)",
               pred_levels=c('PC9_L4'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_RC2); 
 # RC2 non sig as main effect (p=0.16)
 # expected:RC2 non sig (p=0.96)
@@ -1415,7 +1874,10 @@ export_output(model=lm_2M_RC2,name="Exp. 1 2M - PC2 (L1 vs L2 Use)",
               pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC8 <- glmer(observed ~ scale(trialn) + expected*RC8_hist_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_RC8 <- glmer(observed ~ scale(trialn) + expected*RC8_hist_L2 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_RC8); 
 # RC8 sig as main effect (p=0.049)
 # expected:RC8 non sig (p=0.83)
@@ -1423,7 +1885,10 @@ export_output(model=lm_2M_RC8,name="Exp. 1 2M - PC8 (L2 History)",
               pred_levels=c('PC8_L2_History'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_prof_L2 + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_prof_L2 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_RC3); 
 # RC3 sig as main effect (p=0.02)
 # expected:RC3 marg. sig (p=0.08)
@@ -1431,7 +1896,10 @@ export_output(model=lm_2M_RC3,name="Exp. 1 2M - PC3 (L2 Proficiency)",
               pred_levels=c('PC3_L2_Proficiency'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*ent + (1+expected|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*ent + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
 summary(lm_2M_ent); 
 # ent non sig as main effect (p=0.15)
 # expected:ent non sig(p=0.92)
@@ -1439,12 +1907,18 @@ export_output(model=lm_2M_ent,name="Exp. 1 2M - Multilingual balance (Entropy)",
               pred_levels=c('Entropy'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*use_ent + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*use_ent + (1|sbj_ID), 
+                       data=data_BLP_testing[
+                         data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                       family='binomial');
 summary(lm_2M_use_ent); 
 # use_ent non sig as main effect (p=0.17)
 # expected:use_ent non sig (p=0.64)
 
-lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multiexp) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multiexp) + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
 summary(lm_2M_multiexp); 
 # multiexp non sig as main effect (p=0.17)
 # expected:multiexp non sig (p=0.79)
@@ -1452,7 +1926,10 @@ export_output(model=lm_2M_multiexp,name="Exp. 1 2M - Multilingual experience",
               pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
 summary(lm_2M_L1L2diff); 
 # L1L2diff sig as main effect (p=0.03)
 # expected:L1L2diff non sig (p=0.66)
@@ -1460,7 +1937,10 @@ export_output(model=lm_2M_L1L2diff,name="Exp. 1 2M - Bilingual Balance (L1-L2 di
               pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
 summary(lm_2M_cossim); 
 # cossim non sig as main effect (p=0.62)
 # expected:cossim non sig (0.19)
@@ -1468,12 +1948,18 @@ export_output(model=lm_2M_cossim,name="Exp. 1 2M - Multilingual balance (cosine 
               pred_levels=c('scale(Cosine similarity)'),pred_type='continuous',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_use_cossim <- glmer(observed ~ scale(trialn) + expected*scale(use_cossim) + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_use_cossim <- glmer(observed ~ scale(trialn) + expected*scale(use_cossim) + (1|sbj_ID), 
+                          data=data_BLP_testing[
+                            data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                          family='binomial');
 summary(lm_2M_use_cossim); 
 # use_cossim non sig as main effect (p=0.84)
 # expected:use_cossim non sig (p=0.54)
 
-lm_2M_script <- glmer(observed ~ scale(trialn) + expected*script + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_script <- glmer(observed ~ scale(trialn) + expected*script + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
 summary(lm_2M_script); 
 # script non sig as main effect (p=25)
 # expected:script marg. sig (p=0.59)
@@ -1481,7 +1967,10 @@ export_output(model=lm_2M_script,name="Exp. 1 2M - Script",
               pred_levels=c('Same script','Different script'),pred_type='categorical',
               outcome_levels=c('between_language','within_language'));
 
-lm_2M_category <- glmer(observed ~ expected*category + (1|sbj_ID), data=data_BLP_testing[data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], family='binomial');
+lm_2M_category <- glmer(observed ~ expected*category + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M'& data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
 summary(lm_2M_category); 
 # category sig as main effect (bi p=0.02;tri p=0.03; quadri p=0.03)
 # expected:category non sig (expected:bi p=0.66;expected:tri p=0.53; expected:quadri p=0.83)
@@ -1494,99 +1983,114 @@ export_output(model=lm_2M_category,name="Exp. 1 2M - Category",
 ## Familiarity LMERs =================================================
 data_BLP_familiarity$correct_numerical <- as.numeric(data_BLP_familiarity$correct);
 
-lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Gender); 
 # Gender marg. sig (Other p=0.06; Woman p=0.82)
 export_output(model=lm_fam_Gender,name="Exp. 1 Familiarity - Gender",
               pred_levels=c('Man','Other','Woman'),pred_type='categorical',
               outcome_levels=c('wrong','right'));
 
-lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Age); 
 # Age marg. sig (p=0.056)
 export_output(model=lm_fam_Age,name="Exp. 1 Familiarity - Age",
               pred_levels=c('scale(Age)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L3 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC1); 
 # RC1_L3 non sig (p=0.34)
 export_output(model=lm_fam_RC1,name="Exp. 1 Familiarity - PC1 (L3)",
               pred_levels=c('PC1_L3'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_L4 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC9); 
 # RC9_L4 non sig (p=0.50)
 export_output(model=lm_fam_RC9,name="Exp. 1 Familiarity - PC9 (L4)",
               pred_levels=c('PC9_L4'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC2); 
 # RC2_use_L1vsL2 non sig (p=0.52)
 export_output(model=lm_fam_RC2,name="Exp. 1 Familiarity - PC2 (L1 vs L2 Use)",
               pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_RC8 <- glmer(correct ~ scale(trialn) + RC8_hist_L2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_RC8 <- glmer(correct ~ scale(trialn) + RC8_hist_L2 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC8); 
 # RC8_hist_L2 non sig (p=0.41)
 export_output(model=lm_fam_RC8,name="Exp. 1 Familiarity - PC8 (L2 History)",
               pred_levels=c('PC8_L2_History'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_RC3 <- glmer(correct ~ scale(trialn) + RC3_prof_L2 + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_RC3 <- glmer(correct ~ scale(trialn) + RC3_prof_L2 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC3); 
 # RC3_prof_L2 marg. sig (p=0.07)
 export_output(model=lm_fam_Age,name="Exp. 1 Familiarity - PC3 (L2 Proficiency)",
               pred_levels=c('PC3_L2_Proficicent'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_ent <- glmer(correct ~ scale(trialn) + ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_ent <- glmer(correct ~ scale(trialn) + ent + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_ent); 
 # ent non sig (p=0.72)
 export_output(model=lm_fam_ent,name="Exp. 1 Familiarity - Multilingual balance (entropy)",
               pred_levels=c('Entropy'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_use_ent <- glmer(correct ~ scale(trialn) + use_ent + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_use_ent <- glmer(correct ~ scale(trialn) + use_ent + (1|sbj_ID), 
+                        data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_use_ent); 
 # use_ent non sig (p=0.86)
 
-lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multiexp) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multiexp) + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_multiexp); 
 # multiexp non sig (p=0.63)
 export_output(model=lm_fam_multiexp,name="Exp. 1 Familiarity - Multilingual experience",
               pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_L1L2diff); 
 # L1_L2_diff non sig (p=0.36)
 export_output(model=lm_fam_L1L2diff,name="Exp. 1 Familiarity - Bilingual balance (L1-L2 difference)",
               pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_cossim <- glmer(correct ~ scale(trialn) + cossim + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_cossim <- glmer(correct ~ scale(trialn) + cossim + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_cossim); 
 # cossim non sig (p=0.32)
 export_output(model=lm_fam_cossim,name="Exp. 1 Familiarity - Multilingual balance (cosine similarity)",
               pred_levels=c('Cosine similarity'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
-lm_fam_use_cossim <- glmer(correct ~ scale(trialn) + use_cossim + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_use_cossim <- glmer(correct ~ scale(trialn) + use_cossim + (1|sbj_ID), 
+                           data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_use_cossim); 
 # use_cossim non sig (p=0.53)
 
-lm_fam_script <- glmer(correct ~ scale(trialn) + script + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_script <- glmer(correct ~ scale(trialn) + script + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_script); 
 # script non sig (p=0.13)
 export_output(model=lm_fam_script,name="Exp. 1 Familiarity - Script",
               pred_levels=c('Same script','Different script'),pred_type='categorical',
               outcome_levels=c('wrong','right'));
 
-lm_fam_category <- glmer(correct ~ scale(trialn) + category + (1|sbj_ID), data=data_BLP_familiarity, family='binomial');
+lm_fam_category <- glmer(correct ~ scale(trialn) + category + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_category); 
 # category non sig (bi p=0.52; tri p=0.44; quadri p=0.69)
 export_output(model=lm_fam_category,name="Exp. 1 Familiarity - Category",
@@ -1730,7 +2234,9 @@ corrected_results_fam <- data.frame(
 
 
 ## Exploration of significant effects ================================
-data_testing_conditions_BLP <- merge(data_testing_conditions,subset(data_BLP,select=c(sbj_ID,Gender,Age,RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2,multiexp,L1_L2_diff,ent)),by="sbj_ID");
+data_testing_conditions_BLP <- merge(data_testing_conditions,subset(
+  data_BLP,select=c(sbj_ID,Gender,Age,RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2,
+                    multiexp,L1_L2_diff,ent)),by="sbj_ID");
 
 # "YES" - testing conditions
 yes_fit <- ggplot(data_testing_conditions, aes(x=condition, y=score, fill=condition)) +
@@ -1763,7 +2269,9 @@ ggsave("exp1_yes_fit.png",width=10,height=7,yes_fit,path=output_folder,device="p
 
 
 # "YES" - Gender
-yes_gender_plt <- ggplot(data_testing_conditions_BLP, aes(x=condition,y=score,fill=Gender,group=interaction(condition,Gender))) +
+yes_gender_plt <- ggplot(data_testing_conditions_BLP, aes(x=condition,y=score,
+                                                          fill=Gender,
+                                                          group=interaction(condition,Gender))) +
   scale_fill_manual(values=c(cols2[400],cols2[310],cols2[200])) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
@@ -1778,7 +2286,7 @@ yes_gender_plt <- ggplot(data_testing_conditions_BLP, aes(x=condition,y=score,fi
   ylim(0,1.05) +
   coord_cartesian(expand = FALSE) +
   scale_x_discrete(labels=c("0M", "1M", "2M"));
-ggsave("exp1_yes_gender.png",width=10,height=7,yes_gender_plt,path=output_folder,device="png");
+ggsave("exp1_yes_gender.png",width=10,height=6,yes_gender_plt,path=output_folder,device="png");
 # too few Gender = Other datapoints to be meaningful
 
 # "YES" - Age
@@ -1790,19 +2298,21 @@ effect_Age <- as.data.frame(effect('testing_condition*scale(Age)',
 yes_age_plt <- ggplot(effect_Age, aes(x=Age,y=fit)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
-  geom_line(aes(color = testing_condition), lwd = 2) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
-  scale_color_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
                      name="Condition",labels=c("0M","1M","2M")) +
-  scale_fill_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
   labs(x = "Age", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
         text=element_text(family="CMU Serif",size=60),
         legend.position=c(0.1,0.1),legend.background=element_rect(fill=NA));
-ggsave("exp1_yes_age.png",width=10,height=7,yes_age_plt,path=output_folder,device="png");
+ggsave("exp1_yes_age.png",width=10,height=6,yes_age_plt,path=output_folder,device="png");
 # older = strongly morpheme familiarity effect
 
 # "YES" - RC8
@@ -1814,19 +2324,21 @@ effect_RC8 <- as.data.frame(effect('testing_condition*RC8_hist_L2',
 yes_PC8_plt <- ggplot(effect_RC8, aes(x=RC8_hist_L2,y=fit)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
-  geom_line(aes(color = testing_condition), lwd = 2) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
-  scale_color_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
                      name="Condition",labels=c("0M","1M","2M")) +
-  scale_fill_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
                     name="Condition",labels=c("0M","1M","2M")) +
-  labs(x = "RC8: L2 History", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  labs(x = "PC8: L2 History", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
         text=element_text(family="CMU Serif",size=60),
         legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA));
-ggsave("exp1_yes_PC8.png",width=10,height=7,yes_PC8_plt,path=output_folder,device="png");
+ggsave("exp1_yes_PC8.png",width=10,height=6,yes_PC8_plt,path=output_folder,device="png");
 # Earlier bilingual = more "yes" responses overall
 
 # "YES" - RC3
@@ -1838,19 +2350,21 @@ effect_RC3 <- as.data.frame(effect('testing_condition*RC3_prof_L2',
 yes_PC3_plt <- ggplot(effect_RC3, aes(x=RC3_prof_L2,y=fit)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
-  geom_line(aes(color = testing_condition), lwd = 2) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
-  scale_color_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
                      name="Condition",labels=c("0M","1M","2M")) +
-  scale_fill_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
                     name="Condition",labels=c("0M","1M","2M")) +
-  labs(x = "RC3: L2 Proficiency", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  labs(x = "PC3: L2 Proficiency", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
         text=element_text(family="CMU Serif",size=60),
         legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA)); 
-ggsave("exp1_yes_PC3.png",width=10,height=7,yes_PC3_plt,path=output_folder,device="png");
+ggsave("exp1_yes_PC3.png",width=10,height=6,yes_PC3_plt,path=output_folder,device="png");
 # More proficient L2 = stronger morpheme familiarity effect
 
 # "YES" - L1L2diff
@@ -1862,19 +2376,22 @@ effect_L1L2diff <- as.data.frame(effect('testing_condition*scale(L1_L2_diff)',
 yes_L1L2diff_plt <- ggplot(effect_L1L2diff, aes(x = L1_L2_diff, y = fit)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
-  geom_line(aes(color = testing_condition), lwd = 2) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
-  scale_color_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
                      name="Condition",labels=c("0M","1M","2M")) +
-  scale_fill_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
         text=element_text(family="CMU Serif",size=60),
         legend.position=c(0.9,0.9),legend.background=element_rect(fill=NA)) +
-  labs(x = 'Bilingual balance (L1-L2 difference)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4')
-ggsave("exp1_yes_L1L2diff.png",width=10,height=7,yes_L1L2diff_plt,path=output_folder,device="png");
+  labs(x = 'Bilingual balance (L1-L2 difference)', 
+       y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4')
+ggsave("exp1_yes_L1L2diff.png",width=10,height=6,yes_L1L2diff_plt,path=output_folder,device="png");
 # More bilingual balance = stronger morph familiarity effect
 
 # "YES" - ent
@@ -1886,20 +2403,23 @@ effect_ent <- as.data.frame(effect('testing_condition*ent',
 yes_ent_plt <- ggplot(effect_ent, aes(x = ent, y = fit)) +
   geom_hline(yintercept=0.5, linetype="dashed", 
              color = "darkgray",lwd=1.25) +
-  geom_line(aes(color = testing_condition), lwd = 2) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
   geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
-  scale_color_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
                      name="Condition",labels=c("0M","1M","2M")) +
-  scale_fill_manual(values=c(cols2[100],cols2[200],"#004D40FF"),
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
         text=element_text(family="CMU Serif",size=60),
         legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA)) +
-  labs(x = 'Multilingual balance (entropy)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4')
+  labs(x = 'Multilingual balance (entropy)', y = 'Proportion of "yes" responses', 
+       title = 'Fitted Line - Lme4')
 # More multilingual balance = stronger morph familiarity effect?
-ggsave("exp1_yes_ent.png",width=10,height=7,yes_ent_plt,path=output_folder,device="png");
+ggsave("exp1_yes_ent.png",width=10,height=6,yes_ent_plt,path=output_folder,device="png");
 
 # 2M
 data_testing_2M_aggr <- data_testing_2M_aggr[data_testing_2M_aggr$response=="meanYes",];
@@ -2084,11 +2604,17 @@ ggsave("exp1_fam_PC3.png",width=10,height=7,plt_fam_PC3,path=output_folder,devic
 
 
 ## CLUSTERING TREE ===================================================
-data_BLP_short <- subset(data_BLP, select=c(HistoryL1Score,HistoryL2Score,HistoryL3Score,HistoryL4Score,
-                                            UseL1Score,UseL2Score,UseL3Score,UseL4Score,
-                                            ProficiencyL1Score,ProficiencyL2Score,ProficiencyL3Score,ProficiencyL4Score,
-                                            AttitudeL1Score,AttitudeL2Score,AttitudeL3Score,AttitudeL4Score,
+data_BLP_short <- subset(data_BLP, select=c(HistoryL1Score,HistoryL2Score,
+                                            HistoryL3Score,HistoryL4Score,
+                                            UseL1Score,UseL2Score,UseL3Score,
+                                            UseL4Score,ProficiencyL1Score,
+                                            ProficiencyL2Score,
+                                            ProficiencyL3Score,ProficiencyL4Score,
+                                            AttitudeL1Score,AttitudeL2Score,
+                                            AttitudeL3Score,AttitudeL4Score,
                                             L1Score,L2Score,L3Score,L4Score,
-                                            var,ent,use_ent,cossim,use_cossim,multiexp,L1_L2_diff,
-                                            RC1_L3,RC9_L4,RC2_use_L1vsL2,RC8_hist_L2,RC3_prof_L2));
+                                            var,ent,use_ent,cossim,use_cossim,
+                                            multiexp,L1_L2_diff,RC1_L3,RC9_L4,
+                                            RC2_use_L1vsL2,RC8_hist_L2,
+                                            RC3_prof_L2));
 plot(varclus(as.matrix(data_BLP_short)))

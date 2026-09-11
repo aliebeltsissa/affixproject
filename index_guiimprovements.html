@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Esperimento di parole aliene</title>
+    <!-- jsPsych -->
+    <script src="https://unpkg.com/jspsych@7.3.4" type="text/javascript"></script>
+    <!-- preload & setup -->
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
+    <!-- response plugins -->
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@1.1.4"></script>
+    <!-- survey plugins -->
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-select@1.1.3"></script>
+    <!-- formatting & styling -->
+    <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="survey.css">
+    <meta charset="utf-8"/>
+  </head>
+  <style>
+    @font-face {
+      font-family: "BACS";
+      src: url('BACS1.otf') format('opentype'); 
+    };
+    @font-face {
+      font-family: 'Space';
+      src: url('SpaceOfTime.otf') format('opentype'); 
+    };
+    body {
+      font-family: 'Space', sans-serif;
+    };
+  </style>
+  <body></body>
+  <script>
+    /* ========== INITIALISATION ========== */
+    var jsPsych = initJsPsych();
+    
+    // capture info from Prolific
+    var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+    var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+    var session_id = jsPsych.data.getURLVariable('SESSION_ID');
+
+    jsPsych.data.addProperties({
+      subject_id: subject_id,
+      study_id: study_id,
+      session_id: session_id
+    });
+
+    var font = document.createElement('style');
+    font.innerHTML = `
+      @font-face {
+        font-family: 'BACS';
+        src: url('BACS1.otf') format('opentype');
+      }
+    `;
+    document.head.appendChild(font);
+
+    var font2 = document.createElement('style');
+    font2.innerHTML = `
+      @font-face {
+        font-family: 'Space';
+        src: url('SpaceOfTime.otf') format('opentype');
+      }
+    `;
+    document.head.appendChild(font2);
+
+
+    var timeline = [];
+
+    /* ========== WORD_GENERATION SCRIPT ========== */
+    function import_morphemes() {
+      const L1affixes_list = ['JQA', 'LcO', 'Ald', 'mkc', 'Nac', 'kbu', 'aQr', 'rAm', 'YbN', 'GUa', 'Ymb', 'kam', 'uvJ', 'kYL', 'ark', 'YkZ', 'YLU', 'cbm', 'lLG', 'bLd', 'cUN', 'vcb', 'uUY', 'mZb', 'dUr', 'QGb', 'vJQ', 'Qru', 'rGl', 'Glu', 'rba', 'mLJ', 'LaA', 'Arv', 'uda', 'mvG', 'lvk', 'UZu', 'UbG', 'Jud', 'OcN', 'JUG', 'lGc', 'kmU', 'JcL', 'NUZ', 'YNu', 'JZr', 'uZc', 'rab', 'Zckv', 'ravu', 'uOAO', 'OcZJ', 'JUNa', 'rNlZ', 'NYZu', 'dYAJ', 'YUYa', 'kdrO', 'ZvkL', 'OJlN', 'YaOk', 'kGua', 'vUdm', 'Grub', 'Grbk', 'UdvY', 'QONk', 'kuvb', 'OJNk', 'crdY', 'ukbY', 'LYGA', 'NmAG', 'rAJu', 'YZUZ', 'Yaum', 'ZAUu', 'AZbl', 'Avdk', 'rZYd', 'GUOA', 'OQAr', 'GQYQ', 'uUmb', 'YZJO', 'LUOk', 'vAvb', 'dmkv', 'badk', 'QvlZ', 'rkra', 'cYUv', 'JcUk', 'LkNc', 'kJdr', 'YArG', 'AOUl', 'rULv'];
+      const L1stems_list = ['ukcY', 'bYuQ', 'adkr', 'bvkr', 'mrOd', 'Udbd', 'bvuZ', 'rkYL', 'rckO', 'rvAJ', 'YQbc', 'Yadr', 'YJkb', 'kNua', 'mdla', 'ldAa', 'amJm', 'LGkA', 'aONd', 'krGu', 'UvOG', 'OZkb', 'NaJb', 'vQdO', 'alJY', 'vclY', 'JvaA', 'LQur', 'ArQu', 'rLaZ', 'GZJY', 'vAar', 'JAaG', 'JauQ', 'krUQ', 'kZUb', 'Gabk', 'uauO', 'vYLU', 'rkJu', 'kulZ', 'udkm', 'cAZu', 'YZJm', 'OkGY', 'UmNJ', 'uAkr', 'YOZN', 'AlNU', 'JNka', 'rLkm', 'LdQv', 'AlUY', 'mbZl', 'bmbN', 'rvUb', 'lkAk', 'bGuO', 'lZcu', 'uvaU', 'aUZA', 'Ydud', 'UrOQ', 'AJLr', 'lrZG', 'vblr', 'aYQm', 'dkLl', 'GAcY', 'NvYJ', 'ALGZ', 'NQZv', 'JdGm', 'kGlU', 'NkUA', 'UaYL', 'GJZm', 'dNZA', 'vJab', 'GQrc', 'JmNk', 'UJkG', 'LuaU', 'lmbY', 'UJmr', 'aYaN', 'ZdlO', 'JrGv', 'ukYZ', 'mcOJ', 'muYN', 'NJZl', 'Abka', 'OJGQ', 'Nulk', 'lGZv', 'dJNr', 'lcOc', 'YcdO', 'LuNZ', 'uQuZc', 'GLYrA', 'YuaNd', 'QcQAJ', 'YOaAb', 'UYZlZ', 'vuJZu', 'JAdLm', 'NaAQd', 'UAcdu', 'UdlGQ', 'Amacl', 'NLQGm', 'ZcGdN', 'UdYUQ', 'laYmr', 'auYAk', 'YUNkZ', 'OAblc', 'OLJbl', 'Udumd', 'LckGN', 'ALOrl', 'AmQOY', 'kabJb', 'ZYcQU', 'GumLl', 'kGamN', 'NAacQ', 'kbmZO', 'aOLZU', 'OYuvb', 'lYrua', 'Zvalv', 'Qclad', 'GNAca', 'adYrc', 'LvuOG', 'mZUrQ', 'cuOJb', 'mkmJN', 'YNrAm', 'GJGcZ', 'rbYbu', 'QbkAc', 'dvNvA', 'Juaml', 'rvOvU', 'kLvdN', 'NbmQU', 'rdLJa', 'OAmGr', 'advYO', 'vkYGl', 'uQkrd', 'mLdkZ', 'bNdmG', 'ObZbA', 'QOLmu', 'dmZvm', 'ZNLOv', 'AlQaQ', 'bYGOZ', 'vAuNl', 'LNUrJ', 'QLrOJ', 'ubALm', 'UaZma', 'kdaAJ', 'LcNUJ', 'ZdNmU', 'bdUNu', 'ckLAL', 'NvuGr', 'NbacA', 'YJLcA', 'aNYmb', 'rcmuv', 'vmuLl', 'ZkGmY', 'YLQmG', 'dGLAl', 'aLNlk', 'ObOQl', 'AZlLN', 'mUOcO', 'Ldrbv', 'damYb', 'AZaJc', 'LOLkU', 'ckduA', 'OQarQ', 'ZJLmr', 'rGUAY', 'GLluA', 'OdlNm', 'LAclA', 'JmvmO', 'JZOAk', 'JdOAY'];
+      const L2affixes_list = ['TAm', 'YcM', 'tAY', 'OMC', 'DKP', 'mAM', 'DOk', 'mhc', 'YBO', 'ATc', 'PTl', 'Cdt', 'lRE', 'BCD', 'cDR', 'Akd', 'EcR', 'RDM', 'cPK', 'PMd', 'Tmc', 'tcB', 'ABb', 'OYK', 'Dmh', 'mCd', 'OBT', 'PED', 'dPc', 'OPE', 'TRK', 'tRb', 'dRA', 'YDE', 'bRC', 'Yht', 'OtM', 'APT', 'EAO', 'bTE', 'CEM', 'kBD', 'dBC', 'BbM', 'KmE', 'kPM', 'kKE', 'hBK', 'Tbk', 'MAB', 'TRkY', 'MCkm', 'AdYl', 'RCdc', 'CmYA', 'KlkD', 'dmRb', 'YKPB', 'dTAh', 'dEPD', 'KEdl', 'EKBO', 'EPBT', 'CPMl', 'YTOM', 'OdOP', 'KOYC', 'dCKc', 'RYlD', 'cthB', 'bAMO', 'BCAd', 'CMdP', 'APEM', 'AlKD', 'lMck', 'BYhT', 'RdCc', 'mtKP', 'cMRl', 'MKmY', 'khMD', 'YbBT', 'bdtK', 'TmTm', 'kDOm', 'kMEC', 'DlDT', 'CKOb', 'BRDh', 'PMYm', 'TPOM', 'DbMR', 'hRKm', 'DOAK', 'hEct', 'mKcD', 'PEdK', 'Ckbd', 'YDTk'];
+      const L2stems_list = ['hbmA', 'bROC', 'OCmk', 'kKRC', 'KdAR', 'BbOD', 'DhCP', 'AdDb', 'TdTD', 'TdmA', 'EMYK', 'AbKD', 'RhPm', 'OdYP', 'DCmh', 'KElB', 'BPAl', 'hkRK', 'KDPA', 'TEBK', 'mARM', 'dKRD', 'AMkC', 'mdkK', 'tdDd', 'Ctmb', 'CYPc', 'DBkl', 'PYkC', 'tRdM', 'kPOt', 'hTDd', 'YObA', 'Ehbt', 'RCcE', 'ctkt', 'TklD', 'hChY', 'chAh', 'COTK', 'mBYl', 'lBlE', 'EhRm', 'TDKh', 'CmcO', 'TKDk', 'dYdA', 'tmYh', 'BEPO', 'OtlR', 'McMD', 'khmh', 'OEPk', 'lRCB', 'YmBd', 'ORbk', 'mBbK', 'OcYM', 'AlTd', 'DhMt', 'lTmO', 'EdBb', 'DlDd', 'ACcO', 'bAdk', 'RtRh', 'KMOc', 'DBlh', 'bcOR', 'MhKd', 'kcOY', 'blMk', 'MBmE', 'OMlT', 'mhtc', 'tmAK', 'MDKP', 'PlEK', 'kCRm', 'Ddck', 'tRPD', 'RKYk', 'hbkd', 'MTdY', 'PdDT', 'bcbM', 'PcBT', 'DMRP', 'TPCb', 'YlYc', 'Mlth', 'ktBd', 'PEtE', 'YKRk', 'hCkt', 'hlkT', 'lBKt', 'BECk', 'KABA', 'dRht', 'kKEdM', 'dClOC', 'DmAME', 'EltMB', 'KRARm', 'tKDmh', 'PCMPK', 'kcCRt', 'EPMDk', 'htmhC', 'KAERM', 'DOchl', 'EtMDM', 'DRPkY', 'BKDRY', 'EPERd', 'bmdAB', 'CDEmY', 'lhCTC', 'hYDmt', 'PMPtk', 'BOCRM', 'kcdOt', 'TObCO', 'OAmAd', 'lbBDE', 'hAROK', 'hlbtb', 'hmKPM', 'DcPTc', 'btlck', 'kDRKc', 'cdKBY', 'BMEMA', 'dTmED', 'TAdhM', 'KMDYt', 'ECtbD', 'KBKBE', 'bRABt', 'RkmdC', 'AYkEh', 'lAOKM', 'MkmEd', 'Blmcl', 'chEDO', 'dRbDb', 'kdEdY', 'PctRC', 'dMThk', 'BOckP', 'hTtBb', 'lKdbc', 'hlctE', 'ODBDA', 'COtBD', 'YlCPB', 'DkTCP', 'EYtYR', 'kRCkO', 'cBROB', 'dCtMA', 'thbOM', 'TbKME', 'ckdAm', 'OmtlD', 'cDOEB', 'KTDTB', 'CkBOP', 'RdPtD', 'PDPhl', 'dKDth', 'cRElD', 'lRckA', 'cROMt', 'PCPDh', 'BATOc', 'Phktk', 'PEkhA', 'dMYBP', 'Cchtd', 'DBPhc', 'tcYbd', 'MBKRE', 'BdtAC', 'hBmMC', 'RYtkc', 'DOBhY', 'RlAKc', 'mBmlA', 'kPkRA', 'tDPRk', 'dOYml', 'kMbTR', 'ABPRB', 'tmtEM', 'lCbcm', 'EMbDP', 'CRdBd', 'TCbDC'];
+      return [L1affixes_list, L1stems_list, L2affixes_list, L2stems_list]
+    };
+
+    function cycle_through(L1affixes_list, L1stems_list, L2affixes_list, L2stems_list) {
+      const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0];
+    
+      function wordcycle(affixes,stems) {
+        var reps = 0;
+        var words_list = [];
+        var listlength = words_list.length;
+        while (listlength < 50) {
+          var words_list = [];
+          var congruenttesting_list = [];
+          var words_dict = {};
+          var congruenttesting_dict = {};
+          var training_dict = {};
+          var affix_subset = jsPsych.randomization.sampleWithoutReplacement(affixes, 5);
+          var stem_subset = jsPsych.randomization.sampleWithoutReplacement(stems, 10);
+          reps++;
+          console.log('Finished rep ' + reps + ' of generating word list.')
+          for (let i = 0; i < stem_subset.length; i++) {
+            var j = 0;
+            while (j < affix_subset.length) {
+              var stem = stem_subset[i];
+              var last = stem.slice(-1); //
+              var affix = affix_subset[j];
+              if (stem != affix && last != affix[0]) {
+                words_list.push([stem + affix]); 
+                var parts = [stem, affix];
+                var word = stem + affix;
+                var dictkeys = Object.keys(words_dict);
+                if (dictkeys.includes(word) == false) {
+                  words_dict[word] = parts
+                };
+              };
+              j++;
+            };
+            var indice = testingaffix_indices[i];
+            var affix = affix_subset[indice];
+            var stem = stem_subset[i];
+            var word = stem + affix;
+            if (congruenttesting_list.includes(word) == false) {
+              congruenttesting_list.push([stem + affix]);
+              var parts = [stem, affix];
+              var word = stem + affix;
+              congruenttesting_dict[word] = parts
+            };
+          };
+          var words_list = Object.keys(words_dict);
+          var listlength = words_list.length;
+          if (listlength < 50) {
+            var affix_subset = [];
+            var stem_subset = [];
+            var words_list = [];
+            var congruenttesting_list = [];
+            var words_dict = {};
+            var congruenttesting_dict = {};
+            var training_dict = {}
+          };
+        };
+        if (words_list.length == 50) {
+          console.log('Finished testing word list.');
+          congruenttesting_list2 = [...congruenttesting_list];
+          var congruenttesting_list = [];
+          var training_dict = Object.assign({}, words_dict);
+          var training_list = Object.keys(training_dict);
+          for (word of congruenttesting_list2) {
+            var word = word.toString();
+            congruenttesting_list.push(word)
+          };
+          for (let i = 0; i < congruenttesting_list.length; i++) {
+            var word = congruenttesting_list[i];
+            var training_list = Object.keys(training_dict);
+            if (training_list.includes(word)) {
+              delete training_dict[word];
+            };
+          };
+          var training_list = Object.keys(training_dict);
+        };
+        return [affix_subset, stem_subset, words_dict, words_list, training_dict, training_list, congruenttesting_dict, congruenttesting_list]
+      };
+
+      function cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list) {
+        const testingaffix_indices = [0,1,2,3,4,1,2,3,4,0];
+        var incongruenttesting_list = [];
+        var incongruenttesting_dict = {};
+        for (let i = 0; i < L1stemsubset_list.length; i++) {
+          var indice = testingaffix_indices[i];
+          var affix = L1affixsubset_list[indice];
+          var stem = L2stemsubset_list[i];
+          var word = stem + affix;
+          if (stem[-1] != affix[0] && incongruenttesting_list.includes(word) == false) {
+            incongruenttesting_list.push([stem + affix]);
+            var parts = [stem, affix];
+            var word = stem + affix;
+            incongruenttesting_dict[word] = parts
+          };
+        };
+        for (let j = 0; j < L2stemsubset_list.length; j++) {
+          var indice = testingaffix_indices[j];
+          var affix = L2affixsubset_list[indice];
+          var stem = L1stemsubset_list[j];
+          var word = stem + affix;
+          if (stem[-1] != affix[0] && incongruenttesting_list.includes(word) == false) {
+            incongruenttesting_list.push([stem + affix]);
+            var parts = [stem, affix];
+            var word = stem + affix;
+            incongruenttesting_dict[word] = parts
+          };
+        };
+        return [incongruenttesting_list, incongruenttesting_dict]
+      };
+    
+      /* generate word lists for both languages */
+      var incongruenttesting_list = [];
+      while (incongruenttesting_list.length < 20) {
+        var values = wordcycle(L1affixes_list, L1stems_list);
+        var L1affixsubset_list = values[0];
+        var L1stemsubset_list = values[1];
+        var L1words_dict = values[2];
+        var L1words_list = values[3];
+        var L1training_dict = values[4];
+        var L1training_list = values[5];
+        var L1congruenttesting_dict = values[6];
+        var L1congruenttesting_list = values[7];
+        var values2 = wordcycle(L2affixes_list, L2stems_list);
+        var L2affixsubset_list = values2[0];
+        var L2stemsubset_list = values2[1];
+        var L2words_dict = values2[2];
+        var L2words_list = values2[3];
+        var L2training_dict = values2[4];
+        var L2training_list = values2[5];
+        var L2congruenttesting_dict = values2[6];
+        var L2congruenttesting_list = values2[7];
+        var training_list = L1training_list.concat(L2training_list);
+        var training_dict = Object.assign({},L1training_dict,L2training_dict);
+        var congruenttesting_list = L1congruenttesting_list.concat(L2congruenttesting_list);
+        var congruenttesting_dict = Object.assign({},L1congruenttesting_dict,L2congruenttesting_dict);
+        var values3 = cross_language_testing(L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list);
+        var incongruenttesting_list = values3[0];
+        var incongruenttesting_dict = values3[1];
+        for (let i = 0; i < incongruenttesting_list.length; i++) {
+          var word = congruenttesting_list[i];
+          var training_list = Object.keys(training_dict);
+          if (training_list.includes(word)) {
+            delete training_dict[word];
+          };
+        };
+        var training_list = Object.keys(training_dict);
+        
+      };
+      var all_morphemes = Object.values(training_dict);
+      var all_morphemes = all_morphemes.flat();
+      var all_morphemes = [...new Set(all_morphemes)];
+      all_morphemes.sort((a, b) => a.length - b.length);
+      var exp_threes = [];
+      var exp_fours = [];
+      var exp_fives = [];
+      for (morpheme of all_morphemes) {
+        if (morpheme.length == 3) {exp_threes.push(morpheme)};
+        if (morpheme.length == 4) {exp_fours.push(morpheme)};
+        if (morpheme.length == 5) {exp_fives.push(morpheme)};
+      };
+      var big_threes = [];
+      var big_fours = [];
+      var big_fives = [];
+      for (morpheme of L1affixes_list) {
+        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {big_threes.push(morpheme)};
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+      };
+      for (morpheme of L1stems_list) {
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {big_fives.push(morpheme)};
+      };
+      for (morpheme of L2affixes_list) {
+        if (morpheme.length == 3 && all_morphemes.includes(morpheme) == false) {big_threes.push(morpheme)};
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+      };
+      for (morpheme of L2stems_list) {
+        if (morpheme.length == 4 && all_morphemes.includes(morpheme) == false) {big_fours.push(morpheme)};
+        if (morpheme.length == 5 && all_morphemes.includes(morpheme) == false) {big_fives.push(morpheme)};
+      };
+
+      var all_confounds = [];
+      var confound_threes = [];
+      var confound_fours = [];
+      var confound_fives = [];
+      confound_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, parseInt(exp_threes.length));
+      confound_fours = jsPsych.randomization.sampleWithoutReplacement(big_fours, parseInt(exp_fours.length));
+      confound_fives = jsPsych.randomization.sampleWithoutReplacement(big_fives, parseInt(exp_fives.length));
+      var all_confounds = confound_threes.concat(confound_fours, confound_fives);
+      if (all_confounds.length == all_morphemes.length && confound_threes.length == exp_threes.length && confound_fours.length == exp_fours.length && confound_fives.length == exp_fives.length) {
+        console.log("Correctly generated familiarity confound set.")
+      };
+
+      big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+        return confound_threes.indexOf( el ) < 0;
+      } );
+      big_fours = big_fours.filter( function( el ) {
+        return confound_fours.indexOf( el ) < 0;
+      } );
+      big_fives = big_fives.filter( function( el ) {
+        return confound_fives.indexOf( el ) < 0;
+      } );
+
+      var familiarity_pairs = [];
+      for (let i = 0; i < 30; i++) {
+        familiarity_pairs.push([all_morphemes[i], all_confounds[i]])
+      };
+      return [L1affixsubset_list, L1stemsubset_list, L2affixsubset_list, L2stemsubset_list, L1words_dict, L1words_list, L1training_dict, L1training_list, L1congruenttesting_dict, L1congruenttesting_list, L2words_dict, L2words_list, L2training_dict, L2training_list, L2congruenttesting_dict, L2congruenttesting_list, training_list, training_dict, congruenttesting_list, congruenttesting_dict, incongruenttesting_list, incongruenttesting_dict, familiarity_pairs, all_morphemes, all_confounds, exp_threes, exp_fours, exp_fives, big_threes, big_fours, big_fives]
+    };
+
+    var values4 = import_morphemes();
+    var L1affixes_list = values4[0];
+    var L1stems_list = values4[1];
+    var L2affixes_list = values4[2];
+    var L2stems_list = values4[3];
+    var values5 = cycle_through(L1affixes_list, L1stems_list, L2affixes_list, L2stems_list);
+    var L1affixsubset_list = values5[0];
+    var L1stemsubset_list = values5[1];
+    var L2affixsubset_list = values5[2];
+    var L2stemsubset_list = values5[3];
+    var L1words_dict = values5[4];
+    var L1words_list = values5[5];
+    var L1training_dict = values5[6];
+    var L1training_list = values5[7];
+    var L1congruenttesting_dict = values5[8];
+    var L1congruenttesting_list = values5[9];
+    var L2words_dict = values5[10];
+    var L2words_list = values5[11];
+    var L2training_dict = values5[12];
+    var L2training_list = values5[13];
+    var L2congruenttesting_dict = values5[14];
+    var L2congruenttesting_list = values5[15];
+    var training_list = values5[16];
+    var training_dict = values5[17];
+    var congruenttesting_list2 = values5[18];
+    var congruenttesting_dict = values5[19];
+    var incongruenttesting_list2 = values5[20];
+    var incongruenttesting_dict = values5[21];
+    var familiarity_pairs = values5[22];
+    var all_morphemes = values5[23];
+    var all_confounds = values5[24];
+    var exp_threes = values5[25];
+    var exp_fours = values5[26];
+    var exp_fives = values5[27];
+    var big_threes = values5[28];
+    var big_fours = values5[29];
+    var big_fives = values5[30];
+    var incongruenttesting_list = [];
+    for (word of incongruenttesting_list2) {
+      var word = word.toString();
+      incongruenttesting_list.push(word)
+    };
+    var congruenttesting_list = [];
+    var congruenttesting = [];
+    var incongruenttesting = [];
+    for (word of congruenttesting_list2) {
+      var word = word.toString();
+      congruenttesting_list.push(word)
+    };
+    for (word of congruenttesting_list) {
+      congruenttesting.push([word,0])
+    };
+    for (word of incongruenttesting_list) {
+      incongruenttesting.push([word,1])
+    };
+    var testing = congruenttesting.concat(incongruenttesting);
+    var testing_dict = Object.assign({}, congruenttesting_dict, incongruenttesting_dict);
+
+    if (training_list.length == 80 && testing.length == 40) {
+      console.log('Correctly generated complete stimuli set.')
+    };
+
+    console.log('Training list: ' + training_list);
+    console.log(testing);
+
+    function training_randomisation(training_list) {
+      var listlength = training_list.length;
+      var rand_lst = ['efjnpqsz'];
+      var rep = 0;
+      while (rand_lst.length < (listlength + 1)) {
+        if (rep < 500) {
+          var word = jsPsych.randomization.sampleWithoutReplacement(training_list, 1)[0];
+          var last2_word = word.slice(-2);
+          var last_training = rand_lst.slice(-1)[0];
+          var last2_training = last_training.slice(-2);
+          var first2_word = word.slice(0, 2);
+          var first2_training = last_training.slice(0, 2);
+          if (first2_word != first2_training && last2_word != last2_training && rand_lst.includes(word) == false) {
+            rand_lst.push(word)
+          };
+          rep++;
+        };
+        if (rep >= 500) {
+          var rand_lst = ['efjnpqsz'];
+          var rep = 0
+        }
+      };
+      rand_lst.shift();
+      var rand_lst = rand_lst.flat();
+      return rand_lst
+    };
+    
+    function testing_randomisation(testing) {
+      var listlength = testing.length;
+      var rand_lst = [['efjnpqsz',0]];
+      var rep = 0;
+      while (rand_lst.length < (listlength+1)) {
+        if (rep < 500) {
+          var item = jsPsych.randomization.sampleWithoutReplacement(testing, 1)[0];
+          var word = item[0];
+          var word_condition = item[1];
+          var last_item = rand_lst.slice(-1)[0];
+          var last_word = last_item.slice(0)[0];
+          var first2_word = word.slice(0, 2);
+          var first2_last_word = last_word.slice(0, 2);
+          var last2_word = word.slice(-2);
+          var last2_last_word = last_word.slice(-2);
+          if (first2_word != first2_last_word && last2_word != last2_last_word && rand_lst.includes(item) == false) {
+            rand_lst.push(item)
+          };
+          rep++
+        };
+        if (rep >= 500) {
+          var rand_lst = [['efjnpqsz',0]];
+          var rep = 0;
+        }
+      };
+      rand_lst.shift();
+      return rand_lst
+    };
+
+    function FisherYatesShuffle(array) {
+      var m = array.length, t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+      }
+    return array;
+    };
+
+    /* generating MorCode novel words */
+    // extract morpheme lengths from experimental stimuli dict
+    var testing_lengths = [];
+    var testing_parts = Object.values(testing_dict)
+    for (let i = 0; i < testing_parts.length; i++) { // creates a list of lists with [stem length; affix length]
+      var parts = testing_parts[i];
+      if (parts[0].length == 3) {length_1 = 3};
+      if (parts[0].length == 4) {length_1 = 4};
+      if (parts[0].length == 5) {length_1 = 5};
+      if (parts[1].length == 3) {length_2 = 3};
+      if (parts[1].length == 4) {length_2 = 4};
+      if (parts[1].length == 5) {length_2 = 5};
+      testing_lengths.push([length_1, length_2])
+    };
+
+    var stem_lengths = [];
+    var affix_lengths = [];
+    for (let i = 0; i < testing_lengths.length; i++) { // splits up the testing_length list into the stem & affix lengths
+      var line = testing_lengths[i];
+      stem_lengths.push(line[0]);
+      affix_lengths.push(line[1])
+    };
+
+    function elementCount(arr, element) {
+      return arr.reduce((currentElement, arrElement) => (arrElement == element ? currentElement + 1 : currentElement), 0)
+    };
+    var stem_4s = elementCount(stem_lengths, 4); // count how many 4-character stems are in the current testing words
+    var stem_5s = elementCount(stem_lengths, 5);
+    var affix_3s = elementCount(affix_lengths, 3);
+    var affix_4s = elementCount(affix_lengths, 4);
+
+    // assembling new morphemes in same length combinations as testing items
+    var morcodeXmorcode_words_list = [];
+    var morcodeXmorcode_words_dict = {};
+    while (morcodeXmorcode_words_list < 40) {
+      for (let i = 0; i < testing.length; i++) {
+        var lengths = testing_lengths[i];
+        if (lengths[0] == 3) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+        if (lengths[0] == 4) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+        if (lengths[0] == 5) {var morcode_stem = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+        if (lengths[1] == 3) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_threes, 1))};
+        if (lengths[1] == 4) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fours, 1))};
+        if (lengths[1] == 5) {var morcode_affix = String(jsPsych.randomization.sampleWithoutReplacement(big_fives, 1))};
+        var morcode = morcode_stem + morcode_affix;
+        if (morcodeXmorcode_words_list.includes(morcode) == false & morcode_stem[-1] != morcode_affix[0]) {
+          morcodeXmorcode_words_list.push(morcode);
+          morcodeXmorcode_words_dict[morcode] = [morcode_stem, 'morcode', morcode_affix, 'morcode']
+        }
+      };
+      if (morcodeXmorcode_words_list.length < 40) {var morcodeXmorcode_words_list = []}
+    };
+    var all_morcode = Object.values(morcodeXmorcode_words_dict);
+    var all_morcode = all_morcode.flat();
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return all_morcode.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return all_morcode.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return all_morcode.indexOf( el ) < 0;
+    } );
+
+    // morcode X training word, training word X morcode
+    var testing_affixes = [];
+    var testing_stems = [];
+    var congruenttesting_list;
+    for (let i=0; i < congruenttesting_list.length; i++) { // extract all stems & affixes used in the congruent testing condition
+      var parts = congruenttesting_dict[congruenttesting_list[i]];
+      var stem = parts[0];
+      var affix = parts[1];
+      testing_stems.push(stem);
+      testing_affixes.push(affix)
+    };
+    
+    // sorts testing affixes and stems according to length
+    var testing_stems_4s = [];
+    var testing_stems_5s = [];
+    var testing_affixes_3s = [];
+    var testing_affixes_4s = [];
+    for (let i = 0; i < testing_stems.length; i++) {
+      if (testing_stems[i].length == 4) {testing_stems_4s.push(testing_stems[i])};
+      if (testing_stems[i].length == 5) {testing_stems_5s.push(testing_stems[i])}
+    };
+    for (let i = 0; i < testing_affixes.length; i++) {
+      if (testing_affixes[i].length == 3) {testing_affixes_3s.push(testing_affixes[i])};
+      if (testing_affixes[i].length == 4) {testing_affixes_4s.push(testing_affixes[i])}
+    };
+
+    // extracts new morcodes of required length
+    var morcode_3s = affix_3s/2; // divided by 2 since we have morphemes as well, so need just 1 half of each word
+    var morcode_4s = (affix_4s/2) + (stem_4s/2);
+    var morcode_5s = stem_5s/2;
+    var morcode_threes = jsPsych.randomization.sampleWithoutReplacement(big_threes, morcode_3s);
+    var morcode_fours = jsPsych.randomization.sampleWithoutReplacement(big_fours, morcode_4s);
+    var morcode_fives = jsPsych.randomization.sampleWithoutReplacement(big_fives, morcode_5s);
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return morcode_threes.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return morcode_fours.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return morcode_fives.indexOf( el ) < 0;
+    } );
+
+    var morcodeXmorpheme_list = [];
+    var morcodeXmorpheme_dict = {};
+    for (let i=0; i < testing_lengths.length; i++) {
+      var testing_length = testing_lengths[i];
+      var stem_length = testing_length[0];
+      var affix_length = testing_length[1];
+      if (stem_length == 4) { // if the stem length is supposed to be 4
+        if (testing_stems_4s.length == 0) { // if no more 4-character stems in morpheme list
+          var stem = morcode_fours.shift();
+          var stem_nature = 'morcode';
+          var affix_nature = 'morpheme';
+          if (affix_length == 3) {
+            if(testing_affixes_3s[0][0] != stem[-1]) { // if 1st letter would be repeating
+              var affix = testing_affixes_3s.shift()}
+            else { // get 2nd morph in array
+              var affix = testing_affixes_3s.splice(1,1)}}
+          if (affix_length == 4) {
+            if (testing_affixes_4s[0][0] != stem[-1]) {
+              var affix = testing_affixes_4s.shift()}
+            else {
+              var affix = testing_affixes_4s.splice(1,1)}}
+        }
+        if (testing_stems_4s.length != 0) { // if still some 4-character stems in morpheme list
+          var stem = testing_stems_4s.shift();
+          var stem_nature = 'morpheme';
+          var affix_nature = 'morcode';
+          if (affix_length == 3) {
+            if(morcode_threes[0][0] != stem[-1]) {
+              var affix = morcode_threes.shift()}
+            else {
+              var affix = morcode_threes.splice(1,1)
+            }}
+          if (affix_length == 4) {
+            if(morcode_fours[0][0] != stem[-1]) {
+              var affix = morcode_fours.shift()}
+            else {
+              var affix = morcode_fours.splice(1,1)}}
+        }; 
+      };
+      if (stem_length == 5) { // if the stem length is supposed to be 5
+        if (testing_stems_5s.length == 0) {
+          var stem = morcode_fives.shift();
+          var stem_nature = 'morcode';
+          var affix_nature = 'morpheme';
+          if (affix_length == 3) {
+            if(testing_affixes_3s[0][0] != stem[-1]) {
+              var affix = testing_affixes_3s.shift()}
+            else {
+              var affix = testing_affixes_3s.splice(1,1)}}
+            
+          if (affix_length == 4) {
+            if(testing_affixes_4s[0][0] != stem[-1]) {
+              var affix = testing_affixes_4s.shift()}
+            else {
+              var affix = testing_affixes_4s.splice(1,1)}}
+        }
+        if (testing_stems_5s.length != 0) {
+          var stem = testing_stems_5s.shift();
+          var stem_nature = 'morpheme';
+          var affix_nature = 'morcode';
+          if (affix_length == 3) {
+            if(morcode_threes[0][0] != stem[-1]) {
+              var affix = morcode_threes.shift()}
+            else {
+              var affix = morcode_threes.splice(1,1)}}
+            
+          if (affix_length == 4) {
+            if(morcode_fours[0][0] != stem[-1]) {
+              var affix = morcode_fours.shift()}
+            else {
+              var affix = morcode_fours.splice(1,1)}}
+        };     
+      };
+      var morcodeXmorpheme = stem + affix;
+      morcodeXmorpheme_list.push(morcodeXmorpheme);
+      var parts = [stem, stem_nature, affix, affix_nature];
+      morcodeXmorpheme_dict[morcodeXmorpheme] = parts
+    };
+    console.log(morcodeXmorpheme_dict);
+
+    big_threes = big_threes.filter( function( el ) { // removes morphemes in big_threes if selected for all_morcode
+      return morcode_threes.indexOf( el ) < 0;
+    } );
+    big_fours = big_fours.filter( function( el ) {
+      return morcode_fours.indexOf( el ) < 0;
+    } );
+    big_fives = big_fives.filter( function( el ) {
+      return morcode_fives.indexOf( el ) < 0;
+    } );
+
+    // making a master testing list with morphemeXmorpheme, morcodeXmorpheme, morcodeXmorcode
+    var master_testing_list = [];
+    for (word of testing) {
+      master_testing_list.push([word[0], word[1],'morphemeXmorpheme'])
+    };
+    for (const word of Object.keys(morcodeXmorpheme_dict)) {
+      if (morcodeXmorpheme_dict[word][1] == 'morpheme') {
+        master_testing_list.push([word, 'morphemeXmorcode']);
+      };
+      if (morcodeXmorpheme_dict[word][1] == 'morcode') {
+        master_testing_list.push([word, 'morcodeXmorpheme'])
+      }
+    };
+    for (word of morcodeXmorcode_words_list) {
+      master_testing_list.push([word,'morcodeXmorcode'])
+    };
+    console.log(master_testing_list);
+    var master_testing_dict = Object.assign({}, testing_dict, morcodeXmorpheme_dict, morcodeXmorcode_words_dict);
+    console.log(master_testing_dict);
+    console.log(familiarity_pairs);
+
+    // extract stimuli for morpheme training
+    var grouped_characters = [];
+    for (morpheme of all_morphemes) {
+      var characters = morpheme.split("");
+      grouped_characters.push(characters)
+    };
+
+    function removeDuplicates(arr) {
+      return [...new Set(arr)];
+    };
+
+    var all_characters = removeDuplicates(grouped_characters.flat());
+    console.log(all_characters);
+
+
+    // list randomisations
+    var trainingn = 12;
+    var rand_training1 = training_randomisation(training_list);
+    var rand_training2 = training_randomisation(training_list);
+    var rand_training3 = training_randomisation(training_list);
+    var rand_training4 = training_randomisation(training_list);
+    var rand_training5 = training_randomisation(training_list);
+    var rand_training6 = training_randomisation(training_list);
+    var rand_training7 = training_randomisation(training_list);
+    var rand_training8 = training_randomisation(training_list);
+    var rand_training9 = training_randomisation(training_list);
+    var rand_training10 = training_randomisation(training_list);
+    var rand_training11 = training_randomisation(training_list);
+    var rand_training12 = training_randomisation(training_list);
+
+    var rand_testing = testing_randomisation(master_testing_list);
+
+    var familiarity_pairs = FisherYatesShuffle(familiarity_pairs);
+
+    /* ========== JSPSYCH SCRIPT ========== */
+    document.body.style.backgroundImage = "url('./exp_images/night.jpg')";
+
+    // change text colour to white
+    function changeTextColor(color) {
+      var body = document.getElementsByTagName("body")[0];
+      body.style.color = color;
+    };
+
+    changeTextColor("white");
+
+    // set default font to SpaceOfTime
+    document.body.style.fontFamily = "'Space', sans-serif";
+
+    /* Participant ID textbox */
+    var sbjIDPrompt = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size:40px">Prolific ID:</p>',
+      html: '<p><input name="ID" type="text" required/></p>',
+      button_label: 'Continue'
+    };
+    timeline.push(sbjIDPrompt);
+
+    var title = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 60px;font-family:Space">WELCOME TO THE EXPERIMENT.</p>
+      <p style="font-size: 60px;font-family:Space">PLEASE PRESS SPACE.</p>`,
+      choices: ' ',
+      css_classes: ['zoom']
+    };
+    timeline.push(title);
+
+    var instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 15px;font-family:Arial">Before beginning, we ask that you read the consent information and confirm your agreement to participate in the experiment.</p>
+      <p style="font-size: 15px;font-family:Arial"> We ask that you remember that this is a research project and that your participation is entirely voluntary. You can stop your participation at any time, without needing to provide any explanation. The study we're asking you to participate in aims at examining how readers process written words. You will be engaged in a session of apprximately 25-30 minutes, followed by a brief questionnaire. You will have the opportunity to take a few breaks during the experiment. You will be paid £4 for your participation, corresponding to a rate of £8/hour. While this experiment looks at cognitive faculties, this experiment doesn't constitute clinical proof of eventual pathologies.</p>
+      <p style="font-size: 15px;font-family:Arial">All of the information collected thanks to yours and others' participation will be held in a secure password-protected server, and will not be shared with anyone not authorised to view it. Your personal information will be kept with an arbitrary participant ID. Thanks to this data anonymity process, any researcher analysing the data won't be able to track the information back to a specific participant. Therefore, this process will make identifying you impossibile, even when results from the study will be published in scientific reviews, presented at congresses, or at any other public forum. More generally, the collected data will be treated in accordance with the laws on privacy and conformity to the Legislative Degree n. 196 "Code regarding the protection of personal data" of the 30th of June 2003 and to the European Regulation 2016/670 (General Data Protection Regulation - GDPR). The Data Protection Officer is Avv. Valentina Carollo, who can be contacted at the following email addresses: <u>dpo@sissa.it</u> or <u>rpd@sissa.it</u> - PEC: <u>protocollo@pec.sissa.it</u>.</p>
+      <p style="font-size: 15px;font-family:Arial"> Before expressing your consent to participate, we would like to remind you again that in case you need explanations on any aspect of the experimental procedure, the researcher is at your disposition (<u>aliebelt@sissa.it</u>, <u>davide.crepaldi@sissa.it</u>). Please feel free to contact the researcher through the Messaging feature on Prolific if you have any questions or issues.</p>
+      <p style="font-size: 15px;font-family:Arial">If you would like to download the informed consent form, you can do so here: <a href="BASL-Informed_Consent.pdf" download>informed consent form</a>.</p>
+      <p style="font-size: 15px;font-family:Arial">We ask that you press the spacebar to proceed to the consent section.</p>`,
+      choices: ' '
+    };
+    timeline.push(instructions);
+
+    var consent = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="text-align:left;font-family:Arial;font-size:30px">I express my consent to participate in the study and further declare (please click on the boxes below):</p>',
+      html: `<p style="text-align:left;font-family:Arial"><input name="consent1" type="radio" id="YES1" value="YES" required/><label for="YES1">to have carefully read the explanations relating to this study and to the entirety of the experimental procedure;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent2" type="radio" id="YES2" value="YES" required/><label for="YES2">to have been made aware of the goals and objectives of the study in question;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent3" type="radio" id="YES3" value="YES" required/><label for="YES3">to have had the possibility to ask questions regarding any aspect of the experimental procedure and to have received satisfactory answers;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent4" type="radio" id="YES4" value="YES" required/><label for="YES4"> to be aware of any discomfort possibly caused by the experiment;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent5" type="radio" id="YES5" value="YES" required/><label for="YES5">to have received sufficient assurances on the confidentiality of information obtained from the following tests;</label></p>
+      <p style="text-align:left;font-family:Arial"><input name="consent6" type="radio" id="YES6" value="YES" required/><label for="YES6">to be aware that it's possible to stop participating at any phase of the study.</label></p><p>`
+    };
+    timeline.push(consent);
+
+    var enter_fullscreen = {
+      type: jsPsychFullscreen,
+      fullscreen_mode: true,
+      message: `<p style="font-family:Arial";>We ask that you click the button below to enter fullscreen mode. If you no longer want to participate, or run into any problems, you can exit it at any time by pressing the escape key on your keyboard.</p>`,
+      button_label: 'Enter fullscreen mode',
+    };
+    timeline.push(enter_fullscreen);
+
+    var welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5">Welcome, and thank you very much for your time!</p>
+      <p style="font-size:40px;color:#71639A">In this experiment, you'll be a language expert who's been asked to take a look at words that Earth has received in its first communication with aliens. Your task, in this first part of the experiment, is to pay close attention to the words you'll be shown; later, world leaders will ask you questions on what you saw. The words will be shown to you quite quickly; it seems that the aliens were in a hurry :)</p>
+      <img src="./exp_images/alien.png" width="200" height="200">
+      <p style="font-size:40px;color:#486DA5";>Press the spacebar to continue.<p>`,
+      choices: ' ',
+      css_classes: ['zoom']
+    };
+    timeline.push(welcome);
+
+    // BACS needs to be preloaded in some way: the first time it's used, you get a flash of Arial before it changes to BACS.
+    // This trial isn't perceptible, but allowed BACS to be loaded in.
+    var BACS_preload = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 1px; font-family: BACS"> x </p>`,
+      choices: 'NO_KEYS',
+      stimulus_duration: 1,
+      trial_duration: 1,
+      response_ends_trial: false
+    };
+    timeline.push(BACS_preload);
+
+    /* MORPHEME TRAINING */
+    var pre_morpheme_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5">From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
+      <img src="./exp_images/alien_wise.png" width="200">
+      <p style="font-size:40px;color:#71639A">Please press the spacebar when you're ready.</p>`,
+      choices: ' ',
+      css_classes: ['zoom']
+    }
+    timeline.push(pre_morpheme_training);
+
+    all_characters.push('BACKSPACE');
+    const letters = all_characters;
+    var letters_buttons = [];
+    for (let i=0;i<letters.length;i++) {
+      var letter = letters[i];
+      if (letter != 'BACKSPACE'){ // display in BACS
+        letters_buttons.push('<span style="font-family:BACS;font-size:40px;">' + letter + '</span>')
+      } else { // display in Latin characters (arial)
+        letters_buttons.push('<span style="font-size:20px">' + letter + '</span>')
+      }
+    };
+
+    var words = all_morphemes;
+    var words = FisherYatesShuffle(words);
+    var stimuli = [];
+    for (let i=0;i<words.length;i++) {
+      var word = words[i];
+      if (i<11) {
+        var image_name = 'progress0' + (i+1)
+      } else {
+        var image_name = 'progress' + (i+1)
+      };
+      var stimulus = `<img src='./exp_images/progress_bars/`+image_name+`.png'></img><p style="font-size: 40px;color:#486DA5">Please spell this part:</p><p style="font-size: 50px;font-family:BACS;color:#ffffff">`+word+`</p><p style="font-size: 50px;font-family:BACS"><p style="font-size: 50px;color:black">_</p>`;
+      stimuli.push({'stimulus':stimulus, 'word':word, 'length':(stimulus.length-42)}) // length of the stimulus string, without the hidden new line
+    };
+        
+    var morph_training = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: letters_buttons,
+      data: {
+        'word': jsPsych.timelineVariable('word'),
+        'stimulus': jsPsych.timelineVariable('stimulus'),
+        task:'morph_training'
+      },
+      css_classes: function() {
+        var last_trial = jsPsych.data.getLastTrialData();
+        var trials = last_trial['trials'];
+        var trials_dict = trials[0];
+
+        if (trials_dict['stimulus'].slice(-5,) == ' </p>' || trials_dict['stimulus'.slice(-5,) == '_</p>'] || trials_dict['input'] == trials_dict['word']) { // if first time displaying that word
+          return 'zoom';
+        }
+      },
+      on_finish: function(data){
+        var length = jsPsych.timelineVariable('length');
+        if (data.stimulus.slice(-2,) == 'p>') { // if first time displaying that word
+           var inter_stim = data.stimulus.slice(0,-44) // delete extra space
+        } else {
+          var inter_stim = data.stimulus
+        };
+        if (letters[data.response] != 'BACKSPACE') {
+          data.new_stim = inter_stim + letters[data.response]; // previous stimulus + inputted key
+        } else {
+          data.new_stim = inter_stim.slice(0,data.stimulus.length-1);
+        };
+        data.input = data.new_stim.slice(length-2);
+        if (data.new_stim.slice(-2,) == '">') { // if do BACKSPACE all the way to the start
+          data.new_stim = data.new_stim + '<p style="font-size: 50px;color:black">_</p>'
+        };
+        for (let i=0; i<words.length; i++) {
+          if (words[i] == data.word) {
+            var trial = stimuli[i];
+            trial['stimulus'] = jsPsych.data.getLastTrialData().select('new_stim').values[0];
+            data.stimuli = stimuli;
+          };
+        };
+      }
+    };
+
+    var check = {
+      timeline: [morph_training],
+      conditional_function: function(){
+        var input = jsPsych.data.getLastTrialData().select('input').values[0];
+        for (let i = 0; i < words.length; i++) {
+          if (input == words[i]) {
+            var progression = false;
+            break; 
+          } else {
+            var progression = true;
+          }
+        } ;
+        return progression
+      },
+      on_finish: function(data){
+        data.input = jsPsych.data.getLastTrialData().select('input').values[0];
+        var trial = stimuli[i];
+        trial['stimulus'] = jsPsych.data.getLastTrialData().select('new_stim').values[0];
+        data.stimuli = stimuli;
+        console.log(stimuli)
+      }
+    };
+
+    var repeat = {
+      timeline: [morph_training, check],
+      loop_function: function(){
+        var input = jsPsych.data.getLastTrialData().select('input').values[0];
+        for (let i = 0; i < words.length; i++) {
+          if (input == words[i]) {
+            return false;
+          }
+        }
+        return true;
+      }
+    };
+
+    var training_procedure = {
+      timeline: [morph_training,check,repeat],
+      timeline_variables: stimuli,
+    };
+    //timeline.push(training_procedure);
+
+
+    /* TRAINING */
+    var pre_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5">Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly, each round only takes 80 seconds!!</p>
+      <p style="font-size:40px;color:#486DA5">Please presss the spacebar.<p>`
+    };
+    timeline.push(pre_training);
+
+    var example = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5">Here is an example of the words you'll see:</p>
+      <img src='./exp_images/example.png' height='400px'>
+      <p style="font-size:40px;color:#486DA5">When you're ready to begin, press the spacebar.</p></div>`,
+      choices: ' '
+    };
+    timeline.push(example);
+
+    var training_stimuli1 = [];
+    var item = ' '
+    for (let i = 0; i < rand_training1.length; i++) {
+      var item = rand_training1[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict1 = {stimulus: java, correct_response: ''};
+      training_stimuli1.push(training_stimuli_dict1)
+    };
+    
+    var training_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: 'NO_KEYS',
+      stimulus_duration: 1000,
+      trial_duration: 1000,
+      response_ends_trial: false,
+      data:{
+        task: 'training'
+      },
+      css_classes: 'zoom'
+    };
+
+    var training_procedure1 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli1,
+    };
+    //timeline.push(training_procedure1);
+
+    var inter_training1 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 1st block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training1);
+    
+    // training round 2
+    var training_stimuli2 = [];
+    for (let i = 0; i < rand_training2.length; i++) {
+      var item = rand_training2[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict2 = {stimulus: java, correct_response: ''};
+      training_stimuli2.push(training_stimuli_dict2)
+    };
+
+    var training_procedure2 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli2,
+    };
+    //timeline.push(training_procedure2);
+
+    var inter_training2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 2nd block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training2);
+
+    // training round 3
+    var training_stimuli3 = [];
+    for (let i = 0; i < rand_training3.length; i++) {
+      var item = rand_training3[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict3 = {stimulus: java, correct_response: ''};
+      training_stimuli3.push(training_stimuli_dict3)
+    };
+
+    var training_procedure3 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli3,
+    };
+    //timeline.push(training_procedure3);
+
+    var inter_training3 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 3rd block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training3);
+
+    // training round 4
+    var training_stimuli4 = [];
+    for (let i = 0; i < rand_training4.length; i++) {
+      var item = rand_training4[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict4 = {stimulus: java, correct_response: ''};
+      training_stimuli4.push(training_stimuli_dict4)
+    };
+
+    var training_procedure4 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli4,
+    };
+    //timeline.push(training_procedure4);
+
+    var inter_training4 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 4th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training4);
+    
+    // training round 5
+    var training_stimuli5 = [];
+    for (let i = 0; i < rand_training5.length; i++) {
+      var item = rand_training5[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict5 = {stimulus: java, correct_response: ''};
+      training_stimuli5.push(training_stimuli_dict5)
+    };
+
+    var training_procedure5 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli5,
+    };
+    //timeline.push(training_procedure5);
+
+    var inter_training5 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 5th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training5);
+    
+    // training round 6
+    var training_stimuli6 = [];
+    for (let i = 0; i < rand_training6.length; i++) {
+      var item = rand_training6[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict6 = {stimulus: java, correct_response: ''};
+      training_stimuli6.push(training_stimuli_dict6)
+    };
+
+    var training_procedure6 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli6,
+    };
+    //timeline.push(training_procedure6);
+
+    var inter_training6 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 6th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(inter_training6);
+
+    // training round 7
+    var training_stimuli7 = [];
+    for (let i = 0; i < rand_training7.length; i++) {
+      var item = rand_training7[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict7 = {stimulus: java, correct_response: ''};
+      training_stimuli7.push(training_stimuli_dict7)
+    };
+
+    var training_procedure7 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli7,
+    };
+    //timeline.push(training_procedure7);
+
+    var inter_training7 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 7th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training7);
+
+    // training round 8
+    var training_stimuli8 = [];
+    for (let i = 0; i < rand_training8.length; i++) {
+      var item = rand_training8[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict8 = {stimulus: java, correct_response: ''};
+      training_stimuli8.push(training_stimuli_dict8)
+    };
+
+    var training_procedure8 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli8,
+    };
+    //timeline.push(training_procedure8);
+
+    var inter_training8 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 8th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training8);
+
+    // training round 9
+    var training_stimuli9 = [];
+    for (let i = 0; i < rand_training9.length; i++) {
+      var item = rand_training9[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict9 = {stimulus: java, correct_response: ''};
+      training_stimuli9.push(training_stimuli_dict9)
+    };
+
+    var training_procedure9 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli9,
+    };
+    //timeline.push(training_procedure9);
+
+    var inter_training9 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 9th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training9);
+
+    // training round 10
+    var training_stimuli10 = [];
+    for (let i = 0; i < rand_training10.length; i++) {
+      var item = rand_training10[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict10 = {stimulus: java, correct_response: ''};
+      training_stimuli10.push(training_stimuli_dict10)
+    };
+
+    var training_procedure10 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli10,
+    };
+    //timeline.push(training_procedure10);
+
+    var inter_training10 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 10th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training10);
+
+    // training round 11
+    var training_stimuli11 = [];
+    for (let i = 0; i < rand_training11.length; i++) {
+      var item = rand_training11[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict11 = {stimulus: java, correct_response: ''};
+      training_stimuli11.push(training_stimuli_dict11)
+    };
+
+    var training_procedure11 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli11,
+    };
+    //timeline.push(training_procedure11);
+
+    var inter_training11 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great, you've seen the 11th block of words! You may now take a short break.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: [' ']
+    };
+    timeline.push(inter_training11);
+
+    // training round 12
+    var training_stimuli12 = [];
+    for (let i = 0; i < rand_training12.length; i++) {
+      var item = rand_training12[i];
+      var java = '<p style="font-size: 60px; font-family: BACS">'+item+'</p>';
+      var training_stimuli_dict12 = {stimulus: java, correct_response: ''};
+      training_stimuli12.push(training_stimuli_dict12)
+    };
+
+    var training_procedure12 = {
+      timeline: [training_trial],
+      timeline_variables: training_stimuli12,
+    };
+    //timeline.push(training_procedure12);
+
+    var post_training = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<img src='./exp_images/alien_spaceship.png' width="200">
+      <p style="font-size:40px;color:#486DA5">Great! You've seen all the words that we received from space.</p>
+      <p style="font-size:40px;color:#486DA5">Press the spacebar when you're ready to continue.</p>`,
+      choices: ' '
+    };
+    timeline.push(post_training);
+
+    /* TESTING */
+    var pre_testing = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5;">In this second part, you'll be given some words from a new communication from the same group of aliens, and others that belong to a communication from a different group of aliens. However, the two communications arrived at the same time, so the words are mixed up. Your task is to identify the words that belong to the same group of aliens as the communication you saw in the first part of the experiment.</p>
+      <p style="font-size:40px;color:#71639A;">This is a very tricky task, since both alien groups use the same characters. Your meeting with the world leaders starts very soon, so you won't have much time to decide; you need to work quickly. Try to do your best using your intuition; you don't have much time to spend thinking about each word.</p>
+      <p style="font-size:40px;color:#486DA5;">Press <strong>k</strong> when you think that the word you're being shown is from the same group of aliens as before, and <strong>d</strong> when you think it's from a communication from the other alien group.</p>
+      <p style="font-size:40px;color:#71639A;">Press the spacebar when you're ready to begin.</p>`,
+      choices: ' ',
+    };
+    timeline.push(pre_testing);
+
+    var testing_stimuli = [];
+    for (let i = 0; i < rand_testing.length; i++) {
+      var item = rand_testing[i];
+      if (item[1] == 0 || item[1] == 1) {
+        var morpheme_condition = item[1]; // only sometimes have this (in morphemeXmorpheme condition only)
+      } else {
+        var morpheme_condition = 'NULL'
+      }
+      var testing_condition = item.slice(-1);
+      var java1 = item[0];
+      if (i < 3) {
+        var java2 = '<p style="font-size: 40px;color:#486DA5">Does this word come from the alien group you studied previously?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A;">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+      };
+      if (i >= 3) {
+        var java2 = '<p style="font-size: 40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size: 30px;color:#71639A;">Press <strong>k</strong> for yes, <strong>d</strong> for no.</p>'
+      };
+      if (morpheme_condition == 0) { // if morphemeXmorpheme word is congruent, participant should say yes
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
+      };
+      if (morpheme_condition == 1) { // if morphemeXmorpheme word is incongruent, participant should say no
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2, testing_condition: testing_condition}
+      };
+      if (testing_condition == 'morphemeXmorcode') { // if word is morphemeXmorcode, participant should say yes
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
+      };
+      if (testing_condition == 'morcodeXmorpheme') { // if word is morcodeXmorpheme, participant should say yes
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'k', java: java2, testing_condition: testing_condition}
+      };
+      if (testing_condition == 'morcodeXmorcode') { // if word is morcodeXmorcode, participant should say no
+        var testing_stimuli_dict = {stimulus: java1, correct_response: 'd', java: java2, testing_condition: testing_condition}
+      };
+      testing_stimuli.push(testing_stimuli_dict)
+    };
+
+    var testing_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('java'),
+      choices: ['d', 'k'],
+      data: {
+        item: jsPsych.timelineVariable('stimulus'),
+        task: 'testing',
+        correct_response: jsPsych.timelineVariable('correct_response'),
+        testing_condition: jsPsych.timelineVariable('testing_condition')
+      },
+      on_finish: function(data){
+        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+      }
+    };
+
+    var if_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 40px; color: red">Careful! You were too slow for this word.</p>
+      <img src='./exp_images/alien_angry.png' width="200">
+      <p style="font-size: 40px; color: red">Try to be faster.</p>
+      <p style="font-size:30px">Press the spacebar to continue.</p>`,
+      choices: ' '
+    };
+
+    var if_node = {
+      timeline: [if_trial],
+      conditional_function: function(){
+        var lasttrial_rt = jsPsych.data.getLastTrialData().select('rt').values[0];
+        if(lasttrial_rt > 2000) {
+          return true;
+        } else {
+          return false
+        }
+      }
+    };
+
+    var testing_procedure = {
+      timeline: [testing_trial, if_node],
+      timeline_variables: testing_stimuli,
+    };
+    timeline.push(testing_procedure);
+
+    var strategy_prompt = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `<p style="font-size:40px;color:#486DA5">What strategy (if any) did you use in the previous task?</b></p>`,
+      html: '<input name="testing_strategy" type="text" required/></p>',
+      button_label: "Continue"
+    };
+    timeline.push(strategy_prompt);
+
+    /* FAMILIARITY TEST */
+    var meeting_welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<div class="split left">
+      <div class="centered">
+        <img src="./exp_images/meeting.png" width="500">
+      </div>
+    </div>
+
+    <div class="split right">
+      <div class="centered">
+        <p style="font-size: 80px; line-height: 1">Welcome to the experts meeting</p>
+        <p style="font-size: 30px;">Press space</p>
+      </div>
+    </div>`,
+    choices: ' '
+    };
+    timeline.push(meeting_welcome);
+    
+    var pre_familiarity = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;">You've made it to the meeting on time, fantastic! The world leaders want to write a message back to the aliens, and need you to help them recognise which letter combinations you saw in their language. You'll have the choice between 2 letter combinations: one which was in the communication you saw, and one that wasn't. It's important to be friendly with these aliens, so it's important that you make the right choice!</p>
+      <p style="font-size:40px;>Press <strong>d</strong> if you think that the letter combination on the <strong>left</strong> is the one you saw, or <strong>k</strong> if you think that it's the one on the <strong>right</strong>.</p>
+      <p style="font-size:40px;>Press the spacebar when you're ready to begin.</p>`,
+      choices: ' ',
+      on_load: function() {
+        document.body.style.backgroundImage = "url('./exp_images/stainedglass_blurry.png')";
+      }
+    };
+    timeline.push(pre_familiarity);
+
+    var familiarity_pairs_sides = [];
+    for (let i = 0; i < familiarity_pairs.length; i++) {
+      var side = Math.random() * 2 | 0;
+      if (side == 0) {
+        familiarity_pairs_sides.push([familiarity_pairs[i][0], familiarity_pairs[i][1], 'd'])
+      };
+      if (side == 1) {
+        familiarity_pairs_sides.push([familiarity_pairs[i][1], familiarity_pairs[i][0], 'k'])
+      }
+    };
+
+    var familiarity_stimuli = [];
+    for (let i = 0; i < familiarity_pairs_sides.length; i++){
+      var java1 = String(familiarity_pairs_sides[i][0]+'&emsp;&emsp;&emsp;&emsp;&emsp;'+familiarity_pairs_sides[i][1]);
+      if (i < 3) {
+        var java2 = '<p style="font-size:40px;">Which letter combination have you already seen?</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+      };
+      if (i >= 3) {
+        var java2 = '<p style="font-size:40px">&emsp;</p><br><p style="font-size: 60px; font-family: BACS">'+java1+'<p style="font-size:30px;">Press <strong>d</strong> for this letter combination&emsp;&emsp;&emsp;&emsp;&emsp;Press <strong>k</strong> for this letter combination</p>'
+      };
+      if (familiarity_pairs_sides[i][2] == 'd') {
+        var target2 = familiarity_pairs_sides[i][0];
+        var confound2 = familiarity_pairs_sides[i][1]
+      } else if (familiarity_pairs_sides[i][2] == 'k') {
+        var target2 = familiarity_pairs_sides[i][1];
+        var confound2 = familiarity_pairs_sides[i][0]
+      };
+      var familiarity_pairs_dict = {'target': target2, 'confound': confound2, 'correct_response': familiarity_pairs_sides[i][2], 'java': java2};
+      familiarity_stimuli.push(familiarity_pairs_dict);
+    };
+
+    var familiarity_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: jsPsych.timelineVariable('java'),
+      choices: ['d', 'k'],
+      data: {
+        target: jsPsych.timelineVariable('target'),
+        confound: jsPsych.timelineVariable('confound'),
+        task: 'familiarity',
+        correct_response: jsPsych.timelineVariable('correct_response')
+      },
+      on_finish: function(data){
+        data.correct = jsPsych.pluginAPI.compareKeys(data.response, data.correct_response);
+      }
+    };
+
+    var familiarity_procedure = {
+      timeline: [familiarity_trial],
+      timeline_variables: familiarity_stimuli,
+    };
+    timeline.push(familiarity_procedure);
+
+    var pre_BLP = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size:40px;color:#486DA5;">Thank you for your help deciphering these alien communications! In this final part, we'd like you to answer the following questions on your history, use, proficiency, and attitudes towards your own languages.</p>
+      <p style="font-size:40px;color:#71639A;">The questionnaire contains 19 questions and will take only 10 minutes. Please answer every question honestly: this way we'll be able to guarantee a good outcome for this experiment.</p>
+      <p style="font-size:40px;color:#486DA5;">Press the spacebar to begin.</p>`,
+      choices: ' ',
+      on_load: function() {
+        document.body.style.backgroundImage = "url('./exp_images/night.jpg')";
+      }
+    };
+    timeline.push(pre_BLP);
+
+    /* BLP */
+    var bio_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `<p style="font-size:40px;">BIOGRAPHICAL INFORMATION</b></p>`,
+      html: `<legend align="center">Age</legend><div><input name="Age" type="text" required/></div><br>
+
+      <div>
+        <legend align="center">Gender</legend>
+        <div>
+          <input name="Gender" type="radio" id="Woman" name="Gender" value="Woman" required>
+          <label for="Woman">Woman</label>
+        </div>
+        <div>
+          <input type="radio" id="Man" name="Gender" value="Man">
+          <label for="Man">Man</label>
+        </div>
+        <div>
+          <input type="radio" id="Other" name="Gender" value="Other">
+          <label for="Other">Other/would prefer not to say</label>
+        </div>
+      </div><br>
+      
+      <div>
+        <legend align="center">Highest level of formal education</legend>
+        <div>
+          <input type="radio" id="MinusHighSchool" name="Education" value="MinusHighSchool" required>
+          <label for="MinusHighSchool">Less than high school</label>
+        </div>
+        <div>
+          <input type="radio" id="HighSchool" name="Education" value="HighSchool">
+          <label for="HighSchool">High school</label>
+        </div>
+        <div>
+          <input type="radio" id="MinusCollege" name="Education" value="MinusCollege">
+          <label for="MinusCollege">Some college</label>
+        </div>
+        <div>
+          <input type="radio" id="College" name="Education" value="College">
+          <label for="College">College (B.A., B.S.)</label>
+        </div>
+        <div>
+          <input type="radio" id="PlusCollege" name="Education" value="PlusCollege">
+          <label for="PlusCollege">Some graduate school</label>
+        </div>
+        <div>
+          <input type="radio" id="Masters" name="Education" value="Masters">
+          <label for="Masters">Masters</label>
+        </div>
+        <div>
+          <input type="radio" id="PhD" name="Education" value="PhD">
+          <label for="PhD">PhD/MD/JD</label>
+        </div>
+      </div><br>
+      
+      <div>
+        <legend align="center">What language would you consider to be your FIRST LANGUAGE? (the language in which you feel most comfortable in).</legend>
+        <input name="L1" type="text" required/>
+      </div><br>
+      <div>
+        <legend align="center">What language would you consider to be your SECOND LANGUAGE? If you don't speak a second language, please enter "n/a".</legend>
+        <input name="L2" type="text" required/>
+      </div><br>
+      <div>
+        <legend align="center">What language would you consider to be your THIRD LANGUAGE? If you don't speak a third language, please enter "n/a".</legend>
+        <input name="L3" type="text" required/>
+      </div><br>
+      <div>
+        <legend align="center">What language would you consider to be your FOURTH LANGUAGE? If you don't speak a fourth language, please enter "n/a".</legend>
+        <input name="L4" type="text" required/>
+      </div><br>
+      <div>
+        <legend align="center">Do you speak any other languages?</legend>
+        <input name="otherLs" type="text" required/>
+      </div>`,
+      button_label: "Continue",
+      data: {name: 'bio_info'},
+      css_classes: 'zoom'
+    };
+    timeline.push(bio_info);
+
+    // history section
+    function years (question) {
+      var options = [];
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var tag = L1_tag;
+          var name = nameL1;
+          var color = "#911857"
+        };
+        if (l == 1) {
+          var tag = L2_tag;
+          var name = nameL2;
+          var color = "#285f98"
+        };
+        if (l == 2) {
+          var tag = L3_tag;
+          var name = nameL3;
+          var color = "#da9d37"
+        };
+        if (l == 3) {
+          var tag = L4_tag;
+          var name = nameL4;
+          var color = "#2d7017"
+        };
+        if (question == 'AoA') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">Since birth</label>`};
+        if (question == 'AoEase') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">As early as I can remember</label>
+          
+          <input type="radio" id="`+ name +`_notyet" name="`+ name +`" value="notyet">
+          <label for="`+ name +`_notyet">Not yet</label>`};
+        if (question == 'yearsEdu') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsCountry') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsFamily') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">0</label>`};
+        if (question == 'yearsWork') {var extras = `
+          <input type="radio" id="`+ name +`_0" name="`+ name +`" value="0">
+          <label for="`+ name +`_0">0</label>`};
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO' || tag == 'n.a') {var option = ''} else {
+          var option = `
+          <div>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
+            <div class="radio-container">`+ extras +`
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6</label>
+            
+              <input type="radio" id="`+ name +`_7" name="`+ name +`" value="7" required/>
+              <label for="`+ name +`_7">7</label>
+            
+              <input type="radio" id="`+ name +`_8" name="`+ name +`" value="8" required/>
+              <label for="`+ name +`_8">8</label>
+            
+              <input type="radio" id="`+ name +`_9" name="`+ name +`" value="9" required/>
+              <label for="`+ name +`_9">9</label>
+            
+              <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
+              <label for="`+ name +`_10">10</label>
+            
+              <input type="radio" id="`+ name +`_11" name="`+ name +`" value="11" required/>
+              <label for="`+ name +`_11">11</label>
+            
+              <input type="radio" id="`+ name +`_12" name="`+ name +`" value="12" required/>
+              <label for="`+ name +`_12">12</label>
+            
+              <input type="radio" id="`+ name +`_13" name="`+ name +`" value="13" required/>
+              <label for="`+ name +`_13">13</label>
+            
+              <input type="radio" id="`+ name +`_14" name="`+ name +`" value="14" required/>
+              <label for="`+ name +`_14">14</label>
+            
+              <input type="radio" id="`+ name +`_15" name="`+ name +`" value="15" required/>
+              <label for="`+ name +`_15">15</label>
+            
+              <input type="radio" id="`+ name +`_16" name="`+ name +`" value="16" required/>
+              <label for="`+ name +`_16">16</label>
+            
+              <input type="radio" id="`+ name +`_17" name="`+ name +`" value="17" required/>
+              <label for="`+ name +`_17">17</label>
+            
+              <input type="radio" id="`+ name +`_18" name="`+ name +`" value="18" required/>
+              <label for="`+ name +`_18">18</label>
+            
+              <input type="radio" id="`+ name +`_19" name="`+ name +`" value="19" required/>
+              <label for="`+ name +`_19">19</label>
+            
+              <input type="radio" id="`+ name +`_20+" name="`+ name +`" value="20+" required/>
+              <label for="`+ name +`_20+">20+</label>
+            </div>
+          </div>`;
+          };
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'');
+      return options
+    };
+
+    var history_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 40px;">LANGUAGE HISTORY</p><p style="font-size:30px">In this section, we would like you to answer some factual questions about your language history.</p><p>',
+      html: function(){
+        var AoA = years('AoA');
+        var AoEase = years('AoEase');
+        var yearsEdu = years('yearsEdu');
+        var yearsCountry = years('yearsCountry');
+        var yearsFamily = years('yearsFamily');
+        var yearsWork = years('yearsWork');
+        var big_html = `<p style="font-size:40px"><legend>1. At what age did you start learning the following languages?</legend></p>` + AoA +
+        `<p style="font-size:40px"><legend>2. At what age did you start to feel comfortable using the following languages?</legend></p>` + AoEase +
+        `<p style="font-size:40px"><legend>3. How many years of classes (grammar, history, math, etc.) have you had in the following languages (primary school through university)?</legend></p>` + yearsEdu +
+        `<p style="font-size:40px"><legend>4. How many years have you spent in a country/region where the following languages are spoken?</legend></p>` + yearsCountry +
+        `<p style="font-size:40px"><legend>5. How many years have you spent in a family where the following languages are spoken?</legend></p>` + yearsFamily +
+        `<p style="font-size:40px"><legend>6. How many years have you spent in a work environment where the following languages are spoken?</legend></p>` + yearsWork + `</p>`;
+        return big_html
+      },
+      data: {name: 'history_info'},
+      css_classes: 'zoom'
+    };
+    timeline.push(history_info);
+
+    // use section
+    function percent (question) {
+      var options = []
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var tag = L1_tag;
+          var name = nameL1;
+          var color = "#911857"
+        };
+        if (l == 1) {
+          var tag = L2_tag;
+          var name = nameL2;
+          var color = "#285f98"
+        };
+        if (l == 2) {
+          var tag = L3_tag;
+          var name = nameL3;
+          var color = "#da9d37"
+        };
+        if (l == 3) {
+          var tag = L4_tag;
+          var name = nameL4;
+          var color = "#2d7017"
+        };
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO' || tag == 'n.a') {var option = ''} else {
+          var option = `
+          <div>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
+            <div class="radio-container">
+              <input type="radio" id="`+ name +`_0" name ="`+ name +`" value="0" required/>
+              <label for="`+ name +`_0">0%</label>
+            
+              <input type="radio" id="`+ name +`_10" name="`+ name +`" value="10" required/>
+              <label for="`+ name +`_10">10%</label>
+            
+              <input type="radio" id="`+ name +`_20" name="`+ name +`" value="20" required/>
+              <label for="`+ name +`_20">20%</label>
+            
+              <input type="radio" id="`+ name +`_30" name="`+ name +`" value="30" required/>
+              <label for="`+ name +`_30">30%</label>
+            
+              <input type="radio" id="`+ name +`_40" name="`+ name +`" value="40" required/>
+              <label for="`+ name +`_40">40%</label>
+            
+              <input type="radio" id="`+ name +`_50" name="`+ name +`" value="50" required/>
+              <label for="`+ name +`_50">50%</label>
+            
+              <input type="radio" id="`+ name +`_60" name="`+ name +`" value="60" required/>
+              <label for="`+ name +`_60">60%</label>
+            
+              <input type="radio" id="`+ name +`_70" name="`+ name +`" value="70" required/>
+              <label for="`+ name +`_70">70%</label>
+            
+              <input type="radio" id="`+ name +`_80" name="`+ name +`" value="80" required/>
+              <label for="`+ name +`_80">80%</label>
+            
+              <input type="radio" id="`+ name +`_90" name="`+ name +`" value="90" required/>
+              <label for="`+ name +`_90">90%</label>
+            
+              <input type="radio" id="`+ name +`_100" name="`+ name +`" value="100" required/>
+              <label for="`+ name +`_100">100%</label>
+            </div>
+          </div>`;
+        };
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'');
+      return options
+    };
+
+    var use_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: '<p style="font-size: 40px;">LANGUAGE USE</p><p style="font-size:30px">In this section, we would like you to answer some questions about your language use. <strong>Total use for all languages in a given question should equal 100%</strong>.</p><p>',
+      html: function() {
+        var PercFriends = percent('PercFriends');
+        var PercFamily = percent('PercFamily');
+        var PercWork = percent('PercWork');
+        var PercSelf = percent('PercSelf');
+        var PercCount = percent('PercCount');
+        var big_html = `<p style="font-size:40px"><legend>7. In an average week, what percentage of time do you use the following languages with friends?</legend></p>` + PercFriends + `</p>
+        <p style="font-size:40px"><legend>8. In an average week, what percentage of time do you use the following languages with family?</legend></p>` + PercFamily + `</p>
+        <p style="font-size:40px"><legend>9. In an average week, what percentage of time do you use the following languages at school/work?</legend></p>` + PercWork + `</p>
+        <p style="font-size:40px"><legend>10. When you talk to yourself, how often do you talk to yourself in the following languages?</legend></p>` + PercSelf + `</p>
+        <p style="font-size:40px"><legend>11. When you count, how often do you count in the following languages?</legend></p>` + PercCount +`</p><p>`;
+        return big_html
+      },
+      data: {name: 'use_info'},
+      css_classes: 'zoom'
+    };
+
+    var error_screen = {
+      type: jsPsychInstructions,
+      pages: [`<p style="font-size: 40px; color: #c51005">Careful! The total use for all languages in each question wasn't equal to 100%.</p>
+        <p style="font-size:40px">Please press the button below to try again.</p>`],
+      button_label_next: 'Retry',
+      allow_keys: false,
+      allow_backward: false,
+      show_clickable_nav: true,
+      data: {name: 'use_info_prb'}
+    };
+    
+    var check_node = {
+      timeline: [error_screen],
+      conditional_function: function(){
+        var lasttrial_data = jsPsych.data.getLastTrialData().select('response').values[0];
+        var questions = ['PercFriends', 'PercCount', 'PercFamily', 'PercWork', 'PercSelf'];
+        var redo = false;
+        for (let i=0; i < questions.length; i++) {
+          if (redo == false) {
+            var L1 = questions[i] + 'L1';
+            var percL1 = lasttrial_data[L1];
+            var L2 = questions[i] + 'L2';
+            var percL2 = lasttrial_data[L2];
+            var L3 = questions[i] + 'L3';
+            var percL3 = lasttrial_data[L3];
+            var L4 = questions[i] + 'L4';
+            var percL4 = lasttrial_data[L4];
+            var percs = [parseInt(percL1), parseInt(percL2), parseInt(percL3), parseInt(percL4)];
+            var red_percs = percs.filter(function (value) {
+              return !Number.isNaN(value);
+            });
+            let sum = 0;
+            red_percs.forEach( num => {sum += num;});
+            if (sum != 100) {
+              var redo = true
+            } else {
+              var redo = false
+            }
+          };
+        };
+        return redo
+      }
+    };
+
+    var repeat = {
+      timeline: [use_info, check_node],
+      loop_function: function(){
+        var lasttrial_name = jsPsych.data.getLastTrialData().select('name').values[0];
+        if(lasttrial_name == 'use_info_prb') {
+          return true;
+        } else {
+          return false
+        }
+      }
+    }
+
+    var use_procedure = {
+      timeline: [repeat]
+    };
+    timeline.push(use_procedure);
+
+
+    // proficiency section
+    function proficiency (question) {
+      var options = [];
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var tag = L1_tag;
+          var name = nameL1;
+          var color = "#911857"
+        };
+        if (l == 1) {
+          var tag = L2_tag;
+          var name = nameL2;
+          var color = "#285f98"
+        };
+        if (l == 2) {
+          var tag = L3_tag;
+          var name = nameL3;
+          var color = "#da9d37"
+        };
+        if (l == 3) {
+          var tag = L4_tag;
+          var name = nameL4;
+          var color = "#2d7017"
+        };
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO' || tag == 'n.a') {var option = ''} else {
+          var option = `
+          <div>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
+            <div class="radio-container">
+              <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
+              <label for="`+ name +`_0">0 (not well at all)</label>
+            
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6 (very well)</label>
+            </div>
+          </div>`;
+        };
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'');
+      return options
+    };
+
+    var proficiency_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `<p style="font-size: 40px;">LANGUAGE PROFICIENCY</p>
+      <p style="font-size:30px">In this section, we would like you to rate your language proficiency by giving marks from 0 to 6.</p>`,
+      html: function() {
+        var ProfSpeak = proficiency('ProfSpeak');
+        var ProfUnderstand = proficiency('ProfUnderstand');
+        var ProfRead = proficiency('ProfRead');
+        var Attention = proficiency('Attention');
+        var ProfWrite = proficiency('ProfWrite');
+        var big_html = `<p style="font-size:40px"><legend>12. How well do you speak the following languages?</legend></p>` + ProfSpeak + `
+        <p style="font-size:40px"><legend>13. How well do you understand the following languages?</legend></p>` + ProfUnderstand + `
+        <p style="font-size:40px"><legend>14. How well do you read in the following languages?</legend></p>` + ProfRead + `
+        <p style="font-size:40px"><legend>If you're reading this, please answer "2" for all languages.</legend></p>` + Attention + `
+        <p style="font-size:40px"><legend>15. How well do you write in the following languages?</legend></p>` + ProfWrite;
+        return big_html
+      },
+      data: {name: 'proficiency_info'},
+      css_classes: 'zoom'
+    };
+    timeline.push(proficiency_info);
+
+    // attitudes section
+    function attitudes (question) {
+      var options = [];
+      var nameL1 = String(question + 'L1');
+      var nameL2 = String(question + 'L2');
+      var nameL3 = String(question + 'L3');
+      var nameL4 = String(question + 'L4');
+      var L1_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L1'];
+      var L2_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L2'];
+      var L3_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L3'];
+      var L4_tag = jsPsych.data.get().filter({name: 'bio_info'}).values()[0].response['L4'];
+      for (let l=0; l < 4; l++) {
+        if (l == 0) {
+          var tag = L1_tag
+          var name = nameL1;
+          var color = "#911857"
+        };
+        if (l == 1) {
+          var tag = L2_tag;
+          var name = nameL2;
+          var color = "#285f98"
+        };
+        if (l == 2) {
+          var tag = L3_tag;
+          var name = nameL3;
+          var color = "#da9d37"
+        };
+        if (l == 3) {
+          var tag = L4_tag;
+          var name = nameL4;
+          var color = "#2d7017"
+        };
+        if (tag == 'n/a' || tag == 'na' || tag == 'NA' || tag == 'N/A' || tag == 'no' || tag == 'NO' || tag == 'n.a') {var option = ''} else {
+          var option = `
+          <div>
+            <strong><font size="40px" color="`+ color +`">`+ tag +`: </strong></font>
+            <div class="radio-container">
+              <input type="radio" name="`+ name +`" id="`+ name +`_0" value="0" required/>
+              <label for="`+ name +`_0">0 (disagree)</label>
+            
+              <input type="radio" id="`+ name +`_1" name="`+ name +`" value="1" required/>
+              <label for="`+ name +`_1">1</label>
+            
+              <input type="radio" id="`+ name +`_2" name="`+ name +`" value="2" required/>
+              <label for="`+ name +`_2">2</label>
+            
+              <input type="radio" id="`+ name +`_3" name="`+ name +`" value="3" required/>
+              <label for="`+ name +`_3">3</label>
+            
+              <input type="radio" id="`+ name +`_4" name="`+ name +`" value="4" required/>
+              <label for="`+ name +`_4">4</label>
+            
+              <input type="radio" id="`+ name +`_5" name="`+ name +`" value="5" required/>
+              <label for="`+ name +`_5">5</label>
+            
+              <input type="radio" id="`+ name +`_6" name="`+ name +`" value="6" required/>
+              <label for="`+ name +`_6">6 (agree)</label>
+            </div>
+          </div>`;
+        };
+        options.push(option)
+      };
+      var options = options.toString();
+      var options = options.replace(/,/g,'');
+      return options
+    };
+
+    var attitudes_info = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: `<p style="font-size: 40px;">LANGUAGE ATTITUDES</p>
+      <p style="font-size:30px">In this section, we would like you to respond to statements about language attitudes by giving marks from 0-6.</p>`,
+      html: function() {
+        var AttSelf = attitudes('AttSelf');
+        var AttCulture = attitudes('AttCulture');
+        var AttNativeLevel = attitudes('AttNativeLevel');
+        var AttMothertongue = attitudes('AttMothertongue');
+        var big_html = `<p style="font-size:40px"><legend>16. I feel like myself when I speak the following languages.</legend></p>` + AttSelf + `
+        <p style="font-size:40px"><legend>17. I identify with a culture that speaks the following languages.</legend></p>` + AttCulture + `
+        <p style="font-size:40px"><legend>18. It is important to me to use (or eventually use) the following languages like a native speaker.</legend></p>` + AttNativeLevel + `
+        <p style="font-size:40px"><legend>19. I want others to think I am a native speaker of the following languages.</legend></p>` + AttMothertongue;
+        return big_html
+      },
+      data: {name: 'attitudes_info'},
+      css_classes: 'zoom'
+    };
+    timeline.push(attitudes_info);
+
+    var goodbye = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-family:Arial"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
+      <img src="./exp_images/alien_goodbye.png" width="300">
+      <p style="font-family:Arial">Please press any key to upload your data.</p>`,
+      css_classes: 'zoom'
+    };
+    timeline.push(goodbye);
+
+    var exit_fullscreen = {
+      type: jsPsychFullscreen,
+      fullscreen_mode: false,
+      delay_after: 0
+    };
+    timeline.push(exit_fullscreen);
+
+    var redirect = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `<p style="font-family:Arial">Click the button below to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
+      choices: ['Submit'],
+      on_finish: function() {
+        window.location = "https://app.prolific.com/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
+      }
+    };
+    timeline.push(redirect);
+
+    jsPsych.run(timeline);
+  </script>
+</html>

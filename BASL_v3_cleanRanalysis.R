@@ -1,0 +1,2735 @@
+# SETUP --------------------------------------------------------------
+# clear workspace
+rm(list=ls());
+ls();
+
+# load required libraries
+library(lme4);
+library(Hmisc);
+library(stats);
+library(toolbox);
+library(emmeans);
+library(effects);
+library(BayesRS);
+library(extrafont);
+library(showtext);
+library(ggplot2);
+library(viridis);
+library(tidyverse);
+library(DescTools);
+library(paletteer);
+library(grid);
+library(png);
+library(BayesFactor);
+library(RColorBrewer);
+library(xtable);
+library(dplyr);
+library(phytools);
+library(tidytree);
+library(treeio);
+library(ggtree);
+library(data.tree);
+library(ape);
+library(ggtreeExtra);
+library(ggrepel);
+library(pheatmap);
+
+# set global font
+par(family="CMU Serif");
+font_add("CMU Serif", "C:/Users/annal/Downloads/cmu/cmunrm.ttf");
+showtext_auto();
+
+# set colour scheme
+cols <- paletteer_d("MetBrewer::Degas");
+cols2 <- paletteer_d("palettesForR::Named");
+cols3 <- paletteer_d("ggthemes::Tableau_20");
+
+# define functions
+dPrime <- function(sbj, expectedResp, observedResp)
+{
+  sbjNumbers <- unique(sbj);
+  dprimes <- vector(length=length(sbjNumbers), mode="numeric");
+  log_beta <- vector(length=length(sbjNumbers), mode="numeric");
+  c <- vector(length=length(sbjNumbers), mode="numeric");
+  subjects <- vector(length=length(sbjNumbers), mode="integer");
+  counter <- 1;
+  for (s in sbjNumbers)
+  {
+    expectedRespCurrentSbj <- expectedResp[sbj==s];
+    observedRespCurrentSbj <- observedResp[sbj==s];
+    num_of_hits <- sum(observedRespCurrentSbj[expectedRespCurrentSbj==1])+.5;
+    num_of_fa <- sum(observedRespCurrentSbj[expectedRespCurrentSbj==0])+.5;
+    prop_of_hits <- num_of_hits/ (xtabs(~expectedRespCurrentSbj)[2]+1);
+    prop_of_fa <- num_of_fa/ (xtabs(~expectedRespCurrentSbj)[1]+1);
+    z_hits <- qnorm(prop_of_hits);
+    z_fa <- qnorm(prop_of_fa); 
+    dprimes[counter] <- round(z_hits - z_fa, digits = 3);
+    log_beta[counter] <- round((z_fa^2 - z_hits^2)/2, digits = 3); 
+    #this is taken from Stanislaw and Todorov, PBR 1999. Log_beta=0 indicates no
+    # bias; negative values is bias for YES; positive values is bias for NO
+    c[counter] <- round( -(z_hits + z_fa)/2, digits = 3); # this is taken again 
+    # from Stanislaw and Todorov, PBR 1999, who note that c "...assumes that 
+    # subjects respond yes when the decision variable exceeds the criterion and 
+    # no otherwise; responses are based directly on the decision variable, which 
+    # some researchers regard as more plausible than assuming that responses are 
+    # based on a likelihood ratio [which the assumption behind beta] 
+    # (Richardson, 1994). Another advantage of c is that it is unaffected by 
+    # in d', whereas Beta is (Ingham, 1970; Macmil- lan, 1993; 
+    # McNicol, 1972, pp. 63--64)". Similarly to log_beta, c=0 is no bias, 
+    # negative c is bias for YES, negative c is bias for NO.
+    subjects[counter] <- s;
+    counter <- counter + 1;
+  };
+  data.frame(sbj=subjects, dprime=dprimes, log_beta=log_beta, c=c);
+};
+
+round2 <- function(x, digits) {
+  posneg = sign(x)
+  z = abs(x)*10^digits
+  z = z + 0.5 + sqrt(.Machine$double.eps)
+  z = trunc(z)
+  z = z/10^digits
+  z*posneg
+};
+
+export_output <- function(model,name,pred_levels,
+                          pred_type=c("categorical","continuous"),outcome_levels,
+                          interaction=TRUE) {
+  if (is.null(pred_type) || !length(pred_type) || !all(pred_type %in% c("categorical","continuous"))) {
+    stop("'Predictor type' argument must be one of: 'categorical','continuous'")
+  }
+  
+  # VARIABLES
+  # trialn?
+  vars <- all.vars(formula(model));
+  if (vars[2] == "trialn") {
+    trialn=TRUE;
+  }  else {trialn=FALSE};
+  
+  # random effects?
+  rand_vars <- toString(lme4::findbars(formula(model))[[1]])
+  if (grepl("\\+",rand_vars)) {
+    random_effects=TRUE
+  } else {random_effects=FALSE};
+  
+  # interaction?
+  formula_str <- toString(formula(model));
+  if (grepl("\\*",formula_str)) {
+    interaction=TRUE
+  } else {interaction=FALSE};
+  
+  # FORMULA
+  formula <- formula(summary(model));
+  formula <- as.character(formula);
+  formula <- paste(formula[2], formula[1], formula[3]);
+  formula <- gsub("~", "$\\\\sim$", formula);
+  formula <- gsub(" ","",formula);
+  formula <- gsub("\\|", "\\\\textbar ", formula);
+  formula <- gsub("expected", "string nature", formula);
+  formula <- gsub("observed", "participant response", formula);
+  name2 <- paste("\\multicolumn{5}{c}{\\textbf{",name,"}}",sep="");
+  formula <- paste("\\multicolumn{5}{C{15cm}}{",formula,"}",sep="");
+  formula <- data.frame(Groups=c(name2,formula),
+                        Name=c("",""),
+                        Variance=c("",""),
+                        SD=c("",""),
+                        Corr=c("",""));
+  colnames(formula) <- c('\\textbf{Groups}','\\textbf{Name}',
+                         '\\textbf{Variance}','\\textbf{SD}','\\textbf{Corr}');
+  
+  outcome_levels <- outcome_levels[-1];
+  if (pred_type == "categorical") {
+    pred_levels <- pred_levels[-1];
+  }
+  
+  varcorr <- data.frame();
+  if (random_effects) {
+    # RANDOM EFFECTS
+    varcorr <- data.frame(VarCorr(model));
+    colnames(varcorr) <- c('Groups','Name','Var2','Variance','SD');
+    if (length(outcome_levels) == 1) {
+      varcorr$Corr <- c(0,varcorr$SD[nrow(varcorr)],0);
+      colnames(varcorr) <- c('Groups','Name','Var2',
+                             'Variance','SD','Corr');
+      varcorr <- varcorr[-nrow(varcorr), ]
+      varcorr <- varcorr[, -which(names(varcorr) == 'Var2')];
+      varcorr[c('Variance','SD','Corr')] <- lapply(
+        varcorr[c('Variance','SD','Corr')],
+        function(x) round2(x,2));
+      varcorr$Corr[varcorr$Corr == 0] <- "";
+      varcorr$Groups[varcorr$Groups=='sbj_ID'] <- "";
+      for (x in 1:length(outcome_levels)) {
+        varcorr$Name[1+x] <- outcome_levels[x]
+      };
+      colnames(varcorr) <- c('\\textbf{Groups}','\\textbf{Name}',
+                             '\\textbf{Variance}','\\textbf{SD}',
+                             '\\textbf{Corr}');
+      columns <- c('\\textbf{Random effects}','',
+                   '\\textbf{Variance}','\\textbf{SD}','\\textbf{Corr}');
+    }
+    
+    if (length(outcome_levels) == 2) {
+      varcorr$Corr <- c(0,varcorr$SD[4],varcorr$SD[5]);
+      varcorr$Corr2 <- c(0,0,varcorr$SD[6]);
+      varcorr <- varcorr[-c((nrow(varcorr)-2):nrow(varcorr)), ]
+      varcorr <- varcorr[, -which(names(varcorr) == 'Var2')];
+      varcorr[c('Variance','SD','Corr','Corr2')] <- lapply(
+        varcorr[c('Variance','SD','Corr','Corr2')],
+        function(x) round2(x,2));
+      varcorr$Corr[varcorr$Corr == 0] <- "";
+      varcorr$Corr2[varcorr$Corr2 == 0] <- "";
+      varcorr <- varcorr[, -which(names(varcorr) == 'Groups')];
+      for (x in 1:length(outcome_levels)) {
+        varcorr$Name[1+x] <- outcome_levels[x]
+      };
+      colnames(varcorr) <- c('\\textbf{Groups}','\\textbf{Name}',
+                             '\\textbf{Variance}','\\textbf{SD}',
+                             '\\textbf{Corr}');
+      columns <- c('\\textbf{Random effects}','\\textbf{Variance}',
+                   '\\textbf{SD}','\\textbf{Corr}','');
+    };
+    
+    varcorr <- rbind(columns,varcorr)
+    
+    formula <- rbind(formula, varcorr);
+  }
+  
+  # FIXED EFFECTS
+  coefficients <- summary(model)$coefficients;
+  coefs <- data.frame(coefficients);
+  colnames(coefs) <- c('estimate','SE','z-value','p-value');
+  
+  coefs$sig <- "";
+  coefs$sig[coefs$`p-value` < 0.1] <- " (.)";
+  coefs$sig[coefs$`p-value` < 0.05] <- " (*)";
+  coefs$sig[coefs$`p-value` < 0.01] <- " (**)";
+  coefs$sig[coefs$`p-value` < 0.001] <- " (***)";
+  
+  coefs['p-value'] <- lapply(
+    coefs['p-value'], 
+    function(x) ifelse(
+      abs(x)<=0.01,
+      format(x,scientific=TRUE, digits=2),
+      ifelse (x>0.04 & x<0.06, round2(x,3), round2(x,2))
+    ));
+  
+  coefs[c('estimate','SE','z-value')] <- lapply(
+    coefs[c('estimate','SE','z-value')], 
+    function(x) ifelse(
+      abs(x)<=0.01,
+      format(x,scientific =TRUE, digits=2),
+      round2(x,2)
+    ));
+  
+  coefs$`p-value` <- paste(coefs$`p-value`,coefs$sig);
+  coefs <- coefs[, -which(names(coefs) == 'sig')];
+  
+  columns <- c('\\textbf{Fixed effects}','$\\boldsymbol\\beta$','\\textbf{SE}',
+               '\\textbf{z-value}','\\textbf{p-value}');
+  rows <- c('(Intercept)');
+  if (trialn) {
+    rows <- c(rows,'scale(trialn)')
+  };
+  if (interaction == TRUE) {
+    rows <- c(rows,outcome_levels);
+  }
+  for (level in pred_levels) {
+    rows <- c(rows,level)
+  }
+  if (interaction == TRUE) {
+    for (pred_level in pred_levels) {
+      for (outcome_level in outcome_levels) {
+        interaction <- paste(outcome_level,'*',pred_level,sep="")
+        rows <- c(rows,interaction)
+      }
+    }
+  }
+  
+  coefs <- cbind(rows,coefs);
+  coefs <- rbind(columns,coefs);
+  rownames(coefs) <- NULL;
+  colnames(coefs) <- c('\\textbf{Groups}','\\textbf{Name}',
+                       '\\textbf{Variance}','\\textbf{SD}','\\textbf{Corr}');
+  
+  global <- rbind(formula,coefs);
+  
+  filename <- paste('./analysis_tables/',name,".tex",sep="");
+  
+  if (random_effects) {
+    hlines <- c(0,2,3,2+nrow(varcorr),3+nrow(varcorr),nrow(global));
+  } else {
+    hlines <- c(0,2,3,nrow(global));
+  };
+  
+  print(xtable(global,auto=TRUE,booktabs=TRUE),
+        file=filename,math.style.exponents=TRUE,latex.environments='center',
+        include.rownames=FALSE,include.colnames=FALSE,
+        tabular.environmen='tabularx',width="\\linewidth",
+        hline.after=hlines,floating=FALSE,
+        sanitize.text.function = function(x) {x});
+  
+  lines <- readLines(filename);
+  lines <- gsub("\\\\begin\\{tabularx\\}\\{\\\\linewidth\\}\\{lllll\\}",
+                "\\\\begin{tabularx}{\\\\linewidth}{{@{} >{\\\\RaggedRight}X*{5}{c}@{}}}",
+                lines);
+  lines <- gsub(" &  &  &  & ","",lines);
+  lines <- gsub("\\\\hline","\\\\midrule",lines)
+  writeLines(lines,filename);
+};
+
+
+# set working directory
+setwd("C:/Users/annal/Documents/GitHub/affixproject");
+
+# set analysis image output folder
+output_folder <- "C:/Users/annal/Documents/Me/SISSA/BASL/BASL analysis/exp3";
+
+# set participant IDs
+# PARTICIPANTS WITH MORPHEME SPELLING
+#participants <- list('6986a19e46ebcbecef51dd75','69838401d1cfe5c9b90101d5',
+#'69b1b777b6001c732d14c141','672a315f5ffd0405912274c1','6696773b71afe15e1f73abbe',
+#'6696d81ba57640f9273a1949','6980783cf4fad5885733d8c2','69c6a36442f19e441d78eb77',
+#'698108404d737ae8dbb46561','69867e57a70df0709c0f2cfa','698a375fdb636f8b25ee8330');
+
+# PARTICIPANTS WITHOUT MORPHEME SPELLING
+participants <- list('66446d88662725412dc27d06','6980bff5e4be64da2d6c8914',
+                     '6980756db82b3f6b672c2fea','697ca9cfd08ef9e2ffd194c9',
+                     '6980d349ae34723f48ea7a3d','69ca93b861a695b1c1eec106',
+                     '6984df69583cf5f1ae4f9490','67503701c4ef8958767a58d9',
+                     '6977ae157abbca43d19d7ed2','6932c63c66408da96a982ab1',
+                     '69c1120111926f72009dde4d','6980a7096eb2c15732813632',
+                     '697cabd6c4f2dee174cf2a1d','6980b7b8619ca8828b86f21b',
+                     '69b81e444b794cbe8947b065','698351788833bcdaa3c391ce',
+                     '69807e97ec7daf3eb0a4f256','6989baec35fa286279b29ca5',
+                     '69839e45e8ca9d3863565d6d','673caf90069aa7e3820136cc',
+                     '698732a17e9271820246153f','69b168262adfe7b4609a9209',
+                     '65fad6c874ac75642ffc254b','69b0960f30730461ec1d57b1',
+                     '6981e24e62bb6fd0037109e5','6981ec61b00cbb326f2382a2',
+                     '6989bf21e63ddf302c08f8ee','697ceef83c5a1d1a0f21c6c1',
+                     '6980c16f9985e39f6bcbbe3a','60c0fa09ef735c52ada64d23',
+                     '6951d6fd93f50ed0e6363eba','697ce004a414418e49c8d32a',
+                     '698d1d8ff61786b4c5785a1c','68c00b0de12e311f71a427fd',
+                     '699426b305113343f561b4c6','69c147cc355c3af96875e729',
+                     '69aca66948779f79eefc2152','61353c933f32fef782432cc7',
+                     '690b6a1d98044838e462d048','69839df6b3f83b9c02ac8234',
+                     '697cd69b8306e0d7e7ff4bfc','6983ab405a31650a9c36d9f8',
+                     '697ccf682c513bd6ac96151f','69e511fc6bace0c078531c15',
+                     '65feaaac53eb219f09ad5ea0','69aeec32d642e2a0092f6452',
+                     '69826a6954465a13b14b2786','6989f4760694ce91b5bc35f7',
+                     '69e258d883661ada98acc7ee','69e266c172efe398cfc4c52d',
+                     '60fa7628023c88195f68529c','69dac423e2591f3cbc0dcad7',
+                     '69d648d33057d63617173b85','6989da604f75e4c44ffefa17',
+                     '69c4d00086c2b4a1a8dc2191','66ce4da62b4ca0e6ead754d6',
+                     '6980c5902273a0acf918ced1','69808261911a7a9bd10cd048',
+                     '698df4a194fabefa716596ec','698078075d3326e1b30bd1c3',
+                     '6931bc7a9286300ba24d7703','659c0682d109f8537a89fdd3',
+                     '69a6f5f930a06e13c4593d9d','6998a16a9147ebdebf871a82',
+                     '69b52f9256ef2162a97fbebc','6932b8da8751dc6771770907',
+                     '698093a6ccef1114e376cfe5','677302ad15f7e3d0c1725fef',
+                     '5ba4da6f03692b00019adae6','6980bc0b357eb9d91de4a0e9',
+                     '6989bc7b28c71e3280a6e7f6','69807f12172ef48a2ac7edfa',
+                     '69af1632fa81c6ae5d2df790','60fa6f5d0c4ef9c26538f610',
+                     '698074881d252d37dd9bc4d2','697ca949b8525fcd6448b5ab',
+                     '69809e035896ef246cbc2922','69835a10b58c1a190110ab59',
+                     '6998ed35ce310d26bcf802aa','698074189377637711d6ee4c',
+                     '698a1dffe0d91dbe2dde8ab7','698b4e2840974dba43e185e8',
+                     '692e8f1540ec35b6b4bb0b51','69a5e91eee249ee63d49f9ca',
+                     '6985a1a2a9b075341a3e65b0','698f277e7eb87d0f843d6bf7',
+                     '69d25ddbd1a5851c7aa92ad3','6978c41323acbe6260c25b6b',
+                     '697caee42ccb58f80bd052aa','698077f69bf2b842579340fc',
+                     '6980b64569f487effa4069a3','697ced4d80e2cdd6597570a4',
+                     '698138565bd9d4728a0a2e04','69aeee44187fdda005ab835b',
+                     '698078e0b930dfcbfde9d603','697ae23c7ed5edbb062a80a3',
+                     '697cab1603c68e76a4d71eb0','698255186a52f393404e26f7',
+                     '698a196b6438a03eb3cce8f3','66cf143e060992b3d817c20f',
+                     '697af0b9a1262e67a280818f','6931edb6c25b0bfc7745d97b',
+                     '67269f439696d166fbb74e09','697f3920d3a9308de7557222',
+                     '6980b660de828c2f1a83d72f','68d446bc9f28065a31881b5f',
+                     '698119def2a23d22dac3df09','69d62066fd5570ddfaee9725',
+                     '69d7cd471aa7b7397313cb1f','69824e53e214c63c2afb2c53',
+                     '69809b4956d7129d4b119b43','699c7585ca22df8b1bf087fe',
+                     '6980962a67c3b3ba8cb2836a','68c91cf657e369ac5e1a5663',
+                     '69e549ba0b6a44f0ec2b09cc','698725ce979bc4d4ea7c7373',
+                     '697d0af5cbf092790e5303e5','69d66f2bcd1bac4e9bbdddc3',
+                     '6982228b60e61107ddfc0bd3','697ce9513b3628db72070f23',
+                     '69bc58df28cbddd60a341a03','673c2ec22f554dedb25d4049',
+                     '697cee693cacc7fc3ccaedb3','698cb68a1093d20f7c6087b7',
+                     '6972610c74d08456b2aa6ae2','69c2a6ec39af7c4c4c681804',
+                     '69a56a100ee2dc518e8c415c','698242aea446c3fc40454a2d',
+                     '6980dcc1fee5670e573354f1','6980a4f0faef0e53cdfb97a7',
+                     '697a79efb4f34a8176d66d2b','698dd411bc2ef10a72a75749',
+                     '69d8b313ae434f632a305c9b','697b39e368a5d148ab03b923',
+                     '69bbe66ef888cc3fc9405de9','697cac029fc2c2f5a6adbc65',
+                     '697cc570d57156b29c34b70a','69c653159fc262f6ae945f2c',
+                     '69a5dbac7321bbc23b76cb30','5ea2e2054687bd0517c23492',
+                     '697bbefe70fe1cb006530f0f','69cff69eb8da20e1ea8a2fbe',
+                     '698362eea52b5dadb6f3197b','69822b89bfde15d117539990',
+                     '69808060419a938572d8eb13','69807d4738a6a1d1a2774e67',
+                     '69907667f821728d219ce06d','6980b8dbf12d0bde4727635e',
+                     '69863c0a716ec6381ad4d1fb','6989c0c01b2e93d5d8f2e20a',
+                     '69835b48d4c4c9a78668c0af','67270215b5ff7147c67afb89',
+                     '6985466b840079abc0ac75e9','6981128082d28d2191154253',
+                     '66c7469a4526d21d11ed0e15','69dcfc3bcb3d5759729e920e',
+                     '6989de5cb788d8dfc4a2641e','697ce7bf0f53f5d87f619308',
+                     '6984ab8a88a32e8274e0351b','66b2acaa5fe9506f6cd278a8',
+                     '6984b22b8b8f99c86194ce62','697cbe43c25ee72899c9c213',
+                     '69824df3026e0eff3dec0d0b','69865b7be282f1756be7d697',
+                     '697b23f24e0252dfb327f950','6989c9427f6c4ffb769fad68',
+                     '69df940e45bb58f49783baac','698b57a46bf6a0eee98c0c04',
+                     '698734d0ecc42269dc0e75ac','612e6bf6f0eba168c2a1dc35',
+                     '66676e9de30c99b6eaa0b5a3','697babc50cd42f81edf45acc',
+                     '669d0b18e3a1ae0b5f7571ef','69e50234165d341516973996',
+                     '6982eb0cb5743c2857d1c8e0','6984b8a7eadad5d5bd8e12cf',
+                     '65b3c533a99b6a6b97a6f54a','6980b37761737090ad122e6f',
+                     '698a4bd40711b1611e7f96ca','666b081591c316f46bbb3361',
+                     '6984c939f133acffbbd3b36a','6983518f181a5c0bd8d4742c',
+                     '697cb9bb801ddf0766cdaa70','67407b1fdd5d63e5b542d325',
+                     '69e743c5f506b9499e8fa3f9','69e0e73998a997f72e680509',
+                     '6980899c7847724b431b38ac','6931ed877a6b11c2d99e317a',
+                     '69e90048f00cb9113be223d3','6985a6c2b7a13630aac31fc5',
+                     '671a35e007e5342c31f94fa7','69a81ed11957a0f6e26144d2',
+                     '6124f23ea1f4ef44fe280dd4','6989bbea6334b622c22a53ee',
+                     '697da4b448849212fa6532e6','69aebf5ccbf8f23f086f7b6c',
+                     '69af34e771ce9d065c0d9d80','66ca0a6b19da058b82d8637d',
+                     '697cb146afcfe842ae49bdd4','66019ce5f01f7f69af8016d1');
+
+
+# TESTING ------------------------------------------------------------
+# importing testing data
+data_all_testing <- read.csv("exp3_testing_preprocessed.csv",header=T,sep=",");
+data_all_testing <- subset(data_all_testing, select = -c(X)) 
+# remove redundant column
+data_testing <- data_all_testing[data_all_testing$sbj_ID %in% participants,]; 
+# n =  participants
+
+# make some variables factors
+data_testing$sbj_ID <- as.factor(data_testing$sbj_ID);
+data_testing$task <- as.factor(data_testing$task);
+data_testing$item <- as.factor(data_testing$item);
+data_testing$testing_condition <- as.factor(data_testing$testing_condition);
+data_testing$correct <- as.logical(data_testing$correct);
+data_testing$familiar_morph <- as.factor(data_testing$familiar_morph);
+
+# change coding: 0 into 'within_lang' and 1 into 'between_lang'
+data_expected <- replace(data_testing$expected, data_testing$expected == 0, 'within_lang');
+data_expected <- replace(data_expected, data_expected == 1, 'between_lang');
+data_testing$expected <- data_expected;
+data_testing$expected <- as.factor(data_testing$expected);
+
+data_observed <- replace(data_testing$observed, data_testing$observed == 0, 'within_lang');
+data_observed <- replace(data_observed, data_observed == 1, 'between_lang');
+data_testing$observed <- data_observed;
+data_testing$observed <- as.factor(data_testing$observed);
+
+## testing RTs =======================================================
+IDs <- list(data_testing$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_testing$rt[data_testing$sbj_ID==IDs[1]],na.rm=TRUE),
+     xlim=c(0,2200),ylim=c(0,0.01),xlab="RTs (ms)",main="",xaxt = "n",
+     col=cols2[27],yaxs="i",lwd=1,cex.lab=1.5);
+axis(1, at = c(0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200));
+for (x in 2:length(participants)) {
+  lines(density(data_testing$rt[data_testing$sbj_ID==IDs[x]],na.rm=TRUE),col=cols2[x+26],lwd=1)
+}; # good, centered around Xms
+data_testing_rt_means <- aggregate(data_testing$rt, list(data_testing$sbj_ID), FUN=mean, na.rm=TRUE);
+summary(data_testing_rt_means$x); # good med & mean
+plot(data_testing_rt_means$x, ylab="Mean participant RT (ms)",
+     xlab="Participants",main="",xaxt = "n",pch=3,yaxs="i",ylim=c(0,2750));
+# looks healthy overall
+
+plot(data_testing$rt[data_testing$sbj_ID=='6989bf21e63ddf302c08f8ee'],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='6989bf21e63ddf302c08f8ee'&data_testing$rt>2000],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='6989bf21e63ddf302c08f8ee'&data_testing$rt>10000],pch=19);
+summary(data_testing$rt[data_testing$sbj_ID=='6989bf21e63ddf302c08f8ee']);
+# 19 data points above 2s response time, 3 above 10s
+# mean RT = 2205ms -> exclude
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('6989bf21e63ddf302c08f8ee'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('6989bf21e63ddf302c08f8ee'),];
+# now n=199
+
+plot(data_testing$rt[data_testing$sbj_ID=='698a1dffe0d91dbe2dde8ab7'],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='698a1dffe0d91dbe2dde8ab7'&data_testing$rt>2000],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='698a1dffe0d91dbe2dde8ab7'&data_testing$rt>10000],pch=19);
+summary(data_testing$rt[data_testing$sbj_ID=='698a1dffe0d91dbe2dde8ab7']);
+# 6 data points above 2s response time, 3 above 10s
+# mean RT = 2911ms -> exclude
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('698a1dffe0d91dbe2dde8ab7'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('698a1dffe0d91dbe2dde8ab7'),];
+# now n=198
+
+plot(data_testing$rt[data_testing$sbj_ID=='698074881d252d37dd9bc4d2'],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='698074881d252d37dd9bc4d2'&data_testing$rt>2000],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='698074881d252d37dd9bc4d2'&data_testing$rt>10000],pch=19);
+summary(data_testing$rt[data_testing$sbj_ID=='698074881d252d37dd9bc4d2']);
+# 7 data points above 2s response time, 1 above 10s
+# mean RT = 2587ms -> exclude
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('698074881d252d37dd9bc4d2'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('698074881d252d37dd9bc4d2'),];
+# now n=197
+
+plot(data_testing$rt[data_testing$sbj_ID=='69808060419a938572d8eb13'],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='69808060419a938572d8eb13'&data_testing$rt>2000],pch=19);
+plot(data_testing$rt[data_testing$sbj_ID=='69808060419a938572d8eb13'&data_testing$rt>10000],pch=19);
+summary(data_testing$rt[data_testing$sbj_ID=='69808060419a938572d8eb13']);
+# 4 data points above 2s response time, 1 above 10s
+# mean RT = 4393ms -> exclude
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('69808060419a938572d8eb13'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('69808060419a938572d8eb13'),];
+# now n=196
+
+summary(data_testing_rt_means$x);
+# min:254 Q1:773 med:939 mean:925 Q3:1086 max:1990
+
+## Testing responses =================================================
+mean_yes <- aggregate(data_testing$observed,by=list(data_testing$sbj_ID), FUN=function(x) sum(x == 'within_lang'));
+names(mean_yes) <- c("sbj_ID", "yes");
+summary(mean_yes$yes); # out of 120 items
+#never said "yes": 
+#always said "yes": 697b39e368a5d148ab03b923
+data_testing <- data_testing[!data_testing$sbj_ID %in% c('697b39e368a5d148ab03b923'),];
+data_testing_rt_means <- data_testing_rt_means[!data_testing_rt_means$Group.1 %in% c('697b39e368a5d148ab03b923'),];
+# now n=195
+
+summary(data_testing_rt_means$x);
+# min:254 Q1:773 med:939 mean:925 Q3:1086 max:1990
+
+### 0M responses #####################################################
+# 0M "YES" boxplot
+data_testing_0M_yes <- aggregate(data_testing$observed[
+  data_testing$testing_condition=='0M'], 
+  by=list(data_testing$sbj_ID[data_testing$testing_condition=='0M']), 
+  FUN = function(x) sum(x == 'within_lang'));
+names(data_testing_0M_yes) <- c("sbj_ID","yes_0M");
+data_testing_0M_yes$yes_0M <- data_testing_0M_yes$yes_0M/40*100; #transform into percent
+summary(data_testing_0M_yes$yes_0M);
+# min:2.5 Q1:25 med:40 mean:39.62 Q3:52.5 max:92.5
+t.test(data_testing_0M_yes$yes_0M, mu=50);
+# t=-7.18 df=194 p=1.43e-11 CI=[36.76;42.47] est=39.62 
+data_testing <- merge(data_testing,data_testing_0M_yes,by="sbj_ID");
+
+### 1M responses #####################################################
+# 1M "YES" boxplot
+data_testing_1M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], 
+                                 by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M']), 
+                                 FUN = function(x) sum(x == 'within_lang'));
+names(data_testing_1M_yes) <- c("sbj_ID","yes_1M");
+data_testing_1M_yes$yes_1M <- data_testing_1M_yes$yes_1M/40*100; #transform into percent
+summary(data_testing_1M_yes$yes_1M);
+# min:15 Q1:42.5 med:52.5 mean:53.14 Q3:62.5 max:100
+t.test(data_testing_1M_yes$yes_1M, mu=50);
+# t=3.09 df=194 p=0.002 CI=[51.13;55.15] est=53.14
+data_testing <- merge(data_testing,data_testing_1M_yes,by="sbj_ID");
+boxplot(data_testing_1M_yes$yes_1M~data_testing_1M_yes);
+
+# 1M "YES" BY FAMILIAR MORPHEME
+data_testing_1M_yes_bytype <- aggregate(data_testing$observed[data_testing$testing_condition=='1M'], 
+                                 by=list(data_testing$sbj_ID[data_testing$testing_condition=='1M'],
+                                         data_testing$familiar_morph[data_testing$testing_condition=='1M']), 
+                                 FUN = function(x) sum(x == 'within_lang'));
+names(data_testing_1M_yes_bytype) <- c("sbj_ID","familiar_morph","yes_1M");
+data_testing_1M_yes_bytype$yes_1M <- data_testing_1M_yes_bytype$yes_1M/20*100; #transform into percent
+summary(data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='stem']);
+# min:5 Q1:50 med:60 mean:60.69 Q3:75 max:100 
+summary(data_testing_1M_yes_bytype$yes_1M[data_testing_1M_yes_bytype$familiar_morph=='affix']);
+# min:5 Q1:30 med:45 mean:45.59 Q3:60 max:100
+
+fam_morph_plt <- ggplot(data_testing_1M_yes_bytype, aes(x=familiar_morph, y=yes_1M, color=familiar_morph)) +
+  geom_hline(yintercept=50, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black",size=2) +
+  labs(x = "1M test item", y = 'Percent of 1M "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80)) +
+  ylim(0,101) +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 4,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  scale_x_discrete(labels=c("string + affix", "stem + string"));
+ggsave("exp3_1M_fammorph.png",width=10,height=7,fam_morph_plt,path=output_folder,device="png");
+
+t.test(data_testing_1M_yes_bytype[data_testing_1M_yes_bytype$familiar_morph=='affix',]$yes_1M, mu=50);
+# t=-2.90 df=194 p=0.004 CI=[42.59;48.59] est=45.59 (**)
+t.test(data_testing_1M_yes_bytype[data_testing_1M_yes_bytype$familiar_morph=='stem',]$yes_1M, mu=50);
+# t=7.94 df=194 p=1.55e-13 CI=[58.04;63.35] est=60.69 (***)
+
+# 1M combinations with familiar stem valued more than 1M combinations with affix
+# fast presentations & decision times so pay more attention to first part of word?
+# (^ backed up by strategy declarations)
+
+### 2M responses #####################################################
+# 2M "YES" boxplot
+data_testing_2M_yes <- aggregate(data_testing$observed[data_testing$testing_condition=='2M'], 
+                                 by=list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), 
+                                 FUN = function(x) sum(x == 'within_lang'));
+names(data_testing_2M_yes) <- c("sbj_ID","yes_2M");
+data_testing_2M_yes$yes_2M <- data_testing_2M_yes$yes_2M/40*100; #transform into percent
+summary(data_testing_2M_yes$yes_2M);
+# min=25 Q1=57.5 med=67.5 mean=66.29 Q3=77.5 max=97.5
+t.test(data_testing_2M_yes$yes_2M, mu=50);
+# t=15.32 df=194 p<2.2e-16 CI=[64.20;68.39] est=66.29
+data_testing <- merge(data_testing,data_testing_2M_yes,by="sbj_ID");
+
+data_testing_2M_aggr <- data_testing %>% 
+  mutate(correct01 = case_when(correct == TRUE ~ 1,
+                               correct == FALSE ~ 0),
+         yesno01 = case_when(observed == 'between_lang' ~ 0,
+                             observed == 'within_lang' ~ 1)) %>% 
+  filter(testing_condition == '2M') %>% 
+  group_by(expected, sbj_ID) %>% 
+  dplyr::summarise(meanCorrect = mean(correct01), se = sd(correct01/sqrt(n())),
+                   meanYes = mean(yesno01), se = sd(yesno01/sqrt(n()))) %>% 
+  mutate(meanNo = 1 - meanYes);
+
+data_testing_2M_aggr <- data_testing_2M_aggr %>%
+  pivot_longer(
+    cols = c(meanYes, meanNo),
+    names_to = "response",
+    values_to = "meanValue"
+  );
+
+data_testing_2M_aggr$response <- as.factor(data_testing_2M_aggr$response);
+
+cossim_2Mresponses_plt <- ggplot(data_testing_2M_aggr[ 
+  which(data_testing_2M_aggr$response=='meanYes'),], aes(x=expected, y=meanValue, 
+                                                         fill=expected)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,width=1) +
+  geom_boxplot(width=0.1,position=position_dodge(width=1)) +
+  scale_fill_manual(values=c(cols2[100],cols2[200]),
+                    name="Participant response",labels=c("Between-language","Within-language")) +
+  scale_x_discrete(labels=c('Between-language', 'Within-language')) +
+  labs(x = "String nature", y = 'Prop of "within-language" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80),
+        legend.position="none",
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_responses.png",width=10,height=7,cossim_2Mresponses_plt,path=output_folder,device="png");
+
+# 2M scores
+data_testing_2M_means <- aggregate(data_testing$correct[data_testing$testing_condition=='2M'], 
+                                   list(data_testing$sbj_ID[data_testing$testing_condition=='2M']), 
+                                   FUN=mean, na.rm=TRUE);
+names(data_testing_2M_means) <- c("sbj_ID","score_2M");
+
+ggplot(data_testing_2M_means, aes(x="", y=score_2M)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_boxplot(fill="grey") +
+  #ylim(0,1) +
+  labs(y='Participant 2M scores') +
+  theme(axis.title.x=element_blank(),axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+summary(data_testing_2M_means$score_2M);
+# min=0.33 Q1=0.48 med=0.50 mean=0.51 Q3=0.55 max=0.65
+var(data_testing_2M_means$score_2M); #var=0.004
+plot(data_testing_2M_means$score_2M,pch=3,ylim=c(0,1));
+abline(h=0.5, lty=5); # clustered around chance
+hist(data_testing_2M_means$score_2M); # normally distributed
+t.test(data_testing_2M_means$score_2M, mu=0.50);
+# t=2.68, df=194, p=0.008, CI=[0.503;0.521], est=0.512
+data_testing <- merge(data_testing,data_testing_2M_means,by="sbj_ID");
+
+# d' computations
+data_testing_2M <- data_testing[data_testing$testing_condition == '2M',];
+
+data_testing_2M$expected_bi[data_testing_2M$expected == "between_lang"] <- 0;
+data_testing_2M$expected_bi[data_testing_2M$expected == "within_lang"] <- 1;
+data_testing_2M$observed_bi[data_testing_2M$observed == "between_lang"] <- 0;
+data_testing_2M$observed_bi[data_testing_2M$observed == "within_lang"] <- 1;
+
+dprimes2M <- dPrime(data_testing_2M$sbj_ID, data_testing_2M$expected_bi, data_testing_2M$observed_bi);
+names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
+summary(dprimes2M);
+# mean(d') = 0.07, mean(c) = -0.44
+data_testing <- merge(data_testing,dprimes2M,by="sbj_ID");
+cor.test(dprimes2M$dprime,dprimes2M$c, method="pearson"); 
+# t=-0.80 df=193 p=0.42 CI=[-0.20;0.08] est=-0.06 ()
+
+testing_short <- data_testing[!duplicated(data_testing$sbj_ID), ];
+t.test(testing_short$dprime, mu=0);
+# t=2.61 df=194 p=0.01 CI=[0.02;0.12] est=0.07 
+t.test(testing_short$c, mu=0);
+# t=-14.40 df=194 p<2.2e-16 CI=[-0.51;-0.38] est=-0.44 
+
+### "YES" responses across conditions ################################
+# evaluating the differences between conditions
+data_testing_conditions <- merge(data_testing_0M_yes,data_testing_1M_yes, by='sbj_ID');
+data_testing_conditions <- merge(data_testing_conditions,data_testing_2M_yes, by='sbj_ID');
+conditions_table <- table(data_testing$testing_condition, data_testing$observed);
+chisq.test(conditions_table);
+# X2 = 1114.5 df=2 p<2.2e-16
+data_testing_conditions <- data_testing_conditions %>%
+  gather(condition, score, -sbj_ID);
+data_testing_conditions$score <- data_testing_conditions$score/100;
+
+# plotting all "yes" responses across conditions
+yes_all_plt <- ggplot(data_testing_conditions, aes(x = condition, y = score, color = condition)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_jitter(width = 0.1, height = 0, alpha = 0.3,color= "black",size=2) +
+  labs(x = "Condition", y = 'Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80)) +
+  ylim(0,1.01) +
+  stat_summary(geom = "point",fun = "mean",col = "red",size = 4,shape = 19) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", width = 0.05,col="red",position = position_dodge(width = 0.5)) +
+  scale_x_discrete(labels=c("0M", "1M", "2M"));
+ggsave("exp3_yes_allconditions_scatterplot.png",width=10,height=7,yes_all_plt,path=output_folder,device="png");
+
+yes_violin <- ggplot(data_testing_conditions, aes(x=condition, y=score)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_violin(alpha=0.75,fill="lightgrey") +
+  geom_boxplot(width=0.1,fill="grey") +
+  scale_x_discrete(labels=c("0M", "1M", "2M")) +
+  labs(x="Condition",y='Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60));
+ggsave("exp3_yes_allconditions_violinplot.png",width=10,height=7,yes_violin,path=output_folder,device="png");
+
+
+# 2M accuracy*RTs
+cor.test(data_testing_2M_means$score_2M, data_testing_rt_means$x, method="pearson");
+# t=0.53 df=193 p=0.59 CI=[-0.10;0.18] est=0.04 ()
+
+# strategies used
+strats <- subset(data_testing, select = c(sbj_ID, strategy));
+strats <- strats[!duplicated(strats),];
+write.csv(strats,"BASL_exp3_strats.csv", row.names = FALSE);
+
+# those having used chunks
+chunkID_strategists <- list('5ba4da6f03692b00019adae6','5ea2e2054687bd0517c23492',
+                            '60c0fa09ef735c52ada64d23','60fa7628023c88195f68529c',
+                            '612e6bf6f0eba168c2a1dc35','61353c933f32fef782432cc7',
+                            '65feaaac53eb219f09ad5ea0','669d0b18e3a1ae0b5f7571ef',
+                            '66b2acaa5fe9506f6cd278a8','66c7469a4526d21d11ed0e15',
+                            '66ce4da62b4ca0e6ead754d6','66cf143e060992b3d817c20f',
+                            '67269f439696d166fbb74e09','677302ad15f7e3d0c1725fef',
+                            '68c00b0de12e311f71a427fd','690b6a1d98044838e462d048',
+                            '6932b8da8751dc6771770907','6951d6fd93f50ed0e6363eba',
+                            '6972610c74d08456b2aa6ae2','6978c41323acbe6260c25b6b',
+                            '697ae23c7ed5edbb062a80a3','697b23f24e0252dfb327f950',
+                            '697cab1603c68e76a4d71eb0','697caee42ccb58f80bd052aa',
+                            '697cc570d57156b29c34b70a','697cd69b8306e0d7e7ff4bfc',
+                            '697cee693cacc7fc3ccaedb3','697ceef83c5a1d1a0f21c6c1',
+                            '697d0af5cbf092790e5303e5','698077f69bf2b842579340fc',
+                            '69807e97ec7daf3eb0a4f256','698093a6ccef1114e376cfe5',
+                            '69809b4956d7129d4b119b43','69809e035896ef246cbc2922',
+                            '6980b660de828c2f1a83d72f','6980b7b8619ca8828b86f21b',
+                            '6980bc0b357eb9d91de4a0e9','6980dcc1fee5670e573354f1',
+                            '6981128082d28d2191154253','698242aea446c3fc40454a2d',
+                            '69824e53e214c63c2afb2c53','698255186a52f393404e26f7',
+                            '698351788833bcdaa3c391ce','69835a10b58c1a190110ab59',
+                            '698362eea52b5dadb6f3197b','6984ab8a88a32e8274e0351b',
+                            '6984b22b8b8f99c86194ce62','6984b8a7eadad5d5bd8e12cf',
+                            '6985466b840079abc0ac75e9','6985a1a2a9b075341a3e65b0',
+                            '698725ce979bc4d4ea7c7373','698732a17e9271820246153f',
+                            '6989baec35fa286279b29ca5','6989bc7b28c71e3280a6e7f6',
+                            '6989c9427f6c4ffb769fad68','6989de5cb788d8dfc4a2641e',
+                            '6989f4760694ce91b5bc35f7','698cb68a1093d20f7c6087b7',
+                            '698dd411bc2ef10a72a75749','698df4a194fabefa716596ec',
+                            '698f277e7eb87d0f843d6bf7','69907667f821728d219ce06d',
+                            '6998a16a9147ebdebf871a82','69a5dbac7321bbc23b76cb30',
+                            '69aeee44187fdda005ab835b','69b0960f30730461ec1d57b1',
+                            '69b81e444b794cbe8947b065','69bbe66ef888cc3fc9405de9',
+                            '69bc58df28cbddd60a341a03','69c1120111926f72009dde4d',
+                            '69c147cc355c3af96875e729','69c4d00086c2b4a1a8dc2191',
+                            '69ca93b861a695b1c1eec106','69cff69eb8da20e1ea8a2fbe',
+                            '69d25ddbd1a5851c7aa92ad3','69d7cd471aa7b7397313cb1f',
+                            '69d8b313ae434f632a305c9b','69df940e45bb58f49783baac',
+                            '69e0e73998a997f72e680509','69e266c172efe398cfc4c52d',
+                            '69e90048f00cb9113be223d3','69af34e771ce9d065c0d9d80',
+                            '66ca0a6b19da058b82d8637d','66019ce5f01f7f69af8016d1');
+# n=84
+data_chunkIDstrategists <- data_testing[data_testing$sbj_ID %in% chunkID_strategists,];
+data_chunkIDstrategists <- data_chunkIDstrategists[data_chunkIDstrategists$testing_condition=='2M',];
+data_chunkIDstrategists <- data_chunkIDstrategists[!duplicated(data_chunkIDstrategists$sbj_ID), ];
+data_chunkIDstrategists$strat <- "chunkID";
+summary(data_chunkIDstrategists$score_2M);
+# min=0.33 Q1=0.48 med=0.53 mean=0.51 Q3=0.55 max=0.65
+t.test(data_chunkIDstrategists$score_2M, mu=0.50);
+# t=1.82 df=83 p=0.07 CI=[0.499;0.53] est=0.51 (.)
+summary(data_chunkIDstrategists$dprime);
+summary(data_chunkIDstrategists$c);
+# dprime:0.07 c:-0.46
+t.test(data_chunkIDstrategists$dprime, mu=0);
+# t=1.71 df=83 p=0.09 CI=[-0.01;0.14] est=0.07 (.)
+t.test(data_chunkIDstrategists$c, mu=0);
+# t=-9.44 df=83 p=8.76e-15 CI=[-0.57;-0.37] est=-0.47 (***)
+
+ggplot(data_chunkIDstrategists, aes(x="", y=score_2M)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,fill="gold1") +
+  geom_boxplot(width=0.1,fill="gold1") +
+  ylim(0,1) +
+  labs(y='Participant 2M scores') +
+  theme(axis.title.x=element_blank(),axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+# those having used their intuition
+intuition_strategists <- list('6124f23ea1f4ef44fe280dd4','659c0682d109f8537a89fdd3',
+                              '65fad6c874ac75642ffc254b','669d0b18e3a1ae0b5f7571ef',
+                              '671a35e007e5342c31f94fa7','673c2ec22f554dedb25d4049',
+                              '673caf90069aa7e3820136cc','67407b1fdd5d63e5b542d325',
+                              '67503701c4ef8958767a58d9','6931bc7a9286300ba24d7703',
+                              '6931edb6c25b0bfc7745d97b','6932c63c66408da96a982ab1',
+                              '697af0b9a1262e67a280818f','697babc50cd42f81edf45acc',
+                              '697bbefe70fe1cb006530f0f','697cabd6c4f2dee174cf2a1d',
+                              '697ce004a414418e49c8d32a','697ced4d80e2cdd6597570a4',
+                              '698074189377637711d6ee4c','698078075d3326e1b30bd1c3',
+                              '698078e0b930dfcbfde9d603','69807d4738a6a1d1a2774e67',
+                              '69807f12172ef48a2ac7edfa','69808261911a7a9bd10cd048',
+                              '6980b37761737090ad122e6f','6980b64569f487effa4069a3',
+                              '6980b8dbf12d0bde4727635e','6980c16f9985e39f6bcbbe3a',
+                              '698119def2a23d22dac3df09','6981e24e62bb6fd0037109e5',
+                              '69824df3026e0eff3dec0d0b','6983518f181a5c0bd8d4742c',
+                              '69835b48d4c4c9a78668c0af','69839e45e8ca9d3863565d6d',
+                              '6984c939f133acffbbd3b36a','69863c0a716ec6381ad4d1fb',
+                              '69865b7be282f1756be7d697','698734d0ecc42269dc0e75ac',
+                              '698b4e2840974dba43e185e8','698b57a46bf6a0eee98c0c04',
+                              '6998ed35ce310d26bcf802aa','69a56a100ee2dc518e8c415c',
+                              '69a81ed11957a0f6e26144d2','69aeee44187fdda005ab835b',
+                              '69b52f9256ef2162a97fbebc','69d62066fd5570ddfaee9725',
+                              '69d648d33057d63617173b85','69d66f2bcd1bac4e9bbdddc3',
+                              '69dcfc3bcb3d5759729e920e','69e258d883661ada98acc7ee',
+                              '69e511fc6bace0c078531c15','697da4b448849212fa6532e6',
+                              '69aebf5ccbf8f23f086f7b6c');
+# n=53
+data_intuitionstrategists <- data_testing[data_testing$sbj_ID %in% intuition_strategists,];
+data_intuitionstrategists <- data_intuitionstrategists[data_intuitionstrategists$testing_condition=='2M',];
+data_intuitionstrategists <- data_intuitionstrategists[!duplicated(data_intuitionstrategists$sbj_ID), ];
+data_intuitionstrategists$strat <- "intuition";
+summary(data_intuitionstrategists$score_2M);
+# min=0.38 Q1=0.48 med=0.50 mean=0.50 Q3=0.55 max=0.60
+t.test(data_intuitionstrategists$score_2M, mu=0.50);
+# t=0.40 df=52 p=0.69 CI=[0.49;0.52] est=0.50 
+summary(data_intuitionstrategists$dprime);
+summary(data_intuitionstrategists$c);
+# dprime:0.02 c:-0.42
+t.test(data_intuitionstrategists$dprime, mu=0);
+# t=0.48 df=52 p=0.63 CI=[-0.07;0.12] est=0.02 
+t.test(data_intuitionstrategists$c, mu=0);
+# t=-6.62 df=52 p=2.02e-8 CI=[-0.54;-0.29] est=-0.42
+
+ggplot(data_intuitionstrategists, aes(x="", y=score_2M)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,fill="palevioletred") +
+  geom_boxplot(width=0.1,fill="palevioletred") +
+  ylim(0,1) +
+  labs(y='Participant 2M scores') +
+  theme(axis.title.x=element_blank(),axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+# both strategy types
+scores_strategies <- rbind(data_chunkIDstrategists,data_intuitionstrategists);
+ggplot(scores_strategies, aes(x=strat, y=score_2M, fill=strat)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,width=1) +
+  geom_boxplot(width=0.1,position=position_dodge(width=1)) +
+  ylim(0,1) +
+  scale_fill_manual(values=c("gold1","palevioletred")) +
+  scale_x_discrete(labels=c('Chunk ID', 'Intuition')) +
+  labs(x="Strategy used",y="Participant 2M scores") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="none",legend.background=element_rect(fill=NA));
+
+ggplot(scores_strategies, aes(x=strat, y=dprime, fill=strat)) +
+  geom_hline(yintercept=0, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,width=1) +
+  geom_boxplot(width=0.1,position=position_dodge(width=1)) +
+  scale_fill_manual(values=c("gold1","palevioletred")) +
+  scale_x_discrete(labels=c('Chunk ID', 'Intuition')) +
+  labs(x="Strategy used",y="Participant D prime") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="none",legend.background=element_rect(fill=NA));
+
+
+
+
+# FAMILIARITY --------------------------------------------------------
+data_all_familiarity <- read.csv("exp3_familiarity_preprocessed.csv",header=T,sep=",");
+data_all_familiarity <- subset(data_all_familiarity, select = -c(X)) # remove redundant column added by Pavlovia
+data_familiarity <- data_all_familiarity[data_all_familiarity$sbj_ID %in% participants,]; # n = 187 participants
+data_familiarity <- data_familiarity[!data_familiarity$sbj_ID %in% 
+                                       c('6989bf21e63ddf302c08f8ee','698074881d252d37dd9bc4d2',
+                                         '698a1dffe0d91dbe2dde8ab7','69808060419a938572d8eb13',
+                                         '697b39e368a5d148ab03b923'),];
+
+# make some variables factors
+data_familiarity$sbj_ID <- as.factor(data_familiarity$sbj_ID);
+data_familiarity$task <- as.factor(data_familiarity$task);
+data_familiarity$correct <- as.logical(data_familiarity$correct);
+data_familiarity$target <- as.factor(data_familiarity$target);
+data_familiarity$confound <- as.factor(data_familiarity$confound);
+
+# familiarity accuracy
+data_familiarity_means <- aggregate(data_familiarity$correct, list(data_familiarity$sbj_ID), FUN=mean);
+colnames(data_familiarity_means)[colnames(data_familiarity_means)=="Group.1"]="sbj_ID";
+colnames(data_familiarity_means)[colnames(data_familiarity_means)=="x"]="fam_mean";
+summary(data_familiarity_means$fam_mean);
+# min=0.30 Q1=0.57 med=0.67 mean=0.66 Q3=0.73 max=0.97
+hist(data_familiarity_means$fam_mean); # mostly normally distributed
+t.test(data_familiarity_means$fam_mean, mu=0.50);
+# t=17.91 df=194 p<2.2e-16 CI=[0.64;0.67] est=0.66 
+var(data_familiarity_means$fam_mean); # var=0.01
+data_familiarity <- merge(data_familiarity,data_familiarity_means,by="sbj_ID");
+
+# familiarity accuracy violin plot
+ggplot(data_familiarity_means, aes(y=fam_mean, x=x)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_violin(alpha=0.75,fill="orchid4") +
+  geom_boxplot(width=0.1,fill="orchid4") +
+  ylim(0,1) +
+  scale_fill_manual(values=cols2[350]) +
+  labs(y = 'Proportion of correct familiarity responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),legend.position = "none",
+        axis.title.x=element_blank(),axis.text.x=element_blank(),
+        axis.ticks.x=element_blank());
+
+
+# familiarity RTs
+IDs <- list(data_familiarity$sbj_ID);
+IDs <- sapply(IDs, unique);
+plot(density(data_familiarity$rt));
+plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),
+     xlim=c(0,4000),ylim=c(0,0.006),xlab="Familiarity RTs (ms)",main="",
+     xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
+axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
+for (x in 2:length(IDs)) {
+  lines(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[x]]),col=cols2[x],lwd=2)
+};
+data_familiarity_rt_means <- aggregate(data_familiarity$rt, 
+                                       list(data_familiarity$sbj_ID), FUN=mean, 
+                                       na.rm=TRUE);
+summary(data_familiarity_rt_means$x);
+# min=207 Q1=1201 med=1418 mean=1515 Q3=1761 max=3729
+
+# familiarity accuracy*RTs
+cor.test(data_familiarity_means$fam_mean, data_familiarity_rt_means$x, method="pearson")
+# t=5.09 df=193 p=8.41e-7 CI=[0.21;0.46] est=0.34
+# slower at responding = better accuracy
+
+# familiarity accuracy*testing accuracy
+cor.test(data_familiarity_means$fam_mean, data_testing_2M_means$score_2M, method="pearson");
+#t=0.60 df=193 p=0.55 CI=[-0.10;0.18] est=0.04
+# no correlation
+
+# familiarity accuracy by testing strategy
+data_strategistsfam <- data_familiarity_means;
+data_strategistsfam$strat[data_strategistsfam$sbj_ID %in% intuition_strategists] <- 'intuition';
+data_strategistsfam$strat[data_strategistsfam$sbj_ID %in% chunkID_strategists] <- 'chunks';
+data_strategistsfam$strat[data_strategistsfam$sbj_ID %in% chunkID_strategists] <- 'chunks';
+data_strategistsfam$strat <- data_strategistsfam$strat %>% replace_na('other');
+
+summary(data_strategistsfam$fam_mean[data_strategistsfam$strat=='chunks']);
+# min=0.40 Q1=0.62 med=0.70 mean=0.69 Q3=0.77 max=0.87
+t.test(data_strategistsfam$fam_mean[data_strategistsfam$strat=='chunks'],mu=0.50);
+# t=15.44 df=82 p<2.2e-16 CI=[0.66;0.71] est=0.69 
+
+summary(data_strategistsfam$fam_mean[data_strategistsfam$strat=='intuition']);
+# min=0.37 Q1=0.53 med=0.60 mean=0.62 Q3=0.68 max=0.97
+t.test(data_strategistsfam$fam_mean[data_strategistsfam$strat=='intuition'],mu=0.50);
+# t=6.64 df=50 p=2.21e-8 CI=[0.58;0.65] est=0.62 
+
+par(mar=c(5,5,2,2));
+boxplot(data_strategistsfam$fam_mean~data_strategistsfam$strat,
+        ylab = "Familiarity score",xlab="Testing strategy",ylim=c(0.28,0.9),
+        cex.lab=2,cex.axis=1.75,yaxs="i");
+abline(h=0.5, lty=5);
+par(mar=c(5, 4, 4, 2) + 0.1); # back to default
+
+
+
+
+# BLP ----------------------------------------------------------------
+data_all_BLP <- read.csv("exp3_BLP_preprocessed.csv",header=T,sep=",");
+data_all_BLP <- subset(data_all_BLP, select = -c(X)); # remove redundant column added by Pavlovia
+data_BLP <- data_all_BLP[data_all_BLP$sbj_ID %in% participants,]; # n = 190 participants
+data_BLP <- data_BLP[!data_BLP$sbj_ID %in% 
+                       c('6989bf21e63ddf302c08f8ee','698074881d252d37dd9bc4d2',
+                         '698a1dffe0d91dbe2dde8ab7','69808060419a938572d8eb13',
+                         '697b39e368a5d148ab03b923'),];
+
+BLP_correction <- function(data_BLP)
+{
+  data_BLP[data_BLP == "english"|data_BLP == "English "|data_BLP=="Enlish"|
+             data_BLP=="ENGLISH "|data_BLP=="ENGLISH"|data_BLP=="Engish"|
+             data_BLP=="Englosh"|data_BLP=="inglese"|data_BLP=="Englisg"|
+             data_BLP=="InglÃªs"|data_BLP=="inglish"|data_BLP=="Engilsh"|
+             data_BLP=="Englis"|data_BLP=="Inglês"] <- "English";
+  data_BLP[data_BLP == "spanish"|data_BLP=="SPANISH"|data_BLP=="Spanish "|
+             data_BLP=="spanish "|data_BLP=="spagnolo"|data_BLP=="Espanhol"] <- "Spanish";
+  data_BLP[data_BLP == "GERMAN"|data_BLP=="German "|data_BLP=="Germany"|
+             data_BLP=="germany"|data_BLP=="german"] <- "German";
+  data_BLP[data_BLP == "french"|data_BLP=="FRENCH"|
+             data_BLP=="french but very poor"] <- "French";
+  data_BLP[data_BLP == "PORTUGUESE"|data_BLP=="PortuguÃªs"|
+             data_BLP=="Português"] <- "Portuguese";
+  data_BLP[data_BLP == "dutch"|data_BLP=="DUTCH"] <- "Dutch";
+  data_BLP[data_BLP == "arabic"|data_BLP=="ARABIC"|data_BLP=="Arabic "] <- "Arabic";
+  data_BLP[data_BLP == "greek"|data_BLP=="GREEK"] <- "Greek";
+  data_BLP[data_BLP == "HINDI"|data_BLP=="hindi"] <- "Hindi";
+  data_BLP[data_BLP == "italiano"] <- "Italian";
+  data_BLP[data_BLP == "tulu"] <- "Tulu";
+  data_BLP[data_BLP == "kannada"] <- "Kannada";
+  data_BLP[data_BLP == "russian"] <- "Russian";
+  data_BLP[data_BLP == "catalan"] <- "Catalan";
+  data_BLP[data_BLP == "cantonese"] <- "Cantonese";
+  data_BLP[data_BLP == "PUNJABI"] <- "Punjabi";
+  data_BLP[data_BLP == "chinese (dialect)"] <- "Chinese";
+  
+  data_BLP[data_BLP == "N/A"|data_BLP=="N/a"|data_BLP=="na"|data_BLP=="no"|
+             data_BLP=="No"|data_BLP=="n/a"|data_BLP=="n/a "|data_BLP=='"n/a"'] <- "n/a";
+  data_BLP["L1"][is.na(data_BLP["L1"])] <- "n/a";
+  data_BLP["L2"][is.na(data_BLP["L2"])] <- "n/a";
+  data_BLP["L3"][is.na(data_BLP["L3"])] <- "n/a";
+  data_BLP["L4"][is.na(data_BLP["L4"])] <- "n/a";
+  
+  # correcting some participants' demographic information - correction based off of Prolific's information
+  data_BLP["Age"][data_BLP["sbj_ID"] == "65fad6c874ac75642ffc254b"] <- "21";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "66cf143e060992b3d817c20f"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "673c2ec22f554dedb25d4049"] <- "21";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "673caf90069aa7e3820136cc"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "67503701c4ef8958767a58d9"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "697bbefe70fe1cb006530f0f"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "697cac029fc2c2f5a6adbc65"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "697cc570d57156b29c34b70a"] <- "19";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "697ceef83c5a1d1a0f21c6c1"] <- "19";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "697f3920d3a9308de7557222"] <- "22";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698074189377637711d6ee4c"] <- "25";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6980756db82b3f6b672c2fea"] <- "25";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6980b37761737090ad122e6f"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6980b64569f487effa4069a3"] <- "19";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6980b660de828c2f1a83d72f"] <- "20";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698119def2a23d22dac3df09"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6981e24e62bb6fd0037109e5"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698242aea446c3fc40454a2d"] <- "25";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69824df3026e0eff3dec0d0b"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6983518f181a5c0bd8d4742c"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698362eea52b5dadb6f3197b"] <- "22";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698a4bd40711b1611e7f96ca"] <- "20";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698cb68a1093d20f7c6087b7"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "698dd411bc2ef10a72a75749"] <- "24";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "6998a16a9147ebdebf871a82"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69a56a100ee2dc518e8c415c"] <- "21";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69aeee44187fdda005ab835b"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69b52f9256ef2162a97fbebc"] <- "23";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69d8b313ae434f632a305c9b"] <- "25";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69e511fc6bace0c078531c15"] <- "18";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69e549ba0b6a44f0ec2b09cc"] <- "19";
+  data_BLP["Age"][data_BLP["sbj_ID"] == "69e743c5f506b9499e8fa3f9"] <- "20";
+  
+  data_BLP["Gender"][data_BLP["sbj_ID"] == "65fad6c874ac75642ffc254b"] <- "Woman";
+  data_BLP["Gender"][data_BLP["sbj_ID"] == "697af0b9a1262e67a280818f"] <- "Man";
+  data_BLP["Gender"][data_BLP["sbj_ID"] == "69ca93b861a695b1c1eec106"] <- "Man";
+  
+  
+  return (data_BLP)
+};
+
+data_BLP <- BLP_correction(data_BLP);
+
+# make some variables factors
+data_BLP$task <- as.factor(data_BLP$task)
+data_BLP$sbj_ID <- as.factor(data_BLP$sbj_ID);
+data_BLP$Age <- as.numeric(data_BLP$Age);
+data_BLP$Gender <- as.factor(data_BLP$Gender);
+data_BLP$Education <- as.factor(data_BLP$Education);
+data_BLP$L1 <- as.factor(data_BLP$L1);
+data_BLP$L2 <- as.factor(data_BLP$L2);
+data_BLP$L3 <- as.factor(data_BLP$L3);
+data_BLP$L4 <- as.factor(data_BLP$L4);
+data_BLP$otherLs <- as.factor(data_BLP$otherLs);
+data_BLP$AttentionL1 <- as.factor(data_BLP$AttentionL1);
+data_BLP$AttentionL2 <- as.factor(data_BLP$AttentionL2);
+data_BLP$AttentionL3 <- as.factor(data_BLP$AttentionL3);
+data_BLP$AttentionL4 <- as.factor(data_BLP$AttentionL4);
+summary(data_BLP);
+# 138/57 M/F split
+# mean age = 22.21
+# top L1: Arabic
+# top L2: English
+# top L3: French
+# top L4: French
+
+
+# languages visualisation
+df <- read.csv("BASL_exp3_langs_summary.csv",header=T,sep=",");
+
+df <- df %>% mutate(pathString = paste(family, branch, language, sep="/"));
+
+tree_dt <- as.Node(df, pathName = "pathString");
+tree_phylo <- as.phylo(tree_dt);
+
+get_descendant_tips <- function(tree, node) {
+  children_edges <- which(tree$edge[,1] == node)
+  tips <- c()
+  for (i in children_edges) {
+    child <- tree$edge[i,2]
+    if (child <= length(tree$tip.label)) {
+      tips <- c(tips, child)
+    } else {
+      tips <- c(tips, get_descendant_tips(tree, child))
+    }
+  }
+  return(tips)
+};
+
+family_vec <- setNames(df$family, df$language);
+branch_vec <- setNames(df$branch, df$language);
+count_vec <- setNames(df$count, df$language);
+
+edge_df <- ggtree::fortify(tree_phylo);
+
+edge_df <- edge_df %>%
+  rowwise() %>%
+  mutate(
+    edge_width = if (isTip) {
+      cnt <- count_vec[label]
+      if(length(cnt) == 0) 0 else cnt
+    } else {
+      tips <- get_descendant_tips(tree_phylo, node)
+      sum(count_vec[tree_phylo$tip.label[tips]])
+    }
+  ) %>% ungroup();
+
+edge_df <- edge_df %>%
+  mutate(
+    node_family = ifelse(
+      isTip, family_vec[label],
+      NA_character_
+    ),
+    node_branch = ifelse(
+      isTip, branch_vec[label],
+      NA_character_
+    )
+  );
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    languages <- tree_phylo$tip.label[tips]
+    
+    fams <- unique(family_vec[languages])
+    brs  <- unique(branch_vec[languages])
+    
+    if (length(fams) == 1)
+      edge_df$node_family[edge_df$node == n] <- fams
+    
+    if (length(brs) == 1)
+      edge_df$node_branch[edge_df$node == n] <- brs
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+edge_df$node_family <- ifelse(edge_df$isTip,
+                              family_vec[edge_df$label],
+                              NA);
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    langs <- tree_phylo$tip.label[tips]
+    
+    fams <- family_vec[langs]
+    edge_df$node_family[edge_df$node == n] <- names(sort(table(fams), 
+                                                         decreasing = TRUE))[1]
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+language_tree <- ggtree(tree_phylo, layout="circular") %<+% edge_df +
+  geom_tree(aes(linewidth=edge_width, color=edge_family)) +
+  geom_tiplab(aes(label=gsub("_", " ", label), color=edge_family), size=30, align=TRUE,
+              show.legend=FALSE,family="CMU Serif") +
+  geom_text2(aes(subset = !isTip & !is.na(node_branch),
+                 label=gsub("_", " ", node_branch),
+                 color=edge_family,
+                 angle=angle),
+             size=20, hjust=-0.2, vjust=1.4, show.legend=FALSE,
+             family="CMU Serif") +
+  scale_linewidth(breaks = c(1, 50, 100, 150),
+                  range = c(0.5, 10)) +
+  scale_color_manual(values=c(cols3[1],cols3[3],cols3[5],cols3[9],cols3[11],
+                              cols3[15]),
+                     guide = guide_legend(override.aes=list(linewidth=6))) +
+  theme_tree() +
+  theme(text = element_text(family = "CMU Serif",size=60)) +
+  labs(color="Family", linewidth="Count");
+ggsave("exp3_languages.png",width=15.5,height=13,language_tree,path=output_folder,device="png");
+
+# PCA -----
+# combine scores into 1 list
+scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score',
+                                         'L4Score')); 
+write.csv(scores_list,"BASL_exp3_scores.csv", row.names = FALSE);
+# combine use scores into 1 list
+use_scores_list <- subset(data_BLP, select=c('sbj_ID','UseL1Score','UseL2Score',
+                                             'UseL3Score','UseL4Score')); 
+write.csv(use_scores_list,"BASL_exp3_usescores.csv", row.names = FALSE);
+
+
+# correlations of BLP scores
+BLP_scores <- subset(data_BLP,select=c(HistoryL1Score,HistoryL2Score,
+                                       HistoryL3Score,HistoryL4Score,UseL1Score,
+                                       UseL2Score,UseL3Score,UseL4Score,
+                                       ProficiencyL1Score,ProficiencyL2Score,
+                                       ProficiencyL3Score,ProficiencyL4Score,
+                                       AttitudeL1Score,AttitudeL2Score,
+                                       AttitudeL3Score,AttitudeL4Score));
+
+
+png('exp3_corrPlot_BLP.png', width=1000, height=1000);
+corrplot::corrplot(cor(BLP_scores),type="lower", order="original", diag=T, 
+                   method="color", outline=F, addgrid.col=F, tl.col='black', 
+                   tl.pos='ld', addCoef.col='black',tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_BLP.png"));
+
+
+png('exp3_corrPlot_BLP_hclust.png', width=1000, height=1000);
+corrplot::corrplot(cor(BLP_scores),type="lower", order="hclust", diag=T, 
+                   method="color", outline=F, addgrid.col=F, tl.col='black', 
+                   tl.pos='ld', addCoef.col='black',tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_BLP_hclust.png"));
+
+
+# BLP scores PCA
+pca_varimax <- psych::principal(BLP_scores, nfactors=16, rotate='varimax');
+pca_varimax
+data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC1','RC3','RC2','RC8')]);
+colnames(data_BLP)[which(names(data_BLP) == "RC1")] <- "RC1_L4";
+colnames(data_BLP)[which(names(data_BLP) == "RC3")] <- "RC3_L3";
+colnames(data_BLP)[which(names(data_BLP) == "RC2")] <- "RC2_use_L1vsL2";
+colnames(data_BLP)[which(names(data_BLP) == "RC8")] <- "RC8_hist_L2";
+
+
+# scree plot
+scree_data <- data.frame(pca_varimax$Vaccounted)["Proportion Var",];
+scree_data <- scree_data %>% pivot_longer(cols=colnames(scree_data),
+                                          names_to = "PC", values_to = "PropVar");
+scree_data <- scree_data[order(scree_data$PropVar,decreasing=TRUE),];
+scree_data$PC <- c("PC1","PC3","PC2","PC10","PC5","PC6","PC4","PC7","PC9",
+                   "PC11","PC8","PC13","PC12","PC14","PC15","PC16");
+
+BLPscreeplt <- ggplot(scree_data, aes(x = reorder(PC,-PropVar), y = PropVar, group=1)) +
+  geom_point(size=4) +
+  geom_line(linewidth=1) +
+  geom_hline(yintercept=0.05,colour="red",linetype="dashed",lwd=1.25) +
+  labs(title = "Scree Plot", x = "Principal Components", y = "Variance Explained") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_BLP_screeplt.png",BLPscreeplt,path=output_folder,
+       width=10,height=7,device="png");
+
+
+# biplot of 1st 2 PCs
+#biplot(pca_varimax, main="Biplot of First Two Principal Components");
+
+
+# loadings plot for 1st 2 PCs
+loadings_data <- as.data.frame(pca_varimax$loadings[1:16, ]);
+loadings_data$BLP_var <- c("L1 History","L2 History", "L3 History", "L4 History",
+                           "L1 Use","L2 Use","L3 Use","L4 Use",
+                           "L1 Proficiency","L2 Proficiency","L3 Proficiency","L4 Proficiency",
+                           "L1 Attitude","L2 Attitude","L3 Attitude","L4 Attitude");
+loadings_data$lang <- c(rep(c("L1","L2","L3","L4"),times=4));
+ggplot(loadings_data, aes(x=RC1, y=RC3)) +
+  geom_point(size=4,colour=c(rep(c(cols2[100],cols2[310],cols2[200],cols2[285]),times=4))) +
+  geom_text_repel(aes(label=rownames(loadings_data)),vjust=2,family="CMU Serif",
+                  position=position_dodge(width=0.01),force=2,size=10,
+                  colour=c(rep(c(cols2[100],cols2[310],cols2[200],cols2[285]),times=4))) +
+  labs(title="PCA Loadings Plot (PC1 vs PC3)",x="PC1 (L4)",y="PC3 (L3)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),legend.position="none",
+        legend.background=element_rect(fill=NA));
+
+
+# PC1
+ggplot(loadings_data, aes(x=BLP_var, y=RC1, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC1 - L4)",y="PC1 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.9),legend.background=element_rect(fill=NA));
+
+
+# PC3
+ggplot(loadings_data, aes(x=BLP_var, y=RC3, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],
+                             "L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC3 - L3)",y="PC3 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.9),legend.background=element_rect(fill=NA));
+
+
+# PC2
+ggplot(loadings_data, aes(x=BLP_var, y=RC2, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC2 - L1 Use vs L2 Use)",y="PC2 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.9),legend.background=element_rect(fill=NA));
+
+
+# PC8
+ggplot(loadings_data, aes(x=BLP_var, y=RC8, fill=lang)) +
+  geom_bar(stat="identity") +
+  geom_hline(yintercept=0) +
+  scale_fill_manual(values=c("L1"=cols2[100],"L2"=cols2[310],"L3"=cols2[200],"L4"=cols2[285]),
+                    name="") +
+  labs(title="PCA Loadings Plot (PC8 - L2 History)",y="PC8 loading",x="BLP variables") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.9),legend.background=element_rect(fill=NA));
+
+# PCA heatmap
+heatmap_data <- subset(loadings_data,select=c(RC1,RC3,RC2,RC8));
+colnames(heatmap_data) <- c("PC1","PC3","PC2","PC8");
+pheatmap(heatmap_data,
+         cluster_rows=FALSE,
+         cluster_cols=FALSE,
+         color=colorRampPalette(c("#2E7E8C","#F5F1E8","#E08864"))(50),
+         clustering_distance_rows = "correlation",
+         show_rownames=TRUE,
+         fontfamily="CMU Serif",
+         fontsize=20,
+         display_numbers=TRUE,
+         angle_col=0,
+         fontsize_number=20,
+         number_color="black");
+
+# Cluster plot of 1st 2 PCs} cluster_data <- data.frame(pca_varimax$scores[, 1:2]); 
+#colnames(cluster_data) <- c("PC1", "PC2"); 
+#ggplot(cluster_data, aes(x = PC1, y = PC2)) +   
+#geom_point() +   
+#labs(title = "PCA Cluster Plot (First Two PCs)", x = "Principal Component 1", y = "Principal Component 2") +   
+#theme_minimal();
+
+# Multilingual Metrics ------
+multilingual_metrics <- data.frame();
+for (i in 1:length(scores_list$sbj_ID==unique(scores_list$sbj_ID))) {
+  temp <- scores_list[which(scores_list$sbj_ID==unique(scores_list$sbj_ID)[i]),];
+  sbj_ID <- temp$sbj_ID[1];
+  temp_scores <- as.list(temp);
+  temp_scores <- temp_scores[-1];
+  temp_scores <- unlist(temp_scores);
+  
+  use_temp <- use_scores_list[which(use_scores_list$sbj_ID==unique(use_scores_list$sbj_ID)[i]),];
+  use_temp_scores <- as.list(use_temp);
+  use_temp_scores <- use_temp_scores[-1];
+  use_temp_scores <- unlist(use_temp_scores);
+  
+  # variance
+  variance <- var(temp_scores,na.rm=TRUE);
+  
+  # entropy
+  entropy <- Entropy(temp_scores,na.rm=TRUE);
+  use_entropy <- Entropy(use_temp_scores,na.rm=TRUE);
+  
+  # multilingual experience
+  multiexp <- sum(temp_scores);
+  
+  # L1 - L2 score
+  L1L2 <- abs(temp_scores[[1]]-temp_scores[[2]]);
+  
+  multilingual_metrics <- rbind(multilingual_metrics, 
+                                list(sbj_ID,variance,entropy,use_entropy,multiexp,L1L2));
+};
+names(multilingual_metrics) <- c("sbj_ID","var","ent","use_ent","multiexp","L1_L2_diff");
+data_BLP <- merge(data_BLP,multilingual_metrics,by="sbj_ID");
+
+# Cosine Similarity ---
+cossim <- read.csv("distances_exp3_NOLOWSCORES.csv",header=T,sep=",");
+cossim <- subset(cossim, select = -c(X)); # remove redundant column added by Python
+names(cossim) <- c('sbj_ID','cossim');
+data_BLP <- merge(data_BLP,cossim,by="sbj_ID");
+
+use_cossim <- read.csv("distances_exp3_usescores.csv",header=T,sep=",");
+use_cossim <- subset(use_cossim, select = -c(X)); # remove redundant column added by Python
+names(use_cossim) <- c('sbj_ID','use_cossim');
+data_BLP <- merge(data_BLP,use_cossim,by="sbj_ID");
+
+# Multilingual Category ----
+data_BLP$category <- "mono";
+data_BLP$category[data_BLP$L2Score>0] <- "bi";
+data_BLP$category[data_BLP$L3Score>0] <- "tri";
+data_BLP$category[data_BLP$L4Score>0] <- "quadri";
+data_BLP$category <- factor(data_BLP$category,levels=c("mono","bi","tri","quadri"));
+summary(data_BLP$category);
+# n=23 monos
+# n=91 bis
+# n=55 tris
+# n=26 quadris
+
+# Script
+mixed_script_sbjID <- c('659c0682d109f8537a89fdd3','65b3c533a99b6a6b97a6f54a',
+                        '65fad6c874ac75642ffc254b','66446d88662725412dc27d06',
+                        '666b081591c316f46bbb3361','66ce4da62b4ca0e6ead754d6',
+                        '66cf143e060992b3d817c20f','67270215b5ff7147c67afb89',
+                        '673c2ec22f554dedb25d4049','67503701c4ef8958767a58d9',
+                        '68c00b0de12e311f71a427fd','68c91cf657e369ac5e1a5663',
+                        '68d446bc9f28065a31881b5f','690b6a1d98044838e462d048',
+                        '6951d6fd93f50ed0e6363eba','6972610c74d08456b2aa6ae2',
+                        '697cab1603c68e76a4d71eb0','697cabd6c4f2dee174cf2a1d',
+                        '697cac029fc2c2f5a6adbc65','697caee42ccb58f80bd052aa',
+                        '697cb9bb801ddf0766cdaa70','697cbe43c25ee72899c9c213',
+                        '697cc570d57156b29c34b70a','697ccf682c513bd6ac96151f',
+                        '697ce004a414418e49c8d32a','697ce9513b3628db72070f23',
+                        '697ceef83c5a1d1a0f21c6c1','697da4b448849212fa6532e6',
+                        '697f3920d3a9308de7557222','6980756db82b3f6b672c2fea',
+                        '698078075d3326e1b30bd1c3','698078e0b930dfcbfde9d603',
+                        '69807d4738a6a1d1a2774e67','69807e97ec7daf3eb0a4f256',
+                        '69807f12172ef48a2ac7edfa','69808261911a7a9bd10cd048',
+                        '6980899c7847724b431b38ac','698093a6ccef1114e376cfe5',
+                        '6980962a67c3b3ba8cb2836a','69809b4956d7129d4b119b43',
+                        '69809e035896ef246cbc2922','6980a4f0faef0e53cdfb97a7',
+                        '6980a7096eb2c15732813632','6980b37761737090ad122e6f',
+                        '6980b64569f487effa4069a3','6980b660de828c2f1a83d72f',
+                        '6980b7b8619ca8828b86f21b','6980b8dbf12d0bde4727635e',
+                        '6980bc0b357eb9d91de4a0e9','6980bff5e4be64da2d6c8914',
+                        '6980c16f9985e39f6bcbbe3a','6980c5902273a0acf918ced1',
+                        '6980d349ae34723f48ea7a3d','6980dcc1fee5670e573354f1',
+                        '6981128082d28d2191154253','698119def2a23d22dac3df09',
+                        '698138565bd9d4728a0a2e04','6981e24e62bb6fd0037109e5',
+                        '6981ec61b00cbb326f2382a2','698242aea446c3fc40454a2d',
+                        '69824df3026e0eff3dec0d0b','69824e53e214c63c2afb2c53',
+                        '6983518f181a5c0bd8d4742c','69835a10b58c1a190110ab59',
+                        '69835b48d4c4c9a78668c0af','698362eea52b5dadb6f3197b',
+                        '69839df6b3f83b9c02ac8234','69839e45e8ca9d3863565d6d',
+                        '6984ab8a88a32e8274e0351b','6984c939f133acffbbd3b36a',
+                        '6985a1a2a9b075341a3e65b0','69863c0a716ec6381ad4d1fb',
+                        '69865b7be282f1756be7d697','698732a17e9271820246153f',
+                        '6989baec35fa286279b29ca5','6989bc7b28c71e3280a6e7f6',
+                        '6989c0c01b2e93d5d8f2e20a','6989c9427f6c4ffb769fad68',
+                        '6989da604f75e4c44ffefa17','6989de5cb788d8dfc4a2641e',
+                        '6989f4760694ce91b5bc35f7','698a196b6438a03eb3cce8f3',
+                        '698a4bd40711b1611e7f96ca','698b4e2840974dba43e185e8',
+                        '698b57a46bf6a0eee98c0c04','698cb68a1093d20f7c6087b7',
+                        '698dd411bc2ef10a72a75749','698f277e7eb87d0f843d6bf7',
+                        '69907667f821728d219ce06d','6998a16a9147ebdebf871a82',
+                        '699c7585ca22df8b1bf087fe','69a56a100ee2dc518e8c415c',
+                        '69a81ed11957a0f6e26144d2','69aeec32d642e2a0092f6452',
+                        '69aeee44187fdda005ab835b','69af1632fa81c6ae5d2df790',
+                        '69af34e771ce9d065c0d9d80','69b52f9256ef2162a97fbebc',
+                        '69b81e444b794cbe8947b065','69bc58df28cbddd60a341a03',
+                        '69c147cc355c3af96875e729','69c4d00086c2b4a1a8dc2191',
+                        '69d25ddbd1a5851c7aa92ad3','69dcfc3bcb3d5759729e920e',
+                        '69e50234165d341516973996');
+# n=105
+
+sbj_IDs_included <- list(unique(data_BLP$sbj_ID))[[1]];
+same_script_sbjID <- sbj_IDs_included[!sbj_IDs_included %in% mixed_script_sbjID];
+# n=90
+data_BLP$script[data_BLP$sbj_ID %in% mixed_script_sbjID] <- 'mixed';
+data_BLP$script[data_BLP$sbj_ID %in% same_script_sbjID] <- 'same';
+data_BLP$script <- factor(data_BLP$script,levels=c("same","mixed"));
+
+
+# participant information
+# barplot of category
+category_plt <- ggplot(data_BLP, aes(x=category)) +
+  geom_bar() +
+  labs(x="Multilingual category") +
+  scale_x_discrete(labels=c('Monolinguals','Bilinguals','Trilinguals','Quadrilinguals')) +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp3_BLP_category.png",category_plt,path=output_folder,
+       width=7,height=10,device="png");
+
+# L1 barplot
+L1s <- data_BLP %>% group_by(L1) %>% tally;
+L1s <- L1s[order(-L1s$n), ];
+L1s <- L1s %>% slice_head(n = 8); # just keep top 8 languages
+L1s$L1 <- factor(L1s$L1, levels = L1s$L1);
+
+L1_plt <- ggplot(L1s, aes(x=L1, y=n)) +
+  geom_col() +
+  labs(y="count") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp3_BLP_L1.png",L1_plt,path=output_folder,width=7,height=10,device="png");
+
+# L2 barplot
+L2s <- data_BLP %>% group_by(L2) %>% tally;
+L2s <- L2s[order(-L2s$n), ];
+L2s <- subset(L2s, L2!='n/a');
+L2s <- L2s %>% slice_head(n = 8); # just keep top 8 languages
+L2s$L2 <- factor(L2s$L2, levels = L2s$L2);
+
+L2_plt <- ggplot(L2s, aes(x=L2, y=n)) +
+  geom_col() +
+  labs(y="count") +
+  scale_y_continuous(expand = c(0, 0)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        axis.text.x=element_text(angle=45,vjust=1,hjust=1),
+        legend.position=c(0.05,0.95),legend.background=element_rect(fill=NA));
+ggsave("exp3_BLP_L2.png",L2_plt,path=output_folder,width=7,height=10,device="png");
+
+
+
+# Metric Comparisons ------
+#var
+summary(data_BLP$var);
+# min=124 Q1=6961 med=8791 mean=8246 Q3=9996 max=12172
+var(data_BLP$var);
+# var=6124432
+
+#ent
+summary(data_BLP$ent);
+# min=0 Q1=0.93 med=0.99 mean=1.09 Q3=1.50 max=2
+var(data_BLP$ent);
+# var=0.27
+
+cor.test(data_BLP$var,data_BLP$ent,method="pearson"); 
+# t=-16.84 df=193 p<2.2e-16 CI=[-0.82;-0.71] est=-0.77
+# significantly very strongly negatively correlated 
+
+ggplot(data_BLP, aes(x=sbj_ID,y=ent,colour=category)) +
+  geom_point(size=4) +
+  labs(x = "Participant ID", y = "Multilingual balance (entropy)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        axis.text.x=element_blank(),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position=c(0.15,0.25),legend.background=element_rect(fill=NA)) +
+  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
+                     name="Category",
+                     labels=c("Monolingual","Bilingual","Trilingual","Quadrilingual"));
+
+hist(data_BLP$ent,breaks=1000,xlab="Multilingual balance (entropy)",
+     main="",cex.lab=2,cex.axis=1.5);
+# lots at 0 and 1
+
+#use_ent
+summary(data_BLP$use_ent);
+# min=0 Q1=0.58 med=0.90 mean=0.87 Q3=1.27 max=1.95
+var(data_BLP$use_ent);
+# var=0.23
+
+#multiexp
+summary(data_BLP$multiexp);
+# min=179 Q1=301 med=336 mean=348 Q3=398 max=643
+var(data_BLP$multiexp);
+# var=7533
+
+#L1_L2_diff
+summary(data_BLP$L1_L2_diff);
+# min=1.81 Q1=48.50 med=76.46 mean=86.75 Q3=110.30 max=217.94
+var(data_BLP$L1_L2_diff);
+# var=3016.23
+
+#cossim
+summary(data_BLP$cossim);
+# min=0.84 Q1=0.94 med=0.97 mean=0.96 Q3=0.99 max=1
+var(data_BLP$cossim);
+# var=0.001
+
+ggplot(data_BLP, aes(x=sbj_ID,y=cossim,colour=category)) +
+  geom_point(size=4) +
+  labs(x = "Participant ID", y = "Multilingual balance (cosine similarity)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        axis.text.x=element_blank(),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position=c(0.15,0.15),legend.background=element_rect(fill=NA)) +
+  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
+                     name="Category",
+                     labels=c("Monolingual","Bilingual","Trilingual","Quadrilingual"));
+
+hist(data_BLP$cossim,breaks=1000,
+     xlab="Multilingual balance (cosine similarity)",main="",
+     cex.lab=2,cex.axis=1.5);
+# lots at 1
+hist(data_BLP$cossim[data_BLP$category!="mono"],breaks=1000,
+     xlab="Multilingual balance (cosine similarity)",main="",
+     cex.lab=2,cex.axis=1.5);
+# exponential distribution
+
+
+ggplot(data_BLP, aes(x=cossim,y=ent,colour=category)) +
+  geom_point(size=4) +
+  labs(x = "Multilingual balance (cosine similarity)", y = "Multilingual balance (entropy)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position=c(0.17,0.2),legend.background=element_rect(fill=NA)) +
+  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
+                     name="Category",
+                     labels=c("Monolingual (n=22)","Bilingual (n=70)",
+                              "Trilingual (n=51)","Quadrilingual (n=41)"));
+
+#use_cossim
+summary(data_BLP$use_cossim);
+# min=0.68 Q1=0.80 med=0.87 mean=0.87 Q3=0.9 max=1
+var(data_BLP$use_cossim);
+# var=0.008
+
+# cossim & use_cossim
+cor.test(data_BLP$cossim,data_BLP$use_cossim,method="pearson");
+# t=11.35 df=193 p<2.2e-16 CI=[0.54;0.71] est=0.63
+# significantly strongly positively correlated
+
+
+#ent & multiexp
+cor.test(data_BLP$ent,data_BLP$multiexp,method="pearson");
+# t=32.95 df=193 p<2.2e-16 CI=[0.90;0.94] est=0.92
+# significantly very strongly positively correlated
+
+ggplot(data_BLP, aes(x=multiexp,y=ent,colour=category)) +
+  geom_point(size=4) +
+  labs(x = "Multilingual experience", y = "Multilingual balance (entropy)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position=c(0.8,0.2),legend.background=element_rect(fill=NA)) +
+  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
+                     name="Category",
+                     labels=c("Monolingual (n=22)","Bilingual (n=70)",
+                              "Trilingual (n=51)","Quadrilingual (n=41)"));
+
+
+#cossim & multiexp
+cor.test(data_BLP$cossim,data_BLP$multiexp,method="pearson");
+# t=-1.46 df=193 p=0.14 CI=[-0.24;0.04] est=-0.10
+# not significant
+
+ggplot(data_BLP, aes(x=cossim,y=multiexp,colour=category)) +
+  geom_point(size=4) +
+  labs(y = "Multilingual experience", x = "Multilingual balance (cosine similarity)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA)) +
+  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
+                     name="Category",
+                     labels=c("Monolingual (n=22)","Bilingual (n=70)",
+                              "Trilingual (n=51)","Quadrilingual (n=41)"));
+
+cossim_multiexp_plt <- ggplot(data_BLP, aes(x=cossim,y=multiexp)) +
+  geom_point(size=4) +
+  labs(y = "Multilingual experience", x = "Multilingual balance (cosine similarity)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80),
+        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA));
+ggsave("exp3_cossim_multiexp.png",width=10,height=10,cossim_multiexp_plt,path=output_folder,device="png");
+
+ent_multiexp_plt <- ggplot(data_BLP, aes(x=ent,y=multiexp)) +
+  geom_point(size=4) +
+  labs(y = "Multilingual experience", x = "Multilingual balance (entropy)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 80, color = "black"),
+        text=element_text(family="CMU Serif",size=80),
+        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA));
+ggsave("exp3_ent_multiexp.png",width=10,height=10,ent_multiexp_plt,path=output_folder,device="png");
+
+#cossim & ent
+cor.test(data_BLP$cossim,data_BLP$ent,method="pearson");
+# t=-5.11 df=193 p=7.87e-7 CI=[-0.46;-0.21] est=-0.34
+# no monos:
+cor.test(data_BLP$cossim[data_BLP$category!="mono"],data_BLP$ent[data_BLP$category!="mono"],method="pearson");
+# t=-1.00 df=170 p=0.32 CI=[-0.22;0.07] est=-0.08
+# no corr
+
+
+#ent & use_ent
+cor.test(data_BLP$ent,data_BLP$use_ent,method="pearson");
+# t=31.43 df=193 p<2.2e-16 CI=[0.89;0.93] est=0.91
+# significantly strongly positively correlated
+
+
+# correlations of multilingual metrics
+M <- subset(data_BLP,select=c('ent','multiexp','L1_L2_diff','cossim'));
+colnames(M) <- c("Entropy","Multilingual experience","L1-L2 difference",
+                 "Cosine similarity");
+png('exp3_corrPlot_multimetrics.png', width=1000, height=1000);
+corrplot::corrplot(cor(M),type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',number.cex=1.5,tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_multimetrics.png"));
+
+
+png('exp3_corrPlot_multimetrics_hclust.png', width=1000, height=1000);
+corrplot::corrplot(cor(M),type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black', number.cex=1.5,tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_multimetrics_hclust.png"));
+
+N  <- subset(data_BLP,select=c('ent','multiexp','L1_L2_diff','cossim',
+                               'RC1_L4','RC3_L3','RC2_use_L1vsL2','RC8_hist_L2'));
+colnames(N) <- c("Entropy","Multilingual experience","L1-L2 difference",
+                 "Cosine similarity","PC1 (L4)","PC3 (L3)","PC2 (L1vsL2 Use)",
+                 "PC8 (L2 History)");
+png('exp3_corrPlot_multimetricsPCA.png', width=1000, height=1000);
+corrplot::corrplot(cor(N),type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',number.cex=1.5,tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_multimetricsPCA.png"));
+
+
+png('exp3_corrPlot_multimetricsPCA_hclust.png', width=1000, height=1000);
+corrplot::corrplot(cor(N),type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black', number.cex=1.5,tl.cex=1.5,
+                   family="CMU Serif");
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_multimetricsPCA_hclust.png"));
+
+
+# export BLP dataframe
+write.csv(data_BLP,"BASL_exp3_BLP.csv", row.names = FALSE);
+
+
+# combining BLP & testing scores
+data_BLP_shortened <- subset(data_BLP, select=c(sbj_ID,Gender,Age,HistoryL1Score,
+                                                HistoryL2Score,HistoryL3Score,
+                                                HistoryL4Score,UseL1Score,
+                                                UseL2Score,UseL3Score,UseL4Score,
+                                                ProficiencyL1Score,
+                                                ProficiencyL2Score,
+                                                ProficiencyL3Score,
+                                                ProficiencyL4Score,
+                                                AttitudeL1Score,AttitudeL2Score,
+                                                AttitudeL3Score,AttitudeL4Score,
+                                                L1Score,L2Score,L3Score,L4Score,
+                                                var,ent,use_ent,multiexp,
+                                                L1_L2_diff,cossim,use_cossim,
+                                                RC1_L4,RC3_L3,RC2_use_L1vsL2,
+                                                RC8_hist_L2,category,script));
+data_BLP_testing <- list(data_testing,data_BLP_shortened) %>% 
+  reduce(inner_join, by='sbj_ID');
+data_BLP_familiarity <- list(data_familiarity,data_BLP_shortened) %>% 
+  reduce(inner_join, by='sbj_ID');
+
+
+# correlations of BLP metrics with testing scores
+M <- cor(subset(data_BLP_testing,select=c(score_2M,dprime,c,
+                                          var,ent,use_ent,multiexp,L1_L2_diff,
+                                          cossim,use_cossim,RC1_L4,RC3_L3,
+                                          RC2_use_L1vsL2,RC8_hist_L2)));
+png('exp3_corrPlot_BLP_testing.png', width=1000, height=1000);
+corrplot::corrplot(M,type="lower", order="original", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',tl.cex=1.5);
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_BLP_testing.png"));
+
+
+png('exp3_corrPlot_BLP_testing_hclust.png', width=1000, height=1000);
+corrplot::corrplot(M,type="lower", order="hclust", diag=T, method="color", 
+                   outline=F, addgrid.col=F, tl.col='black', tl.pos='ld', 
+                   addCoef.col='black',tl.cex=1.5);
+dev.off();
+grid.raster(readPNG("exp3_corrPlot_BLP_testing_hclust.png"));
+
+
+# export BLP testing dataframe
+write.csv(data_BLP_testing,"BASL_exp3_BLPtesting.csv", row.names = FALSE);
+
+
+# LINEAR MODELLING ----------
+
+## "Yes" Responses LMERs ------
+lm_TestingConditions <- glmer(observed ~ scale(trialn) + testing_condition + (1|sbj_ID), 
+                              data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_TestingConditions);
+effect_conditions <- as.data.frame(effect('testing_condition',
+                                          lm_TestingConditions, confint=list(alpha=.95)),
+                                   xlevels = list(testing_condition=c('0M','1M','2M')));
+effect_conditions
+export_output(model=lm_TestingConditions,name="Exp. 3 `Yes' responses - Conditions",
+              pred_levels=c('0M','1M','2M'),pred_type='categorical',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_Gender <- glmer(observed ~ scale(trialn) + testing_condition*Gender + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_Gender);
+export_output(model=lm_Gender,name="Exp. 3 `Yes' responses - Gender",
+              pred_levels=c('Man','Woman'),pred_type='categorical',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_Age <- glmer(observed ~ scale(trialn) + testing_condition*scale(Age) + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_Age);
+export_output(model=lm_Age,name="Exp. 3 `Yes' responses - Age",
+              pred_levels=c('scale(Age)'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_RC1 <- glmer(observed ~ scale(trialn) + testing_condition*RC1_L4 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_RC1);
+export_output(model=lm_RC1,name="Exp. 3 `Yes' responses - PC1 (L4)",
+              pred_levels=c('PC1_L4'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_RC3 <- glmer(observed ~ scale(trialn) + testing_condition*RC3_L3 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_RC3);
+export_output(model=lm_RC3,name="Exp. 3 `Yes' responses - PC3 (L3)",
+              pred_levels=c('PC3_L3'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_RC2 <- glmer(observed ~ scale(trialn) + testing_condition*RC2_use_L1vsL2 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_RC2);
+export_output(model=lm_RC2,name="Exp. 3 `Yes' responses - PC2 (L1 vs L2 Use)",
+              pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_RC8 <- glmer(observed ~ scale(trialn) + testing_condition*RC8_hist_L2 + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_RC8);
+export_output(model=lm_RC8,name="Exp. 3 `Yes' responses - PC8 (L2 History)",
+              pred_levels=c('PC8_L2_History'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_ent <- glmer(observed ~ scale(trialn) + testing_condition*ent + (1|sbj_ID), 
+                data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_ent);
+export_output(model=lm_ent,name="Exp. 3 `Yes' responses - Multilingual balance (Entropy)",
+              pred_levels=c('Entropy'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_use_ent <- glmer(observed ~ scale(trialn) + testing_condition*use_ent + (1|sbj_ID), 
+                    data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_use_ent);
+
+lm_multiexp <- glmer(observed ~ scale(trialn) + testing_condition*scale(multiexp) + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_multiexp);
+export_output(model=lm_multiexp,name="Exp. 3 `Yes' responses - Multilingual experience",
+              pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_L1L2diff <- glmer(observed ~ scale(trialn) + testing_condition*scale(L1_L2_diff) + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_L1L2diff);
+export_output(model=lm_L1L2diff,name="Exp. 3 `Yes' responses - Bilingual balance (L1-L2 difference)",
+              pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_cossim <- glmer(observed ~ testing_condition*cossim + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), 
+                   family='binomial',
+                   control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
+summary(lm_cossim);
+export_output(model=lm_cossim,name="Exp. 3 `Yes' responses - Multilingual balance (cosine similarity)",
+              pred_levels=c('Cosine similarity'),pred_type='continuous',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_cossim_nomonos <- glmer(observed ~ testing_condition*cossim + (1|sbj_ID), 
+                           data=subset(data_BLP_testing, rt>300 & rt<3000 & category != "mono"), 
+                           family='binomial',
+                           control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e5)));
+summary(lm_cossim_nomonos);
+
+lm_use_cossim <- glmer(observed ~ scale(trialn) + testing_condition*use_cossim + (1|sbj_ID), 
+                       data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_use_cossim);
+
+lm_script <- glmer(observed ~ scale(trialn) + testing_condition*script + (1|sbj_ID), 
+                   data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_script);
+export_output(model=lm_script,name="Exp. 3 `Yes' responses - Script",
+              pred_levels=c('Same script','Different script'),pred_type='categorical',
+              outcome_levels=c('0M','1M','2M'));
+
+lm_category <- glmer(observed ~ testing_condition*category + (1|sbj_ID), 
+                     data=subset(data_BLP_testing, rt>300 & rt<3000), family='binomial');
+summary(lm_category);
+export_output(model=lm_category,name="Exp. 3 `Yes' responses - Category",
+              pred_levels=c('Monolingual','Bilingual','Trilingual','Quadrilingual'),
+              pred_type='categorical',
+              outcome_levels=c('0M','1M','2M'));
+
+# 2M Responses LMERs -----------
+contrast(data_BLP_testing$expected);
+
+lm_2M <- glmer(observed ~ scale(trialn) + expected + (1|sbj_ID), 
+               data=data_BLP_testing[
+                 data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+               family='binomial');
+summary(lm_2M);
+effect_2M <- as.data.frame(effect('expected',lm_2M,confint=list(alpha=.95)),
+                           xlevels = list(expected=c(0,1)));
+export_output(model=lm_2M,name="Exp. 3 2M",
+              pred_levels=c('between_language','within_language'),
+              pred_type='categorical',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_Gender <- glmer(observed ~ scale(trialn) + expected*Gender + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
+summary(lm_2M_Gender);
+export_output(model=lm_2M_Gender,name="Exp. 3 2M - Gender",
+              pred_levels=c('Man','Woman'),pred_type='categorical',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_Age <- glmer(observed ~ scale(trialn) + expected*scale(Age) + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_Age);
+export_output(model=lm_2M_Age,name="Exp. 3 2M - Age",
+              pred_levels=c('scale(Age)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_RC1 <- glmer(observed ~ scale(trialn) + expected*RC1_L4 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_RC1);
+export_output(model=lm_2M_RC1,name="Exp. 3 2M - PC1 (L4)",
+              pred_levels=c('PC1_L4'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_RC3 <- glmer(observed ~ scale(trialn) + expected*RC3_L3 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_RC3);
+export_output(model=lm_2M_RC3,name="Exp. 3 2M - PC3 (L3)",
+              pred_levels=c('PC3_L3'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_RC2 <- glmer(observed ~ scale(trialn) + expected*RC2_use_L1vsL2 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_RC2);
+export_output(model=lm_2M_RC2,name="Exp. 3 2M - PC2 (L1 vs L2 Use)",
+              pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_RC8 <- glmer(observed ~ scale(trialn) + expected*RC8_hist_L2 + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_RC8);
+export_output(model=lm_2M_RC8,name="Exp. 3 2M - PC8 (L2 History)",
+              pred_levels=c('PC8_L2_History'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_ent <- glmer(observed ~ scale(trialn) + expected*ent + (1|sbj_ID), 
+                   data=data_BLP_testing[
+                     data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                   family='binomial');
+summary(lm_2M_ent);
+export_output(model=lm_2M_ent,name="Exp. 3 2M - Multilingual balance (Entropy)",
+              pred_levels=c('Entropy'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_use_ent <- glmer(observed ~ scale(trialn) + expected*use_ent + (1|sbj_ID), 
+                       data=data_BLP_testing[
+                         data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                       family='binomial');
+summary(lm_2M_use_ent);
+
+lm_2M_multiexp <- glmer(observed ~ scale(trialn) + expected*scale(multiexp) + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
+summary(lm_2M_multiexp);
+export_output(model=lm_2M_multiexp,name="Exp. 3 2M - Multilingual experience",
+              pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_L1L2diff <- glmer(observed ~ scale(trialn) + expected*scale(L1_L2_diff) + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
+summary(lm_2M_L1L2diff);
+export_output(model=lm_2M_L1L2diff,name="Exp. 3 2M - Bilingual Balance (L1-L2 difference)",
+              pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_cossim <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
+summary(lm_2M_cossim);
+export_output(model=lm_2M_cossim,name="Exp. 3 2M - Multilingual balance (cosine similarity)",
+              pred_levels=c('scale(Cosine similarity)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_cossim_nomonos <- glmer(observed ~ scale(trialn) + expected*scale(cossim) + (1|sbj_ID), 
+                              data=data_BLP_testing[
+                                data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000&data_BLP_testing$category!='mono',], 
+                              family='binomial');
+summary(lm_2M_cossim_nomonos);
+export_output(model=lm_2M_cossim_nomonos,name="Exp. 3 2M - Multilingual balance (cosine similarity - without monolinguals)",
+              pred_levels=c('scale(Cosine similarity)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+lm_2M_use_cossim <- glmer(observed ~ scale(trialn) + expected*scale(use_cossim) + (1|sbj_ID), 
+                          data=data_BLP_testing[
+                            data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                          family='binomial');
+summary(lm_2M_use_cossim);
+export_output(model=lm_2M_use_cossim,name="Exp. 3 2M - Multilingual balance (use cosine similarity)",
+              pred_levels=c('scale(Use cosine similarity)'),pred_type='continuous',
+              outcome_levels=c('between_language','within_language'));
+
+
+lm_2M_script <- glmer(observed ~ scale(trialn) + expected*script + (1|sbj_ID), 
+                      data=data_BLP_testing[
+                        data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                      family='binomial');
+summary(lm_2M_script);
+export_output(model=lm_2M_script,name="Exp. 3 2M - Script",
+              pred_levels=c('Same script','Different script'),pred_type='categorical',
+              outcome_levels=c('between_language','within_language'));
+
+plot_model(lm_2M_script,type = 'pred', terms = c('expected', 'script'));
+
+lm_2M_category <- glmer(observed ~ expected*category + (1|sbj_ID), 
+                        data=data_BLP_testing[
+                          data_BLP_testing$testing_condition=='2M' & data_BLP_testing$rt>300 & data_BLP_testing$rt<3000,], 
+                        family='binomial');
+summary(lm_2M_category);
+export_output(model=lm_2M_category,name="Exp. 3 2M - Category",
+              pred_levels=c('Monolingual','Bilingual','Trilingual','Quadrilingual'),
+              pred_type='categorical',
+              outcome_levels=c('between_language','within_language'));
+
+plot_model(lm_2M_category,type = 'pred', terms = c('expected', 'category'));
+
+## Familiarity Responses LMERs -------
+data_BLP_familiarity$correct_numerical <- as.numeric(data_BLP_familiarity$correct);
+
+lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_Gender);
+export_output(model=lm_fam_Gender,name="Exp. 3 Familiarity - Gender",
+              pred_levels=c('Man','Woman'),pred_type='categorical',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_Age);
+export_output(model=lm_fam_Age,name="Exp. 3 Familiarity - Age",
+              pred_levels=c('scale(Age)'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L4 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC1);
+export_output(model=lm_fam_RC1,name="Exp. 3 Familiarity - PC1 (L4)",
+              pred_levels=c('PC1_L4'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_RC3 <- glmer(correct ~ scale(trialn) + RC3_L3 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC3);
+export_output(model=lm_fam_RC3,name="Exp. 3 Familiarity - PC3 (L3)",
+              pred_levels=c('PC3_L3'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC2);
+export_output(model=lm_fam_RC2,name="Exp. 3 Familiarity - PC2 (L1 vs L2 Use)",
+              pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_RC8 <- glmer(correct ~ scale(trialn) + RC8_hist_L2 + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_RC8);
+export_output(model=lm_fam_RC8,name="Exp. 3 Familiarity - PC8 (L2 History)",
+              pred_levels=c('PC8_L2_History'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_ent <- glmer(correct ~ scale(trialn) + ent + (1|sbj_ID), 
+                    data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_ent);
+export_output(model=lm_fam_ent,name="Exp. 3 Familiarity - Multilingual balance (entropy)",
+              pred_levels=c('Entropy'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_use_ent <- glmer(correct ~ scale(trialn) + use_ent + (1|sbj_ID), 
+                        data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_use_ent);
+
+lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multiexp) + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_multiexp);
+export_output(model=lm_fam_multiexp,name="Exp. 3 Familiarity - Multilingual experience",
+              pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_L1L2diff);
+export_output(model=lm_fam_L1L2diff,name="Exp. 3 Familiarity - Bilingual balance (L1-L2 difference)",
+              pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_cossim <- glmer(correct ~ scale(trialn) + cossim + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_cossim);
+export_output(model=lm_fam_cossim,name="Exp. 3 Familiarity - Multilingual balance (cosine similarity)",
+              pred_levels=c('Cosine similarity'),pred_type='continuous',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_use_cossim <- glmer(correct ~ scale(trialn) + use_cossim + (1|sbj_ID), 
+                           data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_use_cossim); 
+
+lm_fam_script <- glmer(correct ~ scale(trialn) + script + (1|sbj_ID), 
+                       data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_script); 
+export_output(model=lm_fam_script,name="Exp. 3 Familiarity - Script",
+              pred_levels=c('Same script','Different script'),pred_type='categorical',
+              outcome_levels=c('wrong','right'));
+
+lm_fam_category <- glmer(correct ~ scale(trialn) + category + (1|sbj_ID), 
+                         data=data_BLP_familiarity, family='binomial');
+summary(lm_fam_category); 
+export_output(model=lm_fam_category,name="Exp. 3 Familiarity - Category",
+              pred_levels=c('Monolingual','Bilingual','Trilingual','Quadrilingual'),
+              pred_type='categorical',outcome_levels=c('wrong','right'));
+
+
+
+# EXPLORATION OF SIGNIFICANT EFFECTS ----
+data_testing_conditions_BLP <- merge(data_testing_conditions,
+                                     subset(data_BLP,select=c(sbj_ID,Gender,
+                                                              RC1_L4,RC2_use_L1vsL2,
+                                                              ent,multiexp,L1_L2_diff,
+                                                              cossim,category)),by="sbj_ID");
+
+## "Yes" Responses ------
+# "Yes" - Testing Conditions
+ggplot(data_testing_conditions, aes(x=condition, y=score, fill=condition)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_violin(alpha=0.75) +
+  
+  geom_errorbar(aes(x=1,ymin=effect_conditions$lower[[1]],
+                    ymax=effect_conditions$upper[[1]]),width=.1) + # 0M
+  annotate("point",x=1,y=effect_conditions$fit[[1]],colour=cols2[200],size=3) + # 0M
+  
+  geom_errorbar(aes(x=2,ymin=effect_conditions$lower[[2]],
+                    ymax=effect_conditions$upper[[2]]),width=.1) + # 1M
+  annotate("point",x=2,y=effect_conditions$fit[[2]],colour=cols2[100],size=3) + # 1M
+  
+  geom_errorbar(aes(x=3,ymin=effect_conditions$lower[[3]],
+                    ymax=effect_conditions$upper[[3]]),width=.1) + # 2M
+  annotate("point",x=3,y=effect_conditions$fit[[3]],colour=cols2[400],size=3) + # 2M
+  
+  ylim(0,1.01) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400])) +
+  labs(x = "Testing condition", y = 'Proportion of "yes" responses') +
+  scale_x_discrete(labels=c("0M", "1M", "2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 40, color = "black"),
+        text=element_text(family="CMU Serif",size=40),
+        legend.position = "none");
+
+# "Yes" - Gender (MAIN + INTERACTION)
+gender_plt <- ggplot(data_testing_conditions_BLP, aes(x=condition,y=score,
+                                                      fill=Gender,
+                                                      group=interaction(condition,Gender))) +
+  scale_fill_manual(values=c(cols2[400],cols2[310])) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_boxplot(alpha = 0.75, width=0.75) +
+  geom_point(position = position_dodge(width=0.75),size=2) +
+  labs(x = "Condition", y = 'Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.9,0.1),legend.background=element_rect(fill=NA)) +
+  ylim(0,1.05) +
+  coord_cartesian(expand = FALSE) +
+  scale_x_discrete(labels=c("0M", "1M", "2M"));
+# Women say "yes" more in 1M
+ggsave("exp3_yes_gender.png",width=10,height=6,gender_plt,path=output_folder,device="png");
+
+# "Yes" - RC1 (L4) (INTERACTION)
+effect_RC1 <- as.data.frame(effect('testing_condition*RC1_L4',
+                                   lm_RC1, confint=list(alpha=.95)),
+                            xlevels = list(RC1_L4 = -1.2:5.6,
+                                           testing_condition=c('0M','1M','2M')))
+
+RC1_plt <- ggplot(effect_RC1, aes(x=RC1_L4,y=fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  labs(x = "PC1: L4", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.1,0.35),legend.background=element_rect(fill=NA));
+ggsave("exp3_yes_RC1.png",width=10,height=6,RC1_plt,path=output_folder,device="png");
+
+# "Yes" - RC2 (INTERACTION)
+effect_RC2 <- as.data.frame(effect('testing_condition*RC2_use_L1vsL2',
+                                   lm_RC2, confint=list(alpha=.95)),
+                            xlevels = list(RC2_use_L1vsL2 = -1.9:4,
+                                           testing_condition=c('0M','1M','2M')))
+
+RC2_plt <- ggplot(effect_RC2, aes(x=RC2_use_L1vsL2,y=fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  labs(x = "PC2: L1 vs L2 Use", y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA));
+# More L2 use = greater morph fam effect
+ggsave("exp3_yes_RC2.png",width=10,height=6,RC2_plt,path=output_folder,device="png");
+
+# "Yes" - Entropy (INTERACTION)
+effect_ent <- as.data.frame(effect('testing_condition*ent',
+                                        lm_ent, confint=list(alpha=.95)),
+                                 xlevels = list(ent = 0:2,
+                                                testing_condition=c('0M','1M','2M')))
+
+ent_plt <- ggplot(effect_ent, aes(x = ent, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Mulilingual balance (entropy)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+ggsave("exp3_yes_ent.png",width=10,height=6,ent_plt,path=output_folder,device="png");
+
+# "Yes" - Use entropy (INTERACTION)
+effect_use_ent <- as.data.frame(effect('testing_condition*use_ent',
+                                   lm_use_ent, confint=list(alpha=.95)),
+                            xlevels = list(ent = 0:2,
+                                           testing_condition=c('0M','1M','2M')))
+
+useent_plt <- ggplot(effect_use_ent, aes(x = use_ent, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Mulilingual balance (use entropy)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+ggsave("exp3_yes_useent.png",width=10,height=6,useent_plt,path=output_folder,device="png");
+
+# "Yes" - Multilingual experience (INTERACTION)
+effect_multiexp <- as.data.frame(effect('testing_condition*scale(multiexp)',
+                                        lm_multiexp, confint=list(alpha=.95)),
+                                 xlevels = list(multiexp = 179:644,
+                                                testing_condition=c('0M','1M','2M')))
+
+multiexp_plt <- ggplot(effect_multiexp, aes(x = multiexp, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition,linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.1,0.9),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Mulilingual experience', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+# More multiexp = more "yes" responses overall
+ggsave("exp3_yes_multiexp.png",width=10,height=6,multiexp_plt,path=output_folder,device="png");
+
+# "Yes" - L1-L2 Difference (INTERACTION)
+effect_L1L2diff <- as.data.frame(effect('testing_condition*scale(L1_L2_diff)',
+                                        lm_L1L2diff, confint=list(alpha=.95)),
+                                 xlevels = list(L1_L2_diff = 0:218,
+                                                testing_condition=c('0M','1M','2M')));
+
+yes_L1L2diff_plt <- ggplot(effect_L1L2diff, aes(x = L1_L2_diff, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.9,0.9),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Bilingual balance (L1-L2 difference)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+ggsave("exp3_yes_L1L2diff.png",width=10,height=6,yes_L1L2diff_plt,path=output_folder,device="png");
+
+# "Yes" - Cosine similarity (MAIN EFFECT)
+effect_cossim <- as.data.frame(effect('testing_condition*cossim',
+                                      lm_cossim, confint=list(alpha=.95)),
+                               xlevels = list(cossim = 0:1,
+                                              testing_condition=c('0M','1M','2M')));
+
+cossim_plt <- ggplot(effect_cossim, aes(x = cossim, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.9,0.1),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Multilingual balance (cosine similarity)', y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+ggsave("exp3_yes_cossim.png",width=10,height=6,cossim_plt,path=output_folder,device="png");
+
+# "Yes" - Cosine similarity (no monos) (MAIN EFFECT)
+effect_cossim_nomonos <- as.data.frame(effect('testing_condition*cossim',
+                                      lm_cossim_nomonos, confint=list(alpha=.95)),
+                               xlevels = list(L1_L2_diff = 0:1,
+                                              testing_condition=c('0M','1M','2M')));
+
+cossim_nomonos_plt <- ggplot(effect_cossim_nomonos, aes(x = cossim, y = fit)) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_line(aes(color = testing_condition, linetype = testing_condition), lwd = 2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill = testing_condition), alpha = .5) +
+  scale_color_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                     name="Condition",labels=c("0M","1M","2M")) +
+  scale_fill_manual(values=c(cols2[200],cols2[100],cols2[400]),
+                    name="Condition",labels=c("0M","1M","2M")) +
+  scale_linetype_manual(values=c("solid","dashed","dotted"),
+                        name="Condition",labels=c("0M","1M","2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.9,0.1),legend.background=element_rect(fill=NA)) +
+  labs(x = 'Multilingual balance (cosine similarity - no monolinguals)', 
+       y = 'Proportion of "yes" responses', title = 'Fitted Line - Lme4');
+ggsave("exp3_yes_cossim_nomonos.png",width=10,height=6,cossim_nomonos_plt,path=output_folder,device="png");
+
+# "Yes" - Category (INTERACTION)
+category_plt <- ggplot(data_testing_conditions_BLP, aes(x=condition,y=score,
+                                                        fill=category,
+                                                        group=interaction(condition,category))) +
+  scale_fill_manual(values=c(cols2[100],cols2[310],cols2[200],cols2[285]),
+                    name="Category",
+                    labels=c("monolinguals","bilinguals","trilinguals","quadrilinguals")) +
+  geom_hline(yintercept=0.5, linetype="dashed", 
+             color = "darkgray",lwd=1.25) +
+  geom_boxplot(alpha = 0.75, width=0.75) +
+  geom_point(position = position_dodge(width=0.75),size=2) +
+  labs(x = "Condition", y = 'Proportion of "yes" responses') +
+  ylim(0,1.05) +
+  coord_cartesian(expand = FALSE) +
+  scale_x_discrete(labels=c("0M", "1M", "2M")) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position=c(0.9,0.15),legend.background=element_rect(fill=NA));
+ggsave("exp3_yes_category.png",width=10,height=6,category_plt,path=output_folder,device="png");
+
+
+
+## 2M Responses -----
+BLP_2Mscores <- data_BLP_testing[!duplicated(data_BLP_testing$sbj_ID), ];
+
+data_testing_2M_aggr <- data_testing_2M_aggr[data_testing_2M_aggr$response=="meanYes",];
+
+ggplot(data_testing_2M_aggr, aes(x=expected, y=meanValue, fill=expected)) +
+  geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,width=1) +
+  
+  geom_errorbar(aes(x=1,ymin=effect_2M$lower[[1]],ymax=effect_2M$upper[[1]]),
+                width=.1) + # false alarm
+  annotate("point",x=1,y=effect_2M$fit[[1]],colour="darkred",size=3) + # false alarm
+  
+  geom_errorbar(aes(x=2,ymin=effect_2M$lower[[2]],ymax=effect_2M$upper[[2]]),
+                width=.1) + # hit
+  annotate("point",x=2,y=effect_2M$fit[[2]],colour="lightblue",size=3) + # hit
+  
+  scale_fill_manual(values=c(cols2[100],cols2[200])) +
+  scale_x_discrete(labels=c('Between-language', 'Within-language')) +
+  labs(x = "String nature", y = 'Proportion of "yes" responses') +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="none",legend.background=element_rect(fill=NA));
+
+
+# 2M - RC2 (MAIN EFFECT)
+PC2_plt <- ggplot(data_BLP_testing, aes(x=RC2_use_L1vsL2,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "PC2 (L1-L2 use)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$RC2_use_L1vsL2)-0.1,max(data_BLP_testing$RC2_use_L1vsL2)+0.1) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_yes_PC2.png",width=10,height=6,PC2_plt,path=output_folder,device="png");
+
+# 2M - Use entropy (MAIN EFFECT)
+ent_plt <- ggplot(data_BLP_testing, aes(x=use_ent,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (use entropy)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$use_ent)-0.1,max(data_BLP_testing$use_ent)+0.1) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_yes_ent.png",width=10,height=6,ent_plt,path=output_folder,device="png");
+
+# 2M - Multilingual experience (MAIN EFFECT)
+multiexp_plt <- ggplot(data_BLP_testing, aes(x=multiexp,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual experience", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) +
+  xlim(min(data_BLP_testing$multiexp)-5,max(data_BLP_testing$multiexp)+5) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_yes_multiexp.png",width=10,height=6,multiexp_plt,path=output_folder,device="png");
+
+# 2M - L1-L2 Difference (MAIN EFFECT)
+L1L2plt <- ggplot(data_BLP_testing, aes(x=L1_L2_diff,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Bilingual balance (L1-L2 difference)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$L1_L2_diff)-2,max(data_BLP_testing$L1_L2_diff)+2) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_yes_L1L2diff.png",width=10,height=6,L1L2plt,path=output_folder,device="png");
+
+# 2M - Cosine similarity (MAIN EFFECT + INTERACTION)
+cossim_2M_plt <- ggplot(data_BLP_testing, aes(x=cossim,y=score_2M)) +
+  geom_hline(yintercept=0.5,linetype="dashed",color="darkgrey") +
+  geom_point(size=4) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (cosine similarity)", y = '2M accuracy') +
+  ylim(0.3,0.7) + 
+  xlim(min(data_BLP_testing$cossim)-0.01,max(data_BLP_testing$cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2Mscore_cossim.png",width=10,height=6,cossim_2M_plt,path=output_folder,device="png");
+
+ggplot(data_BLP_testing, aes(x=cossim,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (cosine similarity)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$cossim)-0.01,max(data_BLP_testing$cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+# 2M - Cosine similarity (no monos) (MAIN EFFECT + INTERACTION)
+cossimNOMONOS_2M_plt <- ggplot(data_BLP_testing[data_BLP_testing$L2Score>0,], aes(x=cossim,y=score_2M)) +
+  geom_hline(yintercept=0.5,linetype="dashed",color="darkgrey") +
+  geom_point(size=4) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (cosine similarity - no monolinguals)", y = '2M accuracy') +
+  ylim(0.3,0.7) + 
+  xlim(min(data_BLP_testing$cossim)-0.01,max(data_BLP_testing$cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2Mscore_cossim_nomonos.png",width=10,height=6,cossimNOMONOS_2M_plt,path=output_folder,device="png");
+
+ggplot(data_BLP_testing[data_BLP$L2Score>0,], aes(x=cossim,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (cosine similarity - without monolinguals)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$cossim)-0.01,max(data_BLP_testing$cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+# 2M - Use cosine similarity (MAIN EFFECT + INTERACTION)
+use_cossim_2M_plt <- ggplot(data_BLP_testing, aes(x=use_cossim,y=score_2M)) +
+  geom_hline(yintercept=0.5,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (use cosine similarity)", y = '2M accuracy') +
+  ylim(0,1.1) + 
+  xlim(min(data_BLP_testing$use_cossim)-0.01,max(data_BLP_testing$use_cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2Mscore_use_cossim.png",width=10,height=6,use_cossim_2M_plt,path=output_folder,device="png");
+
+ggplot(data_BLP_testing, aes(x=use_cossim,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",formula=y~x,color="red") +
+  labs(x = "Multilingual balance (use cosine similarity)", y = 'Percent of 2M "yes" responses') +
+  ylim(0,101) + 
+  xlim(min(data_BLP_testing$use_cossim)-0.01,max(data_BLP_testing$use_cossim)+0.01) +
+  coord_cartesian(expand = FALSE) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="inside",legend.position.inside = c(0.85,0.09),
+        legend.background=element_rect(fill=NA));
+
+# 2M - Script (MAIN EFFECT)
+script_plt <- ggplot(BLP_2Mscores, aes(x=script,y=yes_2M)) +
+  geom_hline(yintercept=50,linetype="dashed",color="darkgrey") +
+  geom_boxplot(fill="darkgrey") +
+  labs(x = "Script", y = 'Percent of 2M "yes" responses') +
+  scale_x_discrete(labels=c('Same','Mixed')) +
+  scale_y_continuous(expand=c(0, 0), limits=c(0, 101)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_yes_script.png",width=10,height=6,script_plt,path=output_folder,device="png");
+
+# 2M - Category (INTERACTION)
+category_plt <- ggplot(BLP_2Mscores, aes(x=category,y=score_2M)) +
+  geom_hline(yintercept=0.5,linetype="dashed",color="darkgrey") +
+  geom_boxplot(fill="darkgrey") +
+  labs(x = "Multilingual category", y = '2M accuracy') +
+  scale_x_discrete(labels=c('Monolingual','Bilingual','Trilingual','Quadrilingual')) +
+  scale_y_continuous(expand=c(0,0), limits=c(0,1.01)) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 60, color = "black"),
+        text=element_text(family="CMU Serif",size=60),
+        legend.background=element_rect(fill=NA));
+ggsave("exp3_2M_category.png",width=10,height=6,category_plt,path=output_folder,device="png");
+
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$category=='mono'],mu=0.5);
+# t=-0.61 df=22 p=0.55 CI=[0.46;0.52] est=0.49 ()
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$category=='bi'],mu=0.5);
+# t=3.46 df=90 p=0.0008 CI=[0.51;0.53] est=0.52 (***)
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$category=='tri'],mu=0.5);
+# t=1.03 df=54 p=0.31 CI=[0.49;0.53] est=0.51 ()
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$category=='quadri'],mu=0.5);
+# t=0.40 df=25 p=0.69 CI=[0.48;0.53] est=0.50 ()
+
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$category=='mono'],mu=0);
+# t=-0.44 df=22 p=0.66 CI=[-0.22;0.14] est=-0.04 ()
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$category=='bi'],mu=0);
+# t=3.25 df=90 p=0.002 CI=[0.04;0.18] est=0.11 (**)
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$category=='tri'],mu=0);
+# t=1.20 df=54 p=0.23 CI=[-0.04;0.17] est=0.07 ()
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$category=='quadri'],mu=0);
+# t=0.33 df=25 p=0.74 CI=[-0.12;0.17] est=0.02 ()
+
+# 2M - Script
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$script=='same'],mu=0.5);
+# t=1.89 df=89 p=0.06 CI=[0.499;0.52] est=0.51 (.) 
+t.test(BLP_2Mscores$score_2M[BLP_2Mscores$script=='mixed'],mu=0.5);
+# t=1.91 df=104 p=0.059 CI=[0.4995;0.52] est=0.51 (.) 
+
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$script=='same'],mu=0);
+# t=1.60 df=89 p=0.11 CI=[-0.01;0.13] est=0.06 () 
+t.test(BLP_2Mscores$dprime[BLP_2Mscores$script=='mixed'],mu=0);
+# t=2.06 df=104 p=0.04 CI=[0.003;0.15] est=0.08 (*) 
+
+
+# Clustering Tree ----
+data_BLP_short <- subset(data_BLP, select=c(HistoryL1Score,HistoryL2Score,
+                                            HistoryL3Score,HistoryL4Score,
+                                            UseL1Score,UseL2Score,UseL3Score,
+                                            UseL4Score,ProficiencyL1Score,
+                                            ProficiencyL2Score,ProficiencyL3Score,
+                                            ProficiencyL4Score,AttitudeL1Score,
+                                            AttitudeL2Score,AttitudeL3Score,
+                                            AttitudeL4Score,L1Score,L2Score,
+                                            L3Score,L4Score,var,ent,use_ent,
+                                            cossim,use_cossim,multiexp,L1_L2_diff,
+                                            RC3_L3,RC1_L4,RC2_use_L1vsL2,RC8_hist_L2));
+plot(varclus(as.matrix(data_BLP_short)),cex=2,lwd=2)

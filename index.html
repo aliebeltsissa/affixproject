@@ -39,9 +39,7 @@
     }
 
     // call the saveData function after the experiment is over
-    var jsPsych = initJsPsych({
-      on_finish: function(){ saveData(jsPsych.data.get().csv()); }
-    });
+    var jsPsych = initJsPsych();
     
     // capture info from Prolific
     var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
@@ -672,6 +670,45 @@
     };
     timeline.push(consent);
 
+    var language_check = {
+      type: jsPsychSurveyMultiSelect,
+      questions: [
+        {
+          prompt: `<p style="font-size: 30px">Which languages do you speak? Please select all languages you are familiar with.</p>`,
+          options: ["Afrikaans","Albanian","Amharic","Arabic","Armenian","Basque","Bengali","Belarussian","Burmese","Bulgarian","Cantonese","Catalan","Czech","Chinese","Croatian","Danish","Dari","Dzongkha","Dutch","English","Esperanto","Estonian","Faroese","Farsi","Finnish","French","Gaelic","Galician","German","Greek","Gujarati","Hakka","Hebrew","Hindi","Hungarian","Icelandic","Indonesian","Inuktitut","Irish","Italian","Japanese","Khmer","Korean","Kurdish","Laotian","Latvian","Lappish","Lithuanian","Macedonian","Malay","Malayalam","Maltese","Mandarin","Nepali","Norwegian","Papiamento","Pashto","Polish","Portuguese","Punjabi","Romanian","Russian","Scots","Serbian","Slovak","Slovenian","Somali","Spanish","Swedish","Swahili","Tagalog-Filipino","Tajik","Tamil","Thai","Telugu","Tibetan","Tigrinya","Tongan","Turkish","Turkmen","Twi","Ukrainian","Urdu","Uzbek","Welsh","Vietnamese","Other"],
+          horizontal: true,
+          required: true,
+          name: "Languages"
+        }
+      ]
+    }
+
+    var langif_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 30px;">Due to the specific requirements for languages used in this study as was specified in the study description, we're afraid you are not eligible to take part. Please return your submission on Prolific.</p>`,
+      choices: 'NO_KEYS'
+    };
+
+    var languagecheck_ifnode = {
+      timeline: [langif_trial],
+      conditional_function: function(){
+        const langs = jsPsych.data.getLastTrialData().select('response').values[0]['Languages'];
+        console.log(langs);
+        const includesAny = (arr, values) => values.some(v => arr.includes(v));
+        const bad_langs = ["Afrikaans","Albanian","Basque","Belarussian","Bulgarian","Czech","Croatian","Danish","Esperanto","Estonian","Faroese","Finnish","Gaelic","Galician","Hakka","Hungarian","Icelandic","Indonesian","Inuktitut","Irish","Latvian","Lappish","Lithuanian","Malay","Malayalam","Maltese","Norwegian","Papiamento","Polish","Romanian","Scots","Serbian","Slovak","Slovenian","Somali","Swedish","Swahili","Tagalog-Filipino","Tajik","Tamil","Tibetan","Tongan","Turkish","Turkmen","Twi","Uzbek","Welsh","Vietnamese","Other"]
+        if(includesAny(langs, bad_langs) == true) {
+          return true;
+        } else {
+          return false
+        }
+      }
+    };
+
+    var languagecheck_procedure = {
+      timeline: [language_check, languagecheck_ifnode]
+    };
+    timeline.push(languagecheck_procedure);
+
     var enter_fullscreen = {
       type: jsPsychFullscreen,
       fullscreen_mode: true,
@@ -707,7 +744,7 @@
       stimulus: `<p style="font-size: 30px">You're a language expert who's been asked to look at some messages that Earth has received from space. From previous communications, we know some pieces of the words these aliens use. In this first part, we'll ask you to spell out 30 word parts, which will help you understand the messages we've received!</p>
       <p style="font-size: 30px">Please press the spacebar when you're ready.</p>`
     }
-    timeline.push(pre_morpheme_training);
+    //timeline.push(pre_morpheme_training);
 
     all_characters.push('BACKSPACE');
     const letters = all_characters;
@@ -805,7 +842,7 @@
       timeline: [morph_training,check,repeat],
       timeline_variables: stimuli,
     };
-    timeline.push(training_procedure);
+    //timeline.push(training_procedure);
 
 
     /* TRAINING */
@@ -814,7 +851,7 @@
       stimulus: `<p style="font-size: 30px">Great, those are all the word parts! You'll now see the full words we've received in this communication. Try to pay lots of attention to the words we'll show you; later, world leaders will ask you some questions on what you saw. The words will follow each other quite quickly, each round only takes 80 seconds; it seems that the aliens were in a hurry :-)</p>
       <p style="font-size: 30px">Please presss the spacebar.<p>`
     };
-    timeline.push(pre_training);
+    //timeline.push(pre_training);
 
     var training_stimuli1 = [];
     var item = ' '
@@ -1740,9 +1777,22 @@
     var goodbye = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `<p style="font-size: 30px"><u>Goal of the study:</u> This experiment intends to test if people with more experience with more languages are more capable of unconsciously processing statistical information of new words. The alien words you saw at the beginning of the study belonged to two different languages, and this difference was displayed in how word parts were assembled together. Thank you for your participation!</p>
-      <p style="font-size: 30px">Please press any key to upload your data.</p>`
+      <p style="font-size: 30px">Data upload will take a few seconds. Please wait briefly, then you will be redirected to Prolific with your completion code. Press any key now to do so.</p>`,
+      on_finish: function () {
+        saveData(jsPsych.data.get().csv());
+      }
     };
     timeline.push(goodbye);
+
+    var data_lag = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `<p style="font-size: 30px;">Data uploading, please wait...</p>`,
+      choices: 'NO_KEYS',
+      stimulus_duration: 5000,
+      trial_duration: 5000,
+      response_ends_trial: false
+    };
+    timeline.push(data_lag);
 
     var exit_fullscreen = {
       type: jsPsychFullscreen,
@@ -1756,7 +1806,7 @@
       stimulus: `<p style="font-size: 30px">Click the button below to finish, you should be automatically redirected to Prolific with your completion code.</p>`,
       choices: ['Submit'],
       on_finish: function() {
-        window.location = "https://app.prolific.com/submissions/complete?cc=C1HIG4XT" // redirect Prolific participants to completed submission page
+        window.location = "https://app.prolific.com/submissions/complete?cc=C1G6OBT0" // redirect Prolific participants to completed submission page
       }
     };
     timeline.push(redirect);

@@ -1,7 +1,7 @@
 ### IMPORTING ###
 from os import listdir, chdir
 from os.path import isfile
-chdir("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\data\\BASLv2") # set working directory to responses folder
+chdir("C:\\Users\\annal\\Documents\\GitHub\\affixproject\\data\\BASLv2") # set working directory to responses folder
 allfiles = [f for f in listdir() if isfile(f)] # get all file names
 
 import pandas as pd
@@ -346,6 +346,7 @@ def testing_scoring(testing_data):
             condition = 0
             if trial['testing_condition'] == '["morphemeXmorpheme"]':
                 condition = '2M'
+                familiar_morph = 'both'
                 if trial['correct_response'] == 'k':
                     expected = 0
                 if trial['correct_response'] == 'd':
@@ -354,8 +355,17 @@ def testing_scoring(testing_data):
                     observed = 0
                 if trial['response'] == 'd':
                      observed = 1
-            if trial['testing_condition'] == '["morphemeXmorcode"]' or trial['testing_condition'] == '["morcodeXmorpheme"]':
+            if trial['testing_condition'] == '["morphemeXmorcode"]':
                 condition = '1M'
+                familiar_morph = 'stem'
+                expected = 0
+                if trial['response'] == 'k':
+                    observed = 0
+                if trial['response'] == 'd':
+                    observed = 1
+            if trial['testing_condition'] == '["morcodeXmorpheme"]':
+                condition = '1M'
+                familiar_morph = 'affix'
                 expected = 0
                 if trial['response'] == 'k':
                     observed = 0
@@ -363,12 +373,13 @@ def testing_scoring(testing_data):
                     observed = 1
             if trial['testing_condition'] == '["morcodeXmorcode"]':
                 condition = '0M'
+                familiar_morph = 'none'
                 expected = 1
                 if trial['response'] == 'k':
                     observed = 0
                 if trial['response'] == 'd':
                     observed = 1
-            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing', 'testing_condition':condition, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
+            trial_dict = {'sbj_ID':sbj_ID, 'task':'testing', 'testing_condition':condition, 'familiar_morph':familiar_morph, 'trialn':trialn, 'item':trial['item'], 'expected':expected, 'observed':observed, 'correct':trial['correct'], 'rt':trial['rt'], 'strategy':strat}
             trial_dict = {k:[v] for k,v in trial_dict.items()} # avoiding index error
             participant_testing_data_scored = pd.DataFrame(trial_dict)
             all_testing_data_scored = pd.concat([all_testing_data_scored, participant_testing_data_scored],axis = 0)
@@ -444,6 +455,6 @@ if all_familiarity_data_scored.shape[0] == (30*len(familiarity_data)):
     print('Finished pre-processing familiarity responses')
 
 ### EXPORTING ###
-all_familiarity_data_scored.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_familiarity_preprocessed.csv", index=True, header=True)
-all_testing_data_scored.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_testing_preprocessed.csv", index=True, header=True)
-all_BLP_data.to_csv("C:\\Users\\annal\\OneDrive\\Documents\\GitHub\\affixproject\\exp2_BLP_preprocessed.csv", index=True, header=True)
+all_familiarity_data_scored.to_csv("C:\\Users\\annal\\Documents\\GitHub\\affixproject\\exp2_familiarity_preprocessed.csv", index=True, header=True)
+all_testing_data_scored.to_csv("C:\\Users\\annal\\Documents\\GitHub\\affixproject\\exp2_testing_preprocessed.csv", index=True, header=True)
+all_BLP_data.to_csv("C:\\Users\\annal\\Documents\\GitHub\\affixproject\\exp2_BLP_preprocessed.csv", index=True, header=True)

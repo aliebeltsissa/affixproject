@@ -33,15 +33,20 @@ library(viridis);
 library(tidyverse);
 library(DescTools);
 library(paletteer);
+library(grid);
+library(png);
 library(BayesFactor);
 library(RColorBrewer);
 library(xtable);
-library(corrplot);
-library(psych);
-library(sjPlot);
+library(dplyr);
+library(phytools);
+library(tidytree);
+library(treeio);
+library(ggtree);
+library(data.tree);
+library(ape);
+library(ggtreeExtra);
 library(ggrepel);
-library(png);
-library(grid);
 ```
 
 ```{r}
@@ -55,6 +60,7 @@ showtext_auto();
 # set colour scheme
 cols <- paletteer_d("MetBrewer::Degas");
 cols2 <- paletteer_d("palettesForR::Named");
+cols3 <- c(paletteer_d("ggthemes::Tableau_20"));
 ```
 
 ## Define Functions
@@ -503,7 +509,7 @@ names(dprimes2M) <- c("sbj_ID","dprime","log_beta","c");
 summary(dprimes2M);
 # mean(d') = -0.02, mean(c) = -0.37
 data_testing <- merge(data_testing,dprimes2M,by="sbj_ID");
-cor.test(data_testing$dprime,data_testing$c, method="pearson"); 
+cor.test(dprimes2M$dprime,dprimes2M$c, method="pearson"); 
 # significant positive moderate correlation
 # more "YES" responses helps you respond more accurately
 
@@ -568,6 +574,10 @@ t.test(data_chunkIDstrategists$score_2M, mu=0.50);
 summary(data_chunkIDstrategists$dprime);
 summary(data_chunkIDstrategists$c);
 # dprime:0.10 c:-0.34
+t.test(data_chunkIDstrategists$dprime, mu=0);
+# not sig different from chance
+t.test(data_chunkIDstrategists$c, mu=0);
+# sig above chance
 
 ggplot(data_chunkIDstrategists, aes(x="", y=score_2M)) +
   geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
@@ -599,6 +609,10 @@ t.test(data_intuitionstrategists$score_2M, mu=0.50);
 summary(data_intuitionstrategists$dprime);
 summary(data_intuitionstrategists$c);
 # dprime:-0.04 c:-0.31
+t.test(data_intuitionstrategists$dprime, mu=0);
+# not sig different from chance
+t.test(data_intuitionstrategists$c, mu=0);
+# sig above chance
 
 ggplot(data_intuitionstrategists, aes(x="", y=score_2M)) +
   geom_hline(yintercept=0.5, linetype="dashed", color="darkgrey",lwd=1.25) +
@@ -633,6 +647,20 @@ ggplot(scores_strategies, aes(x=strat, y=score_2M, fill=strat)) +
         axis.text = element_text(family = "CMU Serif", size = 20, color = "black"),
         text=element_text(family="CMU Serif",size=20),
         legend.position="none",legend.background=element_rect(fill=NA));
+
+ggplot(scores_strategies, aes(x=strat, y=dprime, fill=strat)) +
+  geom_hline(yintercept=0, linetype="dashed", color="darkgrey",lwd=1.25) +
+  geom_violin(alpha=0.75,width=1) +
+  geom_boxplot(width=0.1,position=position_dodge(width=1)) +
+  scale_fill_manual(values=c("gold1","palevioletred")) +
+  scale_x_discrete(labels=c('Chunk ID', 'Intuition')) +
+  labs(x="Strategy used",y="Participant D prime") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
+        text=element_text(family="CMU Serif",size=30),
+        legend.position="none",legend.background=element_rect(fill=NA));
+
 ```
 
 # FAMILIARITY
@@ -846,6 +874,119 @@ summary(data_BLP);
 # English top L2
 ```
 
+\
+
+```{r}
+lang_cols <- cols3;
+names(lang_cols) <- c('Afro-Asiatic','Austro-Asiatic','Austronesian',
+                      'Dravidian','Indo-European','Japonic','Kra-Dai',
+                      'Niger-Congo','Sino-Tibetan','Turkic','Uralic',
+                      '12','13','14','15','16','17','18','19','20');
+
+# languages visualisation
+df <- read.csv("BASL_exp1_langs_summary.csv",header=T,sep=",");
+
+df <- df %>% mutate(pathString = paste(family, branch, language, sep="/"));
+
+tree_dt <- as.Node(df, pathName = "pathString");
+tree_phylo <- as.phylo(tree_dt);
+
+get_descendant_tips <- function(tree, node) {
+  children_edges <- which(tree$edge[,1] == node)
+  tips <- c()
+  for (i in children_edges) {
+    child <- tree$edge[i,2]
+    if (child <= length(tree$tip.label)) {
+      tips <- c(tips, child)
+    } else {
+      tips <- c(tips, get_descendant_tips(tree, child))
+    }
+  }
+  return(tips)
+};
+
+family_vec <- setNames(df$family, df$language);
+branch_vec <- setNames(df$branch, df$language);
+count_vec <- setNames(df$count, df$language);
+
+edge_df <- ggtree::fortify(tree_phylo);
+
+edge_df <- edge_df %>%
+  rowwise() %>%
+  mutate(
+    edge_width = if (isTip) {
+      cnt <- count_vec[label]
+      if(length(cnt) == 0) 0 else cnt
+    } else {
+      tips <- get_descendant_tips(tree_phylo, node)
+      sum(count_vec[tree_phylo$tip.label[tips]])
+    }
+  ) %>% ungroup();
+
+edge_df <- edge_df %>%
+  mutate(
+    node_family = ifelse(
+      isTip, family_vec[label],
+      NA_character_
+    ),
+    node_branch = ifelse(
+      isTip, branch_vec[label],
+      NA_character_
+    )
+  );
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    languages <- tree_phylo$tip.label[tips]
+    
+    fams <- unique(family_vec[languages])
+    brs  <- unique(branch_vec[languages])
+    
+    if (length(fams) == 1)
+      edge_df$node_family[edge_df$node == n] <- fams
+    
+    if (length(brs) == 1)
+      edge_df$node_branch[edge_df$node == n] <- brs
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+edge_df$node_family <- ifelse(edge_df$isTip,
+                              family_vec[edge_df$label],
+                              NA);
+
+for (n in unique(edge_df$node)) {
+  if (!edge_df$isTip[edge_df$node == n]) {
+    tips <- get_descendant_tips(tree_phylo, n)
+    langs <- tree_phylo$tip.label[tips]
+    
+    fams <- family_vec[langs]
+    edge_df$node_family[edge_df$node == n] <- names(sort(table(fams), decreasing = TRUE))[1]
+  }
+};
+
+edge_df$edge_family <- edge_df$node_family;
+
+language_tree <- ggtree(tree_phylo, layout="circular") %<+% edge_df +
+  geom_tree(aes(linewidth=edge_width, color=edge_family)) +
+  geom_tiplab(aes(label=gsub("_", " ", label), color=edge_family), size=15, 
+              align=TRUE, show.legend=FALSE, family="CMU Serif") +
+  geom_text2(aes(subset = !isTip & !is.na(node_branch), label=node_branch, 
+                 color=edge_family, angle=angle), size=10, hjust=1.1, vjust=2, 
+             show.legend=FALSE, family="CMU Serif") +
+  scale_color_manual(values=lang_cols, guide=guide_legend(order=1, 
+                     override.aes=list(linewidth=6))) +
+  scale_linewidth(breaks=c(1, 50, 100, 150), range=c(0.5, 10), 
+                  guide=guide_legend(order = 2)) +
+  theme_tree() +
+  theme(text = element_text(family = "CMU Serif",size=40)) +
+  labs(color="Family", linewidth="Count");
+ggsave("exp1_languages.png", width=10, height=9.5, language_tree,
+       path=output_folder, device="png");
+```
+
 ```{r}
 scores_list <- subset(data_BLP, select=c('sbj_ID','L1Score','L2Score','L3Score','L4Score')); # combine scores into 1 list
 write.csv(scores_list,"BASL_exp1_scores.csv", row.names = FALSE);
@@ -878,6 +1019,7 @@ grid.raster(readPNG("exp1_corrPlot_BLP_hclust.png"));
 ```{r}
 # BLP scores PCA
 pca_varimax <- psych::principal(BLP_scores, nfactors=16, rotate='varimax');
+pca_varimax
 data_BLP <- cbind(data_BLP, pca_varimax$scores[,c('RC1','RC9','RC2','RC8','RC3')]);
 colnames(data_BLP)[which(names(data_BLP) == "RC1")] <- "RC1_L3";
 colnames(data_BLP)[which(names(data_BLP) == "RC9")] <- "RC9_L4";
@@ -1219,18 +1361,24 @@ ggplot(data_BLP, aes(x=multiexp,y=ent,colour=category)) +
 cor.test(data_BLP$cossim,data_BLP$multiexp,method="pearson");
 # not significant
 
-ggplot(data_BLP, aes(x=cossim,y=multiexp,colour=category)) +
+ggplot(data_BLP, aes(x=cossim,y=multiexp)) +
+  geom_point(size=4) +
+  labs(y = "Multilingual experience", x = "Multilingual balance (cosine similarity)") +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"),
+        axis.text = element_text(family = "CMU Serif", size = 20, color = "black"),
+        text=element_text(family="CMU Serif",size=20),
+        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA));
+
+ggplot(data_BLP, aes(x=ent,y=multiexp)) +
   geom_point(size=4) +
   labs(y = "Multilingual experience", x = "Multilingual balance (entropy)") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 20, color = "black"),
         text=element_text(family="CMU Serif",size=20),
-        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA)) +
-  scale_color_manual(values=c(cols2[100],cols2[150],cols2[200],cols2[250]),
-                     name="Category",
-                     labels=c("Monolingual (n=22)","Bilingual (n=70)",
-                              "Trilingual (n=51)","Quadrilingual (n=41)"));
+        legend.position=c(0.17,0.8),legend.background=element_rect(fill=NA));
+
 ```
 
 ```{r}
@@ -1242,9 +1390,9 @@ cor.test(data_BLP$cossim[data_BLP$category!="mono"],data_BLP$ent[data_BLP$catego
 ```
 
 ```{r}
-#ent & use_ent
-cor.test(data_BLP$ent,data_BLP$use_ent,method="pearson");
-# significantly strongly positively correlated
+#ent & cossim
+cor.test(data_BLP$ent,data_BLP$cossim,method="pearson");
+# significantly correlated, but differences
 ```
 
 ```{r}
