@@ -861,7 +861,7 @@ fam_violin <- ggplot(data_familiarity_means, aes(y=fam_mean, x=x)) +
   geom_boxplot(width=0.1,fill="orchid4") +
   ylim(0,1) +
   scale_fill_manual(values=cols2[350]) +
-  labs(y = 'Proportion of correct familiarity responses') +
+  labs(y = 'Proportion of correct recognition responses') +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"),
         axis.text = element_text(family = "CMU Serif", size = 30, color = "black"),
@@ -875,7 +875,7 @@ ggsave("exp2_familiarity_violinplt.png",fam_violin,path=output_folder,
 IDs <- list(data_familiarity$sbj_ID);
 IDs <- sapply(IDs, unique);
 plot(density(data_familiarity$rt[data_familiarity$sbj_ID==IDs[1]]),
-     xlim=c(0,4000),ylim=c(0,0.01),xlab="Familiarity RTs (ms)",main="",
+     xlim=c(0,4000),ylim=c(0,0.01),xlab="Recognition RTs (ms)",main="",
      xaxt = "n",col=cols2[1],lwd=2,yaxs="i");
 axis(1, at = c(0,500,1000,1500,2000,2500,3000,3500,4000));
 for (x in 2:184) {
@@ -916,7 +916,7 @@ t.test(data_strategistsfam$fam_mean[data_strategistsfam$strat=='intuition'],mu=0
 
 par(mar=c(5,5,2,2));
 boxplot(data_strategistsfam$fam_mean~data_strategistsfam$strat,
-        ylab = "Familiarity score",xlab="Testing strategy",ylim=c(0.28,0.9),
+        ylab = "Recognition score",xlab="Testing strategy",ylim=c(0.28,0.9),
         cex.lab=2,cex.axis=1.75,yaxs="i");
 abline(h=0.5, lty=5);
 par(mar=c(5, 4, 4, 2) + 0.1); # back to default
@@ -2052,14 +2052,14 @@ export_output(model=lm_2M_category,name="Exp. 2 2M - Category",
 plot_model(lm_2M_category,type = 'pred', terms = c('expected', 'category'));
 
 
-## Familiarity LMERs =================================================
+## Recognition LMERs =================================================
 data_BLP_familiarity$correct_numerical <- as.numeric(data_BLP_familiarity$correct);
 
 lm_fam_Gender <- glmer(correct ~ scale(trialn) + Gender + (1|sbj_ID), 
                        data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Gender); 
 # Gender non sig (p=0.66)
-export_output(model=lm_fam_Gender,name="Exp. 2 Familiarity - Gender",
+export_output(model=lm_fam_Gender,name="Exp. 2 Recognition - Gender",
               pred_levels=c('Man','Woman'),pred_type='categorical',
               outcome_levels=c('wrong','right'));
 
@@ -2067,7 +2067,7 @@ lm_fam_Age <- glmer(correct ~ scale(trialn) + scale(Age) + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_Age); 
 # Age non sig (p=0.13)
-export_output(model=lm_fam_Age,name="Exp. 2 Familiarity - Age",
+export_output(model=lm_fam_Age,name="Exp. 2 Recognition - Age",
               pred_levels=c('scale(Age)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2075,7 +2075,7 @@ lm_fam_RC1 <- glmer(correct ~ scale(trialn) + RC1_L4 + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC1); 
 # RC1_L4 non sig (p=0.96)
-export_output(model=lm_fam_RC1,name="Exp. 2 Familiarity - PC1 (L4)",
+export_output(model=lm_fam_RC1,name="Exp. 2 Recognition - PC1 (L4)",
               pred_levels=c('PC1_L4'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2083,7 +2083,7 @@ lm_fam_RC3 <- glmer(correct ~ scale(trialn) + RC3_L3 + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC3); 
 # RC3_L3 non sig (p=0.19)
-export_output(model=lm_fam_RC3,name="Exp. 2 Familiarity - PC3 (L3)",
+export_output(model=lm_fam_RC3,name="Exp. 2 Recognition - PC3 (L3)",
               pred_levels=c('PC3_L3'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2091,7 +2091,7 @@ lm_fam_RC2 <- glmer(correct ~ scale(trialn) + RC2_use_L1vsL2 + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC2); 
 # RC2_use_L1vsL2 non sig (p=0.71)
-export_output(model=lm_fam_RC2,name="Exp. 2 Familiarity - PC2 (L1 vs L2 Use)",
+export_output(model=lm_fam_RC2,name="Exp. 2 Recognition - PC2 (L1 vs L2 Use)",
               pred_levels=c('PC2_L1vsL2_Use'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2099,7 +2099,7 @@ lm_fam_RC7 <- glmer(correct ~ scale(trialn) + RC7_hist_L2 + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC7); 
 # RC7_hist_L2 non sig (p=0.70)
-export_output(model=lm_fam_RC7,name="Exp. 2 Familiarity - PC7 (L2 History)",
+export_output(model=lm_fam_RC7,name="Exp. 2 Recognition - PC7 (L2 History)",
               pred_levels=c('PC7_L2_History'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2107,7 +2107,7 @@ lm_fam_RC9 <- glmer(correct ~ scale(trialn) + RC9_use_L4 + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_RC9); 
 # RC9_use_L4 sig (p=0.02)
-export_output(model=lm_fam_RC9,name="Exp. 2 Familiarity - PC9 (L4 Use)",
+export_output(model=lm_fam_RC9,name="Exp. 2 Recognition - PC9 (L4 Use)",
               pred_levels=c('PC4_L4_Use'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2115,7 +2115,7 @@ lm_fam_ent <- glmer(correct ~ scale(trialn) + ent + (1|sbj_ID),
                     data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_ent); 
 # ent marg. sig (p=0.09)
-export_output(model=lm_fam_ent,name="Exp. 2 Familiarity - Multilingual balance (entropy)",
+export_output(model=lm_fam_ent,name="Exp. 2 Recognition - Multilingual balance (entropy)",
               pred_levels=c('Entropy'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2128,7 +2128,7 @@ lm_fam_multiexp <- glmer(correct ~ scale(trialn) + scale(multiexp) + (1|sbj_ID),
                          data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_multiexp); 
 # multiexp non sig (p=0.25)
-export_output(model=lm_fam_multiexp,name="Exp. 2 Familiarity - Multilingual experience",
+export_output(model=lm_fam_multiexp,name="Exp. 2 Recognition - Multilingual experience",
               pred_levels=c('scale(Multilingual experience)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2136,7 +2136,7 @@ lm_fam_L1L2diff <- glmer(correct ~ scale(trialn) + scale(L1_L2_diff) + (1|sbj_ID
                          data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_L1L2diff); 
 # L1_L2_diff non sig (p=0.62)
-export_output(model=lm_fam_L1L2diff,name="Exp. 2 Familiarity - Bilingual balance (L1-L2 difference)",
+export_output(model=lm_fam_L1L2diff,name="Exp. 2 Recognition - Bilingual balance (L1-L2 difference)",
               pred_levels=c('scale(L1-L2 difference)'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2144,7 +2144,7 @@ lm_fam_cossim <- glmer(correct ~ scale(trialn) + cossim + (1|sbj_ID),
                        data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_cossim); 
 # cossim non sig (p=0.23)
-export_output(model=lm_fam_cossim,name="Exp. 2 Familiarity - Multilingual balance (cosine similarity)",
+export_output(model=lm_fam_cossim,name="Exp. 2 Recognition - Multilingual balance (cosine similarity)",
               pred_levels=c('Cosine similarity'),pred_type='continuous',
               outcome_levels=c('wrong','right'));
 
@@ -2157,7 +2157,7 @@ lm_fam_script <- glmer(correct ~ scale(trialn) + script + (1|sbj_ID),
                        data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_script); 
 # script non sig (p=0.18)
-export_output(model=lm_fam_script,name="Exp. 2 Familiarity - Script",
+export_output(model=lm_fam_script,name="Exp. 2 Recognition - Script",
               pred_levels=c('Same script','Different script'),pred_type='categorical',
               outcome_levels=c('wrong','right'));
 
@@ -2165,7 +2165,7 @@ lm_fam_category <- glmer(correct ~ scale(trialn) + category + (1|sbj_ID),
                          data=data_BLP_familiarity, family='binomial');
 summary(lm_fam_category); 
 # quadri marg. sig (p=0.07)
-export_output(model=lm_fam_category,name="Exp. 2 Familiarity - Category",
+export_output(model=lm_fam_category,name="Exp. 2 Recognition - Category",
               pred_levels=c('Monolingual','Bilingual','Trilingual','Quadrilingual'),
               pred_type='categorical',outcome_levels=c('wrong','right'));
 
@@ -2814,7 +2814,7 @@ plt_fam_PC9 <- ggplot(data_BLP_familiarity, aes(x=RC9_use_L4,y=familiarity_mean)
   geom_hline(yintercept=0.50,linetype="dashed",color="darkgrey") +
   geom_point(size=2) +
   geom_smooth(method="lm",formula=y~x,color="red") +
-  labs(x = "PC9 (L4 Use)", y = 'Familiarity accuracy') +
+  labs(x = "PC9 (L4 Use)", y = 'Recognition accuracy') +
   ylim(0,1) + 
   xlim(min(data_BLP_familiarity$RC9_use_L4)-0.1,max(data_BLP_familiarity$RC9_use_L4)+0.1) +
   coord_cartesian(expand = FALSE) +
@@ -2832,7 +2832,7 @@ plt_fam_ent <- ggplot(data_BLP_familiarity, aes(x=ent,y=familiarity_mean)) +
   geom_hline(yintercept=0.50,linetype="dashed",color="darkgrey") +
   geom_point(size=2) +
   geom_smooth(method="lm",formula=y~x,color="red") +
-  labs(x = "Multilingual balance (entropy)", y = 'Familiarity accuracy') +
+  labs(x = "Multilingual balance (entropy)", y = 'Recognition accuracy') +
   ylim(0,1) + 
   xlim(min(data_BLP_familiarity$ent)-0.1,max(data_BLP_familiarity$ent)+0.1) +
   coord_cartesian(expand = FALSE) +
@@ -2847,7 +2847,7 @@ ggsave("exp2_fam_ent.png",width=10,height=7,plt_fam_ent,path=output_folder,devic
 plt_fam_category <- ggplot(data_BLP_familiarity, aes(x=category,y=fam_mean)) +
   geom_hline(yintercept=0.5,linetype="dashed",color="darkgrey") +
   geom_boxplot(fill="darkgrey") +
-  labs(x = "Category", y = 'Familiarity accuracy') +
+  labs(x = "Category", y = 'Recognition accuracy') +
   scale_x_discrete(labels=c('Monolingual', 'Bilingual','Trilingual','Quadrilingual')) +
   ylim(min(data_BLP_familiarity$fam_mean)-0.05,max(data_BLP_familiarity$fam_mean)+0.05) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),

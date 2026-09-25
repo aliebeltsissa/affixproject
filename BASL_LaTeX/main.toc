@@ -1,0 +1,49 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{Abstract}{3}{section*.2}%
+\contentsline {section}{Introduction}{4}{section*.3}%
+\contentsline {subsection}{\large {\emph {Statistical learning}}}{4}{section*.4}%
+\contentsline {subsection}{\large {\emph {Bilingual statistical learning}}}{5}{section*.5}%
+\contentsline {subsection}{\large {\emph {Limitations to the current literature}}}{7}{section*.6}%
+\contentsline {subsection}{\large {\emph {The current study}}}{9}{section*.7}%
+\contentsline {section}{Experiment 1}{10}{section*.8}%
+\contentsline {subsection}{Methods}{10}{section*.9}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{10}{section*.10}%
+\contentsline {subsubsection}{\large {\emph {Stimuli}}}{10}{section*.11}%
+\contentsline {subsubsection}{\large {\emph {Procedure}}}{13}{section*.15}%
+\contentsline {subsubsection}{\large {\emph {Analysis}}}{15}{section*.16}%
+\contentsline {subsection}{Results}{19}{section*.19}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{19}{section*.20}%
+\contentsline {subsubsection}{\large {\emph {Testing error}}}{19}{section*.21}%
+\contentsline {subsubsection}{\large {\emph {Group-level analyses}}}{19}{section*.22}%
+\contentsline {subsubsection}{\large {\emph {Individual differences analyses}}}{20}{section*.26}%
+\contentsline {subsection}{Discussion}{25}{section*.30}%
+\contentsline {section}{Experiment 2}{27}{section*.31}%
+\contentsline {subsection}{Methods}{27}{section*.32}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{27}{section*.33}%
+\contentsline {subsubsection}{\large {\emph {Stimuli}}}{27}{section*.34}%
+\contentsline {subsubsection}{\large {\emph {Procedure}}}{27}{section*.35}%
+\contentsline {subsubsection}{\large {\emph {Analysis}}}{28}{section*.37}%
+\contentsline {subsection}{Results}{29}{section*.38}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{29}{section*.39}%
+\contentsline {subsubsection}{\large {\emph {Group-level analyses}}}{29}{section*.40}%
+\contentsline {subsubsection}{\large {\emph {Individual differences analyses}}}{30}{section*.44}%
+\contentsline {subsection}{Discussion}{37}{section*.53}%
+\contentsline {section}{Experiment 3}{39}{section*.54}%
+\contentsline {subsection}{Methods}{39}{section*.55}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{39}{section*.56}%
+\contentsline {subsubsection}{\large {\emph {Stimuli}}}{40}{section*.57}%
+\contentsline {subsubsection}{\large {\emph {Procedure}}}{40}{section*.58}%
+\contentsline {subsubsection}{\large {\emph {Analysis}}}{40}{section*.59}%
+\contentsline {subsection}{Results}{41}{section*.60}%
+\contentsline {subsubsection}{\large {\emph {Participants}}}{41}{section*.61}%
+\contentsline {subsubsection}{\large {\emph {Group-level analyses}}}{41}{section*.62}%
+\contentsline {subsubsection}{\large {\emph {Individual differences analyses}}}{43}{section*.66}%
+\contentsline {subsection}{Discussion}{51}{section*.75}%
+\contentsline {section}{General Discussion}{54}{section*.76}%
+\contentsline {subsection}{\large {\emph {Creation of a novel implicit bilingual SL task}}}{54}{section*.77}%
+\contentsline {subsection}{\large {\emph {Multilingual variables}}}{56}{section*.79}%
+\contentsline {subsection}{\large {\emph {Limitations}}}{59}{section*.80}%
+\contentsline {subsection}{\large {\emph {Future directions}}}{60}{section*.81}%
+\contentsline {section}{Conclusion}{61}{section*.82}%
+\contentsline {section}{Supplementary Materials}{62}{section*.83}%
+\contentsline {section}{Bibliography}{100}{section*.130}%

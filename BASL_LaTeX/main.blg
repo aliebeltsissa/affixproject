@@ -1,0 +1,18 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[1] Config.pm:331> INFO - Logfile is 'main.blg'
+[393] biber-MSWIN64:342> INFO - === 
+[532] Biber.pm:421> INFO - Reading 'main.bcf'
+[751] Biber.pm:999> INFO - Using all citekeys in bib section 0
+[829] Biber.pm:4487> INFO - Processing section 0
+[848] Biber.pm:4678> INFO - Looking for bibtex file 'Bibliography.bib' for section 0
+[957] bibtex.pm:1713> INFO - LaTeX decoding ...
+[1274] bibtex.pm:1519> INFO - Found BibTeX data source 'Bibliography.bib'
+[2308] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2308] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2308] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2308] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[2551] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[2639] bbl.pm:779> INFO - Output to main.bbl
+[2639] Biber.pm:132> WARN - ISBN '978-1-78309-229-1 978-1-78309-227-7' in entry 'Gertken2014' is invalid - run biber with '--validate_datamodel' for details.
+[2640] Biber.pm:132> WARN - ISBN '978-1-107-37534-5 978-1-107-04449-4' in entry 'Birdsong2016' is invalid - run biber with '--validate_datamodel' for details.
+[2641] Biber.pm:134> INFO - WARNINGS: 2
